@@ -1,0 +1,6 @@
+{
+  "cors": {
+    "policyname": "zeke",
+    "preflightmaxage": 0
+  }
+}

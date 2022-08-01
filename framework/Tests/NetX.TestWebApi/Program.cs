@@ -1,3 +1,6 @@
+#define NetX
+
+#if !NetX
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -21,3 +24,13 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+#else
+
+using NetX;
+using NetX.Module;
+using System.Reflection;
+
+ServerHost.Start(
+    RunOption.Default
+    );
+#endif
