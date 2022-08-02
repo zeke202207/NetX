@@ -2,6 +2,7 @@
 using NetX.Module;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace NetX;
 
@@ -24,6 +25,9 @@ public static class ServerHost
         var builder = null == options.Options ?
             WebApplication.CreateBuilder(args) :
             WebApplication.CreateBuilder(options.Options);
+        // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddSwaggerGen();
         // 添加自定义配置
         builder.Configuration.AddJsonFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config", "netx.json"));
         options.ActionConfigrationManager?.Invoke(builder.Configuration);
@@ -33,15 +37,24 @@ public static class ServerHost
             builder.Configuration[nameof(urls)];
         if (!string.IsNullOrWhiteSpace(startUrls))
             builder.WebHost.UseUrls(startUrls);
-        //将module模块添加到 AssemblyLoadContext：[需要考虑，是否模块隔离处理]
-        builder.InjectUserModules(builder.Services, builder.Environment);
         // 注册服应用务组件
+        var mvcBuilder = builder.Services.AddMvc();
         foreach (var module in options.Modules)
         {
+            //将module模块添加到 AssemblyLoadContext
+            if (module.Value.module.ModuleType == ModuleType.UserModule)
+                builder.InjectUserModules(mvcBuilder, builder.Services, builder.Environment, module.Value.option);
+            //服务依赖注入
             module.Value.module.ConfigureServices(builder.Services, builder.Environment, 
                 new ModuleContext() {  Configuration = builder.Configuration ,ModuleOptions = module.Value.option});
         }
         var app = builder.Build();
+        // Configure the HTTP request pipeline.
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI();
+        }
         options.App = app;
         // 注册应用中间件组件
         foreach (var module in options.Modules)

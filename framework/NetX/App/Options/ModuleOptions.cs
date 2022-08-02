@@ -40,6 +40,6 @@ namespace NetX
         /// 依赖文件列表
         /// 相对地址
         /// </summary>
-        public List<string> Dependencies { get; set; }
+        public List<string> Dependencies { get; set; } = new();
     }
 }

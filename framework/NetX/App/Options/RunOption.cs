@@ -155,11 +155,13 @@ public sealed class RunOption
                 var options = builder.Get<ModuleOptions>();
                 if (null == options)
                     return;
+                var moduleType = Assembly.Load(File.ReadAllBytes(Path.Combine(fi.DirectoryName,options.FileName))).GetTypes()
+                        .Where(p => p.IsClass && !p.IsAbstract && p.GetInterfaces().Contains(typeof(IModule)))
+                        .FirstOrDefault();
                 //依赖项
-                //var v = Assembly.LoadFile(@"D:\Persion\fw\netx\framework\NetX\bin\Debug\net6.0\NetX.dll").GetTypes()
-                //        .Where(p => p.IsClass && !p.IsAbstract && p.GetInterfaces().Contains(typeof(IModule)))
-                //        .FirstOrDefault();
-                //Modules.Add(Assembly.LoadFrom(fi.FullName).GetType()
+                Directory.EnumerateFiles(Path.Combine(fi.DirectoryName, NetXConst.C_MODULE_REFDIRECTORYNAME))
+                .AsParallel().ForAll(p => options.Dependencies.Add(p));
+                AddModule(moduleType, options);                
             });
     }
 

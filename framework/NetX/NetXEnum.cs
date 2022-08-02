@@ -18,5 +18,5 @@ public enum ModuleType :byte
     /// <summary>
     /// 业务模块
     /// </summary>
-    BusinessModule
+    UserModule
 }
