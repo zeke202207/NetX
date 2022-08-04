@@ -23,6 +23,6 @@ public class ModuleInitializer1 : ModuleInitializer
 
     public override void ConfigureServices(IServiceCollection services, IWebHostEnvironment env, ModuleContext context)
     {
-        services.AddScoped<ITest, MyTest>();
+        //services.AddScoped<ITest, MyTest>();
     }
 }

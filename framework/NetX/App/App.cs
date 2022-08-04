@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using NetX.Module;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,5 +30,17 @@ public static class App
     static App()
     {
        
+    }
+
+    /// <summary>
+    /// 根据用户模块id获取程序集上下文
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public static ModuleAssemblyLoadContext GetModuleContext(Guid id)
+    {
+        if (!InternalApp.ModuleCotextKeyValuePairs.ContainsKey(id))
+            return null;
+        return InternalApp.ModuleCotextKeyValuePairs.FirstOrDefault(p => p.Key.Equals(id)).Value;
     }
 }

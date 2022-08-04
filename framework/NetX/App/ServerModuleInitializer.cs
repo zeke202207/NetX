@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using NetX.Module;
 using System;
 using System.Collections.Generic;
@@ -39,6 +40,9 @@ namespace NetX
                         .WithExposedHeaders("Content-Disposition"));//下载文件时，文件名称会保存在headers的Content-Disposition属性里面
             });
             //2.添加swagger文档处理
+            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            services.AddEndpointsApiExplorer();
+            services.AddSwaggerGen();
 
             //3.添加HttpContext访问上下文
             services.AddHttpContextAccessor();
@@ -60,17 +64,17 @@ namespace NetX
         {
             // 配置静态
             app.UseStaticFiles();
-            // 配置路由
-            app.UseRouting();
 
             //1.跨域
             app.UseCors(context.Configuration.GetSection("cors:policyname").Value);
 
-            // 配置路由
-            app.UseEndpoints(endpoints =>
+            //2. swagger
+            // Configure the HTTP request pipeline.
+            if (((WebApplication)app).Environment.IsDevelopment())
             {
-                endpoints.MapControllers();
-            });
+                app.UseSwagger();
+                app.UseSwaggerUI();
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using NetX.Module;
 using System.Reflection;
 
@@ -25,6 +26,11 @@ public sealed class RunOption
     internal Action<ConfigurationManager> ActionConfigrationManager;
 
     /// <summary>
+    /// <see cref="IServiceCollection"/>
+    /// </summary>
+    internal Action<IServiceCollection> ActionServiceCollection { get; set; }
+
+    /// <summary>
     /// <see cref="WebApplicationOptions"/>
     /// </summary>
     internal WebApplicationOptions Options { get; set; }
@@ -42,7 +48,7 @@ public sealed class RunOption
     /// <summary>
     /// 应用服务组件
     /// </summary>
-    internal Dictionary<Guid,(ModuleInitializer module, ModuleOptions option)> Modules { get; private set; } = new();
+    internal Dictionary<Guid, ModuleOptions> Modules { get; private set; } = new();
 
     /// <summary>
     /// 默认配置项
@@ -101,15 +107,9 @@ public sealed class RunOption
         return this;
     }
 
-    /// <summary>
-    /// 添加应用服务组件
-    /// </summary>
-    /// <typeparam name="TComponent">组件类型</typeparam>
-    /// <returns></returns>
-    public RunOption AddModules<TModule>(ModuleOptions moduleOptions)
-        where TModule : class, IModule, new()
+    public RunOption ConfigrationServiceCollection(Action<IServiceCollection> configServiceCollection)
     {
-        AddModule(typeof(TModule), moduleOptions);
+        ActionServiceCollection = configServiceCollection;
         return this;
     }
 
@@ -121,18 +121,8 @@ public sealed class RunOption
         if (null == Modules)
             Modules = new();
         Modules.Clear();
-        //添加系统模块
-        InitFrameworkModules();
         //添加业务自定义模块
         InitUserModules();
-    }
-
-    /// <summary>
-    /// 初始化系统模块
-    /// </summary>
-    private void InitFrameworkModules()
-    {
-        AddModule(typeof(ServerModuleInitializer), null);
     }
 
     /// <summary>
@@ -155,25 +145,10 @@ public sealed class RunOption
                 var options = builder.Get<ModuleOptions>();
                 if (null == options)
                     return;
-                var moduleType = Assembly.Load(File.ReadAllBytes(Path.Combine(fi.DirectoryName,options.FileName))).GetTypes()
-                        .Where(p => p.IsClass && !p.IsAbstract && p.GetInterfaces().Contains(typeof(IModule)))
-                        .FirstOrDefault();
-                //依赖项
                 Directory.EnumerateFiles(Path.Combine(fi.DirectoryName, NetXConst.C_MODULE_REFDIRECTORYNAME))
                 .AsParallel().ForAll(p => options.Dependencies.Add(p));
-                AddModule(moduleType, options);                
+                Modules.Add(options.Id, options);
             });
-    }
-
-    /// <summary>
-    /// 加载组件模块
-    /// </summary>
-    /// <typeparam name="TModule"></typeparam>
-    private void AddModule(Type modeleType, ModuleOptions moduleOptions)
-    {
-        var module = (ModuleInitializer)Activator.CreateInstance(modeleType);
-        if (null != module && !Modules.ContainsKey(module.Key))
-            Modules.Add(module.Key, (module, moduleOptions));
     }
 }
 

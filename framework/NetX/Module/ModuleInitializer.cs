@@ -24,8 +24,22 @@ namespace NetX.Module
         /// </summary>
         public abstract ModuleType ModuleType { get; }
 
+        /// <summary>
+        /// This method gets called by the runtime.
+        /// Use this method to add services to the container.
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="env"></param>
+        /// <param name="context"></param>
         public abstract void ConfigureServices(IServiceCollection services, IWebHostEnvironment env, ModuleContext context);
 
+        /// <summary>
+        /// This method gets called by the runtime. 
+        /// Use this method to configure the HTTP request pipeline.
+        /// </summary>
+        /// <param name="app"></param>
+        /// <param name="env"></param>
+        /// <param name="context"></param>
         public abstract void ConfigureApplication(IApplicationBuilder app, IWebHostEnvironment env, ModuleContext context);
     }
 }

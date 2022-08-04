@@ -8,20 +8,17 @@ using System.Threading.Tasks;
 
 namespace NetX.Module;
 
-internal sealed class ModuleAssemblyLoadContext : AssemblyLoadContext
+public sealed class ModuleAssemblyLoadContext : AssemblyLoadContext
 {
+    public ModuleContext ModuleContext { get; private set; }
+
     /// <summary>
     /// isCollectible:ture 的时候允许 Unload
     /// </summary>
     /// <param name="moduleName"></param>
-    public ModuleAssemblyLoadContext(string moduleName) 
+    public ModuleAssemblyLoadContext(string moduleName, ModuleContext moduleContext)
         : base(true)
     {
-
-    }
-
-    protected override Assembly Load(AssemblyName assemblyName)
-    {
-        return null;
+        ModuleContext = moduleContext;
     }
 }

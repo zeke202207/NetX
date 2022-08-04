@@ -15,10 +15,10 @@ namespace Module2.Controllers
         private readonly ILogger<Test2Controller> _logger;
         private readonly ITest _test;
 
-        public Test2Controller(/*ILogger<TestController> logger,ITest test*/)
+        public Test2Controller(/*ILogger<TestController> logger,*/ITest test)
         {
             //_logger = logger;
-            //_test = test;
+            _test = test;
         }
 
         [HttpGet(Name = "zeke2")]

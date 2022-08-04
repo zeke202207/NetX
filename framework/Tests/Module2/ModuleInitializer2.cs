@@ -18,11 +18,16 @@ public class ModuleInitializer2 : ModuleInitializer
 
     public override void ConfigureApplication(IApplicationBuilder app, IWebHostEnvironment env, ModuleContext context)
     {
-        
+        //app.UseSwagger();
+        //app.UseSwaggerUI();
     }
 
     public override void ConfigureServices(IServiceCollection services, IWebHostEnvironment env, ModuleContext context)
     {
         services.AddScoped<ITest, MyTest>();
+
+        //// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+        //services.AddEndpointsApiExplorer();
+        //services.AddSwaggerGen();
     }
 }

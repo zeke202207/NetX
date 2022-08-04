@@ -25,9 +25,6 @@ public static class ServerHost
         var builder = null == options.Options ?
             WebApplication.CreateBuilder(args) :
             WebApplication.CreateBuilder(options.Options);
-        // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-        builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen();
         // 添加自定义配置
         builder.Configuration.AddJsonFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config", "netx.json"));
         options.ActionConfigrationManager?.Invoke(builder.Configuration);
@@ -38,32 +35,21 @@ public static class ServerHost
         if (!string.IsNullOrWhiteSpace(startUrls))
             builder.WebHost.UseUrls(startUrls);
         // 注册服应用务组件
-        var mvcBuilder = builder.Services.AddMvc();
-        foreach (var module in options.Modules)
-        {
-            //将module模块添加到 AssemblyLoadContext
-            if (module.Value.module.ModuleType == ModuleType.UserModule)
-                builder.InjectUserModules(mvcBuilder, builder.Services, builder.Environment, module.Value.option);
-            //服务依赖注入
-            module.Value.module.ConfigureServices(builder.Services, builder.Environment, 
-                new ModuleContext() {  Configuration = builder.Configuration ,ModuleOptions = module.Value.option});
-        }
+        options.ActionServiceCollection?.Invoke(builder.Services);
+        //注入系统、用户模块
+        builder.InjectFrameworkService(builder.Environment, builder.Configuration);
+        builder.InjectUserModulesService(options.Modules, builder.Environment, builder.Configuration);
         var app = builder.Build();
-        // Configure the HTTP request pipeline.
-        if (app.Environment.IsDevelopment())
-        {
-            app.UseSwagger();
-            app.UseSwaggerUI();
-        }
+        //路由
+        app.UseRouting();
         options.App = app;
-        // 注册应用中间件组件
-        foreach (var module in options.Modules)
-        {
-            module.Value.module.ConfigureApplication(app, builder.Environment,
-                new ModuleContext() { Configuration = builder.Configuration, ModuleOptions = module.Value.option });
-        }
         options.ActionConfigure?.Invoke(app);
+        // 注册系统、应用中间件组件
+        app.InjectFrameworkApplication(builder.Environment);
+        app.InjectUserModulesApplication(options.Modules, builder.Environment);
         InternalApp.RootServices = app.Services;
+        //配置端点
+        app.UseEndpoints(endpoints => endpoints.MapControllers());
         app.Run();
     }
 }

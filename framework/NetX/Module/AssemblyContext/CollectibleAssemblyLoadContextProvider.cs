@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc.ApplicationParts;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Loader;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,29 +16,26 @@ namespace NetX.Module
     internal sealed class CollectibleAssemblyLoadContextProvider
     {
         /// <summary>
-        /// 获取可回收的程序集
+        /// 加载用户模块
         /// </summary>
-        /// <param name="moduleName"></param>
-        /// <param name="mvcBuilder"></param>
-        /// <returns></returns>
-        public ModuleAssemblyLoadContext Get(ModuleOptions options, IMvcBuilder mvcBuilder)
-        {
-            return Get(options, mvcBuilder.PartManager);
-        }
-
-        /// <summary>
-        /// 获取可回收的程序集
-        /// </summary>
-        /// <param name="moduleName"></param>
+        /// <param name="options"></param>
         /// <param name="apm"></param>
+        /// <param name="services"></param>
+        /// <param name="env"></param>
+        /// <param name="moduleContext"></param>
         /// <returns></returns>
-        public ModuleAssemblyLoadContext Get(ModuleOptions options, ApplicationPartManager apm)
+        public ModuleAssemblyLoadContext LoadCustomeModule(
+            ModuleOptions options, 
+            ApplicationPartManager apm,
+            IServiceCollection services,
+            IWebHostEnvironment env, 
+            ModuleContext moduleContext)
         {
             var modelPath = Path.Combine(AppContext.BaseDirectory, NetXConst.C_MODULE_DIRECTORYNAME);
             var filePath = Path.Combine(modelPath, Path.GetFileNameWithoutExtension(options.FileName), options.FileName);
             var refPath = Path.Combine(modelPath, NetXConst.C_MODULE_REFDIRECTORYNAME);
-            ModuleAssemblyLoadContext context = new ModuleAssemblyLoadContext(options.Id.ToString());
-            using(var fs = new FileStream(filePath,FileMode.Open))
+            ModuleAssemblyLoadContext context = new ModuleAssemblyLoadContext(filePath,moduleContext);
+            using (var fs = new FileStream(filePath, FileMode.Open))
             {
                 //0. 将程序集装在到context中
                 var assembly = context.LoadFromStream(fs);
@@ -48,9 +47,14 @@ namespace NetX.Module
                         var assembly = context.LoadFromStream(fsRef);
                     }
                 });
-                //2. apm装在 assemblypart程序集
+                //2. apm装载assemblypart程序集
                 AssemblyPart part = new AssemblyPart(assembly);
                 apm.ApplicationParts.Add(part);
+                //依赖项注入
+                var moduleType = assembly.GetTypes().FirstOrDefault(p => typeof(ModuleInitializer).IsAssignableFrom(p));
+                context.ModuleContext.Initialize = (ModuleInitializer)Activator.CreateInstance(moduleType);
+                context.ModuleContext.Initialize.ConfigureServices(services, env, context.ModuleContext);
+                context.ModuleContext.ModuleOptions = options;
             }
             return context;
         }
