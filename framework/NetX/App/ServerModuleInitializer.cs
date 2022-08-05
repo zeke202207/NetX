@@ -75,6 +75,8 @@ namespace NetX
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+            // 添加压缩缓存
+            app.UseResponseCaching();
         }
     }
 }

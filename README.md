@@ -10,15 +10,15 @@ NetX 前身是 ``` sagittarius ``` ,一个我业余时间开发的模块化组�
 
 ## AssemblyLoadContext
 
-![这是图片](./doc/images/netx-arch.png#pic_center)
+![assemblyloadcontext](./doc/images/netx-arch.png#pic_center)
 
 > netcore程序启动的时候，会创建一个默认```ALC```，在加载每一个用户模块的时候，会创建建立一个新的```ALC```，也就是这种机制，使得我们的程序可以在不同的模块加载不同版本的依赖库
 
 ## Application Part
 
-![这是图片](./doc/images/netx-apppart-arch.png#pic_center)
+![applicationpart](./doc/images/netx-apppart-arch.png#pic_center)
 
-> 正式基于 ```AssemblyLoadContext``` ```Application Part``` 才能成就我们的```NetX```
+> 正是基于 ```AssemblyLoadContext``` ```Application Part``` 才能成就我们的```NetX```
 
 # 开发计划 :fire:
 

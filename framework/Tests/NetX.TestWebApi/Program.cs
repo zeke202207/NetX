@@ -36,6 +36,6 @@ using NetX.TestWebApi.Controllers;
 using System.Reflection;
 
 ServerHost.Start(
-    RunOption.Default.ConfigrationServiceCollection(p => p.AddScoped<IZeke, Zeke>())
+    RunOption.Default.ConfigrationServiceCollection(p => p.AddScoped<IZeke, Zeke>()),"http://*:8220"
     );
 #endif
