@@ -30,3 +30,12 @@ msbuild.log
 msbuild.err
 msbuild.wrn
 .vs
+/framework/Tests/nupkgs/Module2.1.0.0.snupkg
+/framework/Tests/nupkgs/Module2.1.0.0.nupkg
+/framework/Tests/nupkgs/Module1.1.0.0.snupkg
+/framework/Tests/nupkgs/Module1.1.0.0.nupkg
+/framework/Tests/nupkgs
+/framework/Tests/NetX.UnitTests/NetX.UnitTests.xml
+/framework/Tests/NetX.TestWebApi/NetX.TestWebApi.xml
+/framework/Tests/Module2/Module2.xml
+/framework/Tests/Module1/Module1.xml
