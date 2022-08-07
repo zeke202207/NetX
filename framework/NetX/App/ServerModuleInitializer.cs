@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using NetX.EventBus;
 using NetX.Module;
 using System;
 using System.Collections.Generic;
@@ -50,6 +51,9 @@ namespace NetX
 
             //5.控制器和规范化结果
             services.AddControllers();
+
+            //添加事件总线
+            services.AddEventBus();
         }
 
         /// <summary>
