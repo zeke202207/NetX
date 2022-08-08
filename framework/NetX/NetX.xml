@@ -330,7 +330,7 @@
             事件处理程序集合
             </summary>
         </member>
-        <member name="M:NetX.EventBus.EventBusHostService.#ctor(Microsoft.Extensions.Logging.ILogger{NetX.EventBus.EventBusHostService},System.IServiceProvider,NetX.EventBus.IEventSourceStorer,System.Collections.Generic.IEnumerable{NetX.EventBus.IEventSubscriber})">
+        <member name="M:NetX.EventBus.EventBusHostService.#ctor(Microsoft.Extensions.Logging.ILogger{NetX.EventBus.EventBusHostService},System.IServiceProvider,NetX.EventBus.IEventSourceStorer)">
             <summary>
             事件总线后台主机实例
             </summary>
@@ -347,6 +347,12 @@
             后台处理程序
             </summary>
             <param name="stoppingToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.EventBus.EventBusHostService.BindingAllEventSubscribers">
+            <summary>
+            绑定所有的处理事件
+            </summary>
             <returns></returns>
         </member>
         <member name="T:NetX.EventBus.EventHandlerWrapper">

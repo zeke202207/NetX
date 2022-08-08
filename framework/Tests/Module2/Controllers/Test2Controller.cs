@@ -27,7 +27,7 @@ namespace Module2.Controllers
         [HttpGet(Name = "zeke2")]
         public IEnumerable<string> Get()
         {
-            _publisher.PublishAsync(new EventSource("zeke"),new CancellationToken()).GetAwaiter().GetResult();
+            _publisher.PublishAsync(new EventSource("zeke","hi,zeke"),new CancellationToken()).GetAwaiter().GetResult();
             var v = Newtonsoft.Json.JsonConvert.SerializeObject("{}");
             //return Enumerable.Range(1, 5).Select(index => index.ToString())
             //.ToArray();

@@ -1,9 +1,11 @@
 ﻿using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using NetX.Module;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Loader;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -30,15 +32,16 @@ internal sealed class EventBusHostService : BackgroundService
     public EventBusHostService(
         ILogger<EventBusHostService> logger,
         IServiceProvider service,
-        IEventSourceStorer eventSourceStorer,
-        IEnumerable<IEventSubscriber> eventSubscribers
+        IEventSourceStorer eventSourceStorer
+        //,
+        //IEnumerable<IEventSubscriber> eventSubscribers
         )
     {
         _logger = logger;
         _service = service;
         _eventSourceStorer = eventSourceStorer;
-        _eventSubscribers = eventSubscribers;
-
+        //_eventSubscribers = eventSubscribers;
+        _eventSubscribers = BindingAllEventSubscribers();
         var bindingAttr = BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly;
         //逐条获取事件处理程序并进行包装
         foreach(var eventSubscriber in _eventSubscribers)
@@ -138,5 +141,28 @@ internal sealed class EventBusHostService : BackgroundService
                 }
             },stoppingToken);
         }
+    }
+
+    /// <summary>
+    /// 绑定所有的处理事件
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerable<IEventSubscriber> BindingAllEventSubscribers()
+    {
+        List<IEventSubscriber> list = new List<IEventSubscriber>();
+        AssemblyLoadContext.All.ToList().ForEach(assembly =>
+        {
+            assembly.Assemblies.ToList().ForEach(ass =>
+            {
+                ass.GetTypes().Where(type =>
+                typeof(IEventSubscriber).IsAssignableFrom(type) &&
+                !type.IsInterface &&
+                !type.IsAbstract &&
+                !type.IsSealed
+                ).ToList()
+                .ForEach(t => list.Add((IEventSubscriber)Activator.CreateInstance(t)));
+            });
+        });
+        return list;
     }
 }
