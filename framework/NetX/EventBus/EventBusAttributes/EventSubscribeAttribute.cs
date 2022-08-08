@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace NetX.EventBus;
 
-namespace NetX.EventBus;
-
-[AttributeUsage(AttributeTargets.Method,AllowMultiple =true, Inherited =false)]
+/// <summary>
+/// 事件订阅者特性标签
+/// </summary>
+[AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = false)]
 public class EventSubscribeAttribute : Attribute
 {
     /// <summary>

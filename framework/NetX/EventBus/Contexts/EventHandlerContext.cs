@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NetX.EventBus;
+﻿namespace NetX.EventBus;
 
 /// <summary>
 /// 事件处理上下文
@@ -19,7 +13,7 @@ public abstract class EventHandlerContext
     /// <summary>
     /// 共享上下文数据
     /// </summary>
-    public IDictionary<object,object> Properties { get; }
+    public IDictionary<object, object> Properties { get; }
 
     /// <summary>
     /// 事件处理上下文实例

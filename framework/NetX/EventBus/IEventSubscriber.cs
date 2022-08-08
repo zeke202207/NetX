@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NetX.EventBus;
+﻿namespace NetX.EventBus;
 
 /// <summary>
 /// 事件的订阅者

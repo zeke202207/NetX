@@ -3,12 +3,7 @@ using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NetX.Module;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Loader;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetX
 {
@@ -33,9 +28,9 @@ namespace NetX
             {
                 Configuration = webApplicationBuilder.Configuration,
                 Initialize = Initialize,
-                ModuleOptions = new ModuleOptions() 
+                ModuleOptions = new ModuleOptions()
                 {
-                     Id = new Guid("00000000000000000000000000000001")
+                    Id = new Guid("00000000000000000000000000000001")
                 }
             };
             Initialize.ConfigureServices(services, env, context);
@@ -80,7 +75,7 @@ namespace NetX
                 var contextProvider = new CollectibleAssemblyLoadContextProvider();
                 ApplicationPartManager apm = webApplicationBuilder.Services.AddControllers().PartManager;
                 IServiceCollection services = webApplicationBuilder.Services;
-                var alc = contextProvider.LoadCustomeModule(option.Value, apm, services, env, new ModuleContext() {  Configuration = config });
+                var alc = contextProvider.LoadCustomeModule(option.Value, apm, services, env, new ModuleContext() { Configuration = config });
                 InternalApp.ModuleCotextKeyValuePairs.Add(option.Value.Id, alc);
             }
             return webApplicationBuilder;

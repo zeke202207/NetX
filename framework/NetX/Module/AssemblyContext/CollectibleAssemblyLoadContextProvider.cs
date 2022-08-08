@@ -1,12 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Loader;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetX.Module
 {
@@ -25,16 +19,16 @@ namespace NetX.Module
         /// <param name="moduleContext"></param>
         /// <returns></returns>
         public ModuleAssemblyLoadContext LoadCustomeModule(
-            ModuleOptions options, 
+            ModuleOptions options,
             ApplicationPartManager apm,
             IServiceCollection services,
-            IWebHostEnvironment env, 
+            IWebHostEnvironment env,
             ModuleContext moduleContext)
         {
             var modelPath = Path.Combine(AppContext.BaseDirectory, NetXConst.C_MODULE_DIRECTORYNAME);
             var filePath = Path.Combine(modelPath, Path.GetFileNameWithoutExtension(options.FileName), options.FileName);
             var refPath = Path.Combine(modelPath, NetXConst.C_MODULE_REFDIRECTORYNAME);
-            ModuleAssemblyLoadContext context = new ModuleAssemblyLoadContext(filePath,moduleContext);
+            ModuleAssemblyLoadContext context = new ModuleAssemblyLoadContext(filePath, moduleContext);
             using (var fs = new FileStream(filePath, FileMode.Open))
             {
                 //0. 将程序集装在到context中

@@ -1,7 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using NetX.Module;
-using System.Reflection;
 
 namespace NetX;
 
@@ -39,7 +37,7 @@ public sealed class RunOption
     /// <see cref="WebApplicationBuilder"/>
     /// </summary>
     internal WebApplicationBuilder Builder { get; set; }
-    
+
     /// <summary>
     /// <see cref="WebApplication"/>
     /// </summary>

@@ -309,6 +309,11 @@
             执行前时间
             </summary>
         </member>
+        <member name="T:NetX.EventBus.EventSubscribeAttribute">
+            <summary>
+            事件订阅者特性标签
+            </summary>
+        </member>
         <member name="P:NetX.EventBus.EventSubscribeAttribute.EventId">
             <summary>
             事件唯一标识
@@ -420,6 +425,21 @@
             <param name="eventId">事件Id</param>
             <param name="payload">事件承载数据</param>
         </member>
+        <member name="P:NetX.EventBus.EventSource.EventId">
+            <summary>
+            事件ID
+            </summary>
+        </member>
+        <member name="P:NetX.EventBus.EventSource.Payload">
+            <summary>
+            事件承载数据
+            </summary>
+        </member>
+        <member name="P:NetX.EventBus.EventSource.CreatAt">
+            <summary>
+            事件创建时间
+            </summary>
+        </member>
         <member name="T:NetX.EventBus.ChannelEventSourceStorer">
             <summary>
             基于内存管道的事件源记录器
@@ -499,6 +519,11 @@
             </summary>
             <param name="services">服务集合对象</param>
         </member>
+        <member name="T:NetX.EventBus.EventBusServiceCollectionExtensions">
+            <summary>
+            事件总线服务注入扩展
+            </summary>
+        </member>
         <member name="M:NetX.EventBus.EventBusServiceCollectionExtensions.AddEventBus(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{NetX.EventBus.EventBusOptionsBuilder})">
             <summary>
             添加 EventBus 模块注册
@@ -527,6 +552,14 @@
             <summary>
             事件发布接口
             </summary>
+        </member>
+        <member name="M:NetX.EventBus.IEventPublisher.PublishAsync(NetX.EventBus.IEventSource,System.Threading.CancellationToken)">
+            <summary>
+            发布一个事件源
+            </summary>
+            <param name="eventSource"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
         </member>
         <member name="T:NetX.EventBus.IEventSource">
             <summary>

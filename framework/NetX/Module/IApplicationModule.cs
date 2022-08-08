@@ -1,13 +1,8 @@
 ﻿using Microsoft.AspNetCore.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetX.Module
 {
-    public interface IApplicationModule: IModule
+    public interface IApplicationModule : IModule
     {
         /// <summary>
         /// 配置中间件

@@ -1,11 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using NetX.Module;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetX;
 
@@ -29,7 +24,7 @@ public static class App
     /// </summary>
     static App()
     {
-       
+
     }
 
     /// <summary>

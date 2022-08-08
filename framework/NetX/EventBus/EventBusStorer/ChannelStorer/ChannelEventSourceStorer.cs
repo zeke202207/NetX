@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Channels;
-using System.Threading.Tasks;
+﻿using System.Threading.Channels;
 
 namespace NetX.EventBus;
 
@@ -38,7 +33,7 @@ internal sealed class ChannelEventSourceStorer : IEventSourceStorer
     /// <exception cref="NotImplementedException"></exception>
     public async ValueTask WriteAsync(IEventSource eventSource, CancellationToken cancellationToken)
     {
-        if(null == eventSource)
+        if (null == eventSource)
             throw new ArgumentNullException(nameof(eventSource));
         await _channel.Writer.WriteAsync(eventSource);
     }

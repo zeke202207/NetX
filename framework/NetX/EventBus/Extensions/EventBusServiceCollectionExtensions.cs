@@ -1,12 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetX.EventBus;
 
+/// <summary>
+/// 事件总线服务注入扩展
+/// </summary>
 public static class EventBusServiceCollectionExtensions
 {
     /// <summary>

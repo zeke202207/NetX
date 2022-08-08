@@ -26,5 +26,6 @@ public class ModuleInitializer1 : ModuleInitializer
     {
         //services.AddScoped<ITest, MyTest>();
         services.AddScoped<IEventSubscriber, EventHandler>();
+        services.AddScoped<IEventSubscriber, EventHandler1>();
     }
 }

@@ -1,13 +1,7 @@
 ﻿using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using NetX.Module;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using System.Runtime.Loader;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetX.EventBus;
 
@@ -44,23 +38,23 @@ internal sealed class EventBusHostService : BackgroundService
         _eventSubscribers = BindingAllEventSubscribers();
         var bindingAttr = BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly;
         //逐条获取事件处理程序并进行包装
-        foreach(var eventSubscriber in _eventSubscribers)
+        foreach (var eventSubscriber in _eventSubscribers)
         {
             var eventSubscriberMethods = eventSubscriber.GetType().GetMethods(bindingAttr)
                 .Where(m => m.IsDefined(typeof(EventSubscribeAttribute), false));
             //遍历所有订阅者事件
-            foreach(var eventSubscriberMethod in eventSubscriberMethods)
+            foreach (var eventSubscriberMethod in eventSubscriberMethods)
             {
                 //将方法转换为委托
                 var handler = eventSubscriberMethod.CreateDelegate<Func<EventHandlerExecutingContext, Task>>(eventSubscriber);
                 //同一个事件支持多个事件id
                 var eventSubscribeAttributes = eventSubscriberMethod.GetCustomAttributes<EventSubscribeAttribute>(false);
                 //逐条包装并添加到HashSet集合
-                foreach(var eventSubscribeAttribute in eventSubscribeAttributes)
+                foreach (var eventSubscribeAttribute in eventSubscribeAttributes)
                 {
                     _eventHandlers.Add(new EventHandlerWrapper(eventId: eventSubscribeAttribute.EventId)
                     {
-                         Handler = handler
+                        Handler = handler
                     });
                 }
             }
@@ -99,14 +93,14 @@ internal sealed class EventBusHostService : BackgroundService
     {
         //从事件存储器中读取一条
         var eventSource = await _eventSourceStorer.ReadAsync(stoppingToken);
-        if(string.IsNullOrEmpty(eventSource?.EventId))
+        if (string.IsNullOrEmpty(eventSource?.EventId))
         {
             _logger.LogWarning("Invalid eventid");
             return;
         }
         var eventHandersThatShouldRun = _eventHandlers.Where(p => p.ShouldRun(eventSource.EventId));
         //空订阅
-        if(!eventHandersThatShouldRun.Any())
+        if (!eventHandersThatShouldRun.Any())
         {
             _logger.LogWarning($"Subscriber with event Id <{eventSource.EventId}> was not found");
             return;
@@ -114,12 +108,12 @@ internal sealed class EventBusHostService : BackgroundService
         //创建一个任务工厂并保证任务都能使用当前的计划程序
         var taskFactory = new TaskFactory(TaskScheduler.Current);
         //逐条创建新线程调用
-        foreach(var eventHandlerThatShouldRun in eventHandersThatShouldRun)
+        foreach (var eventHandlerThatShouldRun in eventHandersThatShouldRun)
         {
             await taskFactory.StartNew(async () =>
             {
                 //创建共享上下文数据对象
-                var properties = new Dictionary<object,object>();
+                var properties = new Dictionary<object, object>();
                 //创建执行前上下文
                 var eventHandlerEecutingContext = new EventHandlerExecutingContext(eventSource, properties)
                 {
@@ -139,7 +133,7 @@ internal sealed class EventBusHostService : BackgroundService
                 {
 
                 }
-            },stoppingToken);
+            }, stoppingToken);
         }
     }
 

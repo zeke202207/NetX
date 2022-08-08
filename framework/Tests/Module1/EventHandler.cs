@@ -16,4 +16,14 @@ namespace Module1
             await Task.CompletedTask;
         }
     }
+
+    public class EventHandler1 : IEventSubscriber
+    {
+        [EventSubscribe("zeke")]
+        public async Task Handler(EventHandlerExecutingContext context)
+        {
+            Console.WriteLine("ok---2");
+            await Task.CompletedTask;
+        }
+    }
 }

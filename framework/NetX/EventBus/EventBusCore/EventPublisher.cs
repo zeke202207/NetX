@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NetX.EventBus;
+﻿namespace NetX.EventBus;
 
 /// <summary>
 /// 基于内存通道的事件发布者
