@@ -1,7 +1,12 @@
 ﻿namespace NetX
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class NetXConst
     {
+        #region Module
+
         /// <summary>
         /// server host 模块唯一标识
         /// </summary>
@@ -21,5 +26,21 @@
         /// Ref引用文件目录
         /// </summary>
         public const string C_MODULE_REFDIRECTORYNAME = "ref";
+
+        #endregion
+
+        #region Tenant
+
+        /// <summary>
+        /// http请求头租户key标识
+        /// </summary>
+        public const string C_TENANT_HTTPREQUESTHEADERKEY = "identifier";
+
+        /// <summary>
+        /// tenantcontext上下文标识
+        /// </summary>
+        public const string C_TENANT_HTTPCONTEXTTENANTKEY = "zeke-tenant";
+
+        #endregion
     }
 }

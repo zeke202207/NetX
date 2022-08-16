@@ -22,8 +22,12 @@ public static class ServerHost
         var builder = null == options.Options ?
             WebApplication.CreateBuilder(args) :
             WebApplication.CreateBuilder(options.Options);
+        var configPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config");
+        foreach (var configFile in Directory.EnumerateFiles(configPath, "*.json"))
+            builder.Configuration.AddJsonFile(configFile);
+        InternalApp.Configuration = builder.Configuration;
         // 添加自定义配置
-        builder.Configuration.AddJsonFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config", "netx.json"));
+        //builder.Configuration.AddJsonFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config", "netx.json"));
         options.ActionConfigrationManager?.Invoke(builder.Configuration);
         options.Builder = builder;
         var startUrls = !string.IsNullOrWhiteSpace(urls) ?

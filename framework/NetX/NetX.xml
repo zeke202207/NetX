@@ -31,6 +31,11 @@
             <param name="id"></param>
             <returns></returns>
         </member>
+        <member name="T:NetX.AppWebApplicationBuilderExtensions">
+            <summary>
+            应用程序扩展
+            </summary>
+        </member>
         <member name="M:NetX.AppWebApplicationBuilderExtensions.InjectFrameworkService(Microsoft.AspNetCore.Builder.WebApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment,Microsoft.Extensions.Configuration.IConfiguration)">
             <summary>
             注入系统服务
@@ -241,8 +246,8 @@
         <member name="M:NetX.ServerModuleInitializer.ConfigureApplication(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment,NetX.Module.ModuleContext)">
             <summary>
             配置应用程序
-            注释需要非连续
-            与<see cref="M:NetX.ServerModuleInitializer.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.AspNetCore.Hosting.IWebHostEnvironment,NetX.Module.ModuleContext)"/> 对应，方便阅读
+            注释需要
+            非连续与<see cref="M:NetX.ServerModuleInitializer.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.AspNetCore.Hosting.IWebHostEnvironment,NetX.Module.ModuleContext)"/> 对应，方便阅读
             </summary>
             <param name="app"></param>
             <param name="env"></param>
@@ -716,6 +721,321 @@
             <param name="env"></param>
             <param name="context"></param>
         </member>
+        <member name="M:NetX.MutilTenant.ApplicationBuilderExtensions.UseMultiTenancy``1(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            Use the Teanant Middleware to process the request
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="builder"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.MutilTenant.ApplicationBuilderExtensions.UseMultiTenancy(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            Use the Teanant Middleware to process the request
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="builder"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NetX.MutilTenant.HttpContextExtensions">
+            <summary>
+            扩展http上下文，使multi tenancy 使用起来更方便 
+            </summary>
+        </member>
+        <member name="M:NetX.MutilTenant.HttpContextExtensions.GetTenant``1(Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            获取当前租户信息
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.MutilTenant.HttpContextExtensions.GetTenant(Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            获取当前租户信息
+            </summary>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NetX.MutilTenant.ServiceCollectionExtensions">
+            <summary>
+            多租户注入
+            </summary>
+        </member>
+        <member name="M:NetX.MutilTenant.ServiceCollectionExtensions.AddMultiTenancy``1(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            多租户注入
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="service"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.MutilTenant.ServiceCollectionExtensions.AddMutiTenancy(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            多租户注入 
+            </summary>
+            <param name="service"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NetX.MutilTenant.TenantBuilder`1">
+            <summary>
+            配置tenant的services 
+            </summary>
+        </member>
+        <member name="M:NetX.MutilTenant.TenantBuilder`1.#ctor(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            租户注入构建器
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="M:NetX.MutilTenant.TenantBuilder`1.WithResolutionStrategy``1(Microsoft.Extensions.DependencyInjection.ServiceLifetime)">
+            <summary>
+            注册租户解析实现
+            </summary>
+            <typeparam name="V"></typeparam>
+            <param name="lifetime"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.MutilTenant.TenantBuilder`1.WithStore``1(Microsoft.Extensions.DependencyInjection.ServiceLifetime)">
+            <summary>
+            注册租户信息存储实现
+            </summary>
+            <typeparam name="V"></typeparam>
+            <param name="serviceLifetime"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.MutilTenant.TenantBuilder`1.WithPerTenantOptions``1(System.Action{``0,`0})">
+            <summary>
+            每个租户注册单独的配置
+            </summary>
+            <typeparam name="TOptions">Type of options we are apply configuration to</typeparam>
+            <param name="tenantConfig">Action to configure options for a tenant</param>
+            <returns></returns>
+        </member>
+        <member name="T:NetX.MutilTenant.TenantMiddleware`1">
+            <summary>
+            租户中间件
+            </summary>
+        </member>
+        <member name="T:NetX.MutilTenant.InMemoryTenantStore">
+            <summary>
+            内存租户信息存储
+            </summary>
+        </member>
+        <member name="M:NetX.MutilTenant.InMemoryTenantStore.GetTenantAsync(System.String)">
+            <summary>
+            根据租户身份获取租户信息
+            </summary>
+            <param name="identifier">租户身份</param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.MutilTenant.InMemoryTenantProvider.Init">
+            <summary>
+            配置文件初始化Tenants列表
+            </summary>
+        </member>
+        <member name="T:NetX.MutilTenant.HeaderResolutionStrategy">
+            <summary>
+            请求头解析策略
+            </summary>
+        </member>
+        <member name="M:NetX.MutilTenant.HeaderResolutionStrategy.#ctor(Microsoft.AspNetCore.Http.IHttpContextAccessor)">
+            <summary>
+            请求头解析策略实例
+            </summary>
+            <param name="httpContextAccessor"></param>
+        </member>
+        <member name="M:NetX.MutilTenant.HeaderResolutionStrategy.GetTenantIdentifierAsync">
+            <summary>
+            从请求头获取租户唯一标识
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:NetX.MutilTenant.HostResolutionStrategy">
+            <summary>
+            根据主机解析租户身份
+            </summary>
+        </member>
+        <member name="M:NetX.MutilTenant.HostResolutionStrategy.#ctor(Microsoft.AspNetCore.Http.IHttpContextAccessor)">
+            <summary>
+            主机解析策略
+            </summary>
+            <param name="httpContextAccessor"></param>
+        </member>
+        <member name="M:NetX.MutilTenant.HostResolutionStrategy.GetTenantIdentifierAsync">
+            <summary>
+            解析租户身份 
+            </summary>
+            <returns>租户身份标识</returns>
+        </member>
+        <member name="T:NetX.MutilTenant.TenantAccessor`1">
+            <summary>
+            租户访问器
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:NetX.MutilTenant.TenantAccessor`1.#ctor(Microsoft.AspNetCore.Http.IHttpContextAccessor)">
+            <summary>
+            租户访问器实例
+            </summary>
+            <param name="httpContextAccessor"></param>
+        </member>
+        <member name="P:NetX.MutilTenant.TenantAccessor`1.Tenant">
+            <summary>
+            租户信息
+            </summary>
+        </member>
+        <member name="T:NetX.MutilTenant.TenantAccessService`1">
+            <summary>
+            租户访问访问
+            </summary>
+        </member>
+        <member name="M:NetX.MutilTenant.TenantAccessService`1.#ctor(NetX.MutilTenant.ITenantResolutionStrategy,NetX.MutilTenant.ITenantStore{`0})">
+            <summary>
+            租户访问访问实例
+            </summary>
+            <param name="tenantResolutionStrategy"></param>
+            <param name="tenantStore"></param>
+        </member>
+        <member name="M:NetX.MutilTenant.TenantAccessService`1.GetTenatnAsync">
+            <summary>
+            湖区当前租户信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:NetX.MutilTenant.TenantOptions`1">
+            <summary>
+            Make IOptions tenant aware
+            </summary>
+        </member>
+        <member name="T:NetX.MutilTenant.TenantOptionsCache`2">
+            <summary>
+            租户选项缓存
+            为每一个租户维护一个专有的选项缓存
+            </summary>
+        </member>
+        <member name="M:NetX.MutilTenant.TenantOptionsCache`2.#ctor(NetX.MutilTenant.ITenantAccessor{`1})">
+            <summary>
+            
+            </summary>
+            <param name="tenantAccessor"></param>
+        </member>
+        <member name="M:NetX.MutilTenant.TenantOptionsCache`2.Clear">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.MutilTenant.TenantOptionsCache`2.GetOrAdd(System.String,System.Func{`0})">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+            <param name="createOptions"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.MutilTenant.TenantOptionsCache`2.TryAdd(System.String,`0)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+            <param name="options"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.MutilTenant.TenantOptionsCache`2.TryRemove(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "T:NetX.MutilTenant.TenantOptionsCacheDictionary`1" -->
+        <member name="F:NetX.MutilTenant.TenantOptionsCacheDictionary`1._tenantSpecificOptionCaches">
+            <summary>
+            Caches stored in memory
+            </summary>
+        </member>
+        <member name="M:NetX.MutilTenant.TenantOptionsCacheDictionary`1.Get(System.String)">
+            <summary>
+            Get options for specific tenant (create if not exists)
+            </summary>
+            <param name="tenantId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NetX.MutilTenant.TenantOptionsFactory`2">
+            <summary>
+            租户配置项感知工厂 
+            </summary>
+            <typeparam name="TOptions"></typeparam>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:NetX.MutilTenant.TenantOptionsFactory`2.Create(System.String)">
+            <summary>
+            Create a new options instance
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NetX.MutilTenant.ITenantAccessor`1">
+            <summary>
+            租户访问器 
+            </summary>
+        </member>
+        <member name="P:NetX.MutilTenant.ITenantAccessor`1.Tenant">
+            <summary>
+            租户信息
+            </summary>
+        </member>
+        <member name="T:NetX.MutilTenant.ITenantResolutionStrategy">
+            <summary>
+            组合解析策略
+            </summary>
+        </member>
+        <member name="M:NetX.MutilTenant.ITenantResolutionStrategy.GetTenantIdentifierAsync">
+            <summary>
+            解析获取租户身份
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:NetX.MutilTenant.ITenantStore`1">
+            <summary>
+            租户存储接口
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:NetX.MutilTenant.ITenantStore`1.GetTenantAsync(System.String)">
+            <summary>
+            根据租户身份，获取租户信息
+            </summary>
+            <param name="identifier">租户身份</param>
+            <returns></returns>
+        </member>
+        <member name="T:NetX.MutilTenant.Tenant">
+            <summary>
+            租户信息
+            </summary>
+        </member>
+        <member name="P:NetX.MutilTenant.Tenant.Id">
+            <summary>
+            租户Id
+            </summary>
+        </member>
+        <member name="P:NetX.MutilTenant.Tenant.Identifier">
+            <summary>
+            组合身份
+            在解析策略中使用此标识符进行解析
+            </summary>
+        </member>
+        <member name="P:NetX.MutilTenant.Tenant.Items">
+            <summary>
+            The Tenant Items
+            为开发人员预留扩展
+            </summary>
+        </member>
+        <member name="T:NetX.NetXConst">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="F:NetX.NetXConst.C_SERVERHOST_MODULE_ID">
             <summary>
             server host 模块唯一标识
@@ -734,6 +1054,16 @@
         <member name="F:NetX.NetXConst.C_MODULE_REFDIRECTORYNAME">
             <summary>
             Ref引用文件目录
+            </summary>
+        </member>
+        <member name="F:NetX.NetXConst.C_TENANT_HTTPREQUESTHEADERKEY">
+            <summary>
+            http请求头租户key标识
+            </summary>
+        </member>
+        <member name="F:NetX.NetXConst.C_TENANT_HTTPCONTEXTTENANTKEY">
+            <summary>
+            tenantcontext上下文标识
             </summary>
         </member>
         <member name="T:NetX.ModuleType">

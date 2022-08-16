@@ -1,0 +1,12 @@
+{
+  "tenants": [
+    {
+      "id": "1",
+      "identifier": "zeke"
+    },
+    {
+      "id": "2",
+      "identifier": "zeke1"
+    }
+  ]
+}

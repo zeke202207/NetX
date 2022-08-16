@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NetX.EventBus;
 using NetX.Module;
+using NetX.MutilTenant;
 
 namespace NetX
 {
@@ -47,14 +48,23 @@ namespace NetX
             //5.控制器和规范化结果
             services.AddControllers();
 
-            //添加事件总线
+            //6.添加事件总线
             services.AddEventBus();
+
+            //7.多租户注入
+            services.AddMutiTenancy()
+                .WithResolutionStrategy<HeaderResolutionStrategy>()
+                .WithStore<InMemoryTenantStore>()
+                .WithPerTenantOptions<CookiePolicyOptions>((options, tenant) =>
+                 {
+                     options.ConsentCookie.Name = tenant.Id + "-consent";
+                 });
         }
 
         /// <summary>
         /// 配置应用程序
-        /// 注释需要非连续
-        /// 与<see cref="ConfigureServices(IServiceCollection, IWebHostEnvironment, ModuleContext)"/> 对应，方便阅读
+        /// 注释需要
+        /// 非连续与<see cref="ConfigureServices(IServiceCollection, IWebHostEnvironment, ModuleContext)"/> 对应，方便阅读
         /// </summary>
         /// <param name="app"></param>
         /// <param name="env"></param>
@@ -76,6 +86,9 @@ namespace NetX
             }
             // 添加压缩缓存
             app.UseResponseCaching();
+
+            //7.多租户
+            app.UseMultiTenancy();
         }
     }
 }

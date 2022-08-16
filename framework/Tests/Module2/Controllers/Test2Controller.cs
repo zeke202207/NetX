@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using NetX.EventBus;
+using NetX.MutilTenant;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,17 +19,25 @@ namespace Module2.Controllers
         private readonly ILogger<Test2Controller> _logger;
         private readonly ITest _test;
         private readonly IEventPublisher _publisher;
+        private readonly ITenantAccessor<Tenant> _accessor;
+        private readonly IOptions<CookiePolicyOptions> _options;
 
-        public Test2Controller(/*ILogger<TestController> logger,*/ITest test,IEventPublisher publisher)
+        public Test2Controller(/*ILogger<TestController> logger,*/ITest test,IEventPublisher publisher, ITenantAccessor<Tenant> accessor, IOptions<CookiePolicyOptions> c)
         {
             //_logger = logger;
             _test = test;
             _publisher = publisher;
+            _accessor = accessor;
+            _options = c;
         }
 
         [HttpGet(Name = "zeke2")]
-        public IEnumerable<string> Get()
+        public async Task<IEnumerable<string>> Get()
         {
+            //var info1 = HttpContext.GetTenant();
+            var info = _accessor.Tenant;
+
+
             _publisher.PublishAsync(new EventSource("zeke","hi,zeke"),new CancellationToken()).GetAwaiter().GetResult();
             var v = Newtonsoft.Json.JsonConvert.SerializeObject("{}");
             //return Enumerable.Range(1, 5).Select(index => index.ToString())

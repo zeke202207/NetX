@@ -1,0 +1,48 @@
+﻿using Microsoft.Extensions.Configuration;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace NetX.MutilTenant;
+
+/// <summary>
+/// 内存租户信息存储
+/// </summary>
+public class InMemoryTenantStore : ITenantStore<Tenant>
+{
+    /// <summary>
+    /// 根据租户身份获取租户信息
+    /// </summary>
+    /// <param name="identifier">租户身份</param>
+    /// <returns></returns>
+    public async Task<Tenant> GetTenantAsync(string identifier)
+    {
+        var tenant = InMemoryTenantProvider.Instance.Tenants.SingleOrDefault(p => p.Identifier.ToLower().Equals(identifier.ToLower()));        
+        return await Task.FromResult(tenant);
+    }
+}
+
+internal class InMemoryTenantProvider
+{
+    private static Lazy<InMemoryTenantProvider> _instance = new Lazy<InMemoryTenantProvider>(() => new InMemoryTenantProvider());
+    public List<Tenant> Tenants = new List<Tenant>();
+
+    internal InMemoryTenantProvider()
+    {
+        Init();
+    }
+
+    public static InMemoryTenantProvider Instance { get { return _instance.Value; } }
+
+    /// <summary>
+    /// 配置文件初始化Tenants列表
+    /// </summary>
+    private void Init()
+    {
+        var tenants = App.Configuration.GetSection("tenants").Get<Tenant[]>();
+        if (tenants != null && tenants.Length > 0)
+            Tenants.AddRange(tenants);
+    }
+}

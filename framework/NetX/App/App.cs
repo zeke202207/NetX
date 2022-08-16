@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NetX.Module;
 
@@ -18,6 +19,8 @@ public static class App
     /// 获取请求上下文
     /// </summary>
     public static HttpContext HttpContext => RootServices?.GetService<IHttpContextAccessor>()?.HttpContext;
+
+    public static IConfiguration Configuration => InternalApp.Configuration;
 
     /// <summary>
     /// 构造函数
