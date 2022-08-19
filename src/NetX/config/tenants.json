@@ -1,11 +1,11 @@
 {
   "tenants": [
     {
-      "id": "1",
+      "tenantid": "1",
       "identifier": "zeke"
     },
     {
-      "id": "2",
+      "tenantid": "2",
       "identifier": "zeke1"
     }
   ]

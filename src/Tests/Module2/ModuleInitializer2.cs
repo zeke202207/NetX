@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Module2.Controllers;
 using NetX;
+using NetX.Authentication;
+using NetX.DatabaseSetup;
 using NetX.EventBus;
 using NetX.Module;
 
@@ -26,7 +28,7 @@ public class ModuleInitializer2 : ModuleInitializer
     public override void ConfigureServices(IServiceCollection services, IWebHostEnvironment env, ModuleContext context)
     {
         services.AddScoped<ITest, MyTest>();
-
+        services.AddScoped<IPermissionValidateHandler, TestHandler>();
 
         //// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         //services.AddEndpointsApiExplorer();

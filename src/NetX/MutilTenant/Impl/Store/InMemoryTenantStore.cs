@@ -15,11 +15,12 @@ public class InMemoryTenantStore : ITenantStore<Tenant>
     /// <summary>
     /// 根据租户身份获取租户信息
     /// </summary>
-    /// <param name="identifier">租户身份</param>
+    /// <param name="Identifier">租户身份</param>
     /// <returns></returns>
-    public async Task<Tenant> GetTenantAsync(string identifier)
+    public async Task<Tenant> GetTenantAsync(string Identifier)
     {
-        var tenant = InMemoryTenantProvider.Instance.Tenants.SingleOrDefault(p => p.Identifier.ToLower().Equals(identifier.ToLower()));        
+        var tenant = InMemoryTenantProvider.Instance.Tenants
+            .SingleOrDefault(p => p.Identifier.Trim().ToLower().Equals(Identifier.Substring(0,Identifier.IndexOf(".")).Trim().ToLower()));        
         return await Task.FromResult(tenant);
     }
 }

@@ -14,17 +14,16 @@ public class Tenant
     /// <summary>
     /// 租户Id
     /// </summary>
-    public string Id { get; set; }
+    public string TenantId { get; set; }
 
     /// <summary>
-    /// 组合身份
+    /// 租户身份标识
     /// 在解析策略中使用此标识符进行解析
     /// </summary>
     public string Identifier { get; set; }
 
     /// <summary>
     /// The Tenant Items
-    /// 为开发人员预留扩展
     /// </summary>
     public Dictionary<string, object> Items { get; set; } = new Dictionary<string, object>();
 }

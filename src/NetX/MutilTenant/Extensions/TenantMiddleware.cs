@@ -15,11 +15,20 @@ public class TenantMiddleware<T>
 {
     private readonly RequestDelegate _next;
 
+    /// <summary>
+    /// 租户中间件实例
+    /// </summary>
+    /// <param name="next"></param>
     public TenantMiddleware(RequestDelegate next)
     {
         _next = next;
     }
 
+    /// <summary>
+    /// 中间件执行方法
+    /// </summary>
+    /// <param name="context"></param>
+    /// <returns></returns>
     public async Task Invoke(HttpContext context)
     {
         if(!context.Items.ContainsKey(NetXConst.C_TENANT_HTTPCONTEXTTENANTKEY))

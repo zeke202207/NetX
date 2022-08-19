@@ -16,8 +16,8 @@ namespace NetX.MutilTenant
         /// <summary>
         /// 根据租户身份，获取租户信息
         /// </summary>
-        /// <param name="identifier">租户身份</param>
+        /// <param name="Identifier">租户身份</param>
         /// <returns></returns>
-        Task<T> GetTenantAsync(string identifier);
+        Task<T> GetTenantAsync(string Identifier);
     }
 }

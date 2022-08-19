@@ -33,7 +33,7 @@ public class TenantOptionsCache<TOptions, TTenant> : IOptionsMonitorCache<TOptio
     /// </summary>
     public void Clear()
     {
-        _tenantSpecificOptionsCache.Get(_tenantAccessor.Tenant.Id).Clear();
+        _tenantSpecificOptionsCache.Get(_tenantAccessor.Tenant.TenantId).Clear();
     }
 
     /// <summary>
@@ -44,7 +44,7 @@ public class TenantOptionsCache<TOptions, TTenant> : IOptionsMonitorCache<TOptio
     /// <returns></returns>
     public TOptions GetOrAdd(string name, Func<TOptions> createOptions)
     {
-        return _tenantSpecificOptionsCache.Get(_tenantAccessor.Tenant.Id)
+        return _tenantSpecificOptionsCache.Get(_tenantAccessor.Tenant.TenantId)
             .GetOrAdd(name, createOptions);
     }
 
@@ -56,7 +56,7 @@ public class TenantOptionsCache<TOptions, TTenant> : IOptionsMonitorCache<TOptio
     /// <returns></returns>
     public bool TryAdd(string name, TOptions options)
     {
-        return _tenantSpecificOptionsCache.Get(_tenantAccessor.Tenant.Id)
+        return _tenantSpecificOptionsCache.Get(_tenantAccessor.Tenant.TenantId)
             .TryAdd(name, options);
     }
 
@@ -67,7 +67,7 @@ public class TenantOptionsCache<TOptions, TTenant> : IOptionsMonitorCache<TOptio
     /// <returns></returns>
     public bool TryRemove(string name)
     {
-        return _tenantSpecificOptionsCache.Get(_tenantAccessor.Tenant.Id)
+        return _tenantSpecificOptionsCache.Get(_tenantAccessor.Tenant.TenantId)
             .TryRemove(name);
     }
 }

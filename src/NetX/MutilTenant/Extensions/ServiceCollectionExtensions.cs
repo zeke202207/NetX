@@ -17,17 +17,19 @@ public static class ServiceCollectionExtensions
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="service"></param>
+    /// <param name="tenantType">租户类型，如果租户类型为单租户，<see cref="TenantBuilder{T}"/>将忽略所有注入</param>
     /// <returns></returns>
-    public static TenantBuilder<T> AddMultiTenancy<T>(this IServiceCollection service)
+    public static TenantBuilder<T> AddTenancy<T>(this IServiceCollection service, TenantType tenantType = TenantType.Single)
         where T : Tenant
-    => new TenantBuilder<T>(service);
+    => tenantType == TenantType.Multi ? new TenantBuilder<T>(service, tenantType) : new TenantBuilder<T>(service, tenantType).DefaultSingleTenant();
 
     /// <summary>
     /// 多租户注入 
     /// </summary>
     /// <param name="service"></param>
+    /// <param name="tenantType">租户类型，如果租户类型为单租户，<see cref="TenantBuilder{T}"/>将忽略所有注入</param>
     /// <returns></returns>
-    public static TenantBuilder<Tenant> AddMutiTenancy(this IServiceCollection service)
-    => new TenantBuilder<Tenant>(service);
+    public static TenantBuilder<Tenant> AddTenancy(this IServiceCollection service, TenantType tenantType = TenantType.Single)
+    => tenantType == TenantType.Multi ? new TenantBuilder<Tenant>(service, tenantType): new TenantBuilder<Tenant>(service, tenantType).DefaultSingleTenant();
 
 }

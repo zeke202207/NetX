@@ -1,6 +1,10 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
+using NetX.Authentication.JWT;
+using NetX.DatabaseSetup;
 using NetX.EventBus;
 using NetX.Module;
 using NetX.MutilTenant;
@@ -14,6 +18,8 @@ namespace NetX
 
         /// <summary>
         /// 配置服务
+        /// Demo宏定义下的内容为使用示例，具体是否启用，清根据业务自定决定
+        /// 配置方法请参考<see cref="NetXTestWebApi.Program"/>
         /// </summary>
         /// <param name="services"></param>
         /// <param name="env"></param>
@@ -46,19 +52,16 @@ namespace NetX
             //4.启动log 
 
             //5.控制器和规范化结果
-            services.AddControllers();
+            services.AddControllers(o =>
+            {
+                o.Filters.Add<TenantContextFilter>();
+            });
 
             //6.添加事件总线
             services.AddEventBus();
 
-            //7.多租户注入
-            services.AddMutiTenancy()
-                .WithResolutionStrategy<HeaderResolutionStrategy>()
-                .WithStore<InMemoryTenantStore>()
-                .WithPerTenantOptions<CookiePolicyOptions>((options, tenant) =>
-                 {
-                     options.ConsentCookie.Name = tenant.Id + "-consent";
-                 });
+            //7.授权 
+            services.AddJwtAuth(context.Configuration);
         }
 
         /// <summary>
@@ -86,9 +89,6 @@ namespace NetX
             }
             // 添加压缩缓存
             app.UseResponseCaching();
-
-            //7.多租户
-            app.UseMultiTenancy();
         }
     }
 }

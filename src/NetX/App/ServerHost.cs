@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using NetX.DatabaseSetup;
 
 namespace NetX;
 
@@ -40,6 +41,8 @@ public static class ServerHost
         //注入系统、用户模块
         builder.InjectFrameworkService(builder.Environment, builder.Configuration);
         builder.InjectUserModulesService(options.Modules, builder.Environment, builder.Configuration);
+        //所有模块数据库迁移配置完毕，注入数据库迁移
+        builder.Services.BuildFluentMigrator();
         var app = builder.Build();
         //路由
         app.UseRouting();
@@ -49,6 +52,8 @@ public static class ServerHost
         app.InjectFrameworkApplication(builder.Environment);
         app.InjectUserModulesApplication(options.Modules, builder.Environment);
         InternalApp.RootServices = app.Services;
+        app.UseAuthentication();
+        app.UseAuthorization();
         //配置端点
         app.UseEndpoints(endpoints => endpoints.MapControllers());
         app.Run();

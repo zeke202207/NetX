@@ -1,0 +1,27 @@
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
+using NetX;
+using NetX.DatabaseSetup;
+using NetX.Module;
+using System.Reflection;
+
+namespace DatabaseSetupTest2
+{
+    public class ModuleInitializerDatabaseSetup2 : ModuleInitializer
+    {
+        public override Guid Key => new Guid("10000000000000000000000000000002");
+
+        public override ModuleType ModuleType => ModuleType.UserModule;
+
+        public override void ConfigureApplication(IApplicationBuilder app, IWebHostEnvironment env, ModuleContext context)
+        {
+
+        }
+
+        public override void ConfigureServices(IServiceCollection services, IWebHostEnvironment env, ModuleContext context)
+        {
+            services.AddMigratorAssembly(new Assembly[] { Assembly.GetExecutingAssembly() });
+        }
+    }
+}

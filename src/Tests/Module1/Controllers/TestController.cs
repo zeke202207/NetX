@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using NetX.Authentication;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,7 @@ namespace Module1.Controllers
             //_test = test;
         }
 
+        [NoPermission]
         [HttpGet(Name = "zeke")]
         public IEnumerable<string> Get()
         {

@@ -11,6 +11,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <PackageReference Include="FluentMigrator" Version="3.3.2" />
+	  <PackageReference Include="FluentMigrator.Runner" Version="3.3.2" />
+	  <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.8" />
+	  <PackageReference Include="MySql.Data" Version="8.0.30" />
 	  <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
 	</ItemGroup>
 
@@ -25,6 +29,5 @@
 
 	<ItemGroup>
 	  <Folder Include="DatabaseAccessor\" />
-	  <Folder Include="Utils\" />
 	</ItemGroup>
 </Project>

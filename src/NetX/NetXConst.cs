@@ -34,12 +34,31 @@
         /// <summary>
         /// http请求头租户key标识
         /// </summary>
-        public const string C_TENANT_HTTPREQUESTHEADERKEY = "identifier";
+        public const string C_TENANT_HTTPREQUESTHEADERKEY = "tenantid";
 
         /// <summary>
         /// tenantcontext上下文标识
         /// </summary>
         public const string C_TENANT_HTTPCONTEXTTENANTKEY = "zeke-tenant";
+
+        #endregion
+
+        #region Authentication
+
+        /// <summary>
+        /// 登录用户内部Id
+        /// </summary>
+        public const string AccoundId = "id";
+
+        /// <summary>
+        /// 登录用户名
+        /// </summary>
+        public const string AccountName = "name";
+
+        /// <summary>
+        /// 最后登录时间
+        /// </summary>
+        public const string LoginTime = "lt";
 
         #endregion
     }

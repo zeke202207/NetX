@@ -31,10 +31,7 @@ namespace NetX
             {
                 Configuration = webApplicationBuilder.Configuration,
                 Initialize = Initialize,
-                ModuleOptions = new ModuleOptions()
-                {
-                    Id = new Guid("00000000000000000000000000000001")
-                }
+                ModuleOptions = new ModuleOptions() { Id = NetXConst.C_SERVERHOST_MODULE_ID }
             };
             Initialize.ConfigureServices(services, env, context);
             InternalApp.FrameworkContextKeyValuePairs.Add(context.ModuleOptions.Id, (Initialize, context));
@@ -51,10 +48,9 @@ namespace NetX
             this WebApplication app,
             IWebHostEnvironment env)
         {
-            var key = new Guid("00000000000000000000000000000001");
-            if (!InternalApp.FrameworkContextKeyValuePairs.ContainsKey(key))
+            if (!InternalApp.FrameworkContextKeyValuePairs.ContainsKey(NetXConst.C_SERVERHOST_MODULE_ID))
                 return app;
-            var contents = InternalApp.FrameworkContextKeyValuePairs[key];
+            var contents = InternalApp.FrameworkContextKeyValuePairs[NetXConst.C_SERVERHOST_MODULE_ID];
             contents.initializer.ConfigureApplication(app, env, contents.context);
             return app;
         }
@@ -75,11 +71,21 @@ namespace NetX
         {
             foreach (var option in options)
             {
-                var contextProvider = new CollectibleAssemblyLoadContextProvider();
                 ApplicationPartManager apm = webApplicationBuilder.Services.AddControllers().PartManager;
                 IServiceCollection services = webApplicationBuilder.Services;
-                var alc = contextProvider.LoadCustomeModule(option.Value, apm, services, env, new ModuleContext() { Configuration = config });
-                InternalApp.ModuleCotextKeyValuePairs.Add(option.Value.Id, alc);
+                var contextProvider = new CollectibleAssemblyLoadContextProvider();
+                ModuleContext context = new ModuleContext() { Configuration = config, ModuleOptions = option.Value };
+                if (option.Value.IsSharedAssemblyContext)
+                {
+                    var Initialize = contextProvider.LoadSharedCustomeModule(option.Value, apm, services, env, context);
+                    InternalApp.FrameworkContextKeyValuePairs.Add(context.ModuleOptions.Id, (Initialize, context));
+                }
+                else
+                {
+                    var alc = contextProvider.LoadCustomeModule(option.Value, apm, services, env, context);
+                    InternalApp.ModuleCotextKeyValuePairs.Add(option.Value.Id, alc);
+                }
+
             }
             return webApplicationBuilder;
         }
@@ -98,8 +104,16 @@ namespace NetX
         {
             foreach (var option in options)
             {
-                var context = InternalApp.ModuleCotextKeyValuePairs.GetValueOrDefault(option.Value.Id);
-                context.ModuleContext.Initialize.ConfigureApplication(app, env, context.ModuleContext);
+                if (option.Value.IsSharedAssemblyContext)
+                {
+                    var contents = InternalApp.FrameworkContextKeyValuePairs[option.Value.Id];
+                    contents.initializer.ConfigureApplication(app, env, contents.context);
+                }
+                else
+                {
+                    var context = InternalApp.ModuleCotextKeyValuePairs.GetValueOrDefault(option.Value.Id);
+                    context.ModuleContext.Initialize.ConfigureApplication(app, env, context.ModuleContext);
+                }
             }
             return app;
         }

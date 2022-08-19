@@ -16,16 +16,41 @@ public class TenantBuilder<T>
     where T : Tenant
 {
     private readonly IServiceCollection _services;
+    private readonly TenantType _tenantType;
+    private readonly TenantOption _option;
 
     /// <summary>
     /// 租户注入构建器
     /// </summary>
     /// <param name="services"></param>
-    public TenantBuilder(IServiceCollection services)
+    /// <param name="tenantType"></param>
+    public TenantBuilder(IServiceCollection services, TenantType tenantType = TenantType.Single)
     {
         services.AddTransient<TenantAccessService<T>>();
         services.AddTransient<ITenantAccessor<T>, TenantAccessor<T>>();
         _services = services;
+        _tenantType = tenantType;
+        _option = new TenantOption(_tenantType);
+    }
+
+    /// <summary>
+    /// 配置数据库
+    /// </summary>
+    /// <param name="database"></param>
+    /// <returns></returns>
+    public TenantBuilder<T> WithDatabaseInfo(DatabaseInfo database)
+    {
+        _option.DatabaseInfo = new DatabaseInfo()
+        {
+            DatabaseHost = database.DatabaseHost,
+            DatabaseName = database.DatabaseName,
+            DatabasePort = database.DatabasePort,
+            DatabaseType = database.DatabaseType,
+            UserId = database.UserId,
+            Password = database.Password,
+        };
+        _services.AddSingleton<TenantOption>(_option);
+        return this;
     }
 
     /// <summary>
@@ -37,6 +62,8 @@ public class TenantBuilder<T>
     public TenantBuilder<T> WithResolutionStrategy<V>(ServiceLifetime lifetime = ServiceLifetime.Transient)
         where V : class, ITenantResolutionStrategy
     {
+        if (_tenantType == TenantType.Single)
+            return this;
         _services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         _services.Add(ServiceDescriptor.Describe(typeof(ITenantResolutionStrategy), typeof(V), lifetime));
         return this;
@@ -51,6 +78,8 @@ public class TenantBuilder<T>
     public TenantBuilder<T> WithStore<V>(ServiceLifetime serviceLifetime = ServiceLifetime.Transient)
         where V :class, ITenantStore<T>
     {
+        if (_tenantType == TenantType.Single)
+            return this;
         _services.Add(ServiceDescriptor.Describe(typeof(ITenantStore<T>), typeof(V), serviceLifetime));
         return this; 
     }
@@ -63,6 +92,8 @@ public class TenantBuilder<T>
     /// <returns></returns>
     public TenantBuilder<T> WithPerTenantOptions<TOptions>(Action<TOptions, T> tenantConfig) where TOptions : class, new()
     {
+        if (_tenantType == TenantType.Single)
+            return this;
         //Register the multi-tenant cache
         _services.AddSingleton<IOptionsMonitorCache<TOptions>>(a => ActivatorUtilities.CreateInstance<TenantOptionsCache<TOptions, T>>(a));
         //Register the multi-tenant options factory
@@ -71,6 +102,18 @@ public class TenantBuilder<T>
         _services.AddScoped<IOptionsSnapshot<TOptions>>(a => ActivatorUtilities.CreateInstance<TenantOptions<TOptions>>(a));
         //Register IOptions support
         _services.AddSingleton<IOptions<TOptions>>(a => ActivatorUtilities.CreateInstance<TenantOptions<TOptions>>(a));
+        return this;
+    }
+
+    /// <summary>
+    /// 默认单租户注入
+    /// </summary>
+    /// <returns></returns>
+    public TenantBuilder<T> DefaultSingleTenant()
+    {
+        _services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+        _services.Add(ServiceDescriptor.Describe(typeof(ITenantResolutionStrategy), typeof(HostResolutionStrategy), ServiceLifetime.Transient));
+        _services.Add(ServiceDescriptor.Describe(typeof(ITenantStore<T>), typeof(InMemoryTenantStore), ServiceLifetime.Transient));
         return this;
     }
 }

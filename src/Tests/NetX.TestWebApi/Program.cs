@@ -32,10 +32,38 @@ app.Run();
 
 using NetX;
 using NetX.Module;
+using NetX.MutilTenant;
 using NetX.TestWebApi.Controllers;
 using System.Reflection;
 
 ServerHost.Start(
-    RunOption.Default.ConfigrationServiceCollection(p => p.AddScoped<IZeke, Zeke>()),"http://*:8220"
+    RunOption.Default
+    .ConfigrationServiceCollection(services =>
+    {
+        services.AddScoped<IZeke, Zeke>();
+        //1.多租户设置
+        services.AddTenancy(TenantType.Multi)
+                .WithDatabaseInfo(new DatabaseInfo()
+                {
+                    DatabaseHost = "www.liuping.org.cn",
+                    DatabaseName = "mytestdb",
+                    DatabasePort = 8306,
+                    DatabaseType = DatabaseType.MySql,
+                    UserId = "root",
+                    Password = "root"
+                })
+                .WithResolutionStrategy<HostResolutionStrategy>()
+                .WithStore<InMemoryTenantStore>()
+                .WithPerTenantOptions<CookiePolicyOptions>((options, tenant) =>
+                {
+                    options.ConsentCookie.Name = tenant.TenantId + "-consent";
+                });
+    })
+    .ConfigApplication(app =>
+    {
+        //1.多租户
+        app.UseMultiTenancy();
+    })
+    , "http://*:8220"
     );
 #endif

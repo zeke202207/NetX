@@ -3,8 +3,9 @@
 * 2. [软件架构 :rose:](#:rose:)
 	* 2.1. [AssemblyLoadContext](#AssemblyLoadContext)
 	* 2.2. [Application Part](#ApplicationPart)
+		* 2.2.1. [**版本调整**](#)
 	* 2.3. [Multi Tenant](#MultiTenant)
-	* 2.4. [框架对多租户的支持](#)
+	* 2.4. [框架对多租户的支持](#-1)
 	* 2.5. [数据库对多租户的支持](#-1)
 * 3. [开发计划 :fire:](#:fire:)
 * 4. [欢迎提交MR和Issues :pray:](#MRIssues:pray:)
@@ -40,9 +41,17 @@ NetX 前身是 ``` sagittarius ``` ,一个我业余时间开发的模块化组�
 
 > 正是基于 ```AssemblyLoadContext``` ```Application Part``` 才能成就我们的```NetX```
 
+####  2.2.1. <a name=''></a>**版本调整**
+
+
+|序号|修正内容                                          | 修正日期  |
+|--- | ---                                             | ---      |
+|1   |支持配置独立```Context```和```SharedContext```    |2022/08/19|
+
+
 ###  2.3. <a name='MultiTenant'></a>Multi Tenant
 
-###  2.4. <a name=''></a>框架对多租户的支持
+###  2.4. <a name='-1'></a>框架对多租户的支持
 
 多租户实现逻辑图
 

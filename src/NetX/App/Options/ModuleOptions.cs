@@ -35,5 +35,10 @@
         /// 相对地址
         /// </summary>
         public List<string> Dependencies { get; set; } = new();
+
+        /// <summary>
+        /// 是否是单独的上下文程序集
+        /// </summary>
+        public bool IsSharedAssemblyContext { get; set; } = true;
     }
 }

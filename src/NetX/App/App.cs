@@ -20,6 +20,9 @@ public static class App
     /// </summary>
     public static HttpContext HttpContext => RootServices?.GetService<IHttpContextAccessor>()?.HttpContext;
 
+    /// <summary>
+    /// 获取配置信息
+    /// </summary>
     public static IConfiguration Configuration => InternalApp.Configuration;
 
     /// <summary>
@@ -28,17 +31,5 @@ public static class App
     static App()
     {
 
-    }
-
-    /// <summary>
-    /// 根据用户模块id获取程序集上下文
-    /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
-    public static ModuleAssemblyLoadContext GetModuleContext(Guid id)
-    {
-        if (!InternalApp.ModuleCotextKeyValuePairs.ContainsKey(id))
-            return null;
-        return InternalApp.ModuleCotextKeyValuePairs.FirstOrDefault(p => p.Key.Equals(id)).Value;
     }
 }
