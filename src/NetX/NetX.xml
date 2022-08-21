@@ -4,6 +4,54 @@
         <name>NetX</name>
     </assembly>
     <members>
+        <member name="T:NetX.DatabaseModelExtension">
+            <summary>
+            数据库实体对象转换扩展类
+            </summary>
+        </member>
+        <member name="M:NetX.DatabaseModelExtension.ToConnStr(NetX.MutilTenant.DatabaseInfo)">
+            <summary>
+            根据数据库对象，转换链接字符串
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.DatabaseModelExtension.ToConnStr(NetX.MutilTenant.DatabaseInfo,NetX.TenantType,System.String)">
+            <summary>
+            数据库连接字符串
+            </summary>
+            <param name="model"></param>
+            <param name="type"></param>
+            <param name="tenantId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.DatabaseModelExtension.ToDatabaseName(NetX.MutilTenant.DatabaseInfo,NetX.TenantType,System.String)">
+            <summary>
+            数据库Schema name
+            </summary>
+            <param name="model"></param>
+            <param name="type"></param>
+            <param name="TenantId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.DatabaseModelExtension.ToCreateDatabaseConnStr(NetX.MutilTenant.DatabaseInfo)">
+            <summary>
+            获取创建数据库连接字符串
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NetX.Utils.BaseFilter">
+            <summary>
+            netcore filter 过滤器基类
+            filter 顺序：
+            Authorization Filter  ----授权认证过滤器
+            Resource Filter       ----资源过滤器
+            Action Filter　　     ----Action过滤器
+            Exception Filter      ----异常过滤器
+            Result Filter         ----结果过滤器
+            </summary>
+        </member>
         <member name="T:NetX.App">
             <summary>
             全局应用程序类
@@ -258,436 +306,131 @@
             <param name="env"></param>
             <param name="context"></param>
         </member>
-        <member name="T:NetX.Authentication.ClaimModelAttribute">
+        <member name="T:NetX.Module.CollectibleAssemblyLoadContextProvider">
             <summary>
-            
+            可回收程序集provider
             </summary>
         </member>
-        <member name="M:NetX.Authentication.ClaimModelAttribute.#ctor(System.String)">
+        <member name="M:NetX.Module.CollectibleAssemblyLoadContextProvider.LoadCustomeModule(NetX.ModuleOptions,Microsoft.AspNetCore.Mvc.ApplicationParts.ApplicationPartManager,Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.AspNetCore.Hosting.IWebHostEnvironment,NetX.Module.ModuleContext)">
             <summary>
-            
-            </summary>
-            <param name="claimKey"></param>
-        </member>
-        <member name="T:NetX.Authentication.NoPermissionAttribute">
-            <summary>
-            通用权限模块，登录即可访问，不需要授权
-            </summary>
-        </member>
-        <member name="T:NetX.Authentication.PermissionValidateAttribute">
-            <summary>
-            权限验证特性
-            </summary>
-        </member>
-        <member name="M:NetX.Authentication.PermissionValidateAttribute.OnAuthorization(Microsoft.AspNetCore.Mvc.Filters.AuthorizationFilterContext)">
-            <summary>
-            鉴权验证
-            </summary>
-            <param name="context"></param>
-        </member>
-        <member name="M:NetX.Authentication.PermissionValidateAttribute.OnAuthorizationAsync(Microsoft.AspNetCore.Mvc.Filters.AuthorizationFilterContext)">
-            <summary>
-            
-            </summary>
-            <param name="context"></param>
-            <returns></returns>
-        </member>
-        <member name="T:NetX.Authentication.JWT.JwtLoginHandler">
-            <summary>
-            Jwt 登录处理
-            </summary>
-        </member>
-        <member name="M:NetX.Authentication.JWT.JwtLoginHandler.#ctor(NetX.Authentication.JWT.JwtOptions,Microsoft.Extensions.Logging.ILogger{NetX.Authentication.JWT.JwtLoginHandler})">
-            <summary>
-            
+            加载用户模块
             </summary>
             <param name="options"></param>
-            <param name="logger"></param>
-        </member>
-        <member name="M:NetX.Authentication.JWT.JwtLoginHandler.Handle(NetX.Authentication.ClaimModel,System.String)">
-            <summary>
-            
-            </summary>
-            <param name="claimModel"></param>
-            <param name="extendData"></param>
+            <param name="apm"></param>
+            <param name="services"></param>
+            <param name="env"></param>
+            <param name="moduleContext"></param>
             <returns></returns>
         </member>
-        <member name="M:NetX.Authentication.JWT.JwtLoginHandler.Build(System.Security.Claims.Claim[])">
+        <member name="M:NetX.Module.CollectibleAssemblyLoadContextProvider.LoadSharedCustomeModule(NetX.ModuleOptions,Microsoft.AspNetCore.Mvc.ApplicationParts.ApplicationPartManager,Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.AspNetCore.Hosting.IWebHostEnvironment,NetX.Module.ModuleContext)">
             <summary>
-            生成token信息
+            加载用户模块  AssemblyLoadContext.Default
             </summary>
-            <param name="claims"></param>
+            <param name="options"></param>
+            <param name="apm"></param>
+            <param name="services"></param>
+            <param name="env"></param>
+            <param name="moduleContext"></param>
             <returns></returns>
         </member>
-        <member name="M:NetX.Authentication.JWT.JwtLoginHandler.ResolveJWT(System.String)">
+        <member name="T:NetX.Module.ModuleAssemblyLoadContext">
             <summary>
-            解析Token
-            </summary>
-            <param name="token"></param>
-            <returns></returns>
-        </member>
-        <member name="T:NetX.Authentication.JWT.JwtOptions">
-            <summary>
-            JWT配置项
+            独立模块程序集上下文
             </summary>
         </member>
-        <member name="P:NetX.Authentication.JWT.JwtOptions.Key">
+        <member name="P:NetX.Module.ModuleAssemblyLoadContext.ModuleContext">
             <summary>
-            Key
+            模块上下文
             </summary>
         </member>
-        <member name="P:NetX.Authentication.JWT.JwtOptions.Issuer">
+        <member name="M:NetX.Module.ModuleAssemblyLoadContext.#ctor(System.String,NetX.Module.ModuleContext)">
             <summary>
-            发行人
+            isCollectible:ture 的时候允许 Unload
+            </summary>
+            <param name="moduleName"></param>
+            <param name="moduleContext"></param>
+        </member>
+        <member name="T:NetX.Module.ModuleContext">
+            <summary>
+            模块上下文 
             </summary>
         </member>
-        <member name="P:NetX.Authentication.JWT.JwtOptions.Audience">
+        <member name="P:NetX.Module.ModuleContext.Configuration">
             <summary>
-            消费者
+            配置项
             </summary>
         </member>
-        <member name="P:NetX.Authentication.JWT.JwtOptions.Expires">
+        <member name="P:NetX.Module.ModuleContext.ModuleOptions">
             <summary>
-            有效期(分钟，默认120)
+            模块配置项 <see cref="P:NetX.Module.ModuleContext.ModuleOptions"/>
             </summary>
         </member>
-        <member name="T:NetX.Authentication.JWT.JwtTokenModel">
+        <member name="P:NetX.Module.ModuleContext.Initialize">
             <summary>
-            JWT令牌
+            模块初始化器 <see cref="T:NetX.Module.ModuleInitializer"/>
             </summary>
         </member>
-        <member name="P:NetX.Authentication.JWT.JwtTokenModel.AccessToken">
+        <member name="M:NetX.Module.IApplicationModule.ConfigureApplication(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment,NetX.Module.ModuleContext)">
             <summary>
-            jwt令牌
+            配置中间件
+            </summary>
+            <param name="app"></param>
+            <param name="env"></param>
+        </member>
+        <member name="T:NetX.Module.IModule">
+            <summary>
+            模块初始化器接口
             </summary>
         </member>
-        <member name="P:NetX.Authentication.JWT.JwtTokenModel.RefreshToken">
+        <member name="P:NetX.Module.IModule.Key">
             <summary>
-            刷新令牌
+            模块唯一标识
             </summary>
         </member>
-        <member name="P:NetX.Authentication.JWT.JwtTokenModel.ExpiresIn">
+        <member name="P:NetX.Module.IModule.ModuleType">
             <summary>
-            有效期(秒)
-            对接口调用方而言，非严格意义上的过期，从调用接口前开始计算时间
+            模块类型
             </summary>
         </member>
-        <member name="T:NetX.Authentication.JWT.ServiceCollectionExtensions">
+        <member name="M:NetX.Module.IServiceModule.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.AspNetCore.Hosting.IWebHostEnvironment,NetX.Module.ModuleContext)">
             <summary>
-            
-            </summary>
-        </member>
-        <member name="M:NetX.Authentication.JWT.ServiceCollectionExtensions.AddJwtAuth(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
-            <summary>
-            添加Jwt认证
+            注入服务
             </summary>
             <param name="services"></param>
-            <param name="config">配置项</param>
+            <param name="env">环境变量</param>
         </member>
-        <member name="T:NetX.Authentication.ILoginHandler">
+        <member name="T:NetX.Module.ModuleInitializer">
             <summary>
-             登录处理接口
+            Serve 组件应用服务组件
             </summary>
         </member>
-        <member name="M:NetX.Authentication.ILoginHandler.Handle(NetX.Authentication.ClaimModel,System.String)">
+        <member name="P:NetX.Module.ModuleInitializer.Key">
             <summary>
-            登录处理
-            </summary>
-            <param name="claimModel">信息</param>
-            <param name="extendData">扩展数据</param>
-            <returns></returns>
-        </member>
-        <member name="T:NetX.Authentication.IPermissionValidateHandler">
-            <summary>
-            权限验证接口
+            模块唯一标识
             </summary>
         </member>
-        <member name="M:NetX.Authentication.IPermissionValidateHandler.Validate(Microsoft.AspNetCore.Http.HttpContext,System.Collections.Generic.IDictionary{System.String,System.String})">
+        <member name="P:NetX.Module.ModuleInitializer.ModuleType">
             <summary>
-            验证
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="T:NetX.Authentication.ClaimModel">
-            <summary>
-            
+            模块类型
             </summary>
         </member>
-        <member name="T:NetX.DatabaseSetup.FluentMigrationExtensions">
+        <member name="M:NetX.Module.ModuleInitializer.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.AspNetCore.Hosting.IWebHostEnvironment,NetX.Module.ModuleContext)">
             <summary>
-            数据库迁移扩展方法
-            </summary>
-        </member>
-        <member name="M:NetX.DatabaseSetup.FluentMigrationExtensions.AddMigratorAssembly(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Reflection.Assembly[])">
-            <summary>
-            添加迁移程序集
+            This method gets called by the runtime.
+            Use this method to add services to the container.
             </summary>
             <param name="services"></param>
-            <param name="assemblies"></param>
-            <returns></returns>
+            <param name="env"></param>
+            <param name="context"></param>
         </member>
-        <member name="M:NetX.DatabaseSetup.FluentMigrationExtensions.BuildFluentMigrator(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+        <member name="M:NetX.Module.ModuleInitializer.ConfigureApplication(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment,NetX.Module.ModuleContext)">
             <summary>
-             数据迁移服务注入
+            This method gets called by the runtime. 
+            Use this method to configure the HTTP request pipeline.
             </summary>
-            <param name="services"></param>
-            <param name="assemblies">需要迁移的程序集集合</param>
-            <returns></returns>
-        </member>
-        <member name="M:NetX.DatabaseSetup.FluentMigrationExtensions.BuildFluentMigrator(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Reflection.Assembly[],NetX.MigrationSupportDbType)">
-            <summary>
-            数据迁移服务注入
-            </summary>
-            <param name="services"></param>
-            <param name="assemblies"></param>
-            <param name="supportDbType"></param>
-            <returns></returns>
-        </member>
-        <member name="M:NetX.DatabaseSetup.FluentMigrationExtensions.AddDatabase(FluentMigrator.Runner.IMigrationRunnerBuilder,NetX.MigrationSupportDbType)">
-            <summary>
-            添加支持的数据库
-            </summary>
-            <param name="builder"></param>
-            <param name="supportDbType"></param>
-            <returns></returns>
-        </member>
-        <member name="T:NetX.DatabaseSetup.MigrationAssemblySource">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:NetX.DatabaseSetup.MigrationAssemblySource.Assemblies">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="T:NetX.DatabaseSetup.MigrationRunnerLogger">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:NetX.DatabaseSetup.MigrationRunnerLogger.BeginScope``1(``0)">
-            <summary>
-            
-            </summary>
-            <typeparam name="TState"></typeparam>
-            <param name="state"></param>
-            <returns></returns>
-        </member>
-        <member name="M:NetX.DatabaseSetup.MigrationRunnerLogger.IsEnabled(Microsoft.Extensions.Logging.LogLevel)">
-            <summary>
-            
-            </summary>
-            <param name="logLevel"></param>
-            <returns></returns>
-        </member>
-        <member name="M:NetX.DatabaseSetup.MigrationRunnerLogger.Log``1(Microsoft.Extensions.Logging.LogLevel,Microsoft.Extensions.Logging.EventId,``0,System.Exception,System.Func{``0,System.Exception,System.String})">
-            <summary>
-            
-            </summary>
-            <typeparam name="TState"></typeparam>
-            <param name="logLevel"></param>
-            <param name="eventId"></param>
-            <param name="state"></param>
-            <param name="exception"></param>
-            <param name="formatter"></param>
-        </member>
-        <member name="T:NetX.DatabaseSetup.MigrationValidatorlogger">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:NetX.DatabaseSetup.MigrationValidatorlogger.BeginScope``1(``0)">
-            <summary>
-            
-            </summary>
-            <typeparam name="TState"></typeparam>
-            <param name="state"></param>
-            <returns></returns>
-        </member>
-        <member name="M:NetX.DatabaseSetup.MigrationValidatorlogger.IsEnabled(Microsoft.Extensions.Logging.LogLevel)">
-            <summary>
-            
-            </summary>
-            <param name="logLevel"></param>
-            <returns></returns>
-        </member>
-        <member name="M:NetX.DatabaseSetup.MigrationValidatorlogger.Log``1(Microsoft.Extensions.Logging.LogLevel,Microsoft.Extensions.Logging.EventId,``0,System.Exception,System.Func{``0,System.Exception,System.String})">
-            <summary>
-            
-            </summary>
-            <typeparam name="TState"></typeparam>
-            <param name="logLevel"></param>
-            <param name="eventId"></param>
-            <param name="state"></param>
-            <param name="exception"></param>
-            <param name="formatter"></param>
-        </member>
-        <member name="T:NetX.DatabaseSetup.TenantConnectionStringReader">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:NetX.DatabaseSetup.TenantConnectionStringReader.Priority">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:NetX.DatabaseSetup.TenantConnectionStringReader.GetConnectionString(System.String)">
-            <summary>
-            
-            </summary>
-            <param name="connectionStringOrName"></param>
-            <returns></returns>
-        </member>
-        <member name="T:NetX.DatabaseSetup.TenantMigrationVersionTable">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:NetX.DatabaseSetup.TenantMigrationVersionTable.#ctor">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:NetX.DatabaseSetup.TenantMigrationVersionTable.SchemaName">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:NetX.DatabaseSetup.TenantMigrationVersionTable.TableName">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:NetX.DatabaseSetup.TenantMigrationVersionTable.ColumnName">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:NetX.DatabaseSetup.TenantMigrationVersionTable.UniqueIndexName">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:NetX.DatabaseSetup.TenantMigrationVersionTable.AppliedOnColumnName">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:NetX.DatabaseSetup.TenantMigrationVersionTable.DescriptionColumnName">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:NetX.DatabaseSetup.TenantMigrationVersionTable.OwnsSchema">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:NetX.DatabaseSetup.TenantMigrationVersionTable.ApplicationContext">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="T:NetX.DatabaseSetup.TenantProcessorOptions">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:NetX.DatabaseSetup.TenantProcessorOptions.Value">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:NetX.DatabaseSetup.TenantProcessorOptions.Get(System.String)">
-            <summary>
-            
-            </summary>
-            <param name="name"></param>
-            <returns></returns>
-        </member>
-        <member name="T:NetX.DatabaseSetup.TenantRunnerOptions">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:NetX.DatabaseSetup.TenantRunnerOptions.Value">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:NetX.DatabaseSetup.TenantRunnerOptions.Get(System.String)">
-            <summary>
-            
-            </summary>
-            <param name="name"></param>
-            <returns></returns>
-        </member>
-        <member name="T:NetX.DatabaseSetup.TenantSelectingProcessorAccessorOptions">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:NetX.DatabaseSetup.TenantSelectingProcessorAccessorOptions.Value">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:NetX.DatabaseSetup.TenantSelectingProcessorAccessorOptions.Get(System.String)">
-            <summary>
-            
-            </summary>
-            <param name="name"></param>
-            <returns></returns>
-        </member>
-        <member name="T:NetX.DatabaseSetup.MigrationService">
-            <summary>
-            数据迁移服务
-            </summary>
-        </member>
-        <member name="M:NetX.DatabaseSetup.MigrationService.#ctor(Microsoft.Extensions.DependencyInjection.IServiceCollection,NetX.MigrationSupportDbType)">
-            <summary>
-            数据迁移服务实例
-            </summary>
-            <param name="services"></param>
-            <param name="supportDbType"></param>
-        </member>
-        <member name="M:NetX.DatabaseSetup.MigrationService.SetupDatabase">
-            <summary>
-            创建数据库
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:NetX.DatabaseSetup.MigrationService.CraeteDatabase">
-            <summary>
-            创建数据库
-            </summary>
-        </member>
-        <member name="M:NetX.DatabaseSetup.MigrationService.GetDatabaseFactory(System.IServiceProvider)">
-            <summary>
-            获取数据库连接工厂
-            </summary>
-            <param name="serviceProvider"></param>
-            <returns></returns>
-        </member>
-        <member name="M:NetX.DatabaseSetup.MigrationService.QueryDatabaseSql">
-            <summary>
-            获取数据库是否存在查询语句
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:NetX.DatabaseSetup.MigrationService.CreateDatabaseSql">
-            <summary>
-            建库语句
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:NetX.DatabaseSetup.MigrationService.MigrationTables">
-            <summary>
-            数据库迁移
-            </summary>
-            <returns></returns>
+            <param name="app"></param>
+            <param name="env"></param>
+            <param name="context"></param>
         </member>
         <member name="T:NetX.EventBus.EventHandlerContext">
             <summary>
@@ -1053,131 +796,160 @@
             <param name="context"></param>
             <returns></returns>
         </member>
-        <member name="T:NetX.Module.CollectibleAssemblyLoadContextProvider">
+        <member name="T:NetX.Authentication.ClaimModelAttribute">
             <summary>
-            可回收程序集provider
+            
             </summary>
         </member>
-        <member name="M:NetX.Module.CollectibleAssemblyLoadContextProvider.LoadCustomeModule(NetX.ModuleOptions,Microsoft.AspNetCore.Mvc.ApplicationParts.ApplicationPartManager,Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.AspNetCore.Hosting.IWebHostEnvironment,NetX.Module.ModuleContext)">
+        <member name="M:NetX.Authentication.ClaimModelAttribute.#ctor(System.String)">
             <summary>
-            加载用户模块
+            
             </summary>
-            <param name="options"></param>
-            <param name="apm"></param>
-            <param name="services"></param>
-            <param name="env"></param>
-            <param name="moduleContext"></param>
-            <returns></returns>
+            <param name="claimKey"></param>
         </member>
-        <member name="M:NetX.Module.CollectibleAssemblyLoadContextProvider.LoadSharedCustomeModule(NetX.ModuleOptions,Microsoft.AspNetCore.Mvc.ApplicationParts.ApplicationPartManager,Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.AspNetCore.Hosting.IWebHostEnvironment,NetX.Module.ModuleContext)">
+        <member name="T:NetX.Authentication.NoPermissionAttribute">
             <summary>
-            加载用户模块  AssemblyLoadContext.Default
-            </summary>
-            <param name="options"></param>
-            <param name="apm"></param>
-            <param name="services"></param>
-            <param name="env"></param>
-            <param name="moduleContext"></param>
-            <returns></returns>
-        </member>
-        <member name="T:NetX.Module.ModuleAssemblyLoadContext">
-            <summary>
-            独立模块程序集上下文
+            通用权限模块，登录即可访问，不需要授权
             </summary>
         </member>
-        <member name="P:NetX.Module.ModuleAssemblyLoadContext.ModuleContext">
+        <member name="T:NetX.Authentication.PermissionValidateAttribute">
             <summary>
-            模块上下文
+            权限验证特性
             </summary>
         </member>
-        <member name="M:NetX.Module.ModuleAssemblyLoadContext.#ctor(System.String,NetX.Module.ModuleContext)">
+        <member name="M:NetX.Authentication.PermissionValidateAttribute.OnAuthorization(Microsoft.AspNetCore.Mvc.Filters.AuthorizationFilterContext)">
             <summary>
-            isCollectible:ture 的时候允许 Unload
+            鉴权验证
             </summary>
-            <param name="moduleName"></param>
-            <param name="moduleContext"></param>
-        </member>
-        <member name="T:NetX.Module.ModuleContext">
-            <summary>
-            模块上下文 
-            </summary>
-        </member>
-        <member name="P:NetX.Module.ModuleContext.Configuration">
-            <summary>
-            配置项
-            </summary>
-        </member>
-        <member name="P:NetX.Module.ModuleContext.ModuleOptions">
-            <summary>
-            模块配置项 <see cref="P:NetX.Module.ModuleContext.ModuleOptions"/>
-            </summary>
-        </member>
-        <member name="P:NetX.Module.ModuleContext.Initialize">
-            <summary>
-            模块初始化器 <see cref="T:NetX.Module.ModuleInitializer"/>
-            </summary>
-        </member>
-        <member name="M:NetX.Module.IApplicationModule.ConfigureApplication(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment,NetX.Module.ModuleContext)">
-            <summary>
-            配置中间件
-            </summary>
-            <param name="app"></param>
-            <param name="env"></param>
-        </member>
-        <member name="T:NetX.Module.IModule">
-            <summary>
-            模块初始化器接口
-            </summary>
-        </member>
-        <member name="P:NetX.Module.IModule.Key">
-            <summary>
-            模块唯一标识
-            </summary>
-        </member>
-        <member name="P:NetX.Module.IModule.ModuleType">
-            <summary>
-            模块类型
-            </summary>
-        </member>
-        <member name="M:NetX.Module.IServiceModule.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.AspNetCore.Hosting.IWebHostEnvironment,NetX.Module.ModuleContext)">
-            <summary>
-            注入服务
-            </summary>
-            <param name="services"></param>
-            <param name="env">环境变量</param>
-        </member>
-        <member name="T:NetX.Module.ModuleInitializer">
-            <summary>
-            Serve 组件应用服务组件
-            </summary>
-        </member>
-        <member name="P:NetX.Module.ModuleInitializer.Key">
-            <summary>
-            模块唯一标识
-            </summary>
-        </member>
-        <member name="P:NetX.Module.ModuleInitializer.ModuleType">
-            <summary>
-            模块类型
-            </summary>
-        </member>
-        <member name="M:NetX.Module.ModuleInitializer.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.AspNetCore.Hosting.IWebHostEnvironment,NetX.Module.ModuleContext)">
-            <summary>
-            This method gets called by the runtime.
-            Use this method to add services to the container.
-            </summary>
-            <param name="services"></param>
-            <param name="env"></param>
             <param name="context"></param>
         </member>
-        <member name="M:NetX.Module.ModuleInitializer.ConfigureApplication(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment,NetX.Module.ModuleContext)">
+        <member name="M:NetX.Authentication.PermissionValidateAttribute.OnAuthorizationAsync(Microsoft.AspNetCore.Mvc.Filters.AuthorizationFilterContext)">
             <summary>
-            This method gets called by the runtime. 
-            Use this method to configure the HTTP request pipeline.
+            
             </summary>
-            <param name="app"></param>
-            <param name="env"></param>
             <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NetX.Authentication.JWT.JwtLoginHandler">
+            <summary>
+            Jwt 登录处理
+            </summary>
+        </member>
+        <member name="M:NetX.Authentication.JWT.JwtLoginHandler.#ctor(NetX.Authentication.JWT.JwtOptions,Microsoft.Extensions.Logging.ILogger{NetX.Authentication.JWT.JwtLoginHandler})">
+            <summary>
+            
+            </summary>
+            <param name="options"></param>
+            <param name="logger"></param>
+        </member>
+        <member name="M:NetX.Authentication.JWT.JwtLoginHandler.Handle(NetX.Authentication.ClaimModel,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="claimModel"></param>
+            <param name="extendData"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.Authentication.JWT.JwtLoginHandler.Build(System.Security.Claims.Claim[])">
+            <summary>
+            生成token信息
+            </summary>
+            <param name="claims"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.Authentication.JWT.JwtLoginHandler.ResolveJWT(System.String)">
+            <summary>
+            解析Token
+            </summary>
+            <param name="token"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NetX.Authentication.JWT.JwtOptions">
+            <summary>
+            JWT配置项
+            </summary>
+        </member>
+        <member name="P:NetX.Authentication.JWT.JwtOptions.Key">
+            <summary>
+            Key
+            </summary>
+        </member>
+        <member name="P:NetX.Authentication.JWT.JwtOptions.Issuer">
+            <summary>
+            发行人
+            </summary>
+        </member>
+        <member name="P:NetX.Authentication.JWT.JwtOptions.Audience">
+            <summary>
+            消费者
+            </summary>
+        </member>
+        <member name="P:NetX.Authentication.JWT.JwtOptions.Expires">
+            <summary>
+            有效期(分钟，默认120)
+            </summary>
+        </member>
+        <member name="T:NetX.Authentication.JWT.JwtTokenModel">
+            <summary>
+            JWT令牌
+            </summary>
+        </member>
+        <member name="P:NetX.Authentication.JWT.JwtTokenModel.AccessToken">
+            <summary>
+            jwt令牌
+            </summary>
+        </member>
+        <member name="P:NetX.Authentication.JWT.JwtTokenModel.RefreshToken">
+            <summary>
+            刷新令牌
+            </summary>
+        </member>
+        <member name="P:NetX.Authentication.JWT.JwtTokenModel.ExpiresIn">
+            <summary>
+            有效期(秒)
+            对接口调用方而言，非严格意义上的过期，从调用接口前开始计算时间
+            </summary>
+        </member>
+        <member name="T:NetX.Authentication.JWT.ServiceCollectionExtensions">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.Authentication.JWT.ServiceCollectionExtensions.AddJwtAuth(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            添加Jwt认证
+            </summary>
+            <param name="services"></param>
+            <param name="config">配置项</param>
+        </member>
+        <member name="T:NetX.Authentication.ILoginHandler">
+            <summary>
+             登录处理接口
+            </summary>
+        </member>
+        <member name="M:NetX.Authentication.ILoginHandler.Handle(NetX.Authentication.ClaimModel,System.String)">
+            <summary>
+            登录处理
+            </summary>
+            <param name="claimModel">信息</param>
+            <param name="extendData">扩展数据</param>
+            <returns></returns>
+        </member>
+        <member name="T:NetX.Authentication.IPermissionValidateHandler">
+            <summary>
+            权限验证接口
+            </summary>
+        </member>
+        <member name="M:NetX.Authentication.IPermissionValidateHandler.Validate(Microsoft.AspNetCore.Http.HttpContext,System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            验证
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:NetX.Authentication.ClaimModel">
+            <summary>
+            
+            </summary>
         </member>
         <member name="T:NetX.MutilTenant.NetXPrincipal">
             <summary>
@@ -1688,6 +1460,282 @@
             应用程序数据配置
             </summary>
         </member>
+        <member name="T:NetX.DatabaseSetup.FluentMigrationExtensions">
+            <summary>
+            数据库迁移扩展方法
+            </summary>
+        </member>
+        <member name="M:NetX.DatabaseSetup.FluentMigrationExtensions.AddMigratorAssembly(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Reflection.Assembly[])">
+            <summary>
+            添加迁移程序集
+            </summary>
+            <param name="services"></param>
+            <param name="assemblies"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.DatabaseSetup.FluentMigrationExtensions.BuildFluentMigrator(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+             数据迁移服务注入
+            </summary>
+            <param name="services"></param>
+            <param name="assemblies">需要迁移的程序集集合</param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.DatabaseSetup.FluentMigrationExtensions.BuildFluentMigrator(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Reflection.Assembly[],NetX.MigrationSupportDbType)">
+            <summary>
+            数据迁移服务注入
+            </summary>
+            <param name="services"></param>
+            <param name="assemblies"></param>
+            <param name="supportDbType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.DatabaseSetup.FluentMigrationExtensions.AddDatabase(FluentMigrator.Runner.IMigrationRunnerBuilder,NetX.MigrationSupportDbType)">
+            <summary>
+            添加支持的数据库
+            </summary>
+            <param name="builder"></param>
+            <param name="supportDbType"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NetX.DatabaseSetup.MigrationAssemblySource">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.DatabaseSetup.MigrationAssemblySource.Assemblies">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.DatabaseSetup.MigrationRunnerLogger">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.DatabaseSetup.MigrationRunnerLogger.BeginScope``1(``0)">
+            <summary>
+            
+            </summary>
+            <typeparam name="TState"></typeparam>
+            <param name="state"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.DatabaseSetup.MigrationRunnerLogger.IsEnabled(Microsoft.Extensions.Logging.LogLevel)">
+            <summary>
+            
+            </summary>
+            <param name="logLevel"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.DatabaseSetup.MigrationRunnerLogger.Log``1(Microsoft.Extensions.Logging.LogLevel,Microsoft.Extensions.Logging.EventId,``0,System.Exception,System.Func{``0,System.Exception,System.String})">
+            <summary>
+            
+            </summary>
+            <typeparam name="TState"></typeparam>
+            <param name="logLevel"></param>
+            <param name="eventId"></param>
+            <param name="state"></param>
+            <param name="exception"></param>
+            <param name="formatter"></param>
+        </member>
+        <member name="T:NetX.DatabaseSetup.MigrationValidatorlogger">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.DatabaseSetup.MigrationValidatorlogger.BeginScope``1(``0)">
+            <summary>
+            
+            </summary>
+            <typeparam name="TState"></typeparam>
+            <param name="state"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.DatabaseSetup.MigrationValidatorlogger.IsEnabled(Microsoft.Extensions.Logging.LogLevel)">
+            <summary>
+            
+            </summary>
+            <param name="logLevel"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.DatabaseSetup.MigrationValidatorlogger.Log``1(Microsoft.Extensions.Logging.LogLevel,Microsoft.Extensions.Logging.EventId,``0,System.Exception,System.Func{``0,System.Exception,System.String})">
+            <summary>
+            
+            </summary>
+            <typeparam name="TState"></typeparam>
+            <param name="logLevel"></param>
+            <param name="eventId"></param>
+            <param name="state"></param>
+            <param name="exception"></param>
+            <param name="formatter"></param>
+        </member>
+        <member name="T:NetX.DatabaseSetup.TenantConnectionStringReader">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.DatabaseSetup.TenantConnectionStringReader.Priority">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.DatabaseSetup.TenantConnectionStringReader.GetConnectionString(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="connectionStringOrName"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NetX.DatabaseSetup.TenantMigrationVersionTable">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.DatabaseSetup.TenantMigrationVersionTable.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.DatabaseSetup.TenantMigrationVersionTable.SchemaName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.DatabaseSetup.TenantMigrationVersionTable.TableName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.DatabaseSetup.TenantMigrationVersionTable.ColumnName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.DatabaseSetup.TenantMigrationVersionTable.UniqueIndexName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.DatabaseSetup.TenantMigrationVersionTable.AppliedOnColumnName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.DatabaseSetup.TenantMigrationVersionTable.DescriptionColumnName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.DatabaseSetup.TenantMigrationVersionTable.OwnsSchema">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.DatabaseSetup.TenantMigrationVersionTable.ApplicationContext">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.DatabaseSetup.TenantProcessorOptions">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.DatabaseSetup.TenantProcessorOptions.Value">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.DatabaseSetup.TenantProcessorOptions.Get(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NetX.DatabaseSetup.TenantRunnerOptions">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.DatabaseSetup.TenantRunnerOptions.Value">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.DatabaseSetup.TenantRunnerOptions.Get(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NetX.DatabaseSetup.TenantSelectingProcessorAccessorOptions">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.DatabaseSetup.TenantSelectingProcessorAccessorOptions.Value">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.DatabaseSetup.TenantSelectingProcessorAccessorOptions.Get(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NetX.DatabaseSetup.MigrationService">
+            <summary>
+            数据迁移服务
+            </summary>
+        </member>
+        <member name="M:NetX.DatabaseSetup.MigrationService.#ctor(Microsoft.Extensions.DependencyInjection.IServiceCollection,NetX.MigrationSupportDbType)">
+            <summary>
+            数据迁移服务实例
+            </summary>
+            <param name="services"></param>
+            <param name="supportDbType"></param>
+        </member>
+        <member name="M:NetX.DatabaseSetup.MigrationService.SetupDatabase">
+            <summary>
+            创建数据库
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.DatabaseSetup.MigrationService.CraeteDatabase">
+            <summary>
+            创建数据库
+            </summary>
+        </member>
+        <member name="M:NetX.DatabaseSetup.MigrationService.GetDatabaseFactory(System.IServiceProvider)">
+            <summary>
+            获取数据库连接工厂
+            </summary>
+            <param name="serviceProvider"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.DatabaseSetup.MigrationService.QueryDatabaseSql">
+            <summary>
+            获取数据库是否存在查询语句
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.DatabaseSetup.MigrationService.CreateDatabaseSql">
+            <summary>
+            建库语句
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.DatabaseSetup.MigrationService.MigrationTables">
+            <summary>
+            数据库迁移
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:NetX.NetXConst">
             <summary>
             
@@ -1786,42 +1834,6 @@
         <member name="F:NetX.TenantType.Multi">
             <summary>
             多租户系统
-            </summary>
-        </member>
-        <member name="M:NetX.DatabaseModelExtension.ToConnStr(NetX.MutilTenant.DatabaseInfo,NetX.TenantType,System.String)">
-            <summary>
-            数据库连接字符串
-            </summary>
-            <param name="model"></param>
-            <param name="type"></param>
-            <param name="tenantId"></param>
-            <returns></returns>
-        </member>
-        <member name="M:NetX.DatabaseModelExtension.ToDatabaseName(NetX.MutilTenant.DatabaseInfo,NetX.TenantType,System.String)">
-            <summary>
-            数据库Schema name
-            </summary>
-            <param name="model"></param>
-            <param name="type"></param>
-            <param name="TenantId"></param>
-            <returns></returns>
-        </member>
-        <member name="M:NetX.DatabaseModelExtension.ToCreateDatabaseConnStr(NetX.MutilTenant.DatabaseInfo)">
-            <summary>
-            获取创建数据库连接字符串
-            </summary>
-            <param name="model"></param>
-            <returns></returns>
-        </member>
-        <member name="T:NetX.Utils.BaseFilter">
-            <summary>
-            netcore filter 过滤器基类
-            filter 顺序：
-            Authorization Filter  ----授权认证过滤器
-            Resource Filter       ----资源过滤器
-            Action Filter　　     ----Action过滤器
-            Exception Filter      ----异常过滤器
-            Result Filter         ----结果过滤器
             </summary>
         </member>
     </members>
