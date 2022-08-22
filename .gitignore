@@ -39,3 +39,5 @@ msbuild.wrn
 /framework/Tests/NetX.TestWebApi/NetX.TestWebApi.xml
 /framework/Tests/Module2/Module2.xml
 /framework/Tests/Module1/Module1.xml
+*.snupkg
+*.nupkg
