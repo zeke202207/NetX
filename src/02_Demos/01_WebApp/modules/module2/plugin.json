@@ -1,0 +1,8 @@
+{
+  "Id": "00000000000000000000000000000003",
+  "Name": "Module2 Module",
+  "Version": "1.0.0.0",
+  "Enabled": true,
+  "FileName": "Module2.dll",
+  "IsSharedAssemblyContext":false
+}

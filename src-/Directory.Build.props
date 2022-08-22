@@ -1,0 +1,33 @@
+<Project>
+	<PropertyGroup>
+		<Authors>zeke</Authors>
+		<Company>netx Co.,Ltd.</Company>
+		<Product>netx</Product>
+		<Copyright>© 2022-2022 zeke</Copyright>
+		<RepositoryUrl>https://xxx.com</RepositoryUrl>
+		<RepositoryType>Gitee</RepositoryType>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+		<PackageLicenseExpression>MulanPSL-2.0</PackageLicenseExpression>
+		<PackageProjectUrl>https://xxx.icu</PackageProjectUrl>
+		<!-- <PackageIcon>icon.png</PackageIcon> -->
+		<PackageOutputPath>../nupkgs</PackageOutputPath>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<DocumentationFile>$(MSBuildProjectName).xml</DocumentationFile>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<LangVersion>latest</LangVersion>
+	</PropertyGroup>
+<!--
+	<ItemGroup>
+		<None Include="icon.png">
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
+	</ItemGroup>
+-->
+</Project>

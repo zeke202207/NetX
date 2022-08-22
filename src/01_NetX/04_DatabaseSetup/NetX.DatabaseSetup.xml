@@ -1,0 +1,304 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>NetX.DatabaseSetup</name>
+    </assembly>
+    <members>
+        <member name="T:NetX.DatabaseSetup.MigrationSupportDbType">
+            <summary>
+            code first 数据迁移支持的数据库类型
+            </summary>
+        </member>
+        <member name="F:NetX.DatabaseSetup.MigrationSupportDbType.MySql5">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.DatabaseSetup.DatabaseType">
+            <summary>
+            数据库类型
+            </summary>
+        </member>
+        <member name="F:NetX.DatabaseSetup.DatabaseType.MySql">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.DatabaseSetup.FluentMigrationExtensions">
+            <summary>
+            数据库迁移扩展方法
+            </summary>
+        </member>
+        <member name="M:NetX.DatabaseSetup.FluentMigrationExtensions.AddMigratorAssembly(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Reflection.Assembly[])">
+            <summary>
+            添加迁移程序集
+            </summary>
+            <param name="services"></param>
+            <param name="assemblies"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.DatabaseSetup.FluentMigrationExtensions.BuildFluentMigrator(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+             数据迁移服务注入
+            </summary>
+            <param name="services"></param>
+            <param name="assemblies">需要迁移的程序集集合</param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.DatabaseSetup.FluentMigrationExtensions.BuildFluentMigrator(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Reflection.Assembly[],NetX.DatabaseSetup.MigrationSupportDbType)">
+            <summary>
+            数据迁移服务注入
+            </summary>
+            <param name="services"></param>
+            <param name="assemblies"></param>
+            <param name="supportDbType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.DatabaseSetup.FluentMigrationExtensions.AddDatabase(FluentMigrator.Runner.IMigrationRunnerBuilder,NetX.DatabaseSetup.MigrationSupportDbType)">
+            <summary>
+            添加支持的数据库
+            </summary>
+            <param name="builder"></param>
+            <param name="supportDbType"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NetX.DatabaseSetup.MigrationAssemblySource">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.DatabaseSetup.MigrationAssemblySource.Assemblies">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.DatabaseSetup.MigrationRunnerLogger">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.DatabaseSetup.MigrationRunnerLogger.BeginScope``1(``0)">
+            <summary>
+            
+            </summary>
+            <typeparam name="TState"></typeparam>
+            <param name="state"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.DatabaseSetup.MigrationRunnerLogger.IsEnabled(Microsoft.Extensions.Logging.LogLevel)">
+            <summary>
+            
+            </summary>
+            <param name="logLevel"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.DatabaseSetup.MigrationRunnerLogger.Log``1(Microsoft.Extensions.Logging.LogLevel,Microsoft.Extensions.Logging.EventId,``0,System.Exception,System.Func{``0,System.Exception,System.String})">
+            <summary>
+            
+            </summary>
+            <typeparam name="TState"></typeparam>
+            <param name="logLevel"></param>
+            <param name="eventId"></param>
+            <param name="state"></param>
+            <param name="exception"></param>
+            <param name="formatter"></param>
+        </member>
+        <member name="T:NetX.DatabaseSetup.MigrationValidatorlogger">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.DatabaseSetup.MigrationValidatorlogger.BeginScope``1(``0)">
+            <summary>
+            
+            </summary>
+            <typeparam name="TState"></typeparam>
+            <param name="state"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.DatabaseSetup.MigrationValidatorlogger.IsEnabled(Microsoft.Extensions.Logging.LogLevel)">
+            <summary>
+            
+            </summary>
+            <param name="logLevel"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.DatabaseSetup.MigrationValidatorlogger.Log``1(Microsoft.Extensions.Logging.LogLevel,Microsoft.Extensions.Logging.EventId,``0,System.Exception,System.Func{``0,System.Exception,System.String})">
+            <summary>
+            
+            </summary>
+            <typeparam name="TState"></typeparam>
+            <param name="logLevel"></param>
+            <param name="eventId"></param>
+            <param name="state"></param>
+            <param name="exception"></param>
+            <param name="formatter"></param>
+        </member>
+        <member name="T:NetX.DatabaseSetup.TenantConnectionStringReader">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.DatabaseSetup.TenantConnectionStringReader.Priority">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.DatabaseSetup.TenantConnectionStringReader.GetConnectionString(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="connectionStringOrName"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NetX.DatabaseSetup.TenantMigrationVersionTable">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.DatabaseSetup.TenantMigrationVersionTable.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.DatabaseSetup.TenantMigrationVersionTable.SchemaName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.DatabaseSetup.TenantMigrationVersionTable.TableName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.DatabaseSetup.TenantMigrationVersionTable.ColumnName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.DatabaseSetup.TenantMigrationVersionTable.UniqueIndexName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.DatabaseSetup.TenantMigrationVersionTable.AppliedOnColumnName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.DatabaseSetup.TenantMigrationVersionTable.DescriptionColumnName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.DatabaseSetup.TenantMigrationVersionTable.OwnsSchema">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.DatabaseSetup.TenantMigrationVersionTable.ApplicationContext">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.DatabaseSetup.TenantProcessorOptions">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.DatabaseSetup.TenantProcessorOptions.Value">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.DatabaseSetup.TenantProcessorOptions.Get(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NetX.DatabaseSetup.TenantRunnerOptions">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.DatabaseSetup.TenantRunnerOptions.Value">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.DatabaseSetup.TenantRunnerOptions.Get(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NetX.DatabaseSetup.TenantSelectingProcessorAccessorOptions">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.DatabaseSetup.TenantSelectingProcessorAccessorOptions.Value">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.DatabaseSetup.TenantSelectingProcessorAccessorOptions.Get(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NetX.DatabaseSetup.MigrationService">
+            <summary>
+            数据迁移服务
+            </summary>
+        </member>
+        <member name="M:NetX.DatabaseSetup.MigrationService.#ctor(Microsoft.Extensions.DependencyInjection.IServiceCollection,NetX.DatabaseSetup.MigrationSupportDbType)">
+            <summary>
+            数据迁移服务实例
+            </summary>
+            <param name="services"></param>
+            <param name="supportDbType"></param>
+        </member>
+        <member name="M:NetX.DatabaseSetup.MigrationService.SetupDatabase">
+            <summary>
+            创建数据库
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.DatabaseSetup.MigrationService.CraeteDatabase">
+            <summary>
+            创建数据库
+            </summary>
+        </member>
+        <member name="M:NetX.DatabaseSetup.MigrationService.GetDatabaseFactory(System.IServiceProvider)">
+            <summary>
+            获取数据库连接工厂
+            </summary>
+            <param name="serviceProvider"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.DatabaseSetup.MigrationService.QueryDatabaseSql">
+            <summary>
+            获取数据库是否存在查询语句
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.DatabaseSetup.MigrationService.CreateDatabaseSql">
+            <summary>
+            建库语句
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.DatabaseSetup.MigrationService.MigrationTables">
+            <summary>
+            数据库迁移
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

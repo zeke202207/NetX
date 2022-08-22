@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>NetX.Authentication.Core</name>
+    </assembly>
+    <members>
+        <member name="T:NetX.Authentication.Core.ClaimModelAttribute">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.Authentication.Core.ClaimModelAttribute.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="claimKey"></param>
+        </member>
+        <member name="T:NetX.Authentication.Core.NoPermissionAttribute">
+            <summary>
+            通用权限模块，登录即可访问，不需要授权
+            </summary>
+        </member>
+        <member name="T:NetX.Authentication.Core.PermissionValidateAttribute">
+            <summary>
+            权限验证特性
+            </summary>
+        </member>
+        <member name="M:NetX.Authentication.Core.PermissionValidateAttribute.OnAuthorization(Microsoft.AspNetCore.Mvc.Filters.AuthorizationFilterContext)">
+            <summary>
+            鉴权验证
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:NetX.Authentication.Core.PermissionValidateAttribute.OnAuthorizationAsync(Microsoft.AspNetCore.Mvc.Filters.AuthorizationFilterContext)">
+            <summary>
+            
+            </summary>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NetX.Authentication.Core.ILoginHandler">
+            <summary>
+             登录处理接口
+            </summary>
+        </member>
+        <member name="M:NetX.Authentication.Core.ILoginHandler.Handle(NetX.Authentication.Core.ClaimModel,System.String)">
+            <summary>
+            登录处理
+            </summary>
+            <param name="claimModel">信息</param>
+            <param name="extendData">扩展数据</param>
+            <returns></returns>
+        </member>
+        <member name="T:NetX.Authentication.Core.IPermissionValidateHandler">
+            <summary>
+            权限验证接口
+            </summary>
+        </member>
+        <member name="M:NetX.Authentication.Core.IPermissionValidateHandler.Validate(Microsoft.AspNetCore.Http.HttpContext,System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            验证
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:NetX.Authentication.Core.ClaimModel">
+            <summary>
+            
+            </summary>
+        </member>
+    </members>
+</doc>
