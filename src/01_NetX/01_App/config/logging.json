@@ -1,8 +1,8 @@
 {
   "Serilog": {
-    "Using": [ "Serilog.Sinks.Console", "Serilog.Sinks.File" ],
+    "Using": [ "Serilog.Sinks.File", "Serilog.Sinks.Async", "Serilog.Sinks.Console" ],
     "MinimumLevel": {
-      "Default": "Debug",
+      "Default": "Verbose",
       //覆盖掉微软自带的日志
       "Override": {
         "Microsoft": "Information",
@@ -11,25 +11,30 @@
     },
     "WriteTo": [
       {
-        "Name": "File",
-        "Args": {
-          //文件路径
-          "path": "/log/log.log"
-          //文件滚动方式
-          //"rollingInterval": "Day"
-          //消息输出格式json
-          //"formatter": "Serilog.Formatting.Json.JsonFormatter, Serilog",
-          //消息输出格式
-          //"outputTemplate": "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}",
-          //文件数量
-          //"retainedFileCountLimit": 60,
-          //使用缓冲，提高写入效率
-          //"buffered": true
-        }
-      },
-      {
         "Name": "Console",
         "Args": {}
+      },
+      {
+        "Name": "Async",
+        "Args": {
+          "configure": [
+            {
+              "Name": "File",
+              "Args": {
+                //文件路径
+                "path": "log/log.log",
+                //文件滚动方式
+                "rollingInterval": "Day",
+                //消息输出格式json
+                "formatter": "Serilog.Formatting.Json.JsonFormatter, Serilog",
+                //消息输出格式
+                "outputTemplate": "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}",
+                //文件数量
+                "retainedFileCountLimit": 60
+              }
+            }
+          ]
+        }
       }
     ]
   }
