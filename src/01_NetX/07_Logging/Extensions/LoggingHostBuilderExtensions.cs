@@ -8,15 +8,14 @@ namespace NetX.Logging;
 
 public static class LoggingHostBuilderExtensions
 {
-    public static IHostBuilder UseLogging(this IHostBuilder builder, LoggingType logType, IConfiguration config)
+    public static IHostBuilder UseLogging(this IHostBuilder builder, LoggingType logType)
     {
         switch (logType)
         {
             case LoggingType.Serilog:
                 builder.UseSerilog((hostingContext, loggerConfiguration) =>
                 {
-                    loggerConfiguration.ReadFrom.Configuration(hostingContext.Configuration);
-                    loggerConfiguration.Enrich.FromLogContext();
+                    loggerConfiguration.ReadFrom.Configuration(hostingContext.Configuration).Enrich.FromLogContext();
                 });
                 return builder;
             default:

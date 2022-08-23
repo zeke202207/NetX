@@ -41,6 +41,7 @@ namespace Module2.Controllers
         public async Task<IEnumerable<string>> Get()
         {
             _logger.LogInformation("hi,zeke,this is a log");
+            _logger.LogError(new NotSupportedException("i am a not supported exception"), "this is a message");
 
             //var info1 = HttpContext.GetTenant();
             var info = _accessor.Tenant;
