@@ -25,7 +25,10 @@ namespace NetX.App
             IConfiguration config)
         {
             IServiceCollection services = webApplicationBuilder.Services;
-            var Initialize = (ModuleInitializer)Activator.CreateInstance(typeof(ServerModuleInitializer));
+            var objectInitialize = Activator.CreateInstance(typeof(ServerModuleInitializer));
+            if (null == objectInitialize)
+                return webApplicationBuilder;
+            var Initialize = (ModuleInitializer)objectInitialize;
             AssemblyLoadContext.Default.LoadFromAssemblyName(Initialize.GetType().Assembly.GetName());
             var context = new ModuleContext()
             {
@@ -112,7 +115,7 @@ namespace NetX.App
                 else
                 {
                     var context = InternalApp.ModuleCotextKeyValuePairs.GetValueOrDefault(option.Value.Id);
-                    context.ModuleContext.Initialize.ConfigureApplication(app, env, context.ModuleContext);
+                    context?.ModuleContext.Initialize?.ConfigureApplication(app, env, context.ModuleContext);
                 }
             }
             return app;

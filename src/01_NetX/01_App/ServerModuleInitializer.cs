@@ -5,6 +5,7 @@ using NetX.App.Extensions;
 using NetX.Authentication.Jwt;
 using NetX.EventBus;
 using NetX.Module;
+using NetX.Swagger;
 using Serilog;
 
 namespace NetX.App
@@ -41,9 +42,7 @@ namespace NetX.App
                         .WithExposedHeaders("Content-Disposition"));//下载文件时，文件名称会保存在headers的Content-Disposition属性里面
             });
             //2.添加swagger文档处理
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            services.AddEndpointsApiExplorer();
-            services.AddSwaggerGen();
+            services.AddSwagger(App.GetModuleOptions.Select(p => (name: p.Name, version: p.Version, des:p.Description)));
 
             //3.添加HttpContext访问上下文
             services.AddHttpContextAccessor();
@@ -84,10 +83,7 @@ namespace NetX.App
             //2. swagger
             // Configure the HTTP request pipeline.
             if (((WebApplication)app).Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
+                app.UseCustomSwagger(App.GetModuleOptions.Select(p => p.Name));
             // 添加压缩缓存
             app.UseResponseCaching();
 

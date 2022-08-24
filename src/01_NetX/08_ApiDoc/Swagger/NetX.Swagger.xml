@@ -1,0 +1,121 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>NetX.Swagger</name>
+    </assembly>
+    <members>
+        <member name="T:NetX.Swagger.ApplicationBuilderExtensions">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.Swagger.ApplicationBuilderExtensions.UseCustomSwagger(Microsoft.AspNetCore.Builder.IApplicationBuilder,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            自定义Swagger
+            </summary>
+            <param name="app"></param>
+            <param name="moduleNames">模块名称</param>
+            <returns></returns>
+        </member>
+        <member name="T:NetX.Swagger.ApiActionDescriptionAttribute">
+            <summary>
+            Action描述特性
+            </summary>
+        </member>
+        <member name="M:NetX.Swagger.ApiActionDescriptionAttribute.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="description"></param>
+        </member>
+        <member name="P:NetX.Swagger.ApiActionDescriptionAttribute.Description">
+            <summary>
+            action描述信息
+            </summary>
+        </member>
+        <member name="T:NetX.Swagger.ApiControllerDescriptionAttribute">
+            <summary>
+            Controller描述特性
+            </summary>
+        </member>
+        <member name="M:NetX.Swagger.ApiControllerDescriptionAttribute.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="groupName"></param>
+        </member>
+        <member name="P:NetX.Swagger.ApiControllerDescriptionAttribute.GroupName">
+            <summary>
+            组名
+            </summary>
+        </member>
+        <member name="P:NetX.Swagger.ApiControllerDescriptionAttribute.HeaderKeys">
+            <summary>
+            http请求Header的key值
+            </summary>
+        </member>
+        <member name="P:NetX.Swagger.ApiControllerDescriptionAttribute.Description">
+            <summary>
+            控制器描述
+            </summary>
+        </member>
+        <member name="T:NetX.Swagger.IgnorePropertyAttribute">
+            <summary>
+            Swagger：隐藏属性
+            </summary>
+        </member>
+        <member name="T:NetX.Swagger.DescriptionDocumentFilter">
+            <summary>
+            控制器和方法的描述信息处理
+            </summary>
+        </member>
+        <member name="M:NetX.Swagger.DescriptionDocumentFilter.SetControllerDescription(Microsoft.OpenApi.Models.OpenApiDocument,Swashbuckle.AspNetCore.SwaggerGen.DocumentFilterContext)">
+            <summary>
+            设置控制器的描述信息
+            </summary>
+            <param name="swaggerDoc"></param>
+            <param name="context"></param>
+        </member>
+        <member name="M:NetX.Swagger.DescriptionDocumentFilter.SetActionDescription(Microsoft.OpenApi.Models.OpenApiDocument,Swashbuckle.AspNetCore.SwaggerGen.DocumentFilterContext)">
+            <summary>
+            设置方法的说明
+            </summary>
+            <param name="swaggerDoc"></param>
+            <param name="context"></param>
+        </member>
+        <member name="M:NetX.Swagger.DescriptionDocumentFilter.SetModelDescription(Microsoft.OpenApi.Models.OpenApiDocument,Swashbuckle.AspNetCore.SwaggerGen.DocumentFilterContext)">
+            <summary>
+            设置模型属性描述信息
+            </summary>
+            <param name="swaggerDoc"></param>
+            <param name="context"></param>
+        </member>
+        <member name="M:NetX.Swagger.DescriptionDocumentFilter.TryGetActionDescription(System.String,Swashbuckle.AspNetCore.SwaggerGen.DocumentFilterContext,System.String@)">
+            <summary>
+            获取说明
+            </summary>
+        </member>
+        <member name="T:NetX.Swagger.ServiceCollectionExtensions">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.Swagger.ServiceCollectionExtensions.AddSwagger(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Collections.Generic.IEnumerable{System.ValueTuple{System.String,System.String,System.String}})">
+            <summary>
+            添加Swagger
+            </summary>
+            <param name="services"></param>
+            <param name="moduleInfos">模块信息集合</param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.Swagger.ServiceCollectionExtensions.ApiInfos(System.String,System.String,System.String)">
+            <summary>
+            获取api描述信息
+            </summary>
+            <param name="title"></param>
+            <param name="version"></param>
+            <param name="description"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace NetX.App.Extensions
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class ApplicationBuilderExtensions
     {
         /// <summary>
@@ -18,11 +21,13 @@ namespace NetX.App.Extensions
         public static IApplicationBuilder UseStartupHandler(this IApplicationBuilder app)
         {
             var applicationLifetime = app.ApplicationServices.GetRequiredService<IHostApplicationLifetime>();
-            applicationLifetime.ApplicationStarted.Register(async () =>
+            _ = applicationLifetime.ApplicationStarted.Register(async () =>
             {
                 foreach (var handler in app.ApplicationServices.GetServices<IAppStartHandler>())
                 {
-                    await handler?.Handle();
+                    if (null == handler)
+                        continue;
+                    await handler.Handle();
                 }
             });
             return app;
@@ -39,7 +44,9 @@ namespace NetX.App.Extensions
             {
                 foreach (var handler in app.ApplicationServices.GetServices<IAppShutdownHandler>())
                 {
-                    await handler?.Handle();
+                    if (null == handler)
+                        continue;
+                    await handler.Handle();
                 }
             });
 

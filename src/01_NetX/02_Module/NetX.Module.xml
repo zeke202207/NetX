@@ -185,6 +185,11 @@
             版本
             </summary>
         </member>
+        <member name="P:NetX.Module.ModuleOptions.Description">
+            <summary>
+            描述
+            </summary>
+        </member>
         <member name="P:NetX.Module.ModuleOptions.Enabled">
             <summary>
             是否启用

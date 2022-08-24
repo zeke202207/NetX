@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using NetX.Authentication;
 using NetX.Authentication.Core;
+using NetX.Swagger;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace Module1.Controllers
 {
+    [ApiControllerDescriptionAttribute("Module1",Description ="测试控制器描述")]
     [ApiController]
     [Route("[controller]/[action]")]
     public class TestController : ControllerBase

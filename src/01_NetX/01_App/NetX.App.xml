@@ -29,6 +29,12 @@
             构造函数
             </summary>
         </member>
+        <member name="P:NetX.App.App.GetModuleOptions">
+            <summary>
+            获取模块配置信息
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:NetX.App.AppHandler.IAppShutdownHandler">
             <summary>
             应用程序关闭处理接口
@@ -45,6 +51,11 @@
             </summary>
         </member>
         <member name="M:NetX.App.IAppStartHandler.Handle">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.App.Extensions.ApplicationBuilderExtensions">
             <summary>
             
             </summary>
@@ -150,6 +161,11 @@
             系统程序集集合
             </summary>
         </member>
+        <member name="F:NetX.App.InternalApp.UserModeulOptions">
+            <summary>
+            用户组件模块设置项
+            </summary>
+        </member>
         <member name="P:NetX.App.CorsAccessorOptions.PolicyName">
             <summary>
             策略名称
@@ -219,7 +235,7 @@
             <summary>
             
             </summary>
-            <param name="option"></param>
+            <param name="options"></param>
             <returns></returns>
         </member>
         <member name="M:NetX.App.RunOption.ConfigBuilder(System.Action{Microsoft.AspNetCore.Builder.WebApplicationBuilder})">
@@ -241,6 +257,13 @@
             
             </summary>
             <param name="configrationManager"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.App.RunOption.ConfigrationServiceCollection(System.Action{Microsoft.Extensions.DependencyInjection.IServiceCollection})">
+            <summary>
+            
+            </summary>
+            <param name="configServiceCollection"></param>
             <returns></returns>
         </member>
         <!-- Badly formed XML comment ignored for member "M:NetX.App.RunOption.InitModules" -->

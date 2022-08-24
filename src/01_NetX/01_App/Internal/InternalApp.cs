@@ -21,4 +21,9 @@ internal class InternalApp
     /// 系统程序集集合
     /// </summary>
     internal static Dictionary<Guid, (ModuleInitializer initializer, ModuleContext context)> FrameworkContextKeyValuePairs = new();
+
+    /// <summary>
+    /// 用户组件模块设置项
+    /// </summary>
+    internal static List<ModuleOptions> UserModeulOptions = new List<ModuleOptions>();
 }

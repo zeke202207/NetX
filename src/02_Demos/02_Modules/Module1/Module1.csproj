@@ -10,6 +10,7 @@
     <ProjectReference Include="..\..\..\01_NetX\02_Module\NetX.Module.csproj" />
     <ProjectReference Include="..\..\..\01_NetX\03_EventBus\NetX.EventBus.csproj" />
     <ProjectReference Include="..\..\..\01_NetX\06_Authentication\Authentication.Core\NetX.Authentication.Core.csproj" />
+    <ProjectReference Include="..\..\..\01_NetX\08_ApiDoc\Swagger\NetX.Swagger.csproj" />
   </ItemGroup>
 
 </Project>

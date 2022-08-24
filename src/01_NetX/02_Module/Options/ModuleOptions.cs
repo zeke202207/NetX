@@ -21,6 +21,11 @@ public sealed class ModuleOptions
     public string Version { get; set; }
 
     /// <summary>
+    /// 描述
+    /// </summary>
+    public string Description { get; set; }
+
+    /// <summary>
     /// 是否启用
     /// </summary>
     public bool Enabled { get; set; }

@@ -18,7 +18,7 @@ public static class App
     /// <summary>
     /// 获取请求上下文
     /// </summary>
-    public static HttpContext HttpContext => RootServices?.GetService<IHttpContextAccessor>()?.HttpContext;
+    public static HttpContext? HttpContext => RootServices?.GetService<IHttpContextAccessor>()?.HttpContext;
 
     /// <summary>
     /// 获取配置信息
@@ -32,4 +32,10 @@ public static class App
     {
 
     }
+
+    /// <summary>
+    /// 获取模块配置信息
+    /// </summary>
+    /// <returns></returns>
+    public static IEnumerable<ModuleOptions> GetModuleOptions => InternalApp.UserModeulOptions;
 }

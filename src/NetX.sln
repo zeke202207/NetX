@@ -63,13 +63,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatabaseSetupTest1", "02_De
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatabaseSetupTest2", "02_Demos\03_DatabaseSetups\DatabaseSetupTest2\DatabaseSetupTest2.csproj", "{D35865AD-6BC1-481A-B91E-BBBA9C076160}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetX.Authentication.Core", "01_NetX\06_Authentication\Authentication.Core\NetX.Authentication.Core.csproj", "{649F7101-1464-48A6-B5E8-0190759778A6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetX.Authentication.Core", "01_NetX\06_Authentication\Authentication.Core\NetX.Authentication.Core.csproj", "{649F7101-1464-48A6-B5E8-0190759778A6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetX.Authentication.Jwt", "01_NetX\06_Authentication\Authentication.Jwt\NetX.Authentication.Jwt.csproj", "{68B21E54-BF26-4F51-B5C0-DD8E8D838278}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetX.Authentication.Jwt", "01_NetX\06_Authentication\Authentication.Jwt\NetX.Authentication.Jwt.csproj", "{68B21E54-BF26-4F51-B5C0-DD8E8D838278}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "07_Logging", "07_Logging", "{1782B6F8-3B2B-44CF-9B86-E1452B0D90DE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetX.Logging", "01_NetX\07_Logging\NetX.Logging.csproj", "{03C4AC52-3F20-41D6-B577-18B2F1349E71}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetX.Logging", "01_NetX\07_Logging\NetX.Logging.csproj", "{03C4AC52-3F20-41D6-B577-18B2F1349E71}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "08_ApiDoc", "08_ApiDoc", "{7D753218-DF8D-4355-81A2-7064E7CC463F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetX.Swagger", "01_NetX\08_ApiDoc\Swagger\NetX.Swagger.csproj", "{BD41CDBB-01F8-422D-9B0F-E80D15D9600C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -137,6 +141,10 @@ Global
 		{03C4AC52-3F20-41D6-B577-18B2F1349E71}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{03C4AC52-3F20-41D6-B577-18B2F1349E71}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{03C4AC52-3F20-41D6-B577-18B2F1349E71}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD41CDBB-01F8-422D-9B0F-E80D15D9600C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD41CDBB-01F8-422D-9B0F-E80D15D9600C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD41CDBB-01F8-422D-9B0F-E80D15D9600C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD41CDBB-01F8-422D-9B0F-E80D15D9600C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -172,6 +180,8 @@ Global
 		{68B21E54-BF26-4F51-B5C0-DD8E8D838278} = {BD0D352D-B332-42D5-B551-124EE9F5DF3A}
 		{1782B6F8-3B2B-44CF-9B86-E1452B0D90DE} = {54205D67-3381-4BF0-B639-FD721793413F}
 		{03C4AC52-3F20-41D6-B577-18B2F1349E71} = {1782B6F8-3B2B-44CF-9B86-E1452B0D90DE}
+		{7D753218-DF8D-4355-81A2-7064E7CC463F} = {54205D67-3381-4BF0-B639-FD721793413F}
+		{BD41CDBB-01F8-422D-9B0F-E80D15D9600C} = {7D753218-DF8D-4355-81A2-7064E7CC463F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E8782471-74F4-48CA-9551-1D4CF94CA9CC}

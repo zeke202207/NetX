@@ -1,8 +1,9 @@
 {
   "Id": "00000000000000000000000000000002",
-  "Name": "Module1 Module",
+  "Name": "Module1",
   "Version": "1.0.0.0",
   "Enabled": true,
   "FileName": "Module1.dll",
-  "IsSharedAssemblyContext":false
+  "IsSharedAssemblyContext": false,
+  "Description": "这是一个测试模块Module1"
 }

@@ -7,10 +7,14 @@ using NetX.Authentication;
 using NetX.Authentication.Core;
 using NetX.DatabaseSetup;
 using NetX.EventBus;
+using NetX.Swagger;
 using NetX.Tenants;
+using System.ComponentModel;
 
 namespace Module2.Controllers
 {
+
+    [ApiControllerDescriptionAttribute("Module2", Description = "测试控制器描述Module2", HeaderKeys = new string[] { "version","x-test1","x-test2" })]
     [ApiController]
     [Route("[controller]/[action]")]
     public class Test2Controller : ApiPermissionController
@@ -54,6 +58,11 @@ namespace Module2.Controllers
             return new List<string>() { typeof(Newtonsoft.Json.JsonConvert).Assembly.GetName().Version.ToString() };
         }
 
+        /// <summary>
+        /// 获取访问Token
+        /// </summary>
+        /// <returns></returns>
+        [ApiActionDescriptionAttribute("获取访问Token接口")]
         [NoPermission]
         [HttpGet]
         public ActionResult GetToken()

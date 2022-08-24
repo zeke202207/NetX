@@ -4,5 +4,11 @@
         <name>Module2</name>
     </assembly>
     <members>
+        <member name="M:Module2.Controllers.Test2Controller.GetToken">
+            <summary>
+            获取访问Token
+            </summary>
+            <returns></returns>
+        </member>
     </members>
 </doc>

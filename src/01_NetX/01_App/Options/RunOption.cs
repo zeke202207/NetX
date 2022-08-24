@@ -65,7 +65,7 @@ public sealed class RunOption
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="option"></param>
+    /// <param name="options"></param>
     /// <returns></returns>
     public RunOption ConfigOption(WebApplicationOptions options)
     {
@@ -106,6 +106,11 @@ public sealed class RunOption
         return this;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="configServiceCollection"></param>
+    /// <returns></returns>
     public RunOption ConfigrationServiceCollection(Action<IServiceCollection> configServiceCollection)
     {
         ActionServiceCollection = configServiceCollection;
@@ -149,6 +154,7 @@ public sealed class RunOption
                     Directory.EnumerateFiles(refDir)
                     .AsParallel().ForAll(p => options.Dependencies.Add(p));
                 Modules.Add(options.Id, options);
+                InternalApp.UserModeulOptions.Add(options);
             });
     }
 }

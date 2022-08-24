@@ -15,11 +15,11 @@ namespace NetX.Module
         /// <summary>
         /// 模块配置项 <see cref="ModuleOptions"/>
         /// </summary>
-        public ModuleOptions ModuleOptions { get; set; }
+        public ModuleOptions? ModuleOptions { get; set; }
 
         /// <summary>
         /// 模块初始化器 <see cref="ModuleInitializer"/>
         /// </summary>
-        public ModuleInitializer Initialize { get; set; }
+        public ModuleInitializer? Initialize { get; set; }
     }
 }

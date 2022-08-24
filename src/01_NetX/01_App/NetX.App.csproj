@@ -9,9 +9,6 @@
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\00_Common\NetX.Common.csproj" />
     <ProjectReference Include="..\02_Module\NetX.Module.csproj" />
     <ProjectReference Include="..\03_EventBus\NetX.EventBus.csproj" />
@@ -20,6 +17,7 @@
     <ProjectReference Include="..\06_Authentication\Authentication.Core\NetX.Authentication.Core.csproj" />
     <ProjectReference Include="..\06_Authentication\Authentication.Jwt\NetX.Authentication.Jwt.csproj" />
     <ProjectReference Include="..\07_Logging\NetX.Logging.csproj" />
+    <ProjectReference Include="..\08_ApiDoc\Swagger\NetX.Swagger.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="config\logging.json">
