@@ -37,7 +37,7 @@ public class NetXPrincipal
     /// <summary>
     /// 内部唯一标识
     /// </summary>
-    public string UserId
+    public string? UserId
     {
         get;
         private set;
@@ -46,7 +46,7 @@ public class NetXPrincipal
     /// <summary>
     /// 登录名
     /// </summary>
-    public string UserName
+    public string? UserName
     {
         get;
         private set;
@@ -55,7 +55,7 @@ public class NetXPrincipal
     /// <summary>
     /// 显示名
     /// </summary>
-    public string DisplayName
+    public string? DisplayName
     {
         get;
         private set;
@@ -65,6 +65,15 @@ public class NetXPrincipal
     /// 数据库配置信息 
     /// </summary>
     internal DatabaseInfo DatabaseInfo
+    {
+        get;
+        private set;
+    }
+
+    /// <summary>
+    /// 是否已授权
+    /// </summary>
+    internal bool IsAuthenticated
     {
         get;
         private set;
@@ -88,6 +97,24 @@ public class NetXPrincipal
     /// <summary>
     /// 
     /// </summary>
+    /// <param name="tenant"></param>
+    /// <param name="tenantOption"></param>
+    public NetXPrincipal(Tenant tenant, TenantOption tenantOption)
+    {
+        //租户信息
+        this.Tenant = tenant;
+        this.TenantType = tenantOption.TenantType;
+        this.DatabaseInfo = tenantOption.DatabaseInfo;
+        //身份信息
+        this.IsAuthenticated = false;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="identity"></param>
+    /// <param name="tenant"></param>
+    /// <param name="tenantOption"></param>
     public NetXPrincipal(IIdentity identity, Tenant tenant, TenantOption tenantOption)
     {
         //租户信息
@@ -95,7 +122,18 @@ public class NetXPrincipal
         this.TenantType = tenantOption.TenantType;
         this.DatabaseInfo = tenantOption.DatabaseInfo;
         //身份信息
+        SetIdentityInfo(identity);
+    }
+
+    /// <summary>
+    /// 设置身份信息
+    /// </summary>
+    /// <param name="identity"></param>
+    public void SetIdentityInfo(IIdentity identity)
+    {
+        //身份信息
         this.Identity = identity;
+        this.IsAuthenticated = identity.IsAuthenticated;
         var claimsIdentity = identity as ClaimsIdentity;
         if (claimsIdentity != null)
         {

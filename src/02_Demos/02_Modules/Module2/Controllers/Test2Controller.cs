@@ -26,11 +26,17 @@ namespace Module2.Controllers
         private readonly IOptions<CookiePolicyOptions> _options;
         private readonly ILoginHandler _login;
         private readonly MigrationService _migrationService;
+        private readonly IFreeSql _fsql;
 
         public Test2Controller(
             ILoginHandler login,
             MigrationService migrationService,
-            ILogger<Test2Controller> logger, ITest test, IEventPublisher publisher, ITenantAccessor<Tenant> accessor, IOptions<CookiePolicyOptions> c)
+            ILogger<Test2Controller> logger, 
+            ITest test,
+            IEventPublisher publisher,
+            ITenantAccessor<Tenant> accessor,
+            IOptions<CookiePolicyOptions> c,
+            IFreeSql fsql)
         {
             _logger = logger;
             _test = test;
@@ -39,6 +45,7 @@ namespace Module2.Controllers
             _options = c;
             _login = login;
             _migrationService = migrationService;
+            this._fsql = fsql;
         }
 
         [HttpGet(Name = "zeke2")]
@@ -67,6 +74,7 @@ namespace Module2.Controllers
         [HttpGet]
         public ActionResult GetToken()
         {
+            var result = _fsql.Queryable<Log1>().ToList();
             return new JsonResult(_login.Handle(new ClaimModel()
             {
                 UserId = "12345",
@@ -82,6 +90,13 @@ namespace Module2.Controllers
             _migrationService.SetupDatabase();
             return Task.FromResult("hi,zeke");
         }
+    }
+
+    public class Log1
+    {
+        public int Id { get; set; }
+
+        public string Text { get; set; }
     }
 
     public interface ITest

@@ -77,11 +77,22 @@ NetX 前身是 ``` sagittarius ``` ,一个我业余时间开发的模块化组�
 
 ##  5. <a name=':pray:'></a>感谢 :pray:
 
-本框架设计参考了一些优秀的设计思路，非常感谢这些开源作者的付出（排名不分先后）
+1. 本框架设计参考了一些优秀的设计思路，非常感谢这些开源作者的付出（排名不分先后）
 
-* 框架
-     - NetModular
-     - CoolCat
-     - Furion
-* 博文
-     - [Creating a multi-tenant .NET Core Application](https://michael-mckenna.com/multi-tenant-asp-dot-net-core-application-tenant-resolution)
+     * 框架
+          - NetModular
+          - CoolCat
+          - Furion
+     * 博文
+          - [Creating a multi-tenant .NET Core Application](https://michael-mckenna.com/multi-tenant-asp-dot-net-core-application-tenant-resolution)
+
+2. 本框架使用了一些开源项目
+
+     <!-- 图标生成工具 :https://shields.io/category/version -->
+     
+     | 依赖项  |  版本|
+     |  ----  | ---- |
+     | serilog| <img src="https://img.shields.io/badge/serilog-2.11.0-blue"/> |
+     | swagger | <img src="https://img.shields.io/badge/swagger-6.4.0-blue"/>  |
+
+             

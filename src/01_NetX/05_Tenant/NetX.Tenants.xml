@@ -45,6 +45,11 @@
             数据库配置信息 
             </summary>
         </member>
+        <member name="P:NetX.Tenants.NetXPrincipal.IsAuthenticated">
+            <summary>
+            是否已授权
+            </summary>
+        </member>
         <member name="P:NetX.Tenants.NetXPrincipal.ConnectionStr">
             <summary>
             数据库连接字符串
@@ -60,10 +65,26 @@
             Schema Name
             </summary>
         </member>
+        <member name="M:NetX.Tenants.NetXPrincipal.#ctor(NetX.Tenants.Tenant,NetX.Tenants.TenantOption)">
+            <summary>
+            
+            </summary>
+            <param name="tenant"></param>
+            <param name="tenantOption"></param>
+        </member>
         <member name="M:NetX.Tenants.NetXPrincipal.#ctor(System.Security.Principal.IIdentity,NetX.Tenants.Tenant,NetX.Tenants.TenantOption)">
             <summary>
             
             </summary>
+            <param name="identity"></param>
+            <param name="tenant"></param>
+            <param name="tenantOption"></param>
+        </member>
+        <member name="M:NetX.Tenants.NetXPrincipal.SetIdentityInfo(System.Security.Principal.IIdentity)">
+            <summary>
+            设置身份信息
+            </summary>
+            <param name="identity"></param>
         </member>
         <member name="T:NetX.Tenants.TenantContext">
             <summary>
@@ -100,6 +121,14 @@
             </summary>
             <typeparam name="T"></typeparam>
             <param name="builder"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.Tenants.ApplicationBuilderExtensions.UserMultiTenancyDatabase(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            使用租户数据库
+            </summary>
+            <param name="app"></param>
+            <param name="fsql"></param>
             <returns></returns>
         </member>
         <member name="T:NetX.Tenants.HttpContextExtensions">
@@ -193,6 +222,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:NetX.Tenants.TenantBuilder`1.WithDatabase">
+            <summary>
+            使用租户数据库
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:NetX.Tenants.TenantExtension.ToConnStr(NetX.Tenants.DatabaseInfo,NetX.Tenants.TenantType,System.String)">
             <summary>
             数据库连接字符串
@@ -216,6 +251,13 @@
             获取创建数据库连接字符串
             </summary>
             <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.Tenants.TenantExtension.ToDatabaseType(NetX.Tenants.DatabaseType)">
+            <summary>
+            数据库类型转换
+            </summary>
+            <param name="dbType"></param>
             <returns></returns>
         </member>
         <member name="T:NetX.Tenants.TenantMiddleware`1">

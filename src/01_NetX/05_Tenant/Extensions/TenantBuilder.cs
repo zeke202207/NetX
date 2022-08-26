@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using FreeSql;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
@@ -109,6 +110,25 @@ public class TenantBuilder<T>
         _services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         _services.Add(ServiceDescriptor.Describe(typeof(ITenantResolutionStrategy), typeof(HostResolutionStrategy), ServiceLifetime.Transient));
         _services.Add(ServiceDescriptor.Describe(typeof(ITenantStore<T>), typeof(InMemoryTenantStore), ServiceLifetime.Transient));
+        return this;
+    }
+
+    /// <summary>
+    /// 使用租户数据库
+    /// </summary>
+    /// <returns></returns>
+    public TenantBuilder<T> WithDatabase()
+    {
+        var _fsql = new FreeSqlCloud<string>();
+        _fsql.DistributeTrace = log => Console.WriteLine(log.Split('\n')[0].Trim());
+        //分布式
+        _fsql.Register("main", () =>
+        {
+            var db = new FreeSqlBuilder().UseConnectionString(DataType.Sqlite, "data source=main.db").Build();
+            //db.Aop.CommandAfter += ...
+            return db;
+        });
+        _services.AddSingleton<IFreeSql>(_fsql);
         return this;
     }
 }

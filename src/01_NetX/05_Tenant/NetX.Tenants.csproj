@@ -6,6 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="FreeSql.Cloud" Version="1.5.2" />
+    <PackageReference Include="FreeSql.Provider.MySql" Version="3.2.665" />
+    <PackageReference Include="FreeSql.Provider.Sqlite" Version="3.2.665" />
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
@@ -15,5 +18,10 @@
   <ItemGroup>
     <ProjectReference Include="..\00_Common\NetX.Common.csproj" />
     <ProjectReference Include="..\06_Authentication\Authentication.Jwt\NetX.Authentication.Jwt.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="main.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>

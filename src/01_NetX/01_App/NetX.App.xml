@@ -125,6 +125,7 @@
             <param name="accessor"></param>
             <param name="tenantOption"></param>
             <param name="migrationService"></param>
+            <param name="dbAccessor"></param>
         </member>
         <member name="M:NetX.App.TenantContextFilter.OnResourceExecuted(Microsoft.AspNetCore.Mvc.Filters.ResourceExecutedContext)">
             <summary>

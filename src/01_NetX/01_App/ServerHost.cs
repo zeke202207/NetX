@@ -38,11 +38,11 @@ public static class ServerHost
             builder.Configuration[nameof(urls)];
         if (!string.IsNullOrWhiteSpace(startUrls))
             builder.WebHost.UseUrls(startUrls);
-        // 注册服应用务组件
-        options.ActionServiceCollection?.Invoke(builder.Services);
         //注入系统、用户模块
         builder.InjectFrameworkService(builder.Environment, builder.Configuration);
         builder.InjectUserModulesService(options.Modules, builder.Environment, builder.Configuration);
+        // 注册服应用务组件
+        options.ActionServiceCollection?.Invoke(builder.Services);
         //所有模块数据库迁移配置完毕，注入数据库迁移
         builder.Services.BuildFluentMigrator();
         //添加日志
@@ -51,10 +51,10 @@ public static class ServerHost
         //路由
         app.UseRouting();
         options.App = app;
-        options.ActionConfigure?.Invoke(app);
         // 注册系统、应用中间件组件
         app.InjectFrameworkApplication(builder.Environment);
         app.InjectUserModulesApplication(options.Modules, builder.Environment);
+        options.ActionConfigure?.Invoke(app);
         InternalApp.RootServices = app.Services;
         app.UseAuthentication();
         app.UseAuthorization();
