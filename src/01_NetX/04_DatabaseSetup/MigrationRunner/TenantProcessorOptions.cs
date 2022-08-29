@@ -16,7 +16,7 @@ public class TenantProcessorOptions : IOptionsSnapshot<ProcessorOptions>
     /// </summary>
     public ProcessorOptions Value => new ProcessorOptions()
     {
-        ConnectionString = TenantContext.Current.Principal.ConnectionStr,
+        ConnectionString = TenantContext.CurrentTenant.ConnectionStr,
         Timeout = TimeSpan.FromSeconds(_commandTimeout)
     };
 

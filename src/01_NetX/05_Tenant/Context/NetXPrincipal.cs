@@ -26,15 +26,6 @@ public class NetXPrincipal
     }
 
     /// <summary>
-    /// 租户系统类型
-    /// </summary>
-    public TenantType TenantType
-    {
-        get;
-        private set;
-    }
-
-    /// <summary>
     /// 内部唯一标识
     /// </summary>
     public string? UserId
@@ -62,15 +53,6 @@ public class NetXPrincipal
     }
 
     /// <summary>
-    /// 数据库配置信息 
-    /// </summary>
-    internal DatabaseInfo DatabaseInfo
-    {
-        get;
-        private set;
-    }
-
-    /// <summary>
     /// 是否已授权
     /// </summary>
     internal bool IsAuthenticated
@@ -80,32 +62,13 @@ public class NetXPrincipal
     }
 
     /// <summary>
-    /// 数据库连接字符串
-    /// </summary>
-    public string ConnectionStr => DatabaseInfo.ToConnStr(this.TenantType, this.Tenant?.TenantId);
-
-    /// <summary>
-    /// 创建数据需要的连接字符串
-    /// </summary>
-    public string CreateSchemaConnectionStr => DatabaseInfo.ToCreateDatabaseConnStr();
-
-    /// <summary>
-    /// Schema Name
-    /// </summary>
-    public string DatabaseName => DatabaseInfo.ToDatabaseName(this.TenantType, this.Tenant?.TenantId);
-
-    /// <summary>
     /// 
     /// </summary>
     /// <param name="tenant"></param>
-    /// <param name="tenantOption"></param>
-    public NetXPrincipal(Tenant tenant, TenantOption tenantOption)
+    public NetXPrincipal(Tenant tenant)
     {
         //租户信息
         this.Tenant = tenant;
-        this.TenantType = tenantOption.TenantType;
-        this.DatabaseInfo = tenantOption.DatabaseInfo;
-        //身份信息
         this.IsAuthenticated = false;
     }
 
@@ -114,26 +77,24 @@ public class NetXPrincipal
     /// </summary>
     /// <param name="identity"></param>
     /// <param name="tenant"></param>
-    /// <param name="tenantOption"></param>
-    public NetXPrincipal(IIdentity identity, Tenant tenant, TenantOption tenantOption)
+    public NetXPrincipal(IIdentity identity, Tenant tenant)
     {
         //租户信息
         this.Tenant = tenant;
-        this.TenantType = tenantOption.TenantType;
-        this.DatabaseInfo = tenantOption.DatabaseInfo;
+        this.IsAuthenticated = identity.IsAuthenticated;
         //身份信息
         SetIdentityInfo(identity);
     }
+
 
     /// <summary>
     /// 设置身份信息
     /// </summary>
     /// <param name="identity"></param>
-    public void SetIdentityInfo(IIdentity identity)
+    internal void SetIdentityInfo(IIdentity identity)
     {
         //身份信息
         this.Identity = identity;
-        this.IsAuthenticated = identity.IsAuthenticated;
         var claimsIdentity = identity as ClaimsIdentity;
         if (claimsIdentity != null)
         {

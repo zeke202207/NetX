@@ -48,10 +48,7 @@ public class TenantContextFilter : BaseFilter, IResourceFilter, IAsyncResourceFi
         var identity = context.HttpContext.User.Identity as ClaimsIdentity;
         if(null != _accessor.Tenant)
         {
-            if (TenantContext.Current.Principal == null)
-                TenantContext.Current.Init(new NetXPrincipal(identity, _accessor.Tenant, _tenantOption));
-            else
-                TenantContext.Current.Principal.SetIdentityInfo(identity);
+            TenantContext.CurrentTenant.InitPrincipal(new NetXPrincipal(identity, _accessor.Tenant), _tenantOption);
             _migrationService.SetupDatabase();
         }
     }

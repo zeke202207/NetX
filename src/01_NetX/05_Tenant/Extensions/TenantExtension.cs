@@ -65,7 +65,7 @@ public static class TenantExtension
     /// <returns></returns>
     public static DataType ToDatabaseType(this DatabaseType dbType)
     {
-        switch (TenantContext.Current.Principal.DatabaseInfo.DatabaseType)
+        switch (TenantContext.CurrentTenant.DatabaseInfo.DatabaseType)
         {
             case DatabaseType.MySql:
             default:

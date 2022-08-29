@@ -14,7 +14,7 @@ public class TenantMigrationVersionTable : IVersionTableMetaData
     /// </summary>
     public TenantMigrationVersionTable()
     {
-        SchemaName = TenantContext.Current.Principal.DatabaseName;
+        SchemaName = TenantContext.CurrentTenant.DatabaseName;
     }
 
     /// <summary>

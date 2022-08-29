@@ -117,7 +117,7 @@ public class TenantBuilder<T>
     /// 使用租户数据库
     /// </summary>
     /// <returns></returns>
-    public TenantBuilder<T> WithDatabase()
+    public TenantBuilder<T> WithTenancyDatabase()
     {
         var _fsql = new FreeSqlCloud<string>();
         _fsql.DistributeTrace = log => Console.WriteLine(log.Split('\n')[0].Trim());

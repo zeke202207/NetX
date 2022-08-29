@@ -32,29 +32,30 @@ public static class ApplicationBuilderExtensions
     /// <param name="app"></param>
     /// <param name="fsql"></param>
     /// <returns></returns>
-    public static IApplicationBuilder UserMultiTenancyDatabase(this IApplicationBuilder app)
+    public static IApplicationBuilder UserTenancyDatabase(this IApplicationBuilder app)
     {
         app.Use(async (context, next) =>
         {
-            var _freeSql = app.ApplicationServices.GetService<IFreeSql>() as FreeSqlCloud<string>;
+            using var scope = app.ApplicationServices.CreateScope();
+            var _freeSql = scope.ServiceProvider.GetService<IFreeSql>() as FreeSqlCloud<string>;
             try
             {
                 //处理Tenant信息
-                var accessor = app.ApplicationServices.GetService<ITenantAccessor<Tenant>>();
-                var tenantOptions = app.ApplicationServices.GetService<TenantOption>();
+                var accessor = scope.ServiceProvider.GetService<ITenantAccessor<Tenant>>();
+                var tenantOptions = scope.ServiceProvider.GetService<TenantOption>();
                 if (null != accessor && null != tenantOptions)
-                    TenantContext.Current.Init(new NetXPrincipal(accessor.Tenant, tenantOptions));
-                _freeSql?.Register(TenantContext.Current.Principal.Tenant.TenantId, () =>
+                    TenantContext.CurrentTenant.InitPrincipal(new NetXPrincipal(accessor.Tenant), tenantOptions);
+                _freeSql?.Register(TenantContext.CurrentTenant.Principal.Tenant.TenantId, () =>
                 {
                     var db = new FreeSqlBuilder().UseConnectionString(
-                        TenantContext.Current.Principal.DatabaseInfo.DatabaseType.ToDatabaseType(),
-                        TenantContext.Current.Principal.ConnectionStr)
+                        TenantContext.CurrentTenant.DatabaseInfo.DatabaseType.ToDatabaseType(),
+                        TenantContext.CurrentTenant.ConnectionStr)
                     .Build();
                     //db.Aop.CommandAfter += ...
                     return db;
                 });
                 // 切换租户
-                _freeSql?.Change(TenantContext.Current.Principal.Tenant.TenantId);
+                _freeSql?.Change(TenantContext.CurrentTenant.Principal.Tenant.TenantId);
                 await next();
             }
             finally

@@ -20,6 +20,6 @@ public class TenantConnectionStringReader : IConnectionStringReader
     /// <returns></returns>
     public string GetConnectionString(string connectionStringOrName)
     {
-        return TenantContext.Current.Principal.ConnectionStr;
+        return TenantContext.CurrentTenant.ConnectionStr;
     }
 }

@@ -20,11 +20,6 @@
             租户信息
             </summary>
         </member>
-        <member name="P:NetX.Tenants.NetXPrincipal.TenantType">
-            <summary>
-            租户系统类型
-            </summary>
-        </member>
         <member name="P:NetX.Tenants.NetXPrincipal.UserId">
             <summary>
             内部唯一标识
@@ -40,45 +35,23 @@
             显示名
             </summary>
         </member>
-        <member name="P:NetX.Tenants.NetXPrincipal.DatabaseInfo">
-            <summary>
-            数据库配置信息 
-            </summary>
-        </member>
         <member name="P:NetX.Tenants.NetXPrincipal.IsAuthenticated">
             <summary>
             是否已授权
             </summary>
         </member>
-        <member name="P:NetX.Tenants.NetXPrincipal.ConnectionStr">
-            <summary>
-            数据库连接字符串
-            </summary>
-        </member>
-        <member name="P:NetX.Tenants.NetXPrincipal.CreateSchemaConnectionStr">
-            <summary>
-            创建数据需要的连接字符串
-            </summary>
-        </member>
-        <member name="P:NetX.Tenants.NetXPrincipal.DatabaseName">
-            <summary>
-            Schema Name
-            </summary>
-        </member>
-        <member name="M:NetX.Tenants.NetXPrincipal.#ctor(NetX.Tenants.Tenant,NetX.Tenants.TenantOption)">
+        <member name="M:NetX.Tenants.NetXPrincipal.#ctor(NetX.Tenants.Tenant)">
             <summary>
             
             </summary>
             <param name="tenant"></param>
-            <param name="tenantOption"></param>
         </member>
-        <member name="M:NetX.Tenants.NetXPrincipal.#ctor(System.Security.Principal.IIdentity,NetX.Tenants.Tenant,NetX.Tenants.TenantOption)">
+        <member name="M:NetX.Tenants.NetXPrincipal.#ctor(System.Security.Principal.IIdentity,NetX.Tenants.Tenant)">
             <summary>
             
             </summary>
             <param name="identity"></param>
             <param name="tenant"></param>
-            <param name="tenantOption"></param>
         </member>
         <member name="M:NetX.Tenants.NetXPrincipal.SetIdentityInfo(System.Security.Principal.IIdentity)">
             <summary>
@@ -91,20 +64,56 @@
             租户上下文
             </summary>
         </member>
-        <member name="P:NetX.Tenants.TenantContext.Current">
+        <member name="P:NetX.Tenants.TenantContext.CurrentTenant">
             <summary>
             当前线程的租户上下文信息
             </summary>
         </member>
-        <member name="M:NetX.Tenants.TenantContext.Init(NetX.Tenants.NetXPrincipal)">
+        <member name="P:NetX.Tenants.TenantContext.TenantType">
+            <summary>
+            租户系统类型
+            </summary>
+        </member>
+        <member name="P:NetX.Tenants.TenantContext.DatabaseInfo">
+            <summary>
+            数据库配置信息 
+            </summary>
+        </member>
+        <member name="P:NetX.Tenants.TenantContext.IsAuthenticated">
+            <summary>
+            是否已授权
+            </summary>
+        </member>
+        <member name="P:NetX.Tenants.TenantContext.ConnectionStr">
+            <summary>
+            数据库连接字符串
+            </summary>
+        </member>
+        <member name="P:NetX.Tenants.TenantContext.CreateSchemaConnectionStr">
+            <summary>
+            创建数据需要的连接字符串
+            </summary>
+        </member>
+        <member name="P:NetX.Tenants.TenantContext.DatabaseName">
+            <summary>
+            Schema Name
+            </summary>
+        </member>
+        <member name="M:NetX.Tenants.TenantContext.InitPrincipal(NetX.Tenants.NetXPrincipal,NetX.Tenants.TenantOption)">
             <summary>
             初始化租户信息
             </summary>
             <param name="principal"></param>
+            <param name="tenantOption"></param>
         </member>
         <member name="P:NetX.Tenants.TenantContext.Principal">
             <summary>
             主体对象
+            </summary>
+        </member>
+        <member name="P:NetX.Tenants.TenantContext.TenantOption">
+            <summary>
+            当前租户类型
             </summary>
         </member>
         <member name="M:NetX.Tenants.ApplicationBuilderExtensions.UseMultiTenancy``1(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
@@ -123,7 +132,7 @@
             <param name="builder"></param>
             <returns></returns>
         </member>
-        <member name="M:NetX.Tenants.ApplicationBuilderExtensions.UserMultiTenancyDatabase(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+        <member name="M:NetX.Tenants.ApplicationBuilderExtensions.UserTenancyDatabase(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
             <summary>
             使用租户数据库
             </summary>
@@ -222,7 +231,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:NetX.Tenants.TenantBuilder`1.WithDatabase">
+        <member name="M:NetX.Tenants.TenantBuilder`1.WithTenancyDatabase">
             <summary>
             使用租户数据库
             </summary>

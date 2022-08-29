@@ -57,13 +57,13 @@ ServerHost.Start(
                 {
                     options.ConsentCookie.Name = tenant.TenantId + "-consent";
                 })
-                .WithDatabase();
+                .WithTenancyDatabase();
     })
     .ConfigApplication(app =>
     {
         //1.¶à×â»§
         app.UseMultiTenancy()
-        .UserMultiTenancyDatabase();
+        .UserTenancyDatabase();
     })
     , "http://*:8220"
     );

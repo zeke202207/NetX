@@ -51,7 +51,7 @@ public class MigrationService
                 //创建数据库
                 using (var conn = dbFactory.Factory.CreateConnection())
                 {
-                    conn.ConnectionString = TenantContext.Current.Principal.CreateSchemaConnectionStr;
+                    conn.ConnectionString = TenantContext.CurrentTenant.CreateSchemaConnectionStr;
                     if (conn.State != System.Data.ConnectionState.Open)
                         conn.Open();
                     var cmd = conn.CreateCommand();
@@ -97,7 +97,7 @@ public class MigrationService
         {
             case MigrationSupportDbType.MySql5:
             default:
-                return $"SELECT * FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = '{TenantContext.Current.Principal.DatabaseName}';";
+                return $"SELECT * FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = '{TenantContext.CurrentTenant.DatabaseName}';";
         }
     }
 
@@ -111,7 +111,7 @@ public class MigrationService
         {
             case MigrationSupportDbType.MySql5:
             default:
-                return $"CREATE DATABASE `{TenantContext.Current.Principal.DatabaseName}`";
+                return $"CREATE DATABASE `{TenantContext.CurrentTenant.DatabaseName}`";
         }
     }
 
