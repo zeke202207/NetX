@@ -61,6 +61,7 @@ NetX 前身是 ``` sagittarius ``` ,一个我业余时间开发的模块化组�
 
 ###  2.5. <a name='-1'></a>数据库对多租户的支持
 
+![tenant workflow](./doc/images/tenantworkflow.png#pic_center)
 
 
 ##  3. <a name=':fire:'></a>开发计划 :fire:
@@ -94,5 +95,6 @@ NetX 前身是 ``` sagittarius ``` ,一个我业余时间开发的模块化组�
      |  ----  | ---- |
      | serilog| <img src="https://img.shields.io/badge/serilog-2.11.0-blue"/> |
      | swagger | <img src="https://img.shields.io/badge/swagger-6.4.0-blue"/>  |
+     | freesql cloud | <img src="https://img.shields.io/badge/swagger-1.5.2-blue"/>  |
 
              
