@@ -7,9 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="..\..\01_NetX\01_App\config\logging.json" Link="config\logging.json" />
-    <Content Include="..\..\01_NetX\01_App\config\netx.json" Link="config\netx.json" />
-    <Content Include="..\..\01_NetX\01_App\config\tenants.json" Link="config\tenants.json" />
+    <Content Include="..\..\01_NetX\01_App\config\logging.json" Link="config\logging.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\01_NetX\01_App\config\netx.json" Link="config\netx.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\01_NetX\01_App\config\tenants.json" Link="config\tenants.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

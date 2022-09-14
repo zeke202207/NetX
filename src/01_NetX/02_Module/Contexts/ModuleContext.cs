@@ -10,7 +10,7 @@ namespace NetX.Module
         /// <summary>
         /// 配置项
         /// </summary>
-        public IConfiguration Configuration { get; set; }
+        public IConfiguration? Configuration { get; set; }
 
         /// <summary>
         /// 模块配置项 <see cref="ModuleOptions"/>

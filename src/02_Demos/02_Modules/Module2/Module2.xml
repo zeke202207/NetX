@@ -4,7 +4,7 @@
         <name>Module2</name>
     </assembly>
     <members>
-        <member name="M:Module2.Controllers.Test2Controller.GetToken">
+        <member name="M:Module2.Controllers.Test2Controller.GetToken(Module2.Controllers.LoginModel)">
             <summary>
             获取访问Token
             </summary>

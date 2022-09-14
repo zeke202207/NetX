@@ -72,7 +72,7 @@ namespace NetX.Module
             ModuleContext moduleContext)
         {
             var modelPath = Path.Combine(AppContext.BaseDirectory, ModuleSetupConst.C_MODULE_DIRECTORYNAME);
-            var filePath = Path.Combine(modelPath, Path.GetFileNameWithoutExtension(options.FileName), options.FileName);
+            var filePath = Path.Combine(modelPath, Path.GetFileNameWithoutExtension(options.Name), options.FileName);
             var refPath = Path.Combine(modelPath, ModuleSetupConst.C_MODULE_REFDIRECTORYNAME);
 
             using (var fs = new FileStream(filePath, FileMode.Open))

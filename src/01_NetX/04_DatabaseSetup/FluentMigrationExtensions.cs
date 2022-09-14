@@ -56,7 +56,9 @@ public static class FluentMigrationExtensions
             .AddDatabase(supportDbType)
             .ScanIn(assemblies)
             .For
-            .Migrations())
+            .Migrations()
+            .For
+            .EmbeddedResources())
             .AddLogging(lb => lb.AddFluentMigratorConsole());
         services.AddSingleton(sp =>
         {

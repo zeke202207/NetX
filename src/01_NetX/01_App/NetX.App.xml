@@ -113,6 +113,14 @@
             <param name="env"></param>
             <returns></returns>
         </member>
+        <member name="M:NetX.App.ServiceCollectionExtensions.AddServicesFromAssembly(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Reflection.Assembly)">
+            <summary>
+            从指定程序集中注入服务
+            </summary>
+            <param name="services"></param>
+            <param name="assembly"></param>
+            <returns></returns>
+        </member>
         <member name="T:NetX.App.TenantContextFilter">
             <summary>
             TenantContext过滤器

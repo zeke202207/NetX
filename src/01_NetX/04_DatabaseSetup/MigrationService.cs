@@ -111,7 +111,7 @@ public class MigrationService
         {
             case MigrationSupportDbType.MySql5:
             default:
-                return $"CREATE DATABASE `{TenantContext.CurrentTenant.DatabaseName}`";
+                return $"CREATE DATABASE `{TenantContext.CurrentTenant.DatabaseName}` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci";
         }
     }
 
@@ -127,7 +127,7 @@ public class MigrationService
         _services.AddScoped<IConnectionStringAccessor>(sp => { return selectingProcessorAccessor; });
         _services.AddScoped<IVersionTableMetaData>(sp => { return new TenantMigrationVersionTable(); });
         _services.ConfigureRunner(rb => rb.WithGlobalCommandTimeout(TimeSpan.FromSeconds(_commandTimeout)));
-        var serviceProvider = _services.BuildServiceProvider(false);
+        var serviceProvider = _services.BuildServiceProvider(false);        
         using (var scope = serviceProvider.CreateScope())
         {
             var profileLoader = serviceProvider.GetService(typeof(IProfileLoader)) as IProfileLoader;

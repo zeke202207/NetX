@@ -9,6 +9,13 @@ namespace NetX.Tenants;
 /// </summary>
 public class InMemoryTenantStore : ITenantStore<Tenant>
 {
+    private readonly TenantOption _tenantOption;
+
+    public InMemoryTenantStore(TenantOption tenantOption)
+    {
+        _tenantOption = tenantOption;
+    }
+
     /// <summary>
     /// 根据租户身份获取租户信息
     /// </summary>
@@ -16,9 +23,17 @@ public class InMemoryTenantStore : ITenantStore<Tenant>
     /// <returns></returns>
     public async Task<Tenant> GetTenantAsync(string Identifier)
     {
-        var tenant = InMemoryTenantProvider.Instance.Tenants
+        if (_tenantOption.TenantType == TenantType.Multi)
+        {
+            var tenant = InMemoryTenantProvider.Instance.Tenants
             .SingleOrDefault(p => p.Identifier.Trim().ToLower().Equals(Identifier.Substring(0, Identifier.IndexOf(".")).Trim().ToLower()));
-        return await Task.FromResult(tenant);
+            return await Task.FromResult(tenant);
+        }
+        else
+        {
+            var tenant = InMemoryTenantProvider.Instance.Tenants.FirstOrDefault();
+            return await Task.FromResult(tenant);
+        }
     }
 }
 

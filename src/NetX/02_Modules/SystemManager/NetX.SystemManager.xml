@@ -1,0 +1,194 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>NetX.SystemManager</name>
+    </assembly>
+    <members>
+        <member name="T:NetX.SystemManager.Controllers.AccountController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.SystemManager.Controllers.AccountController.Login(NetX.SystemManager.Models.LoginModel)">
+            <summary>
+            获取访问Token
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.SystemManager.Controllers.AccountController.GetUserInfo">
+            <summary>
+            Token验证并获取用户信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.SystemManager.Controllers.AccountController.GetAccountList(NetX.SystemManager.Models.UserListParam)">
+            <summary>
+            
+            </summary>
+            <param name="roleListparam"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.SystemManager.Controllers.AccountController.IsAccountExist(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="userId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.SystemManager.Controllers.AccountController.GetPermCode">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.SystemManager.Controllers.AccountController.Logout">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:NetX.SystemManager.Controllers.DeptController">
+            <summary>
+            部门管理
+            </summary>
+        </member>
+        <member name="T:NetX.SystemManager.Controllers.MenuController">
+            <summary>
+            菜单管理
+            </summary>
+        </member>
+        <member name="M:NetX.SystemManager.Core.AccountService.Login(System.String,System.String)">
+            <summary>
+            登录
+            </summary>
+            <param name="username"></param>
+            <param name="password"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.SystemManager.Core.AccountService.GetToken(NetX.Authentication.Core.ClaimModel)">
+            <summary>
+            获取Token信息
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:NetX.SystemManager.Core.AccountService.GetUserInfo(System.String)">
+            <summary>
+            获取用户信息
+            </summary>
+            <param name="userId"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:NetX.SystemManager.Core.AccountService.GetAccountLists(NetX.SystemManager.Models.UserListParam)">
+            <summary>
+            获取用户列表
+            </summary>
+            <param name="userParam"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.SystemManager.Core.AccountService.IsAccountExist(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="userName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.SystemManager.Core.Impl.MenuService.AddMenu(NetX.SystemManager.Models.MenuRequestModel)">
+            <summary>
+            新增菜单
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.SystemManager.Core.Impl.MenuService.RemoveMenu(System.String)">
+            <summary>
+            删除菜单
+            </summary>
+            <param name="menuId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.SystemManager.Core.Impl.MenuService.UpdateMenu(NetX.SystemManager.Models.MenuRequestModel)">
+            <summary>
+            跟新菜单信息
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.SystemManager.Core.Impl.MenuService.GetCurrentUserMenuList(System.String)">
+            <summary>
+            获取当前用户可访问的菜单列表集合
+            </summary>
+            <param name="userId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.SystemManager.Core.DeptService.AddDept(NetX.SystemManager.Models.DeptRequestModel)">
+            <summary>
+            新增部門
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:NetX.SystemManager.Core.DeptService.UpdateDept(NetX.SystemManager.Models.DeptRequestModel)">
+            <summary>
+            update the department info
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:NetX.SystemManager.Core.DeptService.RemoveDept(System.String)">
+            <summary>
+            hard remove a department
+            </summary>
+            <param name="deptId"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:NetX.SystemManager.Core.DeptService.GetDeptList(NetX.SystemManager.Models.DeptListParam)">
+            <summary>
+            get the deptment list
+            </summary>
+            <param name="queryParam"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="T:NetX.SystemManager.Models.LoginResult">
+            <summary>
+            登录返回结果实体对象
+            </summary>
+        </member>
+        <member name="T:NetX.SystemManager.Models.LoginModel">
+            <summary>
+            登录实体对象
+            </summary>
+        </member>
+        <member name="P:NetX.SystemManager.Models.LoginModel.UserName">
+            <summary>
+            用户名
+            </summary>
+        </member>
+        <member name="P:NetX.SystemManager.Models.LoginModel.Password">
+            <summary>
+            密码
+            </summary>
+        </member>
+        <member name="T:NetX.SystemManager.Status">
+            <summary>
+            启用状态
+            </summary>
+        </member>
+        <member name="F:NetX.SystemManager.Status.Disabled">
+            <summary>
+            禁用
+            </summary>
+        </member>
+        <member name="F:NetX.SystemManager.Status.Enable">
+            <summary>
+            启用
+            </summary>
+        </member>
+    </members>
+</doc>

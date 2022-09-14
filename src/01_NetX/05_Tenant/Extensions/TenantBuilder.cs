@@ -13,7 +13,7 @@ public class TenantBuilder<T>
 {
     private readonly IServiceCollection _services;
     private readonly TenantType _tenantType;
-    private readonly TenantOption _option;
+    private DatabaseInfo _databaseInfo;
 
     /// <summary>
     /// 租户注入构建器
@@ -26,7 +26,6 @@ public class TenantBuilder<T>
         services.AddTransient<ITenantAccessor<T>, TenantAccessor<T>>();
         _services = services;
         _tenantType = tenantType;
-        _option = new TenantOption(_tenantType);
     }
 
     /// <summary>
@@ -36,7 +35,7 @@ public class TenantBuilder<T>
     /// <returns></returns>
     public TenantBuilder<T> WithDatabaseInfo(DatabaseInfo database)
     {
-        _option.DatabaseInfo = new DatabaseInfo()
+        _databaseInfo = new DatabaseInfo()
         {
             DatabaseHost = database.DatabaseHost,
             DatabaseName = database.DatabaseName,
@@ -45,7 +44,6 @@ public class TenantBuilder<T>
             UserId = database.UserId,
             Password = database.Password,
         };
-        _services.AddSingleton<TenantOption>(_option);
         return this;
     }
 
@@ -130,5 +128,15 @@ public class TenantBuilder<T>
         });
         _services.AddSingleton<IFreeSql>(_fsql);
         return this;
+    }
+
+    public IServiceCollection Build()
+    {
+        TenantOption _option = new TenantOption(_tenantType)
+        {
+            DatabaseInfo = this._databaseInfo
+        };
+        _services.AddSingleton<TenantOption>(_option);
+        return _services;
     }
 }

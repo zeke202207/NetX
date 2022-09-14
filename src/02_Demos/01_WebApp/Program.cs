@@ -41,7 +41,7 @@ ServerHost.Start(
     {
         services.AddScoped<IZeke, Zeke>();
         //1.¶à×â»§ÉèÖÃ
-        services.AddTenancy(TenantType.Multi)
+        services.AddTenancy(TenantType.Single)
                 .WithDatabaseInfo(new DatabaseInfo()
                 {
                     DatabaseHost = "www.liuping.org.cn",
@@ -57,7 +57,8 @@ ServerHost.Start(
                 {
                     options.ConsentCookie.Name = tenant.TenantId + "-consent";
                 })
-                .WithTenancyDatabase();
+                .WithTenancyDatabase()
+                .Build();
     })
     .ConfigApplication(app =>
     {

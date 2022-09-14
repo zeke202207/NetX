@@ -4,6 +4,143 @@
         <name>NetX.Common</name>
     </assembly>
     <members>
+        <member name="T:NetX.Common.Attributes.ScopedAttribute">
+            <summary>
+            单例注入(使用该特性的服务系统会自动注入)
+            </summary>
+        </member>
+        <member name="P:NetX.Common.Attributes.ScopedAttribute.Itself">
+            <summary>
+            是否使用自身的类型进行注入
+            </summary>
+        </member>
+        <member name="M:NetX.Common.Attributes.ScopedAttribute.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.Common.Attributes.ScopedAttribute.#ctor(System.Boolean)">
+            <summary>
+            是否使用自身的类型进行注入
+            </summary>
+            <param name="itself"></param>
+        </member>
+        <member name="T:NetX.Common.Attributes.SingletonAttribute">
+            <summary>
+            单例注入(使用该特性的服务系统会自动注入)
+            </summary>
+        </member>
+        <member name="P:NetX.Common.Attributes.SingletonAttribute.Itself">
+            <summary>
+            是否使用自身的类型进行注入
+            </summary>
+        </member>
+        <member name="M:NetX.Common.Attributes.SingletonAttribute.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.Common.Attributes.SingletonAttribute.#ctor(System.Boolean)">
+            <summary>
+            是否使用自身的类型进行注入
+            </summary>
+            <param name="itself"></param>
+        </member>
+        <member name="T:NetX.Common.Attributes.TransientAttribute">
+            <summary>
+            瞬时注入(使用该特性的服务系统会自动注入)
+            </summary>
+        </member>
+        <member name="P:NetX.Common.Attributes.TransientAttribute.Itself">
+            <summary>
+            是否使用自身的类型进行注入
+            </summary>
+        </member>
+        <member name="M:NetX.Common.Attributes.TransientAttribute.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.Common.Attributes.TransientAttribute.#ctor(System.Boolean)">
+            <summary>
+            是否使用自身的类型进行注入
+            </summary>
+            <param name="itself"></param>
+        </member>
+        <member name="T:NetX.Common.AES">
+            <summary>
+            高级加密标准（英语：Advanced Encryption Standard，缩写：AES）
+            在密码学中又称Rijndael加密法，是美国联邦政府采用的一种区块加密标准。
+            这个标准用来替代原先的DES，已经被多方分析且广为全世界所使用。
+            AES先进加密算法是一向被认为牢不可破的加密算法，针对这项加密算法的攻击是异常复杂的，
+            事实上想要完全破解AES花费的时间要以数十亿年计，极大的保证了数据的安全性。
+            </summary>
+        </member>
+        <member name="T:NetX.Common.DES">
+            <summary>
+            数据加密标准（DES，Data Encryption Standard）是一种对称加密算法，
+            很可能是使用最广泛的密钥系统，特别是在保护金融数据的安全中，是安全性比较高的一种算法，
+            目前只有一种方法可以破解该算法，那就是穷举法。
+            </summary>
+        </member>
+        <member name="P:NetX.Common.EncryptBase.Key">
+            <summary>
+            描  述：加密密钥
+            </summary>
+        </member>
+        <member name="P:NetX.Common.EncryptBase.IV">
+            <summary>
+            描  述：加密偏移量
+            </summary>
+        </member>
+        <member name="M:NetX.Common.EncryptBase.EncryptStr(System.String)">
+            <summary>
+            描  述：字符串加密
+            </summary>
+            <param name="strInput">待加密字符串</param>
+            <returns>加密串</returns>
+        </member>
+        <member name="M:NetX.Common.EncryptBase.DecryptStr(System.String)">
+            <summary>
+            描  述：字符串解密
+            </summary>
+            <param name="strInput">待解密字符串</param>
+            <returns>解密串</returns>
+        </member>
+        <member name="M:NetX.Common.EncryptBase.Encrypt(System.Byte[])">
+            <summary>
+            描  述：文件及流加密
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.Common.EncryptBase.Decrypt(System.Byte[])">
+            <summary>
+            描  述：文件及流解密
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NetX.Common.IEncryption">
+            <summary>
+             加密方式         加密向量            是否可逆    **
+             MD5、SHA         不需要              不可逆     **
+             RSA              不需要               可逆      **
+             AES、DES          需要                可逆      **
+            </summary>
+        </member>
+        <member name="T:NetX.Common.RSAcs">
+            <summary>
+             RSA是第一个既能用于数据加密也能用于数字签名的算法。
+             它易于理解和操作，也很流行。
+             算法的名字以发明者的名字命名：Ron Rivest, Adi Shamir 和Leonard Adleman。
+             但RSA的安全性一直未能得到理论上的证明。
+             它经历了各种攻击，至今未被完全攻破。今天只有短的RSA钥匙才可能被强力方式解破。
+             到2008年为止，世界上还没有任何可靠的攻击RSA算法的方式。
+             只要其钥匙的长度足够长，用RSA加密的信息实际上是不能被解破的。
+             但在分布式计算和量子计算机理论日趋成熟的今天，RSA加密安全性受到了挑战。
+            </summary>
+        </member>
         <member name="T:NetX.Common.BaseFilter">
             <summary>
             netcore filter 过滤器基类
@@ -13,6 +150,53 @@
             Action Filter　　     ----Action过滤器
             Exception Filter      ----异常过滤器
             Result Filter         ----结果过滤器
+            </summary>
+        </member>
+        <member name="T:NetX.Common.Models.ResultModel`1">
+            <summary>
+            统一结果实体对象
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:NetX.Common.Models.ResultModel`1.#ctor(NetX.Common.Models.ResultEnum)">
+            <summary>
+            统一返回结果实体对象
+            </summary>
+            <param name="code"></param>
+        </member>
+        <member name="P:NetX.Common.Models.ResultModel`1.Code">
+            <summary>
+            服务器处理结果状态
+            </summary>
+        </member>
+        <member name="P:NetX.Common.Models.ResultModel`1.Result">
+            <summary>
+            服务器处理结果对象
+            </summary>
+        </member>
+        <member name="P:NetX.Common.Models.ResultModel`1.Message">
+            <summary>
+            异常消息内容
+            </summary>
+        </member>
+        <member name="T:NetX.Common.Models.ResultEnum">
+            <summary>
+            结果状态枚举
+            </summary>
+        </member>
+        <member name="F:NetX.Common.Models.ResultEnum.SUCCESS">
+            <summary>
+            成功
+            </summary>
+        </member>
+        <member name="F:NetX.Common.Models.ResultEnum.ERROR">
+            <summary>
+            失败
+            </summary>
+        </member>
+        <member name="F:NetX.Common.Models.ResultEnum.TIMEOUT">
+            <summary>
+            超时
             </summary>
         </member>
     </members>

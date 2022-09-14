@@ -16,7 +16,7 @@ namespace Module2.Controllers
 
     [ApiControllerDescriptionAttribute("Module2", Description = "测试控制器描述Module2", HeaderKeys = new string[] { "version","x-test1","x-test2" })]
     [ApiController]
-    [Route("[controller]/[action]")]
+    [Route("/api/[controller]/[action]")]
     public class Test2Controller : ApiPermissionController
     {
         private readonly ILogger<Test2Controller> _logger;
@@ -71,8 +71,8 @@ namespace Module2.Controllers
         /// <returns></returns>
         [ApiActionDescriptionAttribute("获取访问Token接口")]
         [NoPermission]
-        [HttpGet]
-        public ActionResult GetToken()
+        [HttpPost]
+        public ActionResult GetToken(LoginModel model)
         {
             var result = _fsql.Queryable<Log1>().ToList();
             return new JsonResult(_login.Handle(new ClaimModel()
@@ -90,6 +90,12 @@ namespace Module2.Controllers
             _migrationService.SetupDatabase();
             return Task.FromResult("hi,zeke");
         }
+    }
+
+    public class LoginModel
+    {
+        public string password { get; set; }
+        public string username { get; set; }
     }
 
     public class Log1
