@@ -17,17 +17,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "05_Tenant", "05_Tenant", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "06_Authentication", "06_Authentication", "{BD0D352D-B332-42D5-B551-124EE9F5DF3A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetX.Common", "01_NetX\00_Common\NetX.Common.csproj", "{2E511575-86F6-4974-8EBC-4642BEE0BD05}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetX.Common", "01_NetXFramework\00_Common\NetX.Common.csproj", "{2E511575-86F6-4974-8EBC-4642BEE0BD05}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetX.App", "01_NetX\01_App\NetX.App.csproj", "{8632AE87-8E95-49C1-9E90-2D05C26A5106}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetX.App", "01_NetXFramework\01_App\NetX.App.csproj", "{8632AE87-8E95-49C1-9E90-2D05C26A5106}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetX.Module", "01_NetX\02_Module\NetX.Module.csproj", "{3AEB9628-054C-4197-B30F-E367916636C0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetX.Module", "01_NetXFramework\02_Module\NetX.Module.csproj", "{3AEB9628-054C-4197-B30F-E367916636C0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetX.EventBus", "01_NetX\03_EventBus\NetX.EventBus.csproj", "{6144D025-9C35-4B0D-AE34-02EF9249264C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetX.EventBus", "01_NetXFramework\03_EventBus\NetX.EventBus.csproj", "{6144D025-9C35-4B0D-AE34-02EF9249264C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetX.DatabaseSetup", "01_NetX\04_DatabaseSetup\NetX.DatabaseSetup.csproj", "{E4A95196-0E61-4B3B-A184-4522B421C6BF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetX.DatabaseSetup", "01_NetXFramework\04_DatabaseSetup\NetX.DatabaseSetup.csproj", "{E4A95196-0E61-4B3B-A184-4522B421C6BF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetX.Tenants", "01_NetX\05_Tenant\NetX.Tenants.csproj", "{E3A8D2F7-61D4-4A29-809C-C594FF75B9AC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetX.Tenants", "01_NetXFramework\05_Tenant\NetX.Tenants.csproj", "{E3A8D2F7-61D4-4A29-809C-C594FF75B9AC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01_NetXFramework", "01_NetXFramework", "{54205D67-3381-4BF0-B639-FD721793413F}"
 EndProject
@@ -63,17 +63,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatabaseSetupTest1", "02_De
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatabaseSetupTest2", "02_Demos\03_DatabaseSetups\DatabaseSetupTest2\DatabaseSetupTest2.csproj", "{D35865AD-6BC1-481A-B91E-BBBA9C076160}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetX.Authentication.Core", "01_NetX\06_Authentication\Authentication.Core\NetX.Authentication.Core.csproj", "{649F7101-1464-48A6-B5E8-0190759778A6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetX.Authentication.Core", "01_NetXFramework\06_Authentication\Authentication.Core\NetX.Authentication.Core.csproj", "{649F7101-1464-48A6-B5E8-0190759778A6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetX.Authentication.Jwt", "01_NetX\06_Authentication\Authentication.Jwt\NetX.Authentication.Jwt.csproj", "{68B21E54-BF26-4F51-B5C0-DD8E8D838278}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetX.Authentication.Jwt", "01_NetXFramework\06_Authentication\Authentication.Jwt\NetX.Authentication.Jwt.csproj", "{68B21E54-BF26-4F51-B5C0-DD8E8D838278}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "07_Logging", "07_Logging", "{1782B6F8-3B2B-44CF-9B86-E1452B0D90DE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetX.Logging", "01_NetX\07_Logging\NetX.Logging.csproj", "{03C4AC52-3F20-41D6-B577-18B2F1349E71}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetX.Logging", "01_NetXFramework\07_Logging\NetX.Logging.csproj", "{03C4AC52-3F20-41D6-B577-18B2F1349E71}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "08_ApiDoc", "08_ApiDoc", "{7D753218-DF8D-4355-81A2-7064E7CC463F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetX.Swagger", "01_NetX\08_ApiDoc\Swagger\NetX.Swagger.csproj", "{BD41CDBB-01F8-422D-9B0F-E80D15D9600C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetX.Swagger", "01_NetXFramework\08_ApiDoc\Swagger\NetX.Swagger.csproj", "{BD41CDBB-01F8-422D-9B0F-E80D15D9600C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NetX", "NetX", "{D799B4DC-8F15-4730-A443-A6645AAF1B60}"
 EndProject
