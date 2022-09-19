@@ -7,18 +7,24 @@ using System.Threading.Tasks;
 
 namespace NetX.SystemManager.Models;
 
-public class RoleModel
+public class RoleRequestModel
 {
     [JsonPropertyName("id")]
-    public string Id { get;set; }
+    public string? Id { get; set; }
     [JsonPropertyName("rolename")]
     public string RoleName { get; set; }
     [JsonPropertyName("status")]
     public string Status { get; set; }
-    [JsonPropertyName("createtime")]
-    public DateTime CreateTime { get; set; }
-    [JsonPropertyName("menu")]
-    public List<string> Menus { get; set; }
     [JsonPropertyName("remark")]
-    public string Remark { get; set; }
+    public string? Remark { get; set; }
+    [JsonPropertyName("menu")]
+    public List<string>? Menus { get; set; }
+}
+
+public class RoleStatusModel
+{
+    [JsonPropertyName("id")]
+    public string? Id { get; set; }
+    [JsonPropertyName("status")]
+    public string? Status { get; set; }
 }

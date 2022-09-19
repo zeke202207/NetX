@@ -49,6 +49,19 @@ public class InitMenuData : InitDataMigration
             })
             .Row(new
             {
+                id = "00000000000000000000000000000022",
+                parentid = "00000000000000000000000000000001",
+                name = "Test",
+                path = "analysis",
+                component = "/dashboard/analysis/index",
+                meta = "{\"HideMenu\":false,\"Title\":\"routes.dashboard.analysis\",\"HideBreadcrumb\":true,\"Icon\":\"bx:bx-home\"}",
+                icon = "ion:document",
+                type = (int)MenuType.Menu,
+                permission = "menu1:view",
+                orderno = 1,
+            })
+            .Row(new
+            {
                 id = "00000000000000000000000000000003",
                 parentid = "00000000000000000000000000000000",
                 name = "System",

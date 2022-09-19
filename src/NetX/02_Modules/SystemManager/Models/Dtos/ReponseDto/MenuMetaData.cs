@@ -7,26 +7,6 @@ using System.Threading.Tasks;
 
 namespace NetX.SystemManager.Models;
 
-//public class CurrentUserMenus
-//{
-//    [JsonPropertyName("id")]
-//    public string Id { get; set; }
-//    [JsonPropertyName("parentid")]
-//    public string ParentId { get; set; }
-//    [JsonPropertyName("path")]
-//    public string Path { get; set; }
-//    [JsonPropertyName("name")]
-//    public string Name { get; set; }
-//    [JsonPropertyName("component")]
-//    public string Component { get; set; }
-//    [JsonPropertyName("redirect")]
-//    public string Redirect { get; set; }
-//    [JsonPropertyName("meta")]
-//    public MenuMetaData Meta { get; set; }
-//    [JsonPropertyName("children")]
-//    public List<CurrentUserMenus> Children { get; set; } = new List<CurrentUserMenus>();
-//}
-
 public class MenuMetaData
 {
     [JsonPropertyName("title")]

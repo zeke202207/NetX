@@ -18,5 +18,7 @@ public class sys_user: BaseEntity
 
     public int status { get; set; }
 
+    public string email { get; set; }
+
     public string remark { get; set; }
 }

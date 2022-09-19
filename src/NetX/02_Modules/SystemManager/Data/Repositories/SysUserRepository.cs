@@ -23,9 +23,9 @@ public class SysUserRepository : BaseRepository<sys_user, string>
 
     public async Task<IEnumerable<Tuple<sys_user, sys_role, sys_dept>>> GetUserList(string deptId,string username,string nickname,int currentpage,int pagesize)
     {
-        var resule = await this._freeSql.Select<sys_user, sys_user_role, sys_user_dept, sys_role, sys_dept>()
+        var result = await this._freeSql.Select<sys_user, sys_user_role, sys_user_dept, sys_role, sys_dept>()
             .LeftJoin((u, ur, ud, r, d) => u.id == ur.userid)
-            .LeftJoin((u, ur, ud, r, d) => u.id == ur.userid)
+            .LeftJoin((u, ur, ud, r, d) => u.id == ud.userid)
             .LeftJoin((u, ur, ud, r, d) => ur.roleid == r.id)
             .LeftJoin((u, ur, ud, r, d) => ud.deptid == d.id)
             .Where((u, ur, ud, r, d) => ud.deptid == deptId)
@@ -33,7 +33,70 @@ public class SysUserRepository : BaseRepository<sys_user, string>
             .WhereIf(!string.IsNullOrWhiteSpace(nickname), (u, ur, ud, r, d) => u.nickname == nickname)
             .Page(currentpage, pagesize)
             .ToListAsync((u, ur, ud, r, d) => new Tuple<sys_user, sys_role, sys_dept>(u, r, d));
-        return resule;
+        return result;
+    }
+
+    public async Task<bool> AddUser(sys_user user, string roleid, string deptid)
+    {
+        using (var uow = this._freeSql.CreateUnitOfWork())
+        {
+            var userRep = uow.GetRepository<sys_user>();
+            var userRoleRep = uow.GetRepository<sys_user_role>();
+            var userDeptRep = uow.GetRepository<sys_user_dept>();
+            userRep.UnitOfWork = uow;
+            userRoleRep.UnitOfWork = uow;
+            userDeptRep.UnitOfWork = uow;
+            await userRep.InsertAsync(user); 
+            if (!string.IsNullOrWhiteSpace(roleid))
+                await userRoleRep.InsertAsync(new sys_user_role() { userid = user.id, roleid = roleid });
+            if (!string.IsNullOrWhiteSpace(deptid))
+                await userDeptRep.InsertAsync(new sys_user_dept() { userid = user.id, deptid = deptid });
+            uow.Commit();
+        }
+        return true;
+    }
+
+
+    public async Task<bool> UpdateUser(sys_user user, string roleid, string deptid)
+    {
+        using (var uow = this._freeSql.CreateUnitOfWork())
+        {
+            var userRep = uow.GetRepository<sys_user>();
+            var userRoleRep = uow.GetRepository<sys_user_role>();
+            var userDeptRep = uow.GetRepository<sys_user_dept>();
+            userRep.UnitOfWork = uow;
+            userRoleRep.UnitOfWork = uow;
+            userDeptRep.UnitOfWork = uow;
+            await userRep.UpdateAsync(user);
+            if (!string.IsNullOrWhiteSpace(roleid))
+            {
+                await userRoleRep.DeleteAsync(p => p.userid.Equals(user.id));
+                await userRoleRep.InsertAsync(new sys_user_role() { userid = user.id, roleid = roleid });
+            }
+            if (!string.IsNullOrWhiteSpace(deptid))
+            {
+                await userDeptRep.DeleteAsync(p => p.userid.Equals(user.id));
+                await userDeptRep.InsertAsync(new sys_user_dept() { userid = user.id, deptid = deptid });
+            }
+            uow.Commit();
+        }
+        return true;
+    }
+
+
+    public async Task<bool> RemoveUser(string userId)
+    {
+        using (var uow = this._freeSql.CreateUnitOfWork())
+        {
+            var userRep = uow.GetRepository<sys_user>();
+            var userRoleRep = uow.GetRepository<sys_user_role>();
+            var userDeptRep = uow.GetRepository<sys_user_dept>();
+            await userRoleRep.DeleteAsync(p => p.userid.Equals(userId));
+            await userDeptRep.DeleteAsync(p => p.userid.Equals(userId));
+            await userRep.DeleteAsync(p => p.id.Equals(userId));
+            uow.Commit();
+        }
+        return true;
     }
 }
 

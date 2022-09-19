@@ -28,7 +28,6 @@ public class InitRoleData : InitDataMigration
                 {
                     id = "00000000000000000000000000000001",
                     rolename = "super admin",
-                    rolevalue = "1",
                     status = (int)Status.Enable,
                     orderno = 1,
                     createtime = DateTime.Now,

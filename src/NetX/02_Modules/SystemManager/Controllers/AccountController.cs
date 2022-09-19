@@ -4,6 +4,7 @@ using NetX.Common.Models;
 using NetX.Swagger;
 using NetX.SystemManager.Core;
 using NetX.SystemManager.Models;
+using NetX.SystemManager.Models.Dtos.RequestDto.Param;
 using NetX.Tenants;
 using System;
 using System.Collections.Generic;
@@ -41,7 +42,7 @@ namespace NetX.SystemManager.Controllers
                 return base.Error(ResultEnum.ERROR, "账号密码验证失败");
             string token = await _accoutService.GetToken(new ClaimModel()
             {
-                UserId = userInfo.UserId, 
+                UserId = userInfo.Id, 
                 LoginName = userInfo.UserName, 
                 DisplayName = userInfo.NickName
             });
@@ -49,7 +50,7 @@ namespace NetX.SystemManager.Controllers
                 return base.Error(ResultEnum.ERROR, "获取token失败");
             return base.Success<LoginResult>(new LoginResult()
             {
-                UserId = userInfo.UserId,
+                UserId = userInfo.Id,
                 UserName = userInfo.UserName,
                 RealName = userInfo.NickName,
                 Token = token,
@@ -128,6 +129,55 @@ namespace NetX.SystemManager.Controllers
         public ActionResult Logout()
         {
             return base.Success<bool>(true);
+        }
+
+        /// <summary>
+        /// add a new user account
+        /// </summary>
+        /// <returns></returns>
+        [ApiActionDescription("添加用户")]
+        [HttpPost]
+        public async Task<ActionResult> AddAccount(AccountRequestModel model)
+        {
+            var result = await _accoutService.AddAccount(model);
+            return new JsonResult(new ResultModel<bool>(ResultEnum.SUCCESS)
+            {
+                Message = "",
+                Result = result
+            });
+        }
+
+        /// <summary>
+        /// edit a new user account
+        /// </summary>
+        /// <returns></returns>
+        [ApiActionDescription("修改用户")]
+        [HttpPost]
+        public async Task<ActionResult> UpdateAccount(AccountRequestModel model)
+        {
+            var result = await _accoutService.UpdateAccount(model);
+            return new JsonResult(new ResultModel<bool>(ResultEnum.SUCCESS)
+            {
+                Message = "",
+                Result = result
+            });
+        }
+
+        /// <summary>
+        /// remove a user account
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        [ApiActionDescriptionAttribute("删除用户")]
+        [HttpDelete]
+        public async Task<ActionResult> RemoveAccount(DeleteParam param)
+        {
+            var result = await _accoutService.RemoveDept(param.Id);
+            return new JsonResult(new ResultModel<bool>(ResultEnum.SUCCESS)
+            {
+                Message = "",
+                Result = result
+            });
         }
     }
 }

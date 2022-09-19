@@ -19,9 +19,9 @@ public class UserDeptTable : CreateTableMigration
     public override void Up()
     {
         Create.Table(_tableName)
-                .WithColumn("userid").AsString(50)
+                .WithColumn("userid").AsString(50).PrimaryKey()
                 .ForeignKey($"fk_{DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYSUSERDEPT}_{DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYSUSER}",DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYSUSER, "id")
-                .WithColumn("deptid").AsString(50)
+                .WithColumn("deptid").AsString(50).PrimaryKey()
                 .ForeignKey($"fk_{DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYSUSERDEPT}_{DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYSDEPT}", DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYSDEPT, "id");
     }
 }

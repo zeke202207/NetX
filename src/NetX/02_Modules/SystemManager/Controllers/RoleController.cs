@@ -4,6 +4,7 @@ using NetX.Common.Models;
 using NetX.Swagger;
 using NetX.SystemManager.Core;
 using NetX.SystemManager.Models;
+using NetX.SystemManager.Models.Dtos.RequestDto.Param;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,31 +47,68 @@ namespace NetX.SystemManager.Controllers
             });
         }
 
-        private List<RoleModel> GetMockRole()
+        /// <summary>
+        /// add a new role
+        /// </summary>
+        /// <returns></returns>
+        [ApiActionDescription("添加角色")]
+        [HttpPost]
+        public async Task<ActionResult> AddRole(RoleRequestModel model)
         {
-            return new List<RoleModel>()
+            var result = await _roleService.AddRole(model);
+            return new JsonResult(new ResultModel<bool>(ResultEnum.SUCCESS)
             {
-                new RoleModel()
-                {
-                    Id ="1",
-                    RoleName = "超级管理员",
-                    RoleValue ="1",
-                    Status = ((int)Status.Enable).ToString(),
-                    OrderNo ="0",
-                    CreateTime =DateTime.Now,
-                    Menus = new List<string>(){"21","211" },
-                    Remark ="hello,zeke"
-                },
-                new RoleModel()
-                {
-                    Id ="2",
-                    RoleName = "管理员",
-                    RoleValue ="2",
-                    Status =((int)Status.Disabled).ToString(),
-                    OrderNo ="1",
-                    CreateTime =DateTime.Now
-                }
-            };
+                Message = "",
+                Result = result
+            });
+        }
+
+        /// <summary>
+        /// add a new role
+        /// </summary>
+        /// <returns></returns>
+        [ApiActionDescription("更新角色")]
+        [HttpPost]
+        public async Task<ActionResult> UpdateRole(RoleRequestModel model)
+        {
+            var result = await _roleService.UpdateRole(model);
+            return new JsonResult(new ResultModel<bool>(ResultEnum.SUCCESS)
+            {
+                Message = "",
+                Result = result
+            });
+        }
+
+        /// <summary>
+        /// add a new role
+        /// </summary>
+        /// <returns></returns>
+        [ApiActionDescription("删除角色")]
+        [HttpDelete]
+        public async Task<ActionResult> RemoveRole(DeleteParam model)
+        {
+            var result = await _roleService.RemoveRole(model.Id);
+            return new JsonResult(new ResultModel<bool>(ResultEnum.SUCCESS)
+            {
+                Message = "",
+                Result = result
+            });
+        }
+
+        /// <summary>
+        /// add a new role
+        /// </summary>
+        /// <returns></returns>
+        [ApiActionDescription("更新角色状态")]
+        [HttpPost]
+        public async Task<ActionResult> SetRoleStatus(RoleStatusModel model)
+        {
+            var result = await _roleService.UpdateRoleStatus(model.Id,model.Status);
+            return new JsonResult(new ResultModel<bool>(ResultEnum.SUCCESS)
+            {
+                Message = "",
+                Result = result
+            });
         }
     }
 }

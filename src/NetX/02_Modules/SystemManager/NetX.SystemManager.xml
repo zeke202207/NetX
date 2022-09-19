@@ -47,6 +47,25 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:NetX.SystemManager.Controllers.AccountController.AddAccount(NetX.SystemManager.Models.AccountRequestModel)">
+            <summary>
+            add a new user account
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.SystemManager.Controllers.AccountController.UpdateAccount(NetX.SystemManager.Models.AccountRequestModel)">
+            <summary>
+            edit a new user account
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.SystemManager.Controllers.AccountController.RemoveAccount(NetX.SystemManager.Models.Dtos.RequestDto.Param.DeleteParam)">
+            <summary>
+            remove a user account
+            </summary>
+            <param name="param"></param>
+            <returns></returns>
+        </member>
         <member name="T:NetX.SystemManager.Controllers.DeptController">
             <summary>
             部门管理
@@ -56,6 +75,30 @@
             <summary>
             菜单管理
             </summary>
+        </member>
+        <member name="M:NetX.SystemManager.Controllers.RoleController.AddRole(NetX.SystemManager.Models.RoleRequestModel)">
+            <summary>
+            add a new role
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.SystemManager.Controllers.RoleController.UpdateRole(NetX.SystemManager.Models.RoleRequestModel)">
+            <summary>
+            add a new role
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.SystemManager.Controllers.RoleController.RemoveRole(NetX.SystemManager.Models.Dtos.RequestDto.Param.DeleteParam)">
+            <summary>
+            add a new role
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.SystemManager.Controllers.RoleController.SetRoleStatus(NetX.SystemManager.Models.RoleStatusModel)">
+            <summary>
+            add a new role
+            </summary>
+            <returns></returns>
         </member>
         <member name="M:NetX.SystemManager.Core.AccountService.Login(System.String,System.String)">
             <summary>
@@ -94,6 +137,28 @@
             </summary>
             <param name="userName"></param>
             <returns></returns>
+        </member>
+        <member name="M:NetX.SystemManager.Core.AccountService.AddAccount(NetX.SystemManager.Models.AccountRequestModel)">
+            <summary>
+            add a new user account
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.SystemManager.Core.AccountService.UpdateAccount(NetX.SystemManager.Models.AccountRequestModel)">
+            <summary>
+            update a user account information
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.SystemManager.Core.AccountService.RemoveDept(System.String)">
+            <summary>
+            remove a account
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
         </member>
         <member name="M:NetX.SystemManager.Core.Impl.MenuService.AddMenu(NetX.SystemManager.Models.MenuRequestModel)">
             <summary>
@@ -154,6 +219,16 @@
             <param name="queryParam"></param>
             <returns></returns>
             <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:NetX.SystemManager.Data.Repositories.SysRoleRepository.GetRoleList(System.String,System.Int32,System.Int32)">
+            <summary>
+            获取role列表和role能访问的菜单列表
+            menuid仅包含叶子节点
+            </summary>
+            <param name="rolename"></param>
+            <param name="currentpage"></param>
+            <param name="pagesize"></param>
+            <returns></returns>
         </member>
         <member name="T:NetX.SystemManager.Models.LoginResult">
             <summary>

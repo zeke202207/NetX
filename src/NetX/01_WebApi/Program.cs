@@ -12,7 +12,7 @@ ServerHost.Start(
                 .WithDatabaseInfo(new DatabaseInfo()
                 {
                     DatabaseHost = "www.liuping.org.cn",
-                    DatabaseName = "mytestdb",
+                    DatabaseName = "mytestdb-zeke",
                     DatabasePort = 8306,
                     DatabaseType = DatabaseType.MySql,
                     UserId = "root",

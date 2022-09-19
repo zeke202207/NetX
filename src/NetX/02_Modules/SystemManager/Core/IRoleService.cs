@@ -12,4 +12,12 @@ public interface IRoleService
     Task<List<RoleModel>> GetRoleList();
 
     Task<List<RoleModel>> GetRoleList(RoleListParam roleListparam);
+
+    Task<bool> AddRole(RoleRequestModel model);
+
+    Task<bool> UpdateRole(RoleRequestModel model);
+
+    Task<bool> UpdateRoleStatus(string roleId,string status);
+
+    Task<bool> RemoveRole(string id);
 }

@@ -32,6 +32,11 @@ public class InitRoleMenuData : InitDataMigration
             .Row(new
             {
                 roleid = "00000000000000000000000000000001",
+                menuid = "00000000000000000000000000000022"
+            })
+            .Row(new
+            {
+                roleid = "00000000000000000000000000000001",
                 menuid = "00000000000000000000000000000003"
             })
             .Row(new

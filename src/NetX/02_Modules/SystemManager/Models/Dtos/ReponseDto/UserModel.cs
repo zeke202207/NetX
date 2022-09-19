@@ -9,8 +9,8 @@ namespace NetX.SystemManager.Models;
 
 public class UserModel
 {
-    [JsonPropertyName("userid")]
-    public string UserId { get; set; }
+    [JsonPropertyName("id")]
+    public string Id { get; set; }
     [JsonPropertyName("username")]
     public string UserName { get; set; }
     [JsonIgnore]
@@ -21,8 +21,9 @@ public class UserModel
     public string Avatar { get; set; }
     [JsonPropertyName("status")]
     public string Status { get; set; }
-    [JsonPropertyName("desc")]
+    [JsonPropertyName("remark")]
     public string Remark { get; set; }
     //public string HomePath { get; set; }
-    //
+    [JsonPropertyName("email")]
+    public string Email { get; set; }
 }

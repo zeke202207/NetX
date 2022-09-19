@@ -26,6 +26,7 @@ public class UserTable : CreateTableMigration
                 .WithColumn("nickname").AsString(255).Nullable()
                 .WithColumn("avatar").AsString(500).Nullable()
                 .WithColumn("status").AsInt16().Nullable().WithDefaultValue(1)
+                .WithColumn("email").AsString(255).Nullable()
                 .WithColumn("remark").AsString(500).Nullable();
     }
 }

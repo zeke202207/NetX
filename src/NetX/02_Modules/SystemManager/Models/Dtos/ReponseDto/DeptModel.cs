@@ -11,13 +11,13 @@ public class DeptModel
 {
     [JsonPropertyName("id")]
     public string Id { get; set; }
-    [JsonPropertyName("parentId")]
+    [JsonPropertyName("parentid")]
     public string ParentId { get; set; }
-    [JsonPropertyName("deptName")]
+    [JsonPropertyName("deptname")]
     public string DeptName { get; set; }
-    [JsonPropertyName("orderNo")]
+    [JsonPropertyName("orderno")]
     public int OrderNo { get; set; }
-    [JsonPropertyName("createTime")]
+    [JsonPropertyName("createtime")]
     public DateTime CreateTime { get; set; }
     [JsonPropertyName("remark")]
     public string Remark { get; set; }

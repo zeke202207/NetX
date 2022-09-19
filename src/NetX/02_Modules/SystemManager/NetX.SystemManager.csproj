@@ -30,8 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\01_NetX\01_App\NetX.App.csproj" />
-    <ProjectReference Include="..\..\..\01_NetX\02_Module\NetX.Module.csproj" />
+    <ProjectReference Include="..\..\..\01_NetXFramework\01_App\NetX.App.csproj" />
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">

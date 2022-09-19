@@ -2,13 +2,14 @@
 using NetX.Authentication.Core;
 using NetX.Common;
 using NetX.Common.Attributes;
+using NetX.SystemManager.Core.Impl;
 using NetX.SystemManager.Data;
 using NetX.SystemManager.Models;
 
 namespace NetX.SystemManager.Core;
 
 [Scoped]
-public class AccountService : IAccountService
+public class AccountService : BaseService, IAccountService
 {
     private readonly IBaseRepository<sys_user> _userRepository;
     private readonly IEncryption _encryption;
@@ -37,7 +38,7 @@ public class AccountService : IAccountService
             return default(UserModel);
         return new UserModel()
         {
-            UserId = user.id,
+            Id = user.id,
             Password = user.password,
             Avatar = user.avatar,
             UserName = user.username,
@@ -75,7 +76,7 @@ public class AccountService : IAccountService
             return default(UserModel);
         return new UserModel()
         {
-            UserId = user.id,
+            Id = user.id,
             Avatar = user.avatar,
             UserName = user.username,
             NickName = user.nickname,
@@ -97,15 +98,16 @@ public class AccountService : IAccountService
         {
             result.Add(new UserListModel()
             {
-                UserId = item.Item1.id,
+                Id = item.Item1.id,
                 Avatar = item.Item1.avatar,
                 NickName = item.Item1.nickname,
                 Remark = item.Item1.remark,
                 UserName = item.Item1.username,
-                DeptId = item.Item3.id,
-                DeptName = item.Item3.deptname,
-                RoleId = item.Item2.id,
-                RoleName = item.Item2.rolename
+                DeptId = item.Item3?.id,
+                DeptName = item.Item3?.deptname,
+                RoleId = item.Item2?.id,
+                RoleName = item.Item2?.rolename,
+                Email = item.Item1.email
             });
         }
         return result;
@@ -121,5 +123,60 @@ public class AccountService : IAccountService
         if (string.IsNullOrWhiteSpace(userName))
             return false;
         return await this._userRepository.Select.FirstAsync(p=>p.username == userName);
+    }
+
+    /// <summary>
+    /// add a new user account
+    /// </summary>
+    /// <param name="model"></param>
+    /// <returns></returns>
+    public async Task<bool> AddAccount(AccountRequestModel model)
+    {
+        var isExist = await IsAccountExist(model.UserName);
+        if (isExist)
+            return false;
+        var userEntity = new sys_user()
+        {
+            id = base.CreateId(),
+            nickname = model.NickName,
+            username = model.UserName,
+            password = "zeke",
+            avatar = "",
+            status = 1,
+            remark = model.Remark,
+            email = model.Email
+        };
+        return await ((SysUserRepository)this._userRepository).AddUser(userEntity, model.RoleId, model.DeptId);
+    }
+
+    /// <summary>
+    /// update a user account information
+    /// </summary>
+    /// <param name="model"></param>
+    /// <returns></returns>
+    public async Task<bool> UpdateAccount(AccountRequestModel model)
+    {
+        var entity = await this._userRepository.Select.Where(p => p.id.Equals(model.Id)).FirstAsync();
+        if (null == entity) 
+            return false;
+        entity.username = model.UserName;
+        entity.nickname = model.NickName;
+        entity.email = model.Email;
+        entity.remark = model.Remark;
+        if (!string.IsNullOrEmpty(model.Remark))
+            entity.remark = model.Remark;
+        return await ((SysUserRepository)this._userRepository).UpdateUser(entity, model.RoleId, model.DeptId);
+
+    }
+
+    /// <summary>
+    /// remove a account
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    public async Task<bool> RemoveDept(string id)
+    {
+        return await ((SysUserRepository)this._userRepository).RemoveUser(id);
     }
 }
