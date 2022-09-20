@@ -25,7 +25,7 @@ public static class TenantExtension
         {
             case DatabaseType.MySql:
             default:
-                return $"server={model.DatabaseHost};port={model.DatabasePort};database={schema};userid={model.UserId};pwd={model.Password}";
+                return $"server={model.DatabaseHost};port={model.DatabasePort};database={schema};userid={model.UserId};pwd={model.Password};Charset=utf8; SslMode=none;Min pool size=1";
         }
     }
 
@@ -54,7 +54,7 @@ public static class TenantExtension
         {
             case DatabaseType.MySql:
             default:
-                return $"Data Source={model.DatabaseHost};port={model.DatabasePort};Persist Security Info=yes;UserId={model.UserId}; PWD={model.Password};";
+                return $"Data Source={model.DatabaseHost};port={model.DatabasePort};Persist Security Info=yes;UserId={model.UserId}; PWD={model.Password};Charset=utf8; SslMode=none;Min pool size=1";
         }
     }
 
