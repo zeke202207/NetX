@@ -18,7 +18,19 @@ public class RoleRequestModel
     [JsonPropertyName("remark")]
     public string? Remark { get; set; }
     [JsonPropertyName("menu")]
-    public List<string>? Menus { get; set; }
+    public CheckMenu? Menus { get; set; }
+
+    public List<string> ToMenuList()
+    {
+        List<string> result = new List<string>();
+        if (null == Menus)
+            return result;
+        if(null!= Menus.Checked)
+            result.AddRange(Menus.Checked);
+        if(null!= Menus.HalfChecked)
+            result.AddRange(Menus.HalfChecked);
+        return result;
+    }
 }
 
 public class RoleStatusModel
@@ -27,4 +39,10 @@ public class RoleStatusModel
     public string? Id { get; set; }
     [JsonPropertyName("status")]
     public string? Status { get; set; }
+}
+
+public class CheckMenu
+{
+    public List<string> Checked { get; set; }
+    public List<string> HalfChecked { get; set; }
 }

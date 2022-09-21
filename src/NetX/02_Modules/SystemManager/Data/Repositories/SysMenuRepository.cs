@@ -26,7 +26,20 @@ public class SysMenuRepository : BaseRepository<sys_menu, string>
         return await this._freeSql.Select<sys_menu, sys_role_menu, sys_user_role>()
             .LeftJoin((m, rm, ur) => m.id == rm.menuid)
             .LeftJoin((m, rm, ur) => rm.roleid == ur.roleid)
-            .Where((m,rm,ur) => ur.userid == userId)
+            .Where((m,rm,ur) => ur.userid == userId && m.type != 2 && m.status == (int)Status.Enable)
             .ToListAsync();
+    }
+
+    public async Task<bool> RemoveMenu(List<string> menuIds)
+    {
+        using (var uow = this._freeSql.CreateUnitOfWork())
+        {
+            var roleMenuRep = uow.GetRepository<sys_role_menu>();
+            var menuRep = uow.GetRepository<sys_menu>();
+            await roleMenuRep.DeleteAsync(p => menuIds.Contains(p.menuid));
+            await menuRep.DeleteAsync(p => menuIds.Contains(p.id));
+            uow.Commit();
+        }
+        return true;
     }
 }

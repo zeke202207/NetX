@@ -23,4 +23,6 @@ public class MenuMetaData
     public bool HideBreadcrumb { get; set; }
     [JsonPropertyName("currentActiveMenu")]
     public string CurrentActiveMenu { get; set; }
+    [JsonPropertyName("frameSrc")]
+    public string FrameSrc { get; set; }
 }

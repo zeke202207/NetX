@@ -103,20 +103,18 @@ namespace NetX.SystemManager.Controllers
         }
 
         /// <summary>
-        /// 
+        /// 获取登录用户访问权限code集合
+        /// v-auth="'menu:zeke'"
         /// </summary>
         /// <returns></returns>
         [ApiActionDescriptionAttribute("获取用户按钮权限集合")]
         [HttpGet]
-        public ActionResult GetPermCode()
+        public async Task<ActionResult> GetPermCode()
         {
+            var result = await _accoutService.GetPermCode(TenantContext.CurrentTenant.Principal.UserId);
             return new JsonResult(new ResultModel<List<string>>(ResultEnum.SUCCESS)
             {
-                Result = new List<string>()
-                {
-                    "0",
-                    "1"
-                }
+                Result = result
             });
         }
 
@@ -142,7 +140,6 @@ namespace NetX.SystemManager.Controllers
             var result = await _accoutService.AddAccount(model);
             return new JsonResult(new ResultModel<bool>(ResultEnum.SUCCESS)
             {
-                Message = "",
                 Result = result
             });
         }
@@ -158,7 +155,6 @@ namespace NetX.SystemManager.Controllers
             var result = await _accoutService.UpdateAccount(model);
             return new JsonResult(new ResultModel<bool>(ResultEnum.SUCCESS)
             {
-                Message = "",
                 Result = result
             });
         }
@@ -175,7 +171,6 @@ namespace NetX.SystemManager.Controllers
             var result = await _accoutService.RemoveDept(param.Id);
             return new JsonResult(new ResultModel<bool>(ResultEnum.SUCCESS)
             {
-                Message = "",
                 Result = result
             });
         }

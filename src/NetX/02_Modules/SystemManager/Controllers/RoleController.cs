@@ -30,7 +30,6 @@ namespace NetX.SystemManager.Controllers
             var roles = await _roleService.GetRoleList(roleListparam);
             return new JsonResult(new ResultModel<List<RoleModel>>(ResultEnum.SUCCESS)
             {
-                Message = "",
                 Result = roles
             });
         }
@@ -42,7 +41,6 @@ namespace NetX.SystemManager.Controllers
             var roles = await _roleService.GetRoleList();
             return new JsonResult(new ResultModel<List<RoleModel>>(ResultEnum.SUCCESS)
             {
-                Message = "",
                 Result = roles
             });
         }
@@ -58,7 +56,6 @@ namespace NetX.SystemManager.Controllers
             var result = await _roleService.AddRole(model);
             return new JsonResult(new ResultModel<bool>(ResultEnum.SUCCESS)
             {
-                Message = "",
                 Result = result
             });
         }
@@ -74,7 +71,6 @@ namespace NetX.SystemManager.Controllers
             var result = await _roleService.UpdateRole(model);
             return new JsonResult(new ResultModel<bool>(ResultEnum.SUCCESS)
             {
-                Message = "",
                 Result = result
             });
         }
@@ -90,7 +86,6 @@ namespace NetX.SystemManager.Controllers
             var result = await _roleService.RemoveRole(model.Id);
             return new JsonResult(new ResultModel<bool>(ResultEnum.SUCCESS)
             {
-                Message = "",
                 Result = result
             });
         }
@@ -106,7 +101,6 @@ namespace NetX.SystemManager.Controllers
             var result = await _roleService.UpdateRoleStatus(model.Id,model.Status);
             return new JsonResult(new ResultModel<bool>(ResultEnum.SUCCESS)
             {
-                Message = "",
                 Result = result
             });
         }

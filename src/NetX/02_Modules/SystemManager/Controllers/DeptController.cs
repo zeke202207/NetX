@@ -33,7 +33,6 @@ namespace NetX.SystemManager.Controllers
             var result = await _deptService.GetDeptList(queryParam);
             return new JsonResult(new ResultModel<List<DeptModel>>(ResultEnum.SUCCESS)
             {
-                Message = "",
                 Result = result
             });
         }
@@ -45,7 +44,6 @@ namespace NetX.SystemManager.Controllers
             var result = await _deptService.AddDept(model);
             return new JsonResult(new ResultModel<bool>(ResultEnum.SUCCESS)
             {
-                Message = "",
                 Result = result
             });
         }
@@ -57,7 +55,6 @@ namespace NetX.SystemManager.Controllers
             var result = await _deptService.UpdateDept(model);
             return new JsonResult(new ResultModel<bool>(ResultEnum.SUCCESS)
             {
-                Message = "",
                 Result = result
             });
         }
@@ -69,7 +66,6 @@ namespace NetX.SystemManager.Controllers
             var result = await _deptService.RemoveDept(param.Id);
             return new JsonResult(new ResultModel<bool>(ResultEnum.SUCCESS)
             {
-                Message = "",
                 Result = result
             });
         }

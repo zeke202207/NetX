@@ -1,14 +1,18 @@
 ﻿using FreeSql;
+using Microsoft.AspNetCore.Components;
 using NetX.Common.Attributes;
 using NetX.SystemManager.Data.Repositories;
 using NetX.SystemManager.Models;
 using NetX.SystemManager.Models.Dtos.Entity;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace NetX.SystemManager.Core.Impl
 {
@@ -30,29 +34,30 @@ namespace NetX.SystemManager.Core.Impl
         /// <returns></returns>
         public async Task<bool> AddMenu(MenuRequestModel model)
         {
+            var menuType = GetMenuType(int.Parse(model.Type));
             var menuEntity = new sys_menu()
             {
                 id = base.CreateId(),
                 createtime = base.CreateInsertTime(),
                 parentid = string.IsNullOrWhiteSpace(model.ParentId) ? SystemManagerConst.C_ROOT_ID : model.ParentId,
                 status = int.Parse(model.Status),
-                component = model.Component,
+                component = (Ext)model.IsExt == Ext.Yes ?"IFrame": menuType == MenuType.Dir ? "LAYOUT" : model.Component,
                 icon = model.Icon,
                 isext = model.IsExt,
                 keepalive = model.KeepAlive,
                 meta = Newtonsoft.Json.JsonConvert.SerializeObject(new MenuMetaData()
                 {
                     Title = model.Name,
-                    CurrentActiveMenu = model.Path,
-                    HideChildrenMenu =false ,
-                    HideBreadcrumb = model.Show == 1 ?true:false,
-                    HideMenu = model.Show == 1 ? true : false,
+                    HideChildrenMenu = false,
+                    HideBreadcrumb = (Status)model.Show == Status.Disabled ? true : false,
+                    HideMenu = (Status)model.Show == Status.Disabled ? true : false,
                     Icon = model.Icon,
-                    IgnoreKeepAlive = model.KeepAlive == 1 ? true : false
+                    IgnoreKeepAlive = (Status)model.Show == Status.Enable ? true : false,
+                    FrameSrc = (Ext)model.IsExt == Ext.Yes ? model.ExtPath : "",
                 }),
                 name = model.Name,
                 orderno = (int)model.OrderNo,
-                path = model.Path,
+                path = menuType == MenuType.Dir ? model.Path.StartsWith("/")? model.Path:$"/{model.Path}":model.Path,
                 permission = model.Permission,
                 redirect = model.Redirect,
                 show = model.Show,
@@ -74,8 +79,7 @@ namespace NetX.SystemManager.Core.Impl
                 .WithSql($"select id from sys_menu where find_in_set(id,get_child_menu('{menuId}'))")
                 .ToListAsync<string>("id");
             //2. delete all
-            await this._menuRepository.DeleteAsync(p => ids.Contains(p.id));
-            return true;
+            return await ((SysMenuRepository)this._menuRepository).RemoveMenu(ids);
         }
 
         /// <summary>
@@ -85,34 +89,33 @@ namespace NetX.SystemManager.Core.Impl
         /// <returns></returns>
         public async Task<bool> UpdateMenu(MenuRequestModel model)
         {
-            var menuEntity = new sys_menu()
+            var menuType = GetMenuType(int.Parse(model.Type));
+            var entity = await this._menuRepository.Select.Where(p => p.id.Equals(model.Id)).FirstAsync();
+            entity.parentid = string.IsNullOrWhiteSpace(model.ParentId) ? SystemManagerConst.C_ROOT_ID : model.ParentId;
+            entity.status = int.Parse(model.Status);
+            entity.component = (Ext)model.IsExt == Ext.Yes ? "IFrame" : menuType == MenuType.Dir ? "LAYOUT" : model.Component;
+            entity.icon = model.Icon;
+            entity.isext = model.IsExt;
+            entity.keepalive = model.KeepAlive;
+            entity.meta = Newtonsoft.Json.JsonConvert.SerializeObject(new MenuMetaData()
             {
-                id = model.Id,
-                parentid = string.IsNullOrWhiteSpace(model.ParentId) ? SystemManagerConst.C_ROOT_ID : model.ParentId,
-                status = int.Parse(model.Status),
-                component = model.Component,
-                icon = model.Icon,
-                isext = model.IsExt,
-                keepalive = model.KeepAlive,
-                meta = Newtonsoft.Json.JsonConvert.SerializeObject(new MenuMetaData()
-                {
-                    Title = model.Name,
-                    CurrentActiveMenu = model.Path,
-                    HideChildrenMenu = false,
-                    HideBreadcrumb = model.Show == 1 ? true : false,
-                    HideMenu = model.Show == 1 ? true : false,
-                    Icon = model.Icon,
-                    IgnoreKeepAlive = model.KeepAlive == 1 ? true : false
-                }),
-                name = model.Name,
-                orderno = (int)model.OrderNo,
-                path = model.Path,
-                permission = model.Permission,
-                redirect = model.Redirect,
-                show = model.Show,
-                type = Convert.ToInt32(model.Type)
-            };
-            return await this._menuRepository.UpdateAsync(menuEntity) > 0;
+                Title = model.Name,
+                //CurrentActiveMenu = model.Path,
+                HideChildrenMenu = false,
+                HideBreadcrumb = (Status)model.Show == Status.Disabled ? true : false,
+                HideMenu = (Status)model.Show == Status.Disabled ? true : false,
+                Icon = model.Icon,
+                IgnoreKeepAlive = (Status)model.Show == Status.Enable ? true : false,
+                FrameSrc = (Ext)model.IsExt == Ext.Yes ? model.ExtPath : "",
+            });
+            entity.name = model.Name;
+            entity.orderno = (int)model.OrderNo;
+            entity.path = menuType == MenuType.Dir ? model.Path.StartsWith("/") ? model.Path : $"/{model.Path}" : model.Path;
+            entity.permission = model.Permission;
+            entity.redirect = model.Redirect;
+            entity.show = model.Show;
+            entity.type = Convert.ToInt32(model.Type);
+            return await this._menuRepository.UpdateAsync(entity) > 0;
         }
 
         /// <summary>
@@ -142,21 +145,28 @@ namespace NetX.SystemManager.Core.Impl
                .WhereIf(int.TryParse(param.Status, out int _), p => p.status == int.Parse(param.Status))
                .Page(param.Page, param.PageSize)
                .ToListAsync();
-            return ToTree(menus.Select(p => new MenuModel()
+            return ToTree(menus.Select(p =>
             {
-                Id = p.id,
-                Component = p.component,
-                CreateTime = p.createtime,
-                Icon = p.icon,
-                Name = p.name,
-                OrderNo = p.orderno,
-                ParentId = p.parentid,
-                Permission = p.permission,
-                Status = p.status.ToString(),
-                Type = p.type.ToString(),
-                Path = p.path,
-                Meta = Newtonsoft.Json.JsonConvert.DeserializeObject<MenuMetaData>(p.meta),
-                Redirect = p.redirect
+                var meta = Newtonsoft.Json.JsonConvert.DeserializeObject<MenuMetaData>(p.meta);
+                return new MenuModel()
+                {
+                    Id = p.id,
+                    Component = p.component,
+                    CreateTime = p.createtime,
+                    Icon = p.icon,
+                    Name = p.name,
+                    OrderNo = p.orderno,
+                    ParentId = p.parentid,
+                    Permission = p.permission,
+                    Status = p.status.ToString(),
+                    Show = p.show.ToString(),
+                    IsExt = p.isext.ToString(),
+                    Type = p.type.ToString(),
+                    Path = p.path,
+                    Meta = meta,
+                    Redirect = p.redirect,
+                    ExtPath = meta?.FrameSrc
+                };
             }).ToList(), "00000000000000000000000000000000");
         }
 
@@ -173,6 +183,11 @@ namespace NetX.SystemManager.Core.Impl
                 }
             }
             return currentMenus?.ToList();
+        }
+
+        private MenuType GetMenuType(int menuType)
+        {
+            return (MenuType)menuType;
         }
     }
 }

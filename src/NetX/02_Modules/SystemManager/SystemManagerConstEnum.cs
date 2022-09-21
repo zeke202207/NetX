@@ -25,4 +25,20 @@ namespace NetX.SystemManager
         /// </summary>
         Enable=1
     }
+
+    /// <summary>
+    /// 外链枚举
+    /// </summary>
+    public enum Ext
+    {
+        No = 0, 
+        Yes = 1
+    }
+
+    public enum MenuType
+    {
+        Dir = 0,
+        Menu,
+        Button
+    }
 }

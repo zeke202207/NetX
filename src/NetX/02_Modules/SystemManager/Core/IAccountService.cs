@@ -20,5 +20,7 @@ namespace NetX.SystemManager.Core
         Task<bool> UpdateAccount(AccountRequestModel model);
 
         Task<bool> RemoveDept(string id);
+
+        Task<List<string>> GetPermCode(string userId);
     }
 }

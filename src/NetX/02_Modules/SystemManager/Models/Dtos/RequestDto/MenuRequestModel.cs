@@ -26,7 +26,7 @@ public class MenuRequestModel
     [JsonPropertyName("icon")]
     public string? Icon { get; set; }
     [JsonPropertyName("type")]
-    public string? Type { get; set; }
+    public string Type { get; set; }
     [JsonPropertyName("permission")]
     public string? Permission { get; set; }
     [JsonPropertyName("orderNo")]
@@ -41,4 +41,6 @@ public class MenuRequestModel
     public int KeepAlive { get; set; }
     [JsonPropertyName("show")]
     public int Show { get; set; }
+    [JsonPropertyName("extpath")]
+    public string? ExtPath { get; set; }
 }

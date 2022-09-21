@@ -37,7 +37,8 @@
         </member>
         <member name="M:NetX.SystemManager.Controllers.AccountController.GetPermCode">
             <summary>
-            
+            获取登录用户访问权限code集合
+            v-auth="'menu:zeke'"
             </summary>
             <returns></returns>
         </member>
@@ -160,6 +161,13 @@
             <returns></returns>
             <exception cref="T:System.NotImplementedException"></exception>
         </member>
+        <member name="M:NetX.SystemManager.Core.AccountService.GetPermCode(System.String)">
+            <summary>
+            获取当前登录用户权限代码集合
+            </summary>
+            <param name="userId"></param>
+            <returns></returns>
+        </member>
         <member name="M:NetX.SystemManager.Core.Impl.MenuService.AddMenu(NetX.SystemManager.Models.MenuRequestModel)">
             <summary>
             新增菜单
@@ -263,6 +271,11 @@
         <member name="F:NetX.SystemManager.Status.Enable">
             <summary>
             启用
+            </summary>
+        </member>
+        <member name="T:NetX.SystemManager.Ext">
+            <summary>
+            外链枚举
             </summary>
         </member>
     </members>

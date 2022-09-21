@@ -56,7 +56,6 @@ public class SysUserRepository : BaseRepository<sys_user, string>
         return true;
     }
 
-
     public async Task<bool> UpdateUser(sys_user user, string roleid, string deptid)
     {
         using (var uow = this._freeSql.CreateUnitOfWork())
@@ -83,7 +82,6 @@ public class SysUserRepository : BaseRepository<sys_user, string>
         return true;
     }
 
-
     public async Task<bool> RemoveUser(string userId)
     {
         using (var uow = this._freeSql.CreateUnitOfWork())
@@ -97,6 +95,16 @@ public class SysUserRepository : BaseRepository<sys_user, string>
             uow.Commit();
         }
         return true;
+    }
+
+    public async Task<List<string>> GetPremCodes(string userId)
+    {
+        var result = await this._freeSql.Select<sys_menu, sys_role_menu, sys_user_role>()
+            .LeftJoin((m, rm, ur) => m.id == rm.menuid)
+            .LeftJoin((m, rm, ur) => rm.roleid == ur.roleid)
+            .Where((m, rm, ur) => ur.userid.Equals(userId) && !string.IsNullOrWhiteSpace(m.permission))
+            .ToListAsync((m, rm, ur) => m.permission);
+        return result;
     }
 }
 

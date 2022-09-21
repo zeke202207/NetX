@@ -179,4 +179,14 @@ public class AccountService : BaseService, IAccountService
     {
         return await ((SysUserRepository)this._userRepository).RemoveUser(id);
     }
+
+    /// <summary>
+    /// 获取当前登录用户权限代码集合
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <returns></returns>
+    public async Task<List<string>> GetPermCode(string userId)
+    {
+        return await ((SysUserRepository)this._userRepository).GetPremCodes(userId);
+    }
 }

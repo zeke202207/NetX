@@ -44,13 +44,7 @@ namespace NetX.SystemManager.Data.Repositories
                     .WithSql($@"SELECT  m.id FROM sys_role_menu rm
                                     LEFT JOIN sys_menu m ON m.id = rm.menuid
                              WHERE
-                                m.id NOT IN (SELECT 
-                                        m.parentid
-                                    FROM
-                                        sys_role_menu rm
-                                            LEFT JOIN
-                                        sys_menu m ON m.id = rm.menuid)
-                                and rm.roleid = '{roleEntity.id}'")
+                                rm.roleid = '{roleEntity.id}'")
                     .ToList<string>("id");
                 result.Add((role: roleEntity, menuids: list1));
             }

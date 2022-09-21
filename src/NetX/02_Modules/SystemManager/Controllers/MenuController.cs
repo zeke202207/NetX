@@ -35,7 +35,6 @@ namespace NetX.SystemManager.Controllers
             var result = await this._menuService.GetCurrentUserMenuList(TenantContext.CurrentTenant.Principal.UserId);
             return new JsonResult(new ResultModel<List<MenuModel>>(ResultEnum.SUCCESS)
             {
-                Message = "",
                 Result = result
             });
         }
@@ -48,43 +47,39 @@ namespace NetX.SystemManager.Controllers
             var result = await this._menuService.GetMenuList(param);
             return new JsonResult(new ResultModel<List<MenuModel>>(ResultEnum.SUCCESS)
             {
-                Message = "",
                 Result = result
             });
         }
 
-        [ApiActionDescriptionAttribute("添加部门")]
+        [ApiActionDescriptionAttribute("添加菜单")]
         [HttpPost]
         public async Task<ActionResult> AddMenu(MenuRequestModel model)
         {
             var result = await this._menuService.AddMenu(model);
             return new JsonResult(new ResultModel<bool>(ResultEnum.SUCCESS)
             {
-                Message = "",
                 Result = result
             });
         }
 
-        [ApiActionDescriptionAttribute("编辑部门")]
+        [ApiActionDescriptionAttribute("编辑菜单")]
         [HttpPost]
         public async Task<ActionResult> UpdateMenu(MenuRequestModel model)
         {
             var result = await this._menuService.UpdateMenu(model);
             return new JsonResult(new ResultModel<bool>(ResultEnum.SUCCESS)
             {
-                Message = "",
                 Result = result
             });
         }
 
-        [ApiActionDescriptionAttribute("删除部门")]
+        [ApiActionDescriptionAttribute("删除菜单")]
         [HttpDelete]
         public async Task<ActionResult> RemoveMenu(DeleteParam param)
         {
             var result = await this._menuService.RemoveMenu(param.Id);
             return new JsonResult(new ResultModel<bool>(ResultEnum.SUCCESS)
             {
-                Message = "",
                 Result = result
             });
         }

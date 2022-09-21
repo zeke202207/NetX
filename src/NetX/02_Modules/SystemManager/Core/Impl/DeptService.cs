@@ -55,16 +55,13 @@ public class DeptService : BaseService, IDeptService
     /// <exception cref="NotImplementedException"></exception>
     public async Task<bool> UpdateDept(DeptRequestModel model)
     {
-        var deptEntity = new sys_dept()
-        {
-            id = model.Id,
-            deptname = model.DeptName,
-            parentid = string.IsNullOrWhiteSpace(model.ParentId) ? SystemManagerConst.C_ROOT_ID : model.ParentId,
-            orderno = model.OrderNo,
-            status = int.Parse(model.Status),
-            remark = model.Remark
-        };
-       return await this._deptRepository.UpdateAsync(deptEntity) >0;
+        var deptEntity = await _deptRepository.Select.Where(p => p.id.Equals(model.Id)).FirstAsync();
+        deptEntity.deptname = model.DeptName;
+        deptEntity.parentid = string.IsNullOrWhiteSpace(model.ParentId) ? SystemManagerConst.C_ROOT_ID : model.ParentId;
+        deptEntity.orderno = model.OrderNo;
+        deptEntity.status = int.Parse(model.Status);
+        deptEntity.remark = model.Remark;
+        return await this._deptRepository.UpdateAsync(deptEntity) > 0;
     }
 
     /// <summary>

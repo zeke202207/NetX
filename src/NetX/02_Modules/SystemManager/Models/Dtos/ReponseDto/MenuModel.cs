@@ -11,7 +11,7 @@ public class MenuModel
 {
     [JsonPropertyName("id")]
     public string Id { get; set; }
-    [JsonPropertyName("parentId")]
+    [JsonPropertyName("parentid")]
     public string ParentId { get; set; }
     [JsonPropertyName("path")]
     public string Path { get; set; }
@@ -29,19 +29,18 @@ public class MenuModel
     public string Type { get; set; }
     [JsonPropertyName("permission")]
     public string Permission { get; set; }
-    [JsonPropertyName("orderNo")]
+    [JsonPropertyName("orderno")]
     public int OrderNo { get; set; }
-    [JsonPropertyName("createTime")]
+    [JsonPropertyName("createtime")]
     public DateTime CreateTime { get; set; }
     [JsonPropertyName("status")]
     public string Status { get; set; }
     [JsonPropertyName("children")]
     public List<MenuModel> Children { get; set; }
-}
-
-public enum MenuType :int
-{
-    Directory =0,
-    Menu,
-    Button
+    [JsonPropertyName("show")]
+    public string Show { get; set; }
+    [JsonPropertyName("isext")]
+    public string IsExt { get; set; }
+    [JsonPropertyName("extpath")]
+    public string ExtPath { get; set; }
 }

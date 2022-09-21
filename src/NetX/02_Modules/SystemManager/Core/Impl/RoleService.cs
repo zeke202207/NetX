@@ -57,20 +57,17 @@ public class RoleService : BaseService, IRoleService
             status = int.Parse(model.Status),
             remark = model?.Remark
         };
-        return ((SysRoleRepository)_roleRepository).AddRole(roleEntity, model.Menus);
+        return ((SysRoleRepository)_roleRepository).AddRole(roleEntity, model.ToMenuList());
     }
 
-    public Task<bool> UpdateRole(RoleRequestModel model)
+    public async Task<bool> UpdateRole(RoleRequestModel model)
     {
-        var roleEntity = new sys_role()
-        {
-            id = model.Id,
-            createtime = base.CreateInsertTime(),
-            rolename = model.RoleName,
-            status = int.Parse(model.Status),
-            remark = model?.Remark
-        };
-        return ((SysRoleRepository)_roleRepository).UpdateRole(roleEntity, model.Menus);
+        var roleEntity = await _roleRepository.Select.Where(p => p.id.Equals(model.Id)).FirstAsync();
+        roleEntity.createtime = base.CreateInsertTime();
+        roleEntity.rolename = model.RoleName;
+        roleEntity.status = int.Parse(model.Status);
+        roleEntity.remark = model?.Remark;
+        return await ((SysRoleRepository)_roleRepository).UpdateRole(roleEntity, model.ToMenuList());
     }
 
     public Task<bool> RemoveRole(string roleId)
