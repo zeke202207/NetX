@@ -1,21 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Security.Cryptography;
-using System.Text;
+﻿using System.Text;
 
-namespace NetX.Common
+namespace NetX.Common;
+
+/// <summary>
+/// MD5加密提供器
+/// </summary>
+public class MD5 : IEncryption
 {
-    public class MD5 : IEncryption
+    /// <summary>
+    /// 解密
+    /// </summary>
+    /// <param name="content"></param>
+    /// <returns></returns>
+    /// <exception cref="NotSupportedException"></exception>
+    public string Decryption(string content)
     {
-        public string Decryption(string content)
-        {
-            throw new NotSupportedException("MD5不支持解密操作");
-        }
+        throw new NotSupportedException("MD5不支持解密操作");
+    }
 
-        public string Encryption(string content)
+    /// <summary>
+    /// 加密字符串
+    /// 32位大写
+    /// </summary>
+    /// <param name="content"></param>
+    /// <returns></returns>
+    public string Encryption(string content)
+    {
+        using (var md5 = System.Security.Cryptography.MD5.Create())
         {
-            MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
-            return BitConverter.ToString(md5.ComputeHash(UTF8Encoding.Default.GetBytes(content))).Replace("-", "").ToUpper();
+            var data = md5.ComputeHash(Encoding.UTF8.GetBytes(content));
+            StringBuilder builder = new StringBuilder();
+            for (int i = 0; i < data.Length; i++)
+            {
+                builder.Append(data[i].ToString("X2"));
+            }
+            return builder.ToString();
         }
     }
 }

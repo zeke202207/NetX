@@ -1,16 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
 
 namespace NetX.SystemManager.Models;
 
-public class RoleListParam :Pager
+/// <summary>
+/// 
+/// </summary>
+public class RoleListParam : Pager
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [JsonPropertyName("roleName")]
     public string? RoleName { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
     [JsonPropertyName("status")]
     public string? Status { get; set; }
 }

@@ -27,7 +27,7 @@ public static class EventBusServiceCollectionExtensions
     /// <param name="services">服务集合对象</param>
     /// <param name="eventBusOptionsBuilder">事件总线配置选项构建器</param>
     /// <returns>服务集合实例</returns>
-    public static IServiceCollection AddEventBus(this IServiceCollection services, EventBusOptionsBuilder eventBusOptionsBuilder = default)
+    public static IServiceCollection AddEventBus(this IServiceCollection services, EventBusOptionsBuilder? eventBusOptionsBuilder = default)
     {
         // 初始化事件总线配置项
         eventBusOptionsBuilder ??= new EventBusOptionsBuilder();

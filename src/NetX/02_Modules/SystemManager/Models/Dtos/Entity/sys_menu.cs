@@ -1,27 +1,68 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace NetX.SystemManager.Models;
 
-namespace NetX.SystemManager.Models.Dtos.Entity
+/// <summary>
+/// 
+/// </summary>
+public class sys_menu : BaseEntity
 {
-    public class sys_menu : BaseEntity
-    {
-        public string parentid { get; set; }
-        public string icon { get; set; }
-        public int type { get; set; }
-        public int orderno { get; set; }
-        public string permission { get; set; }
-        public string name { get; set; }
-        public string path { get; set; }
-        public string component { get; set; }
-        public string redirect { get; set; }
-        public int status { get; set; }
-        public int isext { get; set; }
-        public int keepalive { get; set; }
-        public int show { get; set; }
-        public string meta { get; set; }
-        public DateTime createtime { get; set; }
-    }
+    /// <summary>
+    /// 
+    /// </summary>
+    public string parentid { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
+    public string icon { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
+    public int type { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
+    public int orderno { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
+    public string permission { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
+    public string name { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
+    public string path { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
+    public string component { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
+    public string redirect { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
+    public int status { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
+    public int isext { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
+    public int keepalive { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
+    public int show { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
+    public string meta { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
+    public DateTime createtime { get; set; }
 }

@@ -12,6 +12,9 @@ namespace NetX.Authentication.Core;
 [AttributeUsage(AttributeTargets.Property)]
 public class ClaimModelAttribute : Attribute
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public string ClaimKey { get; private set; }
 
     /// <summary>

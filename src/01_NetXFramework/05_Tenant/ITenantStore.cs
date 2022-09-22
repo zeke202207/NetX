@@ -12,6 +12,6 @@
         /// </summary>
         /// <param name="Identifier">租户身份</param>
         /// <returns></returns>
-        Task<T> GetTenantAsync(string Identifier);
+        Task<T?> GetTenantAsync(string Identifier);
     }
 }

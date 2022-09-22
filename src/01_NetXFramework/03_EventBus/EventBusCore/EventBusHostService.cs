@@ -119,10 +119,11 @@ internal sealed class EventBusHostService : BackgroundService
                 {
                     ExecutingTime = DateTime.UtcNow,
                 };
-                InvalidOperationException executionException = default;
+                InvalidOperationException? executionException = default;
                 try
                 {
-                    await eventHandlerThatShouldRun.Handler(eventHandlerEecutingContext);
+                    if (null != eventHandlerThatShouldRun.Handler)
+                        await eventHandlerThatShouldRun.Handler(eventHandlerEecutingContext);
                 }
                 catch (Exception ex)
                 {
@@ -154,7 +155,12 @@ internal sealed class EventBusHostService : BackgroundService
                 !type.IsAbstract &&
                 !type.IsSealed
                 ).ToList()
-                .ForEach(t => list.Add((IEventSubscriber)Activator.CreateInstance(t)));
+                .ForEach(t =>
+                {
+                    var eventSubscriberInstance = Activator.CreateInstance(t);
+                    if (eventSubscriberInstance is IEventSubscriber)
+                        list.Add((IEventSubscriber)eventSubscriberInstance);
+                });
             });
         });
         return list;

@@ -13,7 +13,7 @@ internal static class HttpContextExtensions
     /// <typeparam name="T"></typeparam>
     /// <param name="context"></param>
     /// <returns></returns>
-    internal static T GetTenant<T>(this HttpContext context)
+    internal static T? GetTenant<T>(this HttpContext context)
         where T : Tenant
     {
         if (!context.Items.ContainsKey(TenantConst.C_TENANT_HTTPCONTEXTTENANTKEY))
@@ -26,7 +26,7 @@ internal static class HttpContextExtensions
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
-    internal static Tenant GetTenant(this HttpContext context)
+    internal static Tenant? GetTenant(this HttpContext context)
     {
         return context.GetTenant<Tenant>();
     }

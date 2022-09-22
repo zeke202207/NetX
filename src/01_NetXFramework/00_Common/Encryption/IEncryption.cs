@@ -12,7 +12,18 @@ namespace NetX.Common
     /// </summary>
     public interface IEncryption
     {
+        /// <summary>
+        /// 加密
+        /// </summary>
+        /// <param name="content"></param>
+        /// <returns></returns>
         string Encryption(string content);
+        
+        /// <summary>
+        /// 解密
+        /// </summary>
+        /// <param name="content"></param>
+        /// <returns></returns>
         string Decryption(string content);
     }
 }

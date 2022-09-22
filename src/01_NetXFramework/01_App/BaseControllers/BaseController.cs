@@ -2,6 +2,9 @@
 
 namespace NetX.App;
 
+/// <summary>
+/// 控制器基类
+/// </summary>
 //[TypeFilter(typeof(ResourceFilter))]
 //[TypeFilter(typeof(ActionsFilter))]
 //[TypeFilter(typeof(ExceptionFilter))]

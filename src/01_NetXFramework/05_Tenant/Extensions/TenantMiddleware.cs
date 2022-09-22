@@ -29,7 +29,8 @@ public class TenantMiddleware<T>
         if (!context.Items.ContainsKey(TenantConst.C_TENANT_HTTPCONTEXTTENANTKEY))
         {
             var tenantService = context.RequestServices.GetService(typeof(TenantAccessService<T>)) as TenantAccessService<T>;
-            context.Items.Add(TenantConst.C_TENANT_HTTPCONTEXTTENANTKEY, await tenantService.GetTenatnAsync());
+            if (null != tenantService)
+                context.Items.Add(TenantConst.C_TENANT_HTTPCONTEXTTENANTKEY, await tenantService.GetTenatnAsync());
         }
         if (null != _next)
             await _next(context);

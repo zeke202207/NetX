@@ -8,13 +8,13 @@ public class Tenant
     /// <summary>
     /// 租户Id
     /// </summary>
-    public string TenantId { get; set; }
+    public string TenantId { get; set; } = string.Empty;
 
     /// <summary>
     /// 租户身份标识
     /// 在解析策略中使用此标识符进行解析
     /// </summary>
-    public string Identifier { get; set; }
+    public string Identifier { get; set; } = string.Empty ; 
 
     /// <summary>
     /// The Tenant Items

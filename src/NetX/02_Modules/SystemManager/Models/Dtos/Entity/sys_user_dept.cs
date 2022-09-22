@@ -1,16 +1,20 @@
 ﻿using FreeSql.DataAnnotations;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetX.SystemManager.Models;
 
+/// <summary>
+/// 
+/// </summary>
 public class sys_user_dept
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [Column(IsPrimary = true)]
     public string userid { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
     [Column(IsPrimary = true)]
     public string deptid { get; set; }
 }

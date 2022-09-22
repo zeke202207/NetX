@@ -116,6 +116,11 @@
             当前租户类型
             </summary>
         </member>
+        <member name="T:NetX.Tenants.ApplicationBuilderExtensions">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="M:NetX.Tenants.ApplicationBuilderExtensions.UseMultiTenancy``1(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
             <summary>
             Use the Teanant Middleware to process the request
@@ -128,7 +133,6 @@
             <summary>
             Use the Teanant Middleware to process the request
             </summary>
-            <typeparam name="T"></typeparam>
             <param name="builder"></param>
             <returns></returns>
         </member>
@@ -137,7 +141,6 @@
             使用租户数据库
             </summary>
             <param name="app"></param>
-            <param name="fsql"></param>
             <returns></returns>
         </member>
         <member name="T:NetX.Tenants.HttpContextExtensions">
@@ -237,6 +240,24 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:NetX.Tenants.TenantBuilder`1.Build">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:NetX.Tenants.TenantExtension">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.Tenants.TenantExtension.ToConnStr(NetX.Tenants.DatabaseInfo)">
+            <summary>
+            
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
         <member name="M:NetX.Tenants.TenantExtension.ToConnStr(NetX.Tenants.DatabaseInfo,NetX.Tenants.TenantType,System.String)">
             <summary>
             数据库连接字符串
@@ -291,6 +312,12 @@
             <summary>
             内存租户信息存储
             </summary>
+        </member>
+        <member name="M:NetX.Tenants.InMemoryTenantStore.#ctor(NetX.Tenants.TenantOption)">
+            <summary>
+            内存租户信息存储实例
+            </summary>
+            <param name="tenantOption"></param>
         </member>
         <member name="M:NetX.Tenants.InMemoryTenantStore.GetTenantAsync(System.String)">
             <summary>
@@ -369,7 +396,7 @@
         </member>
         <member name="M:NetX.Tenants.TenantAccessService`1.GetTenatnAsync">
             <summary>
-            湖区当前租户信息
+            获取当前租户信息
             </summary>
             <returns></returns>
         </member>
@@ -377,6 +404,25 @@
             <summary>
             Make IOptions tenant aware
             </summary>
+        </member>
+        <member name="M:NetX.Tenants.TenantOptions`1.#ctor(Microsoft.Extensions.Options.IOptionsFactory{`0},Microsoft.Extensions.Options.IOptionsMonitorCache{`0})">
+            <summary>
+            
+            </summary>
+            <param name="factory"></param>
+            <param name="cache"></param>
+        </member>
+        <member name="P:NetX.Tenants.TenantOptions`1.Value">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.Tenants.TenantOptions`1.Get(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
         </member>
         <member name="T:NetX.Tenants.TenantOptionsCache`2">
             <summary>
@@ -418,7 +464,11 @@
             <param name="name"></param>
             <returns></returns>
         </member>
-        <!-- Badly formed XML comment ignored for member "T:NetX.Tenants.TenantOptionsCacheDictionary`1" -->
+        <member name="T:NetX.Tenants.TenantOptionsCacheDictionary`1">
+            <summary>
+            租户选项缓存字典包装器
+            </summary>
+        </member>
         <member name="F:NetX.Tenants.TenantOptionsCacheDictionary`1._tenantSpecificOptionCaches">
             <summary>
             Caches stored in memory
@@ -554,6 +604,11 @@
         <member name="P:NetX.Tenants.TenantOption.DatabaseInfo">
             <summary>
             应用程序数据配置
+            </summary>
+        </member>
+        <member name="T:NetX.Tenants.TenantConst">
+            <summary>
+            
             </summary>
         </member>
         <member name="F:NetX.Tenants.TenantConst.C_TENANT_HTTPREQUESTHEADERKEY">

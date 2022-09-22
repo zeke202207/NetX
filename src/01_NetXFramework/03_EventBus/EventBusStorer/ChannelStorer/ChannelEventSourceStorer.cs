@@ -29,6 +29,7 @@ internal sealed class ChannelEventSourceStorer : IEventSourceStorer
     /// 事件溯源写入器
     /// </summary>
     /// <param name="eventSource">事件源对象</param>
+    /// <param name="cancellationToken"></param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
     public async ValueTask WriteAsync(IEventSource eventSource, CancellationToken cancellationToken)
@@ -41,6 +42,7 @@ internal sealed class ChannelEventSourceStorer : IEventSourceStorer
     /// <summary>
     /// 事件源读取器
     /// </summary>
+    /// <param name="cancellationToken"></param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
     public async ValueTask<IEventSource> ReadAsync(CancellationToken cancellationToken)

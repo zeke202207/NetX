@@ -18,8 +18,10 @@ public static class ServiceCollectionExtensions
     /// </summary>
     /// <param name="services"></param>
     /// <param name="config">配置项</param>
-    public static IServiceCollection AddJwtAuth(this IServiceCollection services, IConfiguration config)
+    public static IServiceCollection AddJwtAuth(this IServiceCollection services, IConfiguration? config)
     {
+        if (null == config)
+            return services;
         var jwtOptions = config.GetSection("authentication:jwt").Get<JwtOptions>();
         if (jwtOptions == null)
             return services;

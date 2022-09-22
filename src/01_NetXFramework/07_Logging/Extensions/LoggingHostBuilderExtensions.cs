@@ -6,8 +6,18 @@ using Serilog.Events;
 
 namespace NetX.Logging;
 
+/// <summary>
+/// 
+/// </summary>
 public static class LoggingHostBuilderExtensions
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <param name="logType"></param>
+    /// <returns></returns>
+    /// <exception cref="NotSupportedException"></exception>
     public static IHostBuilder UseLogging(this IHostBuilder builder, LoggingType logType)
     {
         switch (logType)

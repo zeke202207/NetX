@@ -1,59 +1,69 @@
 ﻿using FreeSql;
 using NetX.Common.Attributes;
 using NetX.SystemManager.Models;
-using NetX.SystemManager.Models.Dtos.Entity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace NetX.SystemManager.Data.Repositories
+namespace NetX.SystemManager.Data.Repositories;
+
+/// <summary>
+/// 角色仓储
+/// </summary>
+[Scoped]
+public class SysRoleRepository : BaseRepository<sys_role, string>
 {
-    [Scoped]
-    public class SysRoleRepository : BaseRepository<sys_role, string>
+    private readonly IFreeSql _freeSql;
+
+    /// <summary>
+    /// 角色仓储对象实例
+    /// </summary>
+    /// <param name="fsql"></param>
+    public SysRoleRepository(IFreeSql fsql)
+        : base(fsql, null, null)
     {
-        private readonly IFreeSql _freeSql;
+        this._freeSql = fsql;
+    }
 
-        public SysRoleRepository(IFreeSql fsql)
-            : base(fsql, null, null)
+    /// <summary>
+    /// 获取role列表和role能访问的菜单列表
+    /// menuid仅包含叶子节点
+    /// </summary>
+    /// <param name="rolename"></param>
+    /// <param name="currentpage"></param>
+    /// <param name="pagesize"></param>
+    /// <returns></returns>
+    public async Task<List<(sys_role role, List<string> menuids)>> GetRoleList(string rolename, int currentpage, int pagesize)
+    {
+        List<(sys_role role, List<string> menuids)> result = new List<(sys_role role, List<string> menuids)>();
+        var roles = this._freeSql.Select<sys_role>()
+            .WhereIf(!string.IsNullOrWhiteSpace(rolename), p => p.rolename.Equals(rolename));
+        if (currentpage >= 0 && pagesize > 0)
+            roles.Page(currentpage, pagesize);
+        var roleEntities = await roles.ToListAsync();
+        foreach (var roleEntity in roleEntities)
         {
-            this._freeSql = fsql;
-        }
-
-        /// <summary>
-        /// 获取role列表和role能访问的菜单列表
-        /// menuid仅包含叶子节点
-        /// </summary>
-        /// <param name="rolename"></param>
-        /// <param name="currentpage"></param>
-        /// <param name="pagesize"></param>
-        /// <returns></returns>
-        public async Task<List<(sys_role role,List<string> menuids)>> GetRoleList(string rolename,int currentpage, int pagesize)
-        {
-            List<(sys_role role, List<string> menuids)> result = new List<(sys_role role, List<string> menuids)>();
-            var roles = this._freeSql.Select<sys_role>()
-                .WhereIf(!string.IsNullOrWhiteSpace(rolename), p => p.rolename.Equals(rolename));
-            if (currentpage >= 0 && pagesize > 0)
-                roles.Page(currentpage, pagesize);
-            var roleEntities = await roles.ToListAsync();
-            foreach(var roleEntity in roleEntities)
-            {
-                List<string> list1 = this._freeSql
-                    .Select<object>()
-                    .WithSql($@"SELECT  m.id FROM sys_role_menu rm
+            List<string> list1 = this._freeSql
+                .Select<object>()
+                .WithSql($@"SELECT  m.id FROM sys_role_menu rm
                                     LEFT JOIN sys_menu m ON m.id = rm.menuid
                              WHERE
                                 rm.roleid = '{roleEntity.id}'")
-                    .ToList<string>("id");
-                result.Add((role: roleEntity, menuids: list1));
-            }
-            return result;
+                .ToList<string>("id");
+            result.Add((role: roleEntity, menuids: list1));
         }
+        return result;
+    }
 
-        public async Task<bool> AddRole(sys_role role, List<string> menuids)
+    /// <summary>
+    /// 新增角色
+    /// </summary>
+    /// <param name="role"></param>
+    /// <param name="menuids"></param>
+    /// <returns></returns>
+    public async Task<bool> AddRole(sys_role role, List<string> menuids)
+    {
+        bool result = true;
+        using (var uow = this._freeSql.CreateUnitOfWork())
         {
-            using (var uow = this._freeSql.CreateUnitOfWork())
+            try
             {
                 var roleRep = uow.GetRepository<sys_role>();
                 var roleMenuRep = uow.GetRepository<sys_role_menu>();
@@ -68,12 +78,28 @@ namespace NetX.SystemManager.Data.Repositories
                     }));
                 uow.Commit();
             }
-            return true;
+            catch (Exception ex)
+            {
+                result = false;
+                uow.Rollback();
+                throw new Exception("添加角色失败", ex);
+            }
         }
+        return result;
+    }
 
-        public async Task<bool> UpdateRole(sys_role role, List<string> menuids)
+    /// <summary>
+    /// 更新角色
+    /// </summary>
+    /// <param name="role"></param>
+    /// <param name="menuids"></param>
+    /// <returns></returns>
+    public async Task<bool> UpdateRole(sys_role role, List<string> menuids)
+    {
+        bool result = true;
+        using (var uow = this._freeSql.CreateUnitOfWork())
         {
-            using (var uow = this._freeSql.CreateUnitOfWork())
+            try
             {
                 var roleRep = uow.GetRepository<sys_role>();
                 var roleMenuRep = uow.GetRepository<sys_role_menu>();
@@ -88,12 +114,27 @@ namespace NetX.SystemManager.Data.Repositories
                     }));
                 uow.Commit();
             }
-            return true;
+            catch (Exception ex)
+            {
+                result = false;
+                uow.Rollback();
+                throw new Exception("更新角色失败", ex);
+            }
         }
+        return result;
+    }
 
-        public async Task<bool> RemoveRole(string roleId)
+    /// <summary>
+    /// 删除角色
+    /// </summary>
+    /// <param name="roleId"></param>
+    /// <returns></returns>
+    public async Task<bool> RemoveRole(string roleId)
+    {
+        bool result = true;
+        using (var uow = this._freeSql.CreateUnitOfWork())
         {
-            using (var uow = this._freeSql.CreateUnitOfWork())
+            try
             {
                 var roleRep = uow.GetRepository<sys_role>();
                 var roleMenuRep = uow.GetRepository<sys_role_menu>();
@@ -101,7 +142,13 @@ namespace NetX.SystemManager.Data.Repositories
                 await roleRep.DeleteAsync(p => p.id.Equals(roleId));
                 uow.Commit();
             }
-            return true;
+            catch (Exception ex)
+            {
+                result = false;
+                uow.Rollback();
+                throw new Exception("删除角色失败", ex);
+            }
         }
+        return result;
     }
 }

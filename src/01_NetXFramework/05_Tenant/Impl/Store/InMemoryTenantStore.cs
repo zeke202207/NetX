@@ -11,6 +11,10 @@ public class InMemoryTenantStore : ITenantStore<Tenant>
 {
     private readonly TenantOption _tenantOption;
 
+    /// <summary>
+    /// 内存租户信息存储实例
+    /// </summary>
+    /// <param name="tenantOption"></param>
     public InMemoryTenantStore(TenantOption tenantOption)
     {
         _tenantOption = tenantOption;
@@ -21,7 +25,7 @@ public class InMemoryTenantStore : ITenantStore<Tenant>
     /// </summary>
     /// <param name="Identifier">租户身份</param>
     /// <returns></returns>
-    public async Task<Tenant> GetTenantAsync(string Identifier)
+    public async Task<Tenant?> GetTenantAsync(string Identifier)
     {
         if (_tenantOption.TenantType == TenantType.Multi)
         {
@@ -54,6 +58,8 @@ internal class InMemoryTenantProvider
     /// </summary>
     private void Init()
     {
+        if (null == ServiceLocator.Instance)
+            return;
         var config = ServiceLocator.Instance.GetService<IConfiguration>();
         if (null == config)
             return;

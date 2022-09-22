@@ -4,6 +4,9 @@ using System.Reflection;
 
 namespace NetX.App;
 
+/// <summary>
+/// 服务注入扩展方法
+/// </summary>
 public static class ServiceCollectionExtensions
 {
     /// <summary>
@@ -18,16 +21,16 @@ public static class ServiceCollectionExtensions
         {
             #region ==单例注入==
 
-            var singletonAttr = (SingletonAttribute)Attribute.GetCustomAttribute(type, typeof(SingletonAttribute));
-            if (singletonAttr != null)
+            var singleton = Attribute.GetCustomAttribute(type, typeof(SingletonAttribute));
+            if (singleton is SingletonAttribute)
             {
+                var singletonAttr = (SingletonAttribute)singleton;
                 //注入自身类型
                 if (singletonAttr.Itself)
                 {
                     services.AddSingleton(type);
                     continue;
                 }
-
                 var interfaces = type.GetInterfaces().Where(m => m != typeof(IDisposable)).ToList();
                 if (interfaces.Any())
                 {
@@ -40,7 +43,6 @@ public static class ServiceCollectionExtensions
                 {
                     services.AddSingleton(type);
                 }
-
                 continue;
             }
 
@@ -48,16 +50,16 @@ public static class ServiceCollectionExtensions
 
             #region ==瞬时注入==
 
-            var transientAttr = (TransientAttribute)Attribute.GetCustomAttribute(type, typeof(TransientAttribute));
-            if (transientAttr != null)
+            var transient = Attribute.GetCustomAttribute(type, typeof(TransientAttribute));           
+            if (transient is TransientAttribute)
             {
+                var transientAttr = (TransientAttribute)transient;
                 //注入自身类型
                 if (transientAttr.Itself)
                 {
                     services.AddSingleton(type);
                     continue;
                 }
-
                 var interfaces = type.GetInterfaces().Where(m => m != typeof(IDisposable)).ToList();
                 if (interfaces.Any())
                 {
@@ -76,16 +78,18 @@ public static class ServiceCollectionExtensions
             #endregion
 
             #region ==Scoped注入==
-            var scopedAttr = (ScopedAttribute)Attribute.GetCustomAttribute(type, typeof(ScopedAttribute));
-            if (scopedAttr != null)
+
+            var scoped = Attribute.GetCustomAttribute(type, typeof(ScopedAttribute));
+
+            if (scoped is ScopedAttribute)
             {
+                var scopedAttr = (ScopedAttribute)scoped;
                 //注入自身类型
                 if (scopedAttr.Itself)
                 {
                     services.AddSingleton(type);
                     continue;
                 }
-
                 var interfaces = type.GetInterfaces().Where(m => m != typeof(IDisposable)).ToList();
                 if (interfaces.Any())
                 {

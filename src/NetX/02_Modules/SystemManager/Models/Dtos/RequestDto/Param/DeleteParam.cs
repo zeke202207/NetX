@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace NetX.SystemManager.Models;
 
-namespace NetX.SystemManager.Models.Dtos.RequestDto.Param
+/// <summary>
+/// 
+/// </summary>
+public class DeleteParam
 {
-    public class DeleteParam
-    {
-        public string Id { get; set; }
-    }
+    /// <summary>
+    /// 
+    /// </summary>
+    public string Id { get; set; }
 }

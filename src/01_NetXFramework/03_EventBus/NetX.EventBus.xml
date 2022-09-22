@@ -160,6 +160,7 @@
             发布一条消息
             </summary>
             <param name="eventSource"></param>
+            <param name="cancellationToken"></param>
             <returns></returns>
             <exception cref="T:System.NotImplementedException"></exception>
         </member>
@@ -217,6 +218,7 @@
             事件溯源写入器
             </summary>
             <param name="eventSource">事件源对象</param>
+            <param name="cancellationToken"></param>
             <returns></returns>
             <exception cref="T:System.NotImplementedException"></exception>
         </member>
@@ -224,6 +226,7 @@
             <summary>
             事件源读取器
             </summary>
+            <param name="cancellationToken"></param>
             <returns></returns>
             <exception cref="T:System.NotImplementedException"></exception>
         </member>
@@ -348,12 +351,14 @@
             事件源写入存储器
             </summary>
             <param name="eventSource"></param>
+            <param name="cancellationToken"></param>
             <returns></returns>
         </member>
         <member name="M:NetX.EventBus.IEventSourceStorer.ReadAsync(System.Threading.CancellationToken)">
             <summary>
             从存储器中读取事件源
             </summary>
+            <param name="cancellationToken"></param>
             <returns></returns>
         </member>
         <member name="T:NetX.EventBus.IEventSubscriber">

@@ -23,6 +23,7 @@ internal sealed class EventPublisher : IEventPublisher
     /// 发布一条消息
     /// </summary>
     /// <param name="eventSource"></param>
+    /// <param name="cancellationToken"></param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
     public async Task PublishAsync(IEventSource eventSource, CancellationToken cancellationToken = default)

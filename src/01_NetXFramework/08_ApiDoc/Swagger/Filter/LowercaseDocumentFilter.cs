@@ -3,8 +3,16 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace NetX.Swagger;
 
+/// <summary>
+/// 
+/// </summary>
 public class LowercaseDocumentFilter : IDocumentFilter
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="swaggerDoc"></param>
+    /// <param name="context"></param>
     public void Apply(OpenApiDocument swaggerDoc, DocumentFilterContext context)
     {
         var paths = new OpenApiPaths();

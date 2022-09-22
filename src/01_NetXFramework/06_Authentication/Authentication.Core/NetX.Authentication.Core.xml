@@ -9,6 +9,11 @@
             
             </summary>
         </member>
+        <member name="P:NetX.Authentication.Core.ClaimModelAttribute.ClaimKey">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="M:NetX.Authentication.Core.ClaimModelAttribute.#ctor(System.String)">
             <summary>
             
@@ -63,6 +68,21 @@
             <returns></returns>
         </member>
         <member name="T:NetX.Authentication.Core.ClaimModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.Authentication.Core.ClaimModel.UserId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.Authentication.Core.ClaimModel.LoginName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.Authentication.Core.ClaimModel.DisplayName">
             <summary>
             
             </summary>

@@ -4,6 +4,48 @@
         <name>NetX.DatabaseSetup</name>
     </assembly>
     <members>
+        <member name="T:NetX.DatabaseSetup.BaseMigration">
+            <summary>
+            数据库迁移基类
+            </summary>
+        </member>
+        <member name="T:NetX.DatabaseSetup.CreateTableMigration">
+            <summary>
+            数据库迁移创建表
+            </summary>
+        </member>
+        <member name="F:NetX.DatabaseSetup.CreateTableMigration._tableName">
+            <summary>
+            表名
+            </summary>
+        </member>
+        <member name="M:NetX.DatabaseSetup.CreateTableMigration.#ctor(System.String)">
+            <summary>
+            创建表实例对象
+            </summary>
+            <param name="tableName"></param>
+        </member>
+        <member name="M:NetX.DatabaseSetup.CreateTableMigration.Down">
+            <summary>
+            回滚
+            </summary>
+        </member>
+        <member name="T:NetX.DatabaseSetup.InitDataMigration">
+            <summary>
+            数据库迁移初始化数据
+            </summary>
+        </member>
+        <member name="F:NetX.DatabaseSetup.InitDataMigration._tableName">
+            <summary>
+            表名
+            </summary>
+        </member>
+        <member name="M:NetX.DatabaseSetup.InitDataMigration.#ctor(System.String)">
+            <summary>
+            初始化数据实例对象
+            </summary>
+            <param name="tableName"></param>
+        </member>
         <member name="T:NetX.DatabaseSetup.MigrationSupportDbType">
             <summary>
             code first 数据迁移支持的数据库类型
@@ -42,7 +84,6 @@
              数据迁移服务注入
             </summary>
             <param name="services"></param>
-            <param name="assemblies">需要迁移的程序集集合</param>
             <returns></returns>
         </member>
         <member name="M:NetX.DatabaseSetup.FluentMigrationExtensions.BuildFluentMigrator(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Reflection.Assembly[],NetX.DatabaseSetup.MigrationSupportDbType)">

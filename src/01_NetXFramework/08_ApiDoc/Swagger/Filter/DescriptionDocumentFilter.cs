@@ -10,6 +10,11 @@ namespace NetX.Swagger;
 /// </summary>
 public class DescriptionDocumentFilter : IDocumentFilter
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="swaggerDoc"></param>
+    /// <param name="context"></param>
     public void Apply(OpenApiDocument swaggerDoc, DocumentFilterContext context)
     {
         SetControllerDescription(swaggerDoc, context);
@@ -26,14 +31,16 @@ public class DescriptionDocumentFilter : IDocumentFilter
     {
         if (swaggerDoc.Tags == null)
             swaggerDoc.Tags = new List<OpenApiTag>();
-
         foreach (var apiDescription in context.ApiDescriptions)
         {
             if (apiDescription.TryGetMethodInfo(out MethodInfo methodInfo) && methodInfo.DeclaringType != null)
             {
-                var descAttr = (ApiControllerDescriptionAttribute)Attribute.GetCustomAttribute(methodInfo.DeclaringType, typeof(ApiControllerDescriptionAttribute));
-                if (descAttr != null && !string.IsNullOrWhiteSpace(descAttr.Description))
+                var desc = Attribute.GetCustomAttribute(methodInfo.DeclaringType, typeof(ApiControllerDescriptionAttribute));                
+                if (desc is ApiControllerDescriptionAttribute)
                 {
+                    var descAttr = (ApiControllerDescriptionAttribute)desc;
+                    if (string.IsNullOrWhiteSpace(descAttr.Description))
+                        continue;
                     var controllerName = methodInfo.DeclaringType.Name;
                     controllerName = controllerName.Remove(controllerName.Length - 10);
                     if (swaggerDoc.Tags.All(t => t.Name != controllerName))
@@ -80,25 +87,26 @@ public class DescriptionDocumentFilter : IDocumentFilter
         var pro = typeof(SchemaRepository).GetField("_reservedIds", BindingFlags.NonPublic | BindingFlags.Instance);
         if (pro == null)
             return;
-
-        var schemaTypes = (Dictionary<Type, string>)pro.GetValue(context.SchemaRepository);
-
+        var schemaTypes = (Dictionary<Type, string>?)pro.GetValue(context.SchemaRepository);
+        if (null == schemaTypes)
+            return;
         foreach (var schema in context.SchemaRepository.Schemas)
         {
             var type = schemaTypes.FirstOrDefault(m => m.Value.Equals(schema.Key, StringComparison.OrdinalIgnoreCase)).Key;
             if (type == null || !type.IsClass)
                 continue;
-
             var properties = type.GetProperties();
             foreach (var propertyInfo in properties)
             {
                 var propertySchema = schema.Value.Properties.FirstOrDefault(m => m.Key.Equals(propertyInfo.Name, StringComparison.OrdinalIgnoreCase)).Value;
                 if (propertySchema != null)
                 {
-                    var descAttr = (ApiControllerDescriptionAttribute)Attribute.GetCustomAttribute(propertyInfo, typeof(ApiControllerDescriptionAttribute));
-                    if (descAttr != null && string.IsNullOrWhiteSpace(descAttr.Description))
+                    var desc = Attribute.GetCustomAttribute(propertyInfo, typeof(ApiControllerDescriptionAttribute));
+                    if (desc is ApiControllerDescriptionAttribute)
                     {
-                        propertySchema.Title = descAttr.Description;
+                        var descAttr = (ApiControllerDescriptionAttribute)desc;
+                        if (!string.IsNullOrWhiteSpace(descAttr.Description))
+                            propertySchema.Title = descAttr.Description;
                     }
                 }
             }
@@ -115,15 +123,19 @@ public class DescriptionDocumentFilter : IDocumentFilter
             var apiPath = "/" + apiDescription.RelativePath?.ToLower();
             if (apiPath.Equals(path) && apiDescription.TryGetMethodInfo(out MethodInfo methodInfo))
             {
-                var descAttr = (ApiActionDescriptionAttribute)Attribute.GetCustomAttribute(methodInfo, typeof(ApiActionDescriptionAttribute));
-                if (descAttr != null && !string.IsNullOrWhiteSpace(descAttr.Description))
+                var desc = Attribute.GetCustomAttribute(methodInfo, typeof(ApiControllerDescriptionAttribute));
+                //var descAttr = (ApiActionDescriptionAttribute)Attribute.GetCustomAttribute(methodInfo, typeof(ApiActionDescriptionAttribute));
+                if (desc is ApiActionDescriptionAttribute)
                 {
-                    description = descAttr.Description;
-                    return true;
+                    var descAttr = (ApiActionDescriptionAttribute)desc;
+                    if (!string.IsNullOrWhiteSpace(descAttr.Description))
+                    {
+                        description = descAttr.Description;
+                        return true;
+                    }
                 }
             }
         }
-
         description = "";
         return false;
     }

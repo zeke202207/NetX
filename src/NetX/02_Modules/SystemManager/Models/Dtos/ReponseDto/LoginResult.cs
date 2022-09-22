@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
 
 namespace NetX.SystemManager.Models;
 
@@ -12,14 +7,29 @@ namespace NetX.SystemManager.Models;
 /// </summary>
 public class LoginResult
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [JsonPropertyName("userid")]
     public string UserId { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
     [JsonPropertyName("username")]
     public string UserName { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
     [JsonPropertyName("token")]
     public string Token { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
     [JsonPropertyName("realname")]
     public string RealName { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
     [JsonPropertyName("desc")]
     public string Desc { get; set; }
     //public roles,

@@ -32,7 +32,6 @@ public static class FluentMigrationExtensions
     ///  数据迁移服务注入
     /// </summary>
     /// <param name="services"></param>
-    /// <param name="assemblies">需要迁移的程序集集合</param>
     /// <returns></returns>
     public static IServiceCollection BuildFluentMigrator(this IServiceCollection services)
     {

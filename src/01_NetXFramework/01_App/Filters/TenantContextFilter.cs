@@ -22,7 +22,6 @@ public class TenantContextFilter : BaseFilter, IResourceFilter, IAsyncResourceFi
     /// <param name="accessor"></param>
     /// <param name="tenantOption"></param>
     /// <param name="migrationService"></param>
-    /// <param name="dbAccessor"></param>
     public TenantContextFilter(ITenantAccessor<Tenant> accessor, TenantOption tenantOption, MigrationService migrationService)
     {
         _accessor = accessor;
@@ -46,7 +45,7 @@ public class TenantContextFilter : BaseFilter, IResourceFilter, IAsyncResourceFi
     public void OnResourceExecuting(ResourceExecutingContext context)
     {
         var identity = context.HttpContext.User.Identity as ClaimsIdentity;
-        if(null != _accessor.Tenant)
+        if(null != _accessor.Tenant && null != identity)
         {
             TenantContext.CurrentTenant.InitPrincipal(new NetXPrincipal(identity, _accessor.Tenant), _tenantOption);
             _migrationService.SetupDatabase();

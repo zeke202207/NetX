@@ -14,7 +14,7 @@ public class NetXPrincipal
     /// 身份信息
     /// </summary>
     [NonSerialized]
-    public IIdentity Identity;
+    public IIdentity? Identity;
 
     /// <summary>
     /// 租户信息

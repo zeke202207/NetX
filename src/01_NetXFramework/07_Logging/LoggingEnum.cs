@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace NetX.Logging;
 
+/// <summary>
+/// 日志类型
+/// </summary>
 public enum LoggingType
 {
+    /// <summary>
+    /// 
+    /// </summary>
     Serilog
 }

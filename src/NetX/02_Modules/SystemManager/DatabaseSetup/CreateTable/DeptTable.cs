@@ -1,21 +1,25 @@
 ﻿using FluentMigrator;
 using NetX.DatabaseSetup;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetX.SystemManager.DatabaseSetup.CreateTable;
 
+/// <summary>
+/// 部门表
+/// </summary>
 [Migration(2)]
 public class DeptTable : CreateTableMigration
 {
-    public DeptTable() 
+    /// <summary>
+    /// 
+    /// </summary>
+    public DeptTable()
         : base(DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYSDEPT)
     {
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public override void Up()
     {
         Create.Table(_tableName)

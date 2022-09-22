@@ -13,7 +13,7 @@ public class TenantBuilder<T>
 {
     private readonly IServiceCollection _services;
     private readonly TenantType _tenantType;
-    private DatabaseInfo _databaseInfo;
+    private DatabaseInfo? _databaseInfo;
 
     /// <summary>
     /// 租户注入构建器
@@ -130,6 +130,10 @@ public class TenantBuilder<T>
         return this;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
     public IServiceCollection Build()
     {
         TenantOption _option = new TenantOption(_tenantType)

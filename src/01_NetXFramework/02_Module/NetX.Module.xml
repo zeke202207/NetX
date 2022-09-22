@@ -68,12 +68,18 @@
             模块初始化器 <see cref="T:NetX.Module.ModuleInitializer"/>
             </summary>
         </member>
+        <member name="T:NetX.Module.IApplicationModule">
+            <summary>
+            application模块初始化器接口
+            </summary>
+        </member>
         <member name="M:NetX.Module.IApplicationModule.ConfigureApplication(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment,NetX.Module.ModuleContext)">
             <summary>
             配置中间件
             </summary>
             <param name="app"></param>
             <param name="env"></param>
+            <param name="context"></param>
         </member>
         <member name="T:NetX.Module.IModule">
             <summary>
@@ -90,12 +96,18 @@
             模块类型
             </summary>
         </member>
+        <member name="T:NetX.Module.IServiceModule">
+            <summary>
+            服务模块初始化器接口
+            </summary>
+        </member>
         <member name="M:NetX.Module.IServiceModule.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.AspNetCore.Hosting.IWebHostEnvironment,NetX.Module.ModuleContext)">
             <summary>
             注入服务
             </summary>
             <param name="services"></param>
             <param name="env">环境变量</param>
+            <param name="context"></param>
         </member>
         <member name="T:NetX.Module.ModuleInitializer">
             <summary>
@@ -129,6 +141,11 @@
             <param name="app"></param>
             <param name="env"></param>
             <param name="context"></param>
+        </member>
+        <member name="T:NetX.Module.ModuleSetupConst">
+            <summary>
+            
+            </summary>
         </member>
         <member name="F:NetX.Module.ModuleSetupConst.C_SERVERHOST_MODULE_ID">
             <summary>

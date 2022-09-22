@@ -1,22 +1,25 @@
 ﻿using FluentMigrator;
 using NetX.DatabaseSetup;
-using NetX.SystemManager.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetX.SystemManager.DatabaseSetup.CreateTable;
 
+/// <summary>
+/// 
+/// </summary>
 [Migration(1)]
 public class UserTable : CreateTableMigration
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public UserTable()
         : base(DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYSUSER)
     {
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public override void Up()
     {
         Create.Table(_tableName)

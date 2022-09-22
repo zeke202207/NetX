@@ -4,32 +4,30 @@ using NetX.Common.Models;
 using NetX.Swagger;
 using NetX.SystemManager.Core;
 using NetX.SystemManager.Models;
-using NetX.SystemManager.Models.Dtos.RequestDto.Param;
 using NetX.Tenants;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetX.SystemManager.Controllers
 {
     /// <summary>
-    /// 
+    /// 账号管理api接口
     /// </summary>
-    [ApiControllerDescriptionAttribute("SystemManager", Description = "NetX实现的系统管理模块->账号管理")]
+    [ApiControllerDescription("SystemManager", Description = "NetX实现的系统管理模块->账号管理")]
     [PermissionValidate]
     public class AccountController : SystemManagerBaseController
     {
         private readonly IAccountService _accoutService;
 
+        /// <summary>
+        /// 账号管理api实例对象
+        /// </summary>
+        /// <param name="accountService"></param>
         public AccountController(IAccountService accountService)
         {
             this._accoutService = accountService;
         }
 
         /// <summary>
-        /// 获取访问Token
+        /// 系统登录
         /// </summary>
         /// <returns></returns>
         [ApiActionDescriptionAttribute("登录")]
@@ -42,11 +40,11 @@ namespace NetX.SystemManager.Controllers
                 return base.Error(ResultEnum.ERROR, "账号密码验证失败");
             string token = await _accoutService.GetToken(new ClaimModel()
             {
-                UserId = userInfo.Id, 
-                LoginName = userInfo.UserName, 
+                UserId = userInfo.Id,
+                LoginName = userInfo.UserName,
                 DisplayName = userInfo.NickName
             });
-            if(string.IsNullOrWhiteSpace(token))
+            if (string.IsNullOrWhiteSpace(token))
                 return base.Error(ResultEnum.ERROR, "获取token失败");
             return base.Success<LoginResult>(new LoginResult()
             {
@@ -66,20 +64,20 @@ namespace NetX.SystemManager.Controllers
         [HttpGet]
         public async Task<ActionResult> GetUserInfo()
         {
-            var userInfo = await _accoutService.GetUserInfo(TenantContext.CurrentTenant.Principal.UserId);
+            var userInfo = await _accoutService.GetUserInfo(TenantContext.CurrentTenant.Principal?.UserId);
             if (null == userInfo)
                 return base.Error(ResultEnum.ERROR, "获取用户信息失败");
             return base.Success<UserModel>(userInfo);
         }
 
         /// <summary>
-        /// 
+        /// 获取用户列表集合
         /// </summary>
-        /// <param name="roleListparam"></param>
+        /// <param name="userListparam"></param>
         /// <returns></returns>
         [ApiActionDescriptionAttribute("获取用户列表集合")]
         [HttpGet]
-        public async Task<ActionResult> GetAccountList([FromQuery]UserListParam userListparam)
+        public async Task<ActionResult> GetAccountList([FromQuery] UserListParam userListparam)
         {
             var userList = await _accoutService.GetAccountLists(userListparam);
             if (null == userList)
@@ -88,13 +86,13 @@ namespace NetX.SystemManager.Controllers
         }
 
         /// <summary>
-        /// 
+        /// 判断用户是否存在
         /// </summary>
-        /// <param name="userId"></param>
+        /// <param name="account"></param>
         /// <returns></returns>
         [ApiActionDescription("用户名是否存在校验")]
         [HttpGet]
-        public async Task<ActionResult> IsAccountExist([FromQuery]string account)
+        public async Task<ActionResult> IsAccountExist([FromQuery] string account)
         {
             var isExist = await _accoutService.IsAccountExist(account);
             if (isExist)
@@ -111,15 +109,12 @@ namespace NetX.SystemManager.Controllers
         [HttpGet]
         public async Task<ActionResult> GetPermCode()
         {
-            var result = await _accoutService.GetPermCode(TenantContext.CurrentTenant.Principal.UserId);
-            return new JsonResult(new ResultModel<List<string>>(ResultEnum.SUCCESS)
-            {
-                Result = result
-            });
+            var result = await _accoutService.GetPermCode(TenantContext.CurrentTenant.Principal?.UserId ?? string.Empty);
+            return base.Success<IEnumerable<string>>(result);
         }
 
         /// <summary>
-        /// 
+        /// 等处系统
         /// </summary>
         /// <returns></returns>
         [ApiActionDescriptionAttribute("登出系统")]

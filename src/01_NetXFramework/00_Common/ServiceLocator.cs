@@ -4,10 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetX.Common
+namespace NetX.Common;
+
+/// <summary>
+/// 全局访问定位器
+/// </summary>
+public static class ServiceLocator
 {
-    public static class ServiceLocator
-    {
-        public static IServiceProvider Instance { get; set; }
-    }
+    /// <summary>
+    /// 注入服务定位器
+    /// </summary>
+    public static IServiceProvider? Instance { get; set; }
 }

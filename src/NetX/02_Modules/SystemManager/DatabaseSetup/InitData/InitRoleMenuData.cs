@@ -1,21 +1,25 @@
 ﻿using FluentMigrator;
 using NetX.DatabaseSetup;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetX.SystemManager.DatabaseSetup.InitData;
 
+/// <summary>
+/// 
+/// </summary>
 [Migration(1005)]
 public class InitRoleMenuData : InitDataMigration
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public InitRoleMenuData()
         : base(DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYSROLEMENU)
     {
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public override void Up()
     {
         Insert.IntoTable(_tableName)
@@ -51,6 +55,9 @@ public class InitRoleMenuData : InitDataMigration
             });
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public override void Down()
     {
         Execute.Sql($"delete * from {_tableName}");

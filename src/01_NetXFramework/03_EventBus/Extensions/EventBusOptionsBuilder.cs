@@ -17,7 +17,7 @@ public sealed class EventBusOptionsBuilder
     /// <summary>
     /// 事件存储器实现工厂
     /// </summary>
-    private Func<IServiceProvider, IEventSourceStorer> _eventSourceStorerImplementationFactory;
+    private Func<IServiceProvider, IEventSourceStorer>? _eventSourceStorerImplementationFactory;
 
     /// <summary>
     /// 默认内置事件源存储器内存通道容量

@@ -24,6 +24,8 @@ public class HostResolutionStrategy : ITenantResolutionStrategy
     /// <returns>租户身份标识</returns>
     public async Task<string> GetTenantIdentifierAsync()
     {
+        if (null == _httpContextAccessor.HttpContext)
+            return await Task.FromResult(string.Empty);
         return await Task.FromResult(_httpContextAccessor.HttpContext.Request.Host.Host);
     }
 }

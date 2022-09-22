@@ -1,21 +1,25 @@
 ﻿using FluentMigrator;
 using NetX.DatabaseSetup;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetX.SystemManager.DatabaseSetup.CreateTable;
 
+/// <summary>
+/// 
+/// </summary>
 [Migration(5)]
 public class RoleMenuTable : CreateTableMigration
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public RoleMenuTable()
         : base(DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYSROLEMENU)
     {
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public override void Up()
     {
         Create.Table(_tableName)

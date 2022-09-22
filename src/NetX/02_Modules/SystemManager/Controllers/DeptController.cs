@@ -1,73 +1,76 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using NetX.Authentication.Core;
-using NetX.Common.Models;
 using NetX.Swagger;
 using NetX.SystemManager.Core;
 using NetX.SystemManager.Models;
-using NetX.SystemManager.Models.Dtos.RequestDto.Param;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace NetX.SystemManager.Controllers
+namespace NetX.SystemManager.Controllers;
+
+/// <summary>
+/// 部门管理api接口
+/// </summary>
+[ApiControllerDescription("SystemManager", Description = "NetX实现的系统管理模块->部门管理")]
+public class DeptController : SystemManagerBaseController
 {
+    private readonly IDeptService _deptService;
+
     /// <summary>
-    /// 部门管理
+    /// 部门管理api实例对象
     /// </summary>
-    [ApiControllerDescriptionAttribute("SystemManager", Description = "NetX实现的系统管理模块->部门管理")]
-    public class DeptController : SystemManagerBaseController
+    /// <param name="deptService"></param>
+    public DeptController(IDeptService deptService)
     {
-        private readonly IDeptService _deptService;
+        _deptService = deptService;
+    }
 
-        public DeptController(IDeptService deptService)
-        {
-            _deptService = deptService;
-        }
+    /// <summary>
+    /// 获取部门列表
+    /// </summary>
+    /// <param name="queryParam"></param>
+    /// <returns></returns>
+    [ApiActionDescriptionAttribute("获取部门列表")]
+    [HttpGet]
+    public async Task<ActionResult> GetDeptList([FromQuery] DeptListParam queryParam)
+    {
+        var result = await _deptService.GetDeptList(queryParam);
+        return base.Success<List<DeptModel>>(result);
+    }
 
-        [ApiActionDescriptionAttribute("获取部门列表")]
-        [HttpGet]
-        public async Task<ActionResult> GetDeptList([FromQuery] DeptListParam queryParam)
-        {
-            var result = await _deptService.GetDeptList(queryParam);
-            return new JsonResult(new ResultModel<List<DeptModel>>(ResultEnum.SUCCESS)
-            {
-                Result = result
-            });
-        }
+    /// <summary>
+    /// 新增部门信息
+    /// </summary>
+    /// <param name="model"></param>
+    /// <returns></returns>
+    [ApiActionDescriptionAttribute("新增部门信息")]
+    [HttpPost]
+    public async Task<ActionResult> AddDept(DeptRequestModel model)
+    {
+        var result = await _deptService.AddDept(model);
+        return base.Success<bool>(result);
+    }
 
-        [ApiActionDescriptionAttribute("add a new department")]
-        [HttpPost]
-        public async Task<ActionResult> AddDept(DeptRequestModel model)
-        {
-            var result = await _deptService.AddDept(model);
-            return new JsonResult(new ResultModel<bool>(ResultEnum.SUCCESS)
-            {
-                Result = result
-            });
-        }
+    /// <summary>
+    /// 编辑部门信息
+    /// </summary>
+    /// <param name="model"></param>
+    /// <returns></returns>
+    [ApiActionDescriptionAttribute("编辑部门信息")]
+    [HttpPost]
+    public async Task<ActionResult> UpdateDept(DeptRequestModel model)
+    {
+        var result = await _deptService.UpdateDept(model);
+        return base.Success<bool>(result);
+    }
 
-        [ApiActionDescriptionAttribute("edit department")]
-        [HttpPost]
-        public async Task<ActionResult> UpdateDept(DeptRequestModel model)
-        {
-            var result = await _deptService.UpdateDept(model);
-            return new JsonResult(new ResultModel<bool>(ResultEnum.SUCCESS)
-            {
-                Result = result
-            });
-        }
-
-        [ApiActionDescriptionAttribute("delete department")]
-        [HttpDelete]
-        public async Task<ActionResult>RemoveDept(DeleteParam param)
-        {
-            var result = await _deptService.RemoveDept(param.Id);
-            return new JsonResult(new ResultModel<bool>(ResultEnum.SUCCESS)
-            {
-                Result = result
-            });
-        }
+    /// <summary>
+    /// 删除部门信息
+    /// </summary>
+    /// <param name="param"></param>
+    /// <returns></returns>
+    [ApiActionDescriptionAttribute("删除部门信息")]
+    [HttpDelete]
+    public async Task<ActionResult> RemoveDept(DeleteParam param)
+    {
+        var result = await _deptService.RemoveDept(param.Id);
+        return base.Success<bool>(result);
     }
 }

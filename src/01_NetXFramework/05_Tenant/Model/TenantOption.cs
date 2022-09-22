@@ -22,5 +22,5 @@ public class TenantOption
     /// <summary>
     /// 应用程序数据配置
     /// </summary>
-    public DatabaseInfo DatabaseInfo { get; set; }
+    public DatabaseInfo? DatabaseInfo { get; set; }
 }

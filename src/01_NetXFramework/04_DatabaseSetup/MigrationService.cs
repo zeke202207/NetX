@@ -49,8 +49,10 @@ public class MigrationService
             {
                 var dbFactory = GetDatabaseFactory(serviceProvider);
                 //创建数据库
-                using (var conn = dbFactory.Factory.CreateConnection())
+                using (var conn = dbFactory?.Factory.CreateConnection())
                 {
+                    if (null == conn)
+                        return false;
                     conn.ConnectionString = TenantContext.CurrentTenant.CreateSchemaConnectionStr;
                     if (conn.State != System.Data.ConnectionState.Open)
                         conn.Open();
@@ -68,7 +70,7 @@ public class MigrationService
         }
         catch (Exception ex)
         {
-            return false;
+            throw new Exception("创建数据库失败", ex);
         }
     }
 
@@ -77,8 +79,10 @@ public class MigrationService
     /// </summary>
     /// <param name="serviceProvider"></param>
     /// <returns></returns>
-    private ReflectionBasedDbFactory GetDatabaseFactory(IServiceProvider serviceProvider)
+    private ReflectionBasedDbFactory? GetDatabaseFactory(IServiceProvider serviceProvider)
     {
+        if (null == serviceProvider)
+            return null;
         switch (_supportDbType)
         {
             case MigrationSupportDbType.MySql5:
@@ -155,9 +159,9 @@ public class MigrationService
                 runner.MigrateUp();
                 return true;
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                return false;
+                throw new Exception("数据库迁移失败", ex);
             }
         }
     }

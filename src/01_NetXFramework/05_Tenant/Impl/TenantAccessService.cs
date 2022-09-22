@@ -22,10 +22,10 @@ internal class TenantAccessService<T>
     }
 
     /// <summary>
-    /// 湖区当前租户信息
+    /// 获取当前租户信息
     /// </summary>
     /// <returns></returns>
-    public async Task<T> GetTenatnAsync()
+    public async Task<T?> GetTenatnAsync()
     {
         var tenantIdentifier = await _strategy.GetTenantIdentifierAsync();
         return await _tenantStore.GetTenantAsync(tenantIdentifier);

@@ -1,27 +1,37 @@
 ﻿using FreeSql;
 using NetX.Common.Attributes;
 using NetX.SystemManager.Models;
-using NetX.SystemManager.Models.Dtos.Entity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace NetX.SystemManager.Data;
+namespace NetX.SystemManager.Data.Repositories;
 
+/// <summary>
+/// 用户仓储
+/// </summary>
 [Scoped]
 public class SysUserRepository : BaseRepository<sys_user, string>
 {
     private readonly IFreeSql _freeSql;
 
+    /// <summary>
+    /// 用户仓储对象实例
+    /// </summary>
+    /// <param name="fsql"></param>
     public SysUserRepository(IFreeSql fsql)
         : base(fsql, null, null)
     {
         this._freeSql = fsql;
     }
 
-    public async Task<IEnumerable<Tuple<sys_user, sys_role, sys_dept>>> GetUserList(string deptId,string username,string nickname,int currentpage,int pagesize)
+    /// <summary>
+    /// 获取用户列表
+    /// </summary>
+    /// <param name="deptId"></param>
+    /// <param name="username"></param>
+    /// <param name="nickname"></param>
+    /// <param name="currentpage"></param>
+    /// <param name="pagesize"></param>
+    /// <returns></returns>
+    public async Task<IEnumerable<Tuple<sys_user, sys_role, sys_dept>>> GetUserList(string deptId, string username, string nickname, int currentpage, int pagesize)
     {
         var result = await this._freeSql.Select<sys_user, sys_user_role, sys_user_dept, sys_role, sys_dept>()
             .LeftJoin((u, ur, ud, r, d) => u.id == ur.userid)
@@ -36,67 +46,121 @@ public class SysUserRepository : BaseRepository<sys_user, string>
         return result;
     }
 
-    public async Task<bool> AddUser(sys_user user, string roleid, string deptid)
+    /// <summary>
+    /// 新增用户信息
+    /// </summary>
+    /// <param name="user"></param>
+    /// <param name="roleid"></param>
+    /// <param name="deptid"></param>
+    /// <returns></returns>
+    public async Task<bool> AddUser(sys_user user, string? roleid, string? deptid)
     {
+        bool result = true;
         using (var uow = this._freeSql.CreateUnitOfWork())
         {
-            var userRep = uow.GetRepository<sys_user>();
-            var userRoleRep = uow.GetRepository<sys_user_role>();
-            var userDeptRep = uow.GetRepository<sys_user_dept>();
-            userRep.UnitOfWork = uow;
-            userRoleRep.UnitOfWork = uow;
-            userDeptRep.UnitOfWork = uow;
-            await userRep.InsertAsync(user); 
-            if (!string.IsNullOrWhiteSpace(roleid))
-                await userRoleRep.InsertAsync(new sys_user_role() { userid = user.id, roleid = roleid });
-            if (!string.IsNullOrWhiteSpace(deptid))
-                await userDeptRep.InsertAsync(new sys_user_dept() { userid = user.id, deptid = deptid });
-            uow.Commit();
+            try
+            {
+                var userRep = uow.GetRepository<sys_user>();
+                var userRoleRep = uow.GetRepository<sys_user_role>();
+                var userDeptRep = uow.GetRepository<sys_user_dept>();
+                userRep.UnitOfWork = uow;
+                userRoleRep.UnitOfWork = uow;
+                userDeptRep.UnitOfWork = uow;
+                await userRep.InsertAsync(user);
+                if (!string.IsNullOrWhiteSpace(roleid))
+                    await userRoleRep.InsertAsync(new sys_user_role() { userid = user.id, roleid = roleid });
+                if (!string.IsNullOrWhiteSpace(deptid))
+                    await userDeptRep.InsertAsync(new sys_user_dept() { userid = user.id, deptid = deptid });
+                uow.Commit();
+            }
+            catch (Exception ex)
+            {
+                result = false;
+                uow.Rollback();
+                throw new Exception("删除角色失败", ex);
+            }
         }
-        return true;
+        return result;
     }
 
-    public async Task<bool> UpdateUser(sys_user user, string roleid, string deptid)
+    /// <summary>
+    /// 更新用户信息
+    /// </summary>
+    /// <param name="user"></param>
+    /// <param name="roleid"></param>
+    /// <param name="deptid"></param>
+    /// <returns></returns>
+    public async Task<bool> UpdateUser(sys_user user, string? roleid, string? deptid)
     {
+        bool result = true;
         using (var uow = this._freeSql.CreateUnitOfWork())
         {
-            var userRep = uow.GetRepository<sys_user>();
-            var userRoleRep = uow.GetRepository<sys_user_role>();
-            var userDeptRep = uow.GetRepository<sys_user_dept>();
-            userRep.UnitOfWork = uow;
-            userRoleRep.UnitOfWork = uow;
-            userDeptRep.UnitOfWork = uow;
-            await userRep.UpdateAsync(user);
-            if (!string.IsNullOrWhiteSpace(roleid))
+            try
             {
-                await userRoleRep.DeleteAsync(p => p.userid.Equals(user.id));
-                await userRoleRep.InsertAsync(new sys_user_role() { userid = user.id, roleid = roleid });
+                var userRep = uow.GetRepository<sys_user>();
+                var userRoleRep = uow.GetRepository<sys_user_role>();
+                var userDeptRep = uow.GetRepository<sys_user_dept>();
+                userRep.UnitOfWork = uow;
+                userRoleRep.UnitOfWork = uow;
+                userDeptRep.UnitOfWork = uow;
+                await userRep.UpdateAsync(user);
+                if (!string.IsNullOrWhiteSpace(roleid))
+                {
+                    await userRoleRep.DeleteAsync(p => p.userid.Equals(user.id));
+                    await userRoleRep.InsertAsync(new sys_user_role() { userid = user.id, roleid = roleid });
+                }
+                if (!string.IsNullOrWhiteSpace(deptid))
+                {
+                    await userDeptRep.DeleteAsync(p => p.userid.Equals(user.id));
+                    await userDeptRep.InsertAsync(new sys_user_dept() { userid = user.id, deptid = deptid });
+                }
+                uow.Commit();
             }
-            if (!string.IsNullOrWhiteSpace(deptid))
+            catch (Exception ex)
             {
-                await userDeptRep.DeleteAsync(p => p.userid.Equals(user.id));
-                await userDeptRep.InsertAsync(new sys_user_dept() { userid = user.id, deptid = deptid });
+                result = false;
+                uow.Rollback();
+                throw new Exception("删除角色失败", ex);
             }
-            uow.Commit();
         }
-        return true;
+        return result;
     }
 
+    /// <summary>
+    /// 删除用户信息
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <returns></returns>
     public async Task<bool> RemoveUser(string userId)
     {
+        bool result = true;
         using (var uow = this._freeSql.CreateUnitOfWork())
         {
-            var userRep = uow.GetRepository<sys_user>();
-            var userRoleRep = uow.GetRepository<sys_user_role>();
-            var userDeptRep = uow.GetRepository<sys_user_dept>();
-            await userRoleRep.DeleteAsync(p => p.userid.Equals(userId));
-            await userDeptRep.DeleteAsync(p => p.userid.Equals(userId));
-            await userRep.DeleteAsync(p => p.id.Equals(userId));
-            uow.Commit();
+            try
+            {
+                var userRep = uow.GetRepository<sys_user>();
+                var userRoleRep = uow.GetRepository<sys_user_role>();
+                var userDeptRep = uow.GetRepository<sys_user_dept>();
+                await userRoleRep.DeleteAsync(p => p.userid.Equals(userId));
+                await userDeptRep.DeleteAsync(p => p.userid.Equals(userId));
+                await userRep.DeleteAsync(p => p.id.Equals(userId));
+                uow.Commit();
+            }
+            catch (Exception ex)
+            {
+                result = false;
+                uow.Rollback();
+                throw new Exception("删除角色失败", ex);
+            }
         }
-        return true;
+        return result;
     }
 
+    /// <summary>
+    /// 获取用户权限标识集合
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <returns></returns>
     public async Task<List<string>> GetPremCodes(string userId)
     {
         var result = await this._freeSql.Select<sys_menu, sys_role_menu, sys_user_role>()

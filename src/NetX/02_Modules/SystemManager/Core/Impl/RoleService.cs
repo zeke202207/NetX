@@ -1,41 +1,46 @@
 ﻿using FreeSql;
-using Microsoft.AspNetCore.JsonPatch.Internal;
-using NetX.Authentication.Core;
-using NetX.Common;
 using NetX.Common.Attributes;
-using NetX.SystemManager.Core.Impl;
 using NetX.SystemManager.Data.Repositories;
 using NetX.SystemManager.Models;
-using NetX.SystemManager.Models.Dtos.Entity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetX.SystemManager.Core;
 
+/// <summary>
+/// 角色管理服务
+/// </summary>
 [Scoped]
 public class RoleService : BaseService, IRoleService
 {
     private readonly IBaseRepository<sys_role> _roleRepository;
 
+    /// <summary>
+    /// 角色管理服务实例对象
+    /// </summary>
+    /// <param name="roleRepository"></param>
     public RoleService(
         IBaseRepository<sys_role> roleRepository)
     {
         this._roleRepository = roleRepository;
     }
+
+    /// <summary>
+    /// 获取角色列表
+    /// </summary>
+    /// <returns></returns>
     public async Task<List<RoleModel>> GetRoleList()
     {
         return await GetRoleList(new RoleListParam());
     }
 
+    /// <summary>
+    /// 获取角色列表
+    /// </summary>
+    /// <param name="roleListparam"></param>
+    /// <returns></returns>
     public async Task<List<RoleModel>> GetRoleList(RoleListParam roleListparam)
     {
         var roles = await ((SysRoleRepository)this._roleRepository)
             .GetRoleList(roleListparam.RoleName, roleListparam.Page, roleListparam.PageSize);
-        
         return roles.ConvertAll<RoleModel>(p => new RoleModel()
         {
             Id = p.role.id,
@@ -47,19 +52,29 @@ public class RoleService : BaseService, IRoleService
         });
     }
 
+    /// <summary>
+    /// 添加角色
+    /// </summary>
+    /// <param name="model"></param>
+    /// <returns></returns>
     public Task<bool> AddRole(RoleRequestModel model)
     {
         var roleEntity = new sys_role()
         {
             id = base.CreateId(),
             createtime = base.CreateInsertTime(),
-            rolename = model.RoleName,             
+            rolename = model.RoleName,
             status = int.Parse(model.Status),
             remark = model?.Remark
         };
         return ((SysRoleRepository)_roleRepository).AddRole(roleEntity, model.ToMenuList());
     }
 
+    /// <summary>
+    /// 更新角色
+    /// </summary>
+    /// <param name="model"></param>
+    /// <returns></returns>
     public async Task<bool> UpdateRole(RoleRequestModel model)
     {
         var roleEntity = await _roleRepository.Select.Where(p => p.id.Equals(model.Id)).FirstAsync();
@@ -70,17 +85,28 @@ public class RoleService : BaseService, IRoleService
         return await ((SysRoleRepository)_roleRepository).UpdateRole(roleEntity, model.ToMenuList());
     }
 
+    /// <summary>
+    /// 删除角色
+    /// </summary>
+    /// <param name="roleId"></param>
+    /// <returns></returns>
     public Task<bool> RemoveRole(string roleId)
     {
         return ((SysRoleRepository)_roleRepository).RemoveRole(roleId);
     }
 
+    /// <summary>
+    /// 更新角色状态
+    /// </summary>
+    /// <param name="roleId"></param>
+    /// <param name="status"></param>
+    /// <returns></returns>
     public async Task<bool> UpdateRoleStatus(string roleId, string status)
     {
         int intStatus = 0;
         if (!int.TryParse(status, out intStatus))
             return false;
-        var roleEntity = await _roleRepository.Select.Where(p => p.id.Equals(roleId)).FirstAsync() ;
+        var roleEntity = await _roleRepository.Select.Where(p => p.id.Equals(roleId)).FirstAsync();
         if (null == roleEntity)
             return false;
         roleEntity.status = intStatus;

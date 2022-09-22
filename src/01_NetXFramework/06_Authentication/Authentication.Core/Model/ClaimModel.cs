@@ -11,12 +11,21 @@ namespace NetX.Authentication.Core;
 /// </summary>
 public class ClaimModel
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [ClaimModelAttribute("userid")]
-    public string UserId { get; set; }
+    public string? UserId { get; set; }
 
+    /// <summary>
+    /// 
+    /// </summary>
     [ClaimModelAttribute("loginname")]
-    public string LoginName { get; set; }
+    public string? LoginName { get; set; }
 
+    /// <summary>
+    /// 
+    /// </summary>
     [ClaimModelAttribute("displayname")]
-    public string DisplayName { get; set; }
+    public string? DisplayName { get; set; }
 }

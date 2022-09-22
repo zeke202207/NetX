@@ -23,10 +23,10 @@ public class ApiControllerDescriptionAttribute : Attribute, Microsoft.AspNetCore
     /// <summary>
     /// http请求Header的key值
     /// </summary>
-    public string[] HeaderKeys { get; set; }
+    public string[]? HeaderKeys { get; set; }
 
     /// <summary>
     /// 控制器描述
     /// </summary>
-    public string Description { get; set; }
+    public string? Description { get; set; }
 }

@@ -14,7 +14,7 @@ internal sealed class EventHandlerWrapper
     /// <summary>
     /// 处理程序
     /// </summary>
-    internal Func<EventHandlerExecutingContext, Task> Handler;
+    internal Func<EventHandlerExecutingContext, Task>? Handler;
 
     internal EventHandlerWrapper(string @eventId)
     {

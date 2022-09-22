@@ -1,22 +1,25 @@
 ﻿using FluentMigrator;
 using NetX.DatabaseSetup;
-using NetX.SystemManager.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetX.SystemManager.DatabaseSetup.InitData;
 
+/// <summary>
+/// 
+/// </summary>
 [Migration(1002)]
 public class InitMenuData : InitDataMigration
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public InitMenuData()
         : base(DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYSMENU)
     {
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public override void Up()
     {
         Insert.IntoTable(_tableName)
@@ -30,9 +33,9 @@ public class InitMenuData : InitDataMigration
                 redirect = "",
                 meta = "{\"Title\":\"仪表盘\",\"HideBreadcrumb\":true,\"Icon\":\"bx:bx-home\"}",
                 icon = "ion:layers-outline",
-                type= (int)MenuType.Menu,
-                permission="",
-                orderno=1,
+                type = (int)MenuType.Menu,
+                permission = "",
+                orderno = 1,
             })
             .Row(new
             {
@@ -102,6 +105,9 @@ public class InitMenuData : InitDataMigration
             });
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public override void Down()
     {
         Execute.Sql($"delete * from {_tableName}");

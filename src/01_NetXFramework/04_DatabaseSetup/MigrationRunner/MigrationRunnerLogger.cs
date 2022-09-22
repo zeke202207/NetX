@@ -16,7 +16,9 @@ public class MigrationRunnerLogger : ILogger<MigrationRunner>
     /// <returns></returns>
     public IDisposable BeginScope<TState>(TState state)
     {
+#pragma warning disable CS8603 // 可能返回 null 引用。
         return null;
+#pragma warning restore CS8603 // 可能返回 null 引用。
     }
 
     /// <summary>

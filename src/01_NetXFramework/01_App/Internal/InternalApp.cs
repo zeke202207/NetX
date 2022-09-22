@@ -8,9 +8,9 @@ internal class InternalApp
     /// <summary>
     /// 根服务
     /// </summary>
-    internal static IServiceProvider RootServices { get; set; }
+    internal static IServiceProvider? RootServices { get; set; }
 
-    internal static IConfiguration Configuration { get; set; }
+    internal static IConfiguration? Configuration { get; set; }
 
     /// <summary>
     /// 用户程序集集合

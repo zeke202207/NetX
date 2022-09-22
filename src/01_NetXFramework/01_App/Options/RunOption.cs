@@ -12,37 +12,37 @@ public sealed class RunOption
     /// <summary>
     /// 自定义builder委托<see cref="WebApplicationBuilder"/>
     /// </summary>
-    internal Action<WebApplicationBuilder> ActionBuilder;
+    internal Action<WebApplicationBuilder>? ActionBuilder;
 
     /// <summary>
     /// <see cref="WebApplication"/>
     /// </summary>
-    internal Action<WebApplication> ActionConfigure;
+    internal Action<WebApplication>? ActionConfigure;
 
     /// <summary>
     /// <see cref="ConfigurationManager"/>
     /// </summary>
-    internal Action<ConfigurationManager> ActionConfigrationManager;
+    internal Action<ConfigurationManager>? ActionConfigrationManager;
 
     /// <summary>
     /// <see cref="IServiceCollection"/>
     /// </summary>
-    internal Action<IServiceCollection> ActionServiceCollection { get; set; }
+    internal Action<IServiceCollection>? ActionServiceCollection { get; set; }
 
     /// <summary>
     /// <see cref="WebApplicationOptions"/>
     /// </summary>
-    internal WebApplicationOptions Options { get; set; }
+    internal WebApplicationOptions? Options { get; set; }
 
     /// <summary>
     /// <see cref="WebApplicationBuilder"/>
     /// </summary>
-    internal WebApplicationBuilder Builder { get; set; }
+    internal WebApplicationBuilder? Builder { get; set; }
 
     /// <summary>
     /// <see cref="WebApplication"/>
     /// </summary>
-    internal WebApplication App { get; set; }
+    internal WebApplication? App { get; set; }
 
     /// <summary>
     /// 应用服务组件
@@ -118,7 +118,7 @@ public sealed class RunOption
     }
 
     /// <summary>
-    /// 初始化加载模块:系统模块 && 业务模块
+    /// 初始化加载模块:系统模块\业务模块
     /// </summary>
     private void InitModules()
     {
@@ -142,6 +142,8 @@ public sealed class RunOption
         di.GetFiles("*.json", SearchOption.AllDirectories).Where(fi => fi.Name.ToLower().Equals(ModuleSetupConst.C_MODULE_CINFIGFILENAME))
             ?.ToList().ForEach(fi =>
             {
+                if (string.IsNullOrEmpty(fi.DirectoryName))
+                    return;
                 var builder = new ConfigurationBuilder()
                 .SetBasePath(fi.DirectoryName)
                 .AddJsonFile(fi.Name)

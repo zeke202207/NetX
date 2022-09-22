@@ -26,6 +26,8 @@ public class HeaderResolutionStrategy : ITenantResolutionStrategy
     public async Task<string> GetTenantIdentifierAsync()
     {
         string indentifier = string.Empty;
+        if (null == _httpContextAccessor.HttpContext)
+            return await Task.FromResult(string.Empty);
         var header = _httpContextAccessor.HttpContext.Request.Headers;
         if (null != header && header.ContainsKey(TenantConst.C_TENANT_HTTPREQUESTHEADERKEY))
             indentifier = header[TenantConst.C_TENANT_HTTPREQUESTHEADERKEY];

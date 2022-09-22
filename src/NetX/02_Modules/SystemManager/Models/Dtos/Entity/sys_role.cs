@@ -1,16 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace NetX.SystemManager.Models;
 
-namespace NetX.SystemManager.Models.Dtos.Entity
+/// <summary>
+/// 
+/// </summary>
+public class sys_role : BaseEntity
 {
-    public class sys_role : BaseEntity
-    {
-        public string rolename { get; set; }
-        public int status { get; set; }
-        public DateTime createtime { get; set; }
-        public string remark { get; set; }
-    }
+    /// <summary>
+    /// 
+    /// </summary>
+    public string rolename { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
+    public int status { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
+    public DateTime createtime { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
+    public string remark { get; set; }
 }

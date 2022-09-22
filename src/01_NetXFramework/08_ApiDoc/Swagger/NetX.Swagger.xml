@@ -64,10 +64,34 @@
             Swagger：隐藏属性
             </summary>
         </member>
+        <member name="T:NetX.Swagger.AddRequiredHeaderParameter">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.Swagger.AddRequiredHeaderParameter.HeaderKey">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.Swagger.AddRequiredHeaderParameter.Apply(Microsoft.OpenApi.Models.OpenApiOperation,Swashbuckle.AspNetCore.SwaggerGen.OperationFilterContext)">
+            <summary>
+            
+            </summary>
+            <param name="operation"></param>
+            <param name="context"></param>
+        </member>
         <member name="T:NetX.Swagger.DescriptionDocumentFilter">
             <summary>
             控制器和方法的描述信息处理
             </summary>
+        </member>
+        <member name="M:NetX.Swagger.DescriptionDocumentFilter.Apply(Microsoft.OpenApi.Models.OpenApiDocument,Swashbuckle.AspNetCore.SwaggerGen.DocumentFilterContext)">
+            <summary>
+            
+            </summary>
+            <param name="swaggerDoc"></param>
+            <param name="context"></param>
         </member>
         <member name="M:NetX.Swagger.DescriptionDocumentFilter.SetControllerDescription(Microsoft.OpenApi.Models.OpenApiDocument,Swashbuckle.AspNetCore.SwaggerGen.DocumentFilterContext)">
             <summary>
@@ -95,6 +119,30 @@
             获取说明
             </summary>
         </member>
+        <member name="T:NetX.Swagger.IgnorePropertySchemaFilter">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.Swagger.IgnorePropertySchemaFilter.Apply(Microsoft.OpenApi.Models.OpenApiSchema,Swashbuckle.AspNetCore.SwaggerGen.SchemaFilterContext)">
+            <summary>
+            
+            </summary>
+            <param name="schema"></param>
+            <param name="context"></param>
+        </member>
+        <member name="T:NetX.Swagger.LowercaseDocumentFilter">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.Swagger.LowercaseDocumentFilter.Apply(Microsoft.OpenApi.Models.OpenApiDocument,Swashbuckle.AspNetCore.SwaggerGen.DocumentFilterContext)">
+            <summary>
+            
+            </summary>
+            <param name="swaggerDoc"></param>
+            <param name="context"></param>
+        </member>
         <member name="T:NetX.Swagger.ServiceCollectionExtensions">
             <summary>
             
@@ -116,6 +164,21 @@
             <param name="version"></param>
             <param name="description"></param>
             <returns></returns>
+        </member>
+        <member name="T:NetX.Swagger.SwaggerConst">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:NetX.Swagger.SwaggerConst.C_NOGROUP_NAME">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:NetX.Swagger.SwaggerConst.C_NOGROUP_TITLE">
+            <summary>
+            
+            </summary>
         </member>
     </members>
 </doc>

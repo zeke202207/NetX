@@ -27,7 +27,7 @@ namespace NetcoreX.UnitTests
                 Password = "root"
             };
             var result = info.ToConnStr();
-            Assert.Equal(result, $"server={info.DatabaseHost};port={info.DatabasePort};database={info.DatabaseName};userid={info.UserId};pwd={info.Password}");
+            Assert.Equal(result, $"server={info.DatabaseHost};port={info.DatabasePort};database={info.DatabaseName};userid={info.UserId};pwd={info.Password};Charset=utf8; SslMode=none;Min pool size=1");
         }
 
         [Fact]
@@ -51,7 +51,7 @@ namespace NetcoreX.UnitTests
                 Password = "root"
             };
             var result = info.ToConnStr(TenantType.Multi, _tenantId);
-            Assert.Equal(result, $"server={info.DatabaseHost};port={info.DatabasePort};database={_tenantId}-{info.DatabaseName};userid={info.UserId};pwd={info.Password}");
+            Assert.Equal(result, $"server={info.DatabaseHost};port={info.DatabasePort};database={_tenantId}-{info.DatabaseName};userid={info.UserId};pwd={info.Password};Charset=utf8; SslMode=none;Min pool size=1");
         }
 
         [Fact]

@@ -6,7 +6,6 @@ namespace NetX.Tenants;
 /// <summary>
 /// 租户选项缓存字典包装器
 /// </summary>
-/// <summary>
 internal class TenantOptionsCacheDictionary<TOptions> where TOptions : class
 {
     /// <summary>

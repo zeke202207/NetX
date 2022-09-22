@@ -32,5 +32,13 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+
+  <ItemGroup>
+    <EditorConfigFiles Remove="D:\Persion\fw\netx\src\.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EditorConfigFiles Remove="D:\Persion\fw\netx\src\.editorconfig" />
+  </ItemGroup>
   
 </Project>

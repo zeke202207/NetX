@@ -4,8 +4,16 @@ using System.Reflection;
 
 namespace NetX.Swagger;
 
+/// <summary>
+/// 
+/// </summary>
 public class IgnorePropertySchemaFilter : ISchemaFilter
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="schema"></param>
+    /// <param name="context"></param>
     public void Apply(OpenApiSchema schema, SchemaFilterContext context)
     {
         if (schema?.Properties == null)

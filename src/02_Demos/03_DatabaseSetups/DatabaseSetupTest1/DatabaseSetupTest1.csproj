@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\01_NetX\02_Module\NetX.Module.csproj" />
-    <ProjectReference Include="..\..\..\01_NetX\04_DatabaseSetup\NetX.DatabaseSetup.csproj" />
+    <ProjectReference Include="..\..\..\01_NetXFramework\02_Module\NetX.Module.csproj" />
+    <ProjectReference Include="..\..\..\01_NetXFramework\04_DatabaseSetup\NetX.DatabaseSetup.csproj" />
   </ItemGroup>
 
 </Project>

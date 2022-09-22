@@ -1,21 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace NetX.SystemManager.Core;
 
-namespace NetX.SystemManager.Core.Impl
+/// <summary>
+/// 服务基类
+/// </summary>
+public abstract class BaseService
 {
-    public abstract class BaseService
+    /// <summary>
+    /// 统一id生成器
+    /// </summary>
+    /// <returns></returns>
+    protected string CreateId()
     {
-        protected string CreateId()
-        {
-            return Guid.NewGuid().ToString("N");
-        }
+        return Guid.NewGuid().ToString("N");
+    }
 
-        protected DateTime CreateInsertTime()
-        {
-            return DateTime.Now;
-        }
+    /// <summary>
+    /// 统一时间生成器
+    /// </summary>
+    /// <returns></returns>
+    protected DateTime CreateInsertTime()
+    {
+        return DateTime.Now;
     }
 }

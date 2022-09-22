@@ -55,6 +55,6 @@ public class TenantMigrationVersionTable : IVersionTableMetaData
     /// <summary>
     /// 
     /// </summary>
-    public object ApplicationContext { get; set; }
+    public object? ApplicationContext { get; set; }
 
 }

@@ -1,17 +1,20 @@
 ﻿using FreeSql.DataAnnotations;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace NetX.SystemManager.Models.Dtos.Entity
+namespace NetX.SystemManager.Models;
+
+/// <summary>
+/// 
+/// </summary>
+public class sys_role_menu
 {
-    public class sys_role_menu
-    {
-        [Column(IsPrimary = true)]
-        public string roleid { get; set; }
-        [Column(IsPrimary = true)]
-        public string menuid { get; set; }
-    }
+    /// <summary>
+    /// 
+    /// </summary>
+    [Column(IsPrimary = true)]
+    public string roleid { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
+    [Column(IsPrimary = true)]
+    public string menuid { get; set; }
 }

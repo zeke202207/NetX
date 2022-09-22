@@ -4,16 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetX.App.AppHandler
+namespace NetX.App.AppHandler;
+
+/// <summary>
+/// 应用程序关闭处理接口
+/// </summary>
+public interface IAppShutdownHandler
 {
     /// <summary>
-    /// 应用程序关闭处理接口
+    /// 处理操作
     /// </summary>
-    public interface IAppShutdownHandler
-    {
-        /// <summary>
-        /// 处理操作
-        /// </summary>
-        Task Handle();
-    }
+    Task Handle();
 }

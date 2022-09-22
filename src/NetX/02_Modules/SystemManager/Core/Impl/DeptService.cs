@@ -1,24 +1,22 @@
 ﻿using FreeSql;
 using Microsoft.AspNetCore.Mvc;
-using NetX.Authentication.Core;
-using NetX.Common;
 using NetX.Common.Attributes;
-using NetX.SystemManager.Core.Impl;
-using NetX.SystemManager.Data.Repositories;
 using NetX.SystemManager.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetX.SystemManager.Core;
 
+/// <summary>
+/// 部门管理服务
+/// </summary>
 [Scoped]
 public class DeptService : BaseService, IDeptService
 {
     private readonly IBaseRepository<sys_dept> _deptRepository;
 
+    /// <summary>
+    /// 部门管理服务实例对象
+    /// </summary>
+    /// <param name="deptRepository"></param>
     public DeptService(
         IBaseRepository<sys_dept> deptRepository)
     {
@@ -38,7 +36,7 @@ public class DeptService : BaseService, IDeptService
             id = base.CreateId(),
             createtime = base.CreateInsertTime(),
             deptname = model.DeptName,
-            parentid = string.IsNullOrWhiteSpace(model.ParentId)? SystemManagerConst .C_ROOT_ID: model.ParentId,
+            parentid = string.IsNullOrWhiteSpace(model.ParentId) ? SystemManagerConst.C_ROOT_ID : model.ParentId,
             orderno = model.OrderNo,
             status = int.Parse(model.Status),
             remark = model.Remark
@@ -102,6 +100,12 @@ public class DeptService : BaseService, IDeptService
         }).ToList(), "00000000000000000000000000000000");
     }
 
+    /// <summary>
+    /// 构建部门树
+    /// </summary>
+    /// <param name="depts"></param>
+    /// <param name="parentId"></param>
+    /// <returns></returns>
     private List<DeptModel> ToTree(List<DeptModel> depts, string parentId)
     {
         var currentDepts = depts.Where(p => p.ParentId == parentId);
@@ -114,6 +118,6 @@ public class DeptService : BaseService, IDeptService
                 dept.Children.AddRange(children);
             }
         }
-        return currentDepts?.ToList();
+        return currentDepts.ToList();
     }
 }

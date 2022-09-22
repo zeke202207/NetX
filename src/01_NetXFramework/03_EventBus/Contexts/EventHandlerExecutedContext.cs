@@ -23,5 +23,5 @@ public sealed class EventHandlerExecutedContext : EventHandlerContext
     /// <summary>
     /// 异常信息
     /// </summary>
-    public InvalidOperationException Exception { get; internal set; }
+    public InvalidOperationException? Exception { get; internal set; }
 }

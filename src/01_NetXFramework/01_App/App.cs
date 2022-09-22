@@ -13,7 +13,7 @@ public static class App
     /// <summary>
     /// 根服务
     /// </summary>
-    public static IServiceProvider RootServices => InternalApp.RootServices;
+    public static IServiceProvider? RootServices => InternalApp.RootServices;
 
     /// <summary>
     /// 获取请求上下文
@@ -23,7 +23,7 @@ public static class App
     /// <summary>
     /// 获取配置信息
     /// </summary>
-    public static IConfiguration Configuration => InternalApp.Configuration;
+    public static IConfiguration? Configuration => InternalApp.Configuration;
 
     /// <summary>
     /// 构造函数

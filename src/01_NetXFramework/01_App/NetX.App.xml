@@ -55,9 +55,24 @@
             
             </summary>
         </member>
+        <member name="T:NetX.App.ApiBaseController">
+            <summary>
+            api接口提供基类
+            </summary>
+        </member>
+        <member name="T:NetX.App.ApiPermissionController">
+            <summary>
+            授权先控制的api接口提供基类
+            </summary>
+        </member>
+        <member name="T:NetX.App.BaseController">
+            <summary>
+            控制器基类
+            </summary>
+        </member>
         <member name="T:NetX.App.Extensions.ApplicationBuilderExtensions">
             <summary>
-            
+            应用程序扩展方法
             </summary>
         </member>
         <member name="M:NetX.App.Extensions.ApplicationBuilderExtensions.UseStartupHandler(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
@@ -113,6 +128,11 @@
             <param name="env"></param>
             <returns></returns>
         </member>
+        <member name="T:NetX.App.ServiceCollectionExtensions">
+            <summary>
+            服务注入扩展方法
+            </summary>
+        </member>
         <member name="M:NetX.App.ServiceCollectionExtensions.AddServicesFromAssembly(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Reflection.Assembly)">
             <summary>
             从指定程序集中注入服务
@@ -133,7 +153,6 @@
             <param name="accessor"></param>
             <param name="tenantOption"></param>
             <param name="migrationService"></param>
-            <param name="dbAccessor"></param>
         </member>
         <member name="M:NetX.App.TenantContextFilter.OnResourceExecuted(Microsoft.AspNetCore.Mvc.Filters.ResourceExecutedContext)">
             <summary>
@@ -275,7 +294,11 @@
             <param name="configServiceCollection"></param>
             <returns></returns>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:NetX.App.RunOption.InitModules" -->
+        <member name="M:NetX.App.RunOption.InitModules">
+            <summary>
+            初始化加载模块:系统模块\业务模块
+            </summary>
+        </member>
         <member name="M:NetX.App.RunOption.InitUserModules">
             <summary>
             初始化用户自定义模块
@@ -294,11 +317,25 @@
             <param name="options"></param>
             <param name="urls"></param>
         </member>
+        <member name="T:NetX.App.ServerModuleInitializer">
+            <summary>
+            内部框架服务模块初始化器
+            </summary>
+        </member>
+        <member name="P:NetX.App.ServerModuleInitializer.Key">
+            <summary>
+            模块唯一标识
+            </summary>
+        </member>
+        <member name="P:NetX.App.ServerModuleInitializer.ModuleType">
+            <summary>
+            模块类型
+            </summary>
+        </member>
         <member name="M:NetX.App.ServerModuleInitializer.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.AspNetCore.Hosting.IWebHostEnvironment,NetX.Module.ModuleContext)">
             <summary>
             配置服务
-            Demo宏定义下的内容为使用示例，具体是否启用，清根据业务自定决定
-            配置方法请参考<see cref="!:NetXTestWebApi.Program"/>
+            Demo宏定义下的内容为使用示例，具体是否启用，根据业务自定决定
             </summary>
             <param name="services"></param>
             <param name="env"></param>

@@ -1,28 +1,40 @@
-﻿using FreeSql;
+﻿using AutoMapper;
+using FreeSql;
 using NetX.Authentication.Core;
 using NetX.Common;
 using NetX.Common.Attributes;
-using NetX.SystemManager.Core.Impl;
-using NetX.SystemManager.Data;
+using NetX.SystemManager.Data.Repositories;
 using NetX.SystemManager.Models;
 
 namespace NetX.SystemManager.Core;
 
+/// <summary>
+/// 账号管理服务
+/// </summary>
 [Scoped]
 public class AccountService : BaseService, IAccountService
 {
     private readonly IBaseRepository<sys_user> _userRepository;
     private readonly IEncryption _encryption;
     private readonly ILoginHandler _loginHandler;
+    private readonly IMapper _mapper;
 
+    /// <summary>
+    /// 账号管理服务实例对象
+    /// </summary>
+    /// <param name="userRepository"></param>
+    /// <param name="encryption"></param>
+    /// <param name="loginHandler"></param>
     public AccountService(
         IBaseRepository<sys_user> userRepository,
         IEncryption encryption,
-        ILoginHandler loginHandler)
+        ILoginHandler loginHandler,
+        IMapper mapper)
     {
         this._userRepository = userRepository;
         this._encryption = encryption;
         this._loginHandler = loginHandler;
+        this._mapper = mapper;
     }
 
     /// <summary>
@@ -36,15 +48,7 @@ public class AccountService : BaseService, IAccountService
         var user = await this._userRepository.Select.Where(p => p.username.Equals(username)).FirstAsync<sys_user>();
         if (null == user || _encryption.Encryption(password).ToLower().Equals(user.password))
             return default(UserModel);
-        return new UserModel()
-        {
-            Id = user.id,
-            Password = user.password,
-            Avatar = user.avatar,
-            UserName = user.username,
-            NickName = user.nickname,
-            Remark = user.remark
-        };
+       return this._mapper.Map<UserModel>(user);
     }
 
     /// <summary>
@@ -80,7 +84,7 @@ public class AccountService : BaseService, IAccountService
             Avatar = user.avatar,
             UserName = user.username,
             NickName = user.nickname,
-            Remark = user.remark,
+            Remark = user.remark ?? string.Empty,
             Status = user.status.ToString()
         };
     }
@@ -94,20 +98,20 @@ public class AccountService : BaseService, IAccountService
     {
         var list = await ((SysUserRepository)_userRepository).GetUserList(userParam.DeptId, userParam.Account, userParam.Nickname, userParam.Page, userParam.PageSize);
         List<UserListModel> result = new List<UserListModel>();
-        foreach(var item in list)
+        foreach (var item in list)
         {
             result.Add(new UserListModel()
             {
                 Id = item.Item1.id,
                 Avatar = item.Item1.avatar,
                 NickName = item.Item1.nickname,
-                Remark = item.Item1.remark,
+                Remark = item.Item1.remark??string.Empty,
                 UserName = item.Item1.username,
                 DeptId = item.Item3?.id,
                 DeptName = item.Item3?.deptname,
                 RoleId = item.Item2?.id,
                 RoleName = item.Item2?.rolename,
-                Email = item.Item1.email
+                Email = item.Item1.email??string.Empty,
             });
         }
         return result;
@@ -122,7 +126,7 @@ public class AccountService : BaseService, IAccountService
     {
         if (string.IsNullOrWhiteSpace(userName))
             return false;
-        return await this._userRepository.Select.FirstAsync(p=>p.username == userName);
+        return await this._userRepository.Select.FirstAsync(p => p.username == userName);
     }
 
     /// <summary>
@@ -157,7 +161,7 @@ public class AccountService : BaseService, IAccountService
     public async Task<bool> UpdateAccount(AccountRequestModel model)
     {
         var entity = await this._userRepository.Select.Where(p => p.id.Equals(model.Id)).FirstAsync();
-        if (null == entity) 
+        if (null == entity)
             return false;
         entity.username = model.UserName;
         entity.nickname = model.NickName;
@@ -185,7 +189,7 @@ public class AccountService : BaseService, IAccountService
     /// </summary>
     /// <param name="userId"></param>
     /// <returns></returns>
-    public async Task<List<string>> GetPermCode(string userId)
+    public async Task<IEnumerable<string>> GetPermCode(string userId)
     {
         return await ((SysUserRepository)this._userRepository).GetPremCodes(userId);
     }

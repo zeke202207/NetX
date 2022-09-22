@@ -21,10 +21,9 @@ public class TenantContext
     {
         get
         {
-            TenantContext current;
-            if ((current = _instance.Value) == null)
-                current = (_instance.Value = new TenantContext());
-            return current;
+            if (null == _instance.Value)
+                _instance.Value = new TenantContext();
+            return _instance.Value;
         }
         private set
         {
@@ -44,7 +43,7 @@ public class TenantContext
     /// <summary>
     /// 数据库配置信息 
     /// </summary>
-    internal DatabaseInfo DatabaseInfo
+    internal DatabaseInfo? DatabaseInfo
     {
         get;
         private set;
@@ -62,17 +61,17 @@ public class TenantContext
     /// <summary>
     /// 数据库连接字符串
     /// </summary>
-    public string ConnectionStr => DatabaseInfo.ToConnStr(this.TenantType, this.Principal.Tenant.TenantId);
+    public string? ConnectionStr => DatabaseInfo?.ToConnStr(this.TenantType, this.Principal?.Tenant.TenantId);
 
     /// <summary>
     /// 创建数据需要的连接字符串
     /// </summary>
-    public string CreateSchemaConnectionStr => DatabaseInfo.ToCreateDatabaseConnStr();
+    public string? CreateSchemaConnectionStr => DatabaseInfo?.ToCreateDatabaseConnStr();
 
     /// <summary>
     /// Schema Name
     /// </summary>
-    public string DatabaseName => DatabaseInfo.ToDatabaseName(this.TenantType, this.Principal.Tenant.TenantId);
+    public string? DatabaseName => DatabaseInfo?.ToDatabaseName(this.TenantType, this.Principal?.Tenant.TenantId);
 
 
     /// <summary>
@@ -93,10 +92,10 @@ public class TenantContext
     /// <summary>
     /// 主体对象
     /// </summary>
-    public NetXPrincipal Principal { get; private set; }
+    public NetXPrincipal? Principal { get; private set; }
 
     /// <summary>
     /// 当前租户类型
     /// </summary>
-    public TenantOption TenantOption { get { return _tenantOption; } }
+    public TenantOption? TenantOption { get { return _tenantOption; } }
 }

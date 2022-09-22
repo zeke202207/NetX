@@ -4,5 +4,29 @@
         <name>NetX.Logging</name>
     </assembly>
     <members>
+        <member name="T:NetX.Logging.LoggingHostBuilderExtensions">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.Logging.LoggingHostBuilderExtensions.UseLogging(Microsoft.Extensions.Hosting.IHostBuilder,NetX.Logging.LoggingType)">
+            <summary>
+            
+            </summary>
+            <param name="builder"></param>
+            <param name="logType"></param>
+            <returns></returns>
+            <exception cref="T:System.NotSupportedException"></exception>
+        </member>
+        <member name="T:NetX.Logging.LoggingType">
+            <summary>
+            日志类型
+            </summary>
+        </member>
+        <member name="F:NetX.Logging.LoggingType.Serilog">
+            <summary>
+            
+            </summary>
+        </member>
     </members>
 </doc>

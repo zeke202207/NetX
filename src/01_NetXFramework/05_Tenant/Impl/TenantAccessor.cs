@@ -22,5 +22,7 @@ public class TenantAccessor<T> : ITenantAccessor<T> where T : Tenant
     /// <summary>
     /// 租户信息
     /// </summary>
-    public T Tenant => _httpContextAccessor.HttpContext.GetTenant<T>();
+#pragma warning disable CS8603 // 可能返回 null 引用。
+    public T Tenant => _httpContextAccessor.HttpContext?.GetTenant<T>();
+#pragma warning restore CS8603 // 可能返回 null 引用。
 }

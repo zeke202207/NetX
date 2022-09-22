@@ -76,11 +76,63 @@
             事实上想要完全破解AES花费的时间要以数十亿年计，极大的保证了数据的安全性。
             </summary>
         </member>
+        <member name="M:NetX.Common.AES.Decryption(System.String)">
+            <summary>
+            解密
+            </summary>
+            <param name="content"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.Common.AES.Encryption(System.String)">
+            <summary>
+            加密
+            </summary>
+            <param name="content"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NetX.Common.Base64">
+            <summary>
+            base64加密解密
+            </summary>
+        </member>
+        <member name="M:NetX.Common.Base64.Decryption(System.String)">
+            <summary>
+            base64解密
+            </summary>
+            <param name="content"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.Common.Base64.Encryption(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="content"></param>
+            <returns></returns>
+        </member>
         <member name="T:NetX.Common.DES">
             <summary>
             数据加密标准（DES，Data Encryption Standard）是一种对称加密算法，
             很可能是使用最广泛的密钥系统，特别是在保护金融数据的安全中，是安全性比较高的一种算法，
             目前只有一种方法可以破解该算法，那就是穷举法。
+            </summary>
+        </member>
+        <member name="M:NetX.Common.DES.Decryption(System.String)">
+            <summary>
+            解密
+            </summary>
+            <param name="content"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.Common.DES.Encryption(System.String)">
+            <summary>
+            加密
+            </summary>
+            <param name="content"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NetX.Common.EncryptBase">
+            <summary>
+            加密算法基类
             </summary>
         </member>
         <member name="P:NetX.Common.EncryptBase.Key">
@@ -129,17 +181,40 @@
              AES、DES          需要                可逆      **
             </summary>
         </member>
-        <member name="T:NetX.Common.RSAcs">
+        <member name="M:NetX.Common.IEncryption.Encryption(System.String)">
             <summary>
-             RSA是第一个既能用于数据加密也能用于数字签名的算法。
-             它易于理解和操作，也很流行。
-             算法的名字以发明者的名字命名：Ron Rivest, Adi Shamir 和Leonard Adleman。
-             但RSA的安全性一直未能得到理论上的证明。
-             它经历了各种攻击，至今未被完全攻破。今天只有短的RSA钥匙才可能被强力方式解破。
-             到2008年为止，世界上还没有任何可靠的攻击RSA算法的方式。
-             只要其钥匙的长度足够长，用RSA加密的信息实际上是不能被解破的。
-             但在分布式计算和量子计算机理论日趋成熟的今天，RSA加密安全性受到了挑战。
+            加密
             </summary>
+            <param name="content"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.Common.IEncryption.Decryption(System.String)">
+            <summary>
+            解密
+            </summary>
+            <param name="content"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NetX.Common.MD5">
+            <summary>
+            MD5加密提供器
+            </summary>
+        </member>
+        <member name="M:NetX.Common.MD5.Decryption(System.String)">
+            <summary>
+            解密
+            </summary>
+            <param name="content"></param>
+            <returns></returns>
+            <exception cref="T:System.NotSupportedException"></exception>
+        </member>
+        <member name="M:NetX.Common.MD5.Encryption(System.String)">
+            <summary>
+            加密字符串
+            32位大写
+            </summary>
+            <param name="content"></param>
+            <returns></returns>
         </member>
         <member name="T:NetX.Common.BaseFilter">
             <summary>
@@ -197,6 +272,16 @@
         <member name="F:NetX.Common.Models.ResultEnum.TIMEOUT">
             <summary>
             超时
+            </summary>
+        </member>
+        <member name="T:NetX.Common.ServiceLocator">
+            <summary>
+            全局访问定位器
+            </summary>
+        </member>
+        <member name="P:NetX.Common.ServiceLocator.Instance">
+            <summary>
+            注入服务定位器
             </summary>
         </member>
     </members>

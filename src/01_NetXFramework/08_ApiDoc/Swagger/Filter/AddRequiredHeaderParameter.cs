@@ -9,31 +9,46 @@ using System.Threading.Tasks;
 
 namespace NetX.Swagger;
 
+/// <summary>
+/// 
+/// </summary>
 public class AddRequiredHeaderParameter : IOperationFilter
 {
-    public static string HeaderKey { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
+    public static string? HeaderKey { get; set; }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="operation"></param>
+    /// <param name="context"></param>
     public void Apply(OpenApiOperation operation, OperationFilterContext context)
     {
         if (operation.Parameters == null)
             operation.Parameters = new List<OpenApiParameter>();
         var des = context.ApiDescription;
-        if(null != des && des.TryGetMethodInfo(out MethodInfo methodInfo))
+        if(null != des && des.TryGetMethodInfo(out MethodInfo methodInfo) && null != methodInfo.DeclaringType)
         {
-            var descAttr = (ApiControllerDescriptionAttribute)Attribute.GetCustomAttribute(methodInfo.DeclaringType, typeof(ApiControllerDescriptionAttribute));
-            if(null != descAttr && descAttr.HeaderKeys?.Length>0)
+            var desc = Attribute.GetCustomAttribute(methodInfo.DeclaringType, typeof(ApiControllerDescriptionAttribute));
+            if(desc is ApiControllerDescriptionAttribute )
             {
-                foreach(var item in descAttr.HeaderKeys)
+                var descAttr = (ApiControllerDescriptionAttribute)desc;
+                if (null != descAttr.HeaderKeys)
                 {
-                    if (operation.Parameters.Any(p => p.Name.ToLower() == item.ToLower()))
-                        continue;
-                    operation.Parameters.Add(new OpenApiParameter()
+                    foreach (var item in descAttr.HeaderKeys)
                     {
-                        Name = item,
-                        In = ParameterLocation.Header,
-                        Required = false,
-                        AllowEmptyValue=true,
-                    });
+                        if (operation.Parameters.Any(p => p.Name.ToLower() == item.ToLower()))
+                            continue;
+                        operation.Parameters.Add(new OpenApiParameter()
+                        {
+                            Name = item,
+                            In = ParameterLocation.Header,
+                            Required = false,
+                            AllowEmptyValue = true,
+                        });
+                    }
                 }
             }
         }

@@ -1,20 +1,38 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NetX.SystemManager.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetX.SystemManager.Core;
 
+/// <summary>
+/// 部门管理服务接口
+/// </summary>
 public interface IDeptService
 {
+    /// <summary>
+    /// 获取部门列表
+    /// </summary>
+    /// <param name="queryParam"></param>
+    /// <returns></returns>
     Task<List<DeptModel>> GetDeptList([FromQuery] DeptListParam queryParam);
 
+    /// <summary>
+    /// 添加部门
+    /// </summary>
+    /// <param name="model"></param>
+    /// <returns></returns>
     Task<bool> AddDept(DeptRequestModel model);
 
+    /// <summary>
+    /// 更新部门信息
+    /// </summary>
+    /// <param name="model"></param>
+    /// <returns></returns>
     Task<bool> UpdateDept(DeptRequestModel model);
 
+    /// <summary>
+    /// 删除部门信息
+    /// </summary>
+    /// <param name="deptId"></param>
+    /// <returns></returns>
     Task<bool> RemoveDept(string deptId);
 }

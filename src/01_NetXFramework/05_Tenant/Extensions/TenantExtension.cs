@@ -2,8 +2,16 @@
 
 namespace NetX.Tenants;
 
+/// <summary>
+/// 
+/// </summary>
 public static class TenantExtension
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="model"></param>
+    /// <returns></returns>
     public static string ToConnStr(this DatabaseInfo model)
     {
         return ToConnStr(model, TenantType.Single, string.Empty);
@@ -16,11 +24,11 @@ public static class TenantExtension
     /// <param name="type"></param>
     /// <param name="tenantId"></param>
     /// <returns></returns>
-    public static string ToConnStr(this DatabaseInfo model, TenantType type, string tenantId)
+    public static string ToConnStr(this DatabaseInfo model, TenantType type, string? tenantId)
     {
         if (null == model)
             return string.Empty;
-        string schema = model.ToDatabaseName(type, tenantId);
+        string? schema = model.ToDatabaseName(type, tenantId);
         switch (model.DatabaseType)
         {
             case DatabaseType.MySql:
@@ -36,7 +44,7 @@ public static class TenantExtension
     /// <param name="type"></param>
     /// <param name="TenantId"></param>
     /// <returns></returns>
-    public static string ToDatabaseName(this DatabaseInfo model, TenantType type, string TenantId)
+    public static string? ToDatabaseName(this DatabaseInfo model, TenantType type, string? TenantId)
     {
         if (null == model)
             return string.Empty;
@@ -65,7 +73,7 @@ public static class TenantExtension
     /// <returns></returns>
     public static DataType ToDatabaseType(this DatabaseType dbType)
     {
-        switch (TenantContext.CurrentTenant.DatabaseInfo.DatabaseType)
+        switch (TenantContext.CurrentTenant.DatabaseInfo?.DatabaseType)
         {
             case DatabaseType.MySql:
             default:

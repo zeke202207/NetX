@@ -1,29 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
 
 namespace NetX.SystemManager.Models;
 
+/// <summary>
+/// 
+/// </summary>
 public class DeptRequestModel
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [JsonPropertyName("id")]
     public string? Id { get; set; }
-
+    /// <summary>
+    /// 
+    /// </summary>
     [JsonPropertyName("parentid")]
-    public string? ParentId { get;set; }
-
+    public string? ParentId { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
     [JsonPropertyName("deptname")]
     public string DeptName { get; set; }
-
+    /// <summary>
+    /// 
+    /// </summary>
     [JsonPropertyName("status")]
     public string Status { get; set; }
-
+    /// <summary>
+    /// 
+    /// </summary>
     [JsonPropertyName("orderno")]
     public int OrderNo { get; set; }
-
+    /// <summary>
+    /// 
+    /// </summary>
     [JsonPropertyName("remark")]
     public string? Remark { get; set; }
 }

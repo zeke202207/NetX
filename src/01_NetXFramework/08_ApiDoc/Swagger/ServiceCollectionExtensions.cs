@@ -27,10 +27,15 @@ public static class ServiceCollectionExtensions
             //判断接口属于哪个分组
             option.DocInclusionPredicate((docName, apiDes) =>
             {
-                if (docName.Equals(SwaggerConst.C_NOGROUP_NAME))
+                if (docName.ToLower().Equals(SwaggerConst.C_NOGROUP_NAME.ToLower()))
                     return string.IsNullOrEmpty(apiDes.GroupName);
                 else
-                    return apiDes.GroupName == docName;
+                {
+                    if (!string.IsNullOrWhiteSpace(apiDes.GroupName))
+                        return apiDes.GroupName.ToLower() == docName.ToLower();
+                    else
+                        return string.IsNullOrEmpty(apiDes.GroupName);
+                }
             });
             var securityScheme = new OpenApiSecurityScheme
             {

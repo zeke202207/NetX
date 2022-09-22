@@ -1,22 +1,44 @@
 ﻿using NetX.SystemManager.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace NetX.SystemManager.Core
+namespace NetX.SystemManager.Core;
+
+/// <summary>
+/// 菜单管理服务接口
+/// </summary>
+public interface IMenuService
 {
-    public interface IMenuService
-    {
-        Task<List<MenuModel>> GetCurrentUserMenuList(string userId);
+    /// <summary>
+    /// 获取当前登录用户访问菜单列表
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <returns></returns>
+    Task<List<MenuModel>> GetCurrentUserMenuList(string? userId);
 
-        Task<List<MenuModel>> GetMenuList(MenuListParam param);
+    /// <summary>
+    /// 获取菜单列表
+    /// </summary>
+    /// <param name="param"></param>
+    /// <returns></returns>
+    Task<List<MenuModel>> GetMenuList(MenuListParam param);
 
-        Task<bool> AddMenu(MenuRequestModel model);
+    /// <summary>
+    /// 新增菜单
+    /// </summary>
+    /// <param name="model"></param>
+    /// <returns></returns>
+    Task<bool> AddMenu(MenuRequestModel model);
 
-        Task<bool> UpdateMenu(MenuRequestModel model);
+    /// <summary>
+    /// 更新菜单
+    /// </summary>
+    /// <param name="model"></param>
+    /// <returns></returns>
+    Task<bool> UpdateMenu(MenuRequestModel model);
 
-        Task<bool> RemoveMenu(string menuId);
-    }
+    /// <summary>
+    /// 删除菜单
+    /// </summary>
+    /// <param name="menuId"></param>
+    /// <returns></returns>
+    Task<bool> RemoveMenu(string menuId);
 }

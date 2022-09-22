@@ -17,7 +17,7 @@ public static class ServerHost
     /// </summary>
     /// <param name="options"></param>
     /// <param name="urls"></param>
-    public static void Start(RunOption options, string urls = default)
+    public static void Start(RunOption options, string urls = "")
     {
         //获取命令行参数
         var args = Environment.GetCommandLineArgs().Skip(1).ToArray();
@@ -47,7 +47,7 @@ public static class ServerHost
         builder.Services.BuildFluentMigrator();
         //添加日志
         builder.Host.UseLogging(LoggingType.Serilog);
-        var app = builder.Build();        
+        var app = builder.Build();
         //路由
         app.UseRouting();
         options.App = app;
