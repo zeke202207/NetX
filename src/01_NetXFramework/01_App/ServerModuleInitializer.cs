@@ -62,7 +62,8 @@ public sealed class ServerModuleInitializer : ModuleInitializer
         services.AddControllers(o =>
         {
             o.Filters.Add<TenantContextFilter>();
-        });
+        })
+            .AddNewtonsoftJson();
 
         //6.添加事件总线
         services.AddEventBus();

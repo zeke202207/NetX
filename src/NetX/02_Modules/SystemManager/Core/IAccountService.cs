@@ -1,4 +1,4 @@
-﻿using NetX.Authentication.Core;
+﻿using NetX.Common.Models;
 using NetX.SystemManager.Models;
 
 namespace NetX.SystemManager.Core;
@@ -14,61 +14,61 @@ public interface IAccountService
     /// <param name="username"></param>
     /// <param name="password"></param>
     /// <returns></returns>
-    Task<UserModel> Login(string username, string password);
+    Task<ResultModel<LoginResult>> Login(string username, string password);
 
     /// <summary>
     /// 获取登录token
     /// </summary>
     /// <param name="model"></param>
     /// <returns></returns>
-    Task<string> GetToken(ClaimModel model);
+    // Task<string> GetToken(ClaimModel model);
 
     /// <summary>
     /// 获取登录用户信息
     /// </summary>
     /// <param name="userId"></param>
     /// <returns></returns>
-    Task<UserModel> GetUserInfo(string? userId);
+    Task<ResultModel<UserModel>> GetUserInfo(string? userId);
 
     /// <summary>
     /// 获取账号列表
     /// </summary>
     /// <param name="userParam"></param>
     /// <returns></returns>
-    Task<List<UserListModel>> GetAccountLists(UserListParam userParam);
+    Task<ResultModel<List<UserListModel>>> GetAccountLists(UserListParam userParam);
 
     /// <summary>
     /// 判断账号是否存在
     /// </summary>
     /// <param name="userName"></param>
     /// <returns></returns>
-    Task<bool> IsAccountExist(string userName);
+    Task<ResultModel<bool>> IsAccountExist(string userName);
 
     /// <summary>
     /// 添加账号
     /// </summary>
     /// <param name="model"></param>
     /// <returns></returns>
-    Task<bool> AddAccount(AccountRequestModel model);
+    Task<ResultModel<bool>> AddAccount(AccountRequestModel model);
 
     /// <summary>
     /// 更新账号信息
     /// </summary>
     /// <param name="model"></param>
     /// <returns></returns>
-    Task<bool> UpdateAccount(AccountRequestModel model);
+    Task<ResultModel<bool>> UpdateAccount(AccountRequestModel model);
 
     /// <summary>
     /// 删除账号信息
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    Task<bool> RemoveDept(string id);
+    Task<ResultModel<bool>> RemoveDept(string id);
 
     /// <summary>
     /// 获取访问权限标识集合
     /// </summary>
     /// <param name="userId"></param>
     /// <returns></returns>
-    Task<IEnumerable<string>> GetPermCode(string userId);
+    Task<ResultModel<IEnumerable<string>>> GetPermCode(string userId);
 }

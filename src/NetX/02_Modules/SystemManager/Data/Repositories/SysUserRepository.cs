@@ -31,7 +31,7 @@ public class SysUserRepository : BaseRepository<sys_user, string>
     /// <param name="currentpage"></param>
     /// <param name="pagesize"></param>
     /// <returns></returns>
-    public async Task<IEnumerable<Tuple<sys_user, sys_role, sys_dept>>> GetUserList(string deptId, string username, string nickname, int currentpage, int pagesize)
+    public async Task<IEnumerable<Tuple<sys_user, sys_role, sys_dept>>> GetUserListAsync(string deptId, string username, string nickname, int currentpage, int pagesize)
     {
         var result = await this._freeSql.Select<sys_user, sys_user_role, sys_user_dept, sys_role, sys_dept>()
             .LeftJoin((u, ur, ud, r, d) => u.id == ur.userid)
@@ -53,7 +53,7 @@ public class SysUserRepository : BaseRepository<sys_user, string>
     /// <param name="roleid"></param>
     /// <param name="deptid"></param>
     /// <returns></returns>
-    public async Task<bool> AddUser(sys_user user, string? roleid, string? deptid)
+    public async Task<bool> AddUserAsync(sys_user user, string? roleid, string? deptid)
     {
         bool result = true;
         using (var uow = this._freeSql.CreateUnitOfWork())
@@ -90,7 +90,7 @@ public class SysUserRepository : BaseRepository<sys_user, string>
     /// <param name="roleid"></param>
     /// <param name="deptid"></param>
     /// <returns></returns>
-    public async Task<bool> UpdateUser(sys_user user, string? roleid, string? deptid)
+    public async Task<bool> UpdateUserAsync(sys_user user, string? roleid, string? deptid)
     {
         bool result = true;
         using (var uow = this._freeSql.CreateUnitOfWork())
@@ -131,7 +131,7 @@ public class SysUserRepository : BaseRepository<sys_user, string>
     /// </summary>
     /// <param name="userId"></param>
     /// <returns></returns>
-    public async Task<bool> RemoveUser(string userId)
+    public async Task<bool> RemoveUserAsync(string userId)
     {
         bool result = true;
         using (var uow = this._freeSql.CreateUnitOfWork())
@@ -161,7 +161,7 @@ public class SysUserRepository : BaseRepository<sys_user, string>
     /// </summary>
     /// <param name="userId"></param>
     /// <returns></returns>
-    public async Task<List<string>> GetPremCodes(string userId)
+    public async Task<List<string>> GetPremCodesAsync(string userId)
     {
         var result = await this._freeSql.Select<sys_menu, sys_role_menu, sys_user_role>()
             .LeftJoin((m, rm, ur) => m.id == rm.menuid)

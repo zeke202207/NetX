@@ -1,4 +1,4 @@
-﻿using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace NetX.SystemManager.Models;
 
@@ -10,11 +10,11 @@ public class MenuListParam : Pager
     /// <summary>
     /// 
     /// </summary>
-    [JsonPropertyName("menuName")]
+    [JsonProperty("menuName")]
     public string? MenuName { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    [JsonPropertyName("status")]
+    [JsonProperty("status")]
     public string? Status { get; set; }
 }

@@ -197,7 +197,13 @@
             <param name="services"></param>
             <param name="tenantType"></param>
         </member>
-        <member name="M:NetX.Tenants.TenantBuilder`1.WithDatabaseInfo(NetX.Tenants.DatabaseInfo)">
+        <member name="M:NetX.Tenants.TenantBuilder`1.WithTenancyDatabase(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            根据配置文件配置数据库信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.Tenants.TenantBuilder`1.WithTenancyDatabase(NetX.Tenants.DatabaseInfo)">
             <summary>
             配置数据库
             </summary>
@@ -234,7 +240,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:NetX.Tenants.TenantBuilder`1.WithTenancyDatabase">
+        <member name="M:NetX.Tenants.TenantBuilder`1.WithFreeSql">
             <summary>
             使用租户数据库
             </summary>

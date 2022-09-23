@@ -93,7 +93,7 @@ public static class AppWebApplicationBuilderExtensions
                 var alc = contextProvider.LoadCustomeModule(option.Value, apm, services, env, context);
                 InternalApp.ModuleCotextKeyValuePairs.Add(option.Value.Id, alc);
                 //统一注入 
-                //services.AddServicesFromAssembly(alc.Assemblies);
+                alc.Assemblies.ToList().ForEach(asm => services.AddServicesFromAssembly(asm));
             }
         }
         return webApplicationBuilder;

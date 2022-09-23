@@ -1,4 +1,4 @@
-﻿using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace NetX.SystemManager.Models;
 
@@ -10,21 +10,21 @@ public class UserListModel : UserModel
     /// <summary>
     /// 
     /// </summary>
-    [JsonPropertyName("roleid")]
+    [JsonProperty("roleid")]
     public string? RoleId { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    [JsonPropertyName("rolename")]
+    [JsonProperty("rolename")]
     public string? RoleName { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    [JsonPropertyName("deptid")]
+    [JsonProperty("deptid")]
     public string? DeptId { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    [JsonPropertyName("deptname")]
+    [JsonProperty("deptname")]
     public string? DeptName { get; set; }
 }

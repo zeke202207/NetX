@@ -1,4 +1,4 @@
-﻿using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace NetX.SystemManager.Models;
 
@@ -10,11 +10,11 @@ public class RoleListParam : Pager
     /// <summary>
     /// 
     /// </summary>
-    [JsonPropertyName("roleName")]
+    [JsonProperty("roleName")]
     public string? RoleName { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    [JsonPropertyName("status")]
+    [JsonProperty("status")]
     public string? Status { get; set; }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using NetX.Common.Models;
 using NetX.Swagger;
 using NetX.SystemManager.Core;
 using NetX.SystemManager.Models;
@@ -29,10 +30,9 @@ public class RoleController : SystemManagerBaseController
     /// <returns></returns>
     [ApiActionDescriptionAttribute("获取角色列表")]
     [HttpPost]
-    public async Task<ActionResult> GetRoleListByPage(RoleListParam roleListparam)
+    public async Task<ResultModel<List<RoleModel>>> GetRoleListByPage(RoleListParam roleListparam)
     {
-        var result = await _roleService.GetRoleList(roleListparam);
-        return base.Success<List<RoleModel>>(result);
+        return await _roleService.GetRoleList(roleListparam);
     }
 
     /// <summary>
@@ -41,10 +41,9 @@ public class RoleController : SystemManagerBaseController
     /// <returns></returns>
     [ApiActionDescription("获取全部角色列表")]
     [HttpGet]
-    public async Task<ActionResult> GetAllRoleList()
+    public async Task<ResultModel<List<RoleModel>>> GetAllRoleList()
     {
-        var result = await _roleService.GetRoleList();
-        return base.Success<List<RoleModel>>(result);
+        return await _roleService.GetRoleList();
     }
 
     /// <summary>
@@ -53,10 +52,9 @@ public class RoleController : SystemManagerBaseController
     /// <returns></returns>
     [ApiActionDescription("添加角色")]
     [HttpPost]
-    public async Task<ActionResult> AddRole(RoleRequestModel model)
+    public async Task<ResultModel<bool>> AddRole(RoleRequestModel model)
     {
-        var result = await _roleService.AddRole(model);
-        return base.Success<bool>(result);
+        return await _roleService.AddRole(model);
     }
 
     /// <summary>
@@ -65,10 +63,9 @@ public class RoleController : SystemManagerBaseController
     /// <returns></returns>
     [ApiActionDescription("更新角色信息")]
     [HttpPost]
-    public async Task<ActionResult> UpdateRole(RoleRequestModel model)
+    public async Task<ResultModel<bool>> UpdateRole(RoleRequestModel model)
     {
-        var result = await _roleService.UpdateRole(model);
-        return base.Success<bool>(result);
+        return await _roleService.UpdateRole(model);
     }
 
     /// <summary>
@@ -77,10 +74,9 @@ public class RoleController : SystemManagerBaseController
     /// <returns></returns>
     [ApiActionDescription("删除角色")]
     [HttpDelete]
-    public async Task<ActionResult> RemoveRole(DeleteParam model)
+    public async Task<ResultModel<bool>> RemoveRole(DeleteParam model)
     {
-        var result = await _roleService.RemoveRole(model.Id);
-        return base.Success<bool>(result);
+        return await _roleService.RemoveRole(model.Id);
     }
 
     /// <summary>
@@ -89,9 +85,8 @@ public class RoleController : SystemManagerBaseController
     /// <returns></returns>
     [ApiActionDescription("更新角色状态")]
     [HttpPost]
-    public async Task<ActionResult> SetRoleStatus(RoleStatusModel model)
+    public async Task<ResultModel<bool>> SetRoleStatus(RoleStatusModel model)
     {
-        var result = await _roleService.UpdateRoleStatus(model.Id, model.Status);
-        return base.Success<bool>(result);
+        return await _roleService.UpdateRoleStatus(model.Id, model.Status);
     }
 }

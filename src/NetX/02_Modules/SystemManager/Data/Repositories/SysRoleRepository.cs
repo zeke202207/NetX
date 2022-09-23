@@ -30,7 +30,7 @@ public class SysRoleRepository : BaseRepository<sys_role, string>
     /// <param name="currentpage"></param>
     /// <param name="pagesize"></param>
     /// <returns></returns>
-    public async Task<List<(sys_role role, List<string> menuids)>> GetRoleList(string rolename, int currentpage, int pagesize)
+    public async Task<List<(sys_role role, List<string> menuids)>> GetRoleListAsync(string rolename, int currentpage, int pagesize)
     {
         List<(sys_role role, List<string> menuids)> result = new List<(sys_role role, List<string> menuids)>();
         var roles = this._freeSql.Select<sys_role>()
@@ -58,7 +58,7 @@ public class SysRoleRepository : BaseRepository<sys_role, string>
     /// <param name="role"></param>
     /// <param name="menuids"></param>
     /// <returns></returns>
-    public async Task<bool> AddRole(sys_role role, List<string> menuids)
+    public async Task<bool> AddRoleAsync(sys_role role, List<string> menuids)
     {
         bool result = true;
         using (var uow = this._freeSql.CreateUnitOfWork())
@@ -94,7 +94,7 @@ public class SysRoleRepository : BaseRepository<sys_role, string>
     /// <param name="role"></param>
     /// <param name="menuids"></param>
     /// <returns></returns>
-    public async Task<bool> UpdateRole(sys_role role, List<string> menuids)
+    public async Task<bool> UpdateRoleAsync(sys_role role, List<string> menuids)
     {
         bool result = true;
         using (var uow = this._freeSql.CreateUnitOfWork())
@@ -129,7 +129,7 @@ public class SysRoleRepository : BaseRepository<sys_role, string>
     /// </summary>
     /// <param name="roleId"></param>
     /// <returns></returns>
-    public async Task<bool> RemoveRole(string roleId)
+    public async Task<bool> RemoveRoleAsync(string roleId)
     {
         bool result = true;
         using (var uow = this._freeSql.CreateUnitOfWork())

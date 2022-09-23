@@ -33,27 +33,9 @@ namespace NetX.SystemManager.Controllers
         [ApiActionDescriptionAttribute("登录")]
         [NoPermission]
         [HttpPost]
-        public async Task<ActionResult> Login(LoginModel model)
+        public async Task<ResultModel<LoginResult>> Login(LoginModel model)
         {
-            var userInfo = await _accoutService.Login(model.UserName, model.Password);
-            if (null == userInfo)
-                return base.Error(ResultEnum.ERROR, "账号密码验证失败");
-            string token = await _accoutService.GetToken(new ClaimModel()
-            {
-                UserId = userInfo.Id,
-                LoginName = userInfo.UserName,
-                DisplayName = userInfo.NickName
-            });
-            if (string.IsNullOrWhiteSpace(token))
-                return base.Error(ResultEnum.ERROR, "获取token失败");
-            return base.Success<LoginResult>(new LoginResult()
-            {
-                UserId = userInfo.Id,
-                UserName = userInfo.UserName,
-                RealName = userInfo.NickName,
-                Token = token,
-                Desc = userInfo.Remark
-            });
+            return await _accoutService.Login(model.UserName, model.Password);
         }
 
         /// <summary>
@@ -62,12 +44,9 @@ namespace NetX.SystemManager.Controllers
         /// <returns></returns>
         [ApiActionDescriptionAttribute("获取用户信息")]
         [HttpGet]
-        public async Task<ActionResult> GetUserInfo()
+        public async Task<ResultModel<UserModel>> GetUserInfo()
         {
-            var userInfo = await _accoutService.GetUserInfo(TenantContext.CurrentTenant.Principal?.UserId);
-            if (null == userInfo)
-                return base.Error(ResultEnum.ERROR, "获取用户信息失败");
-            return base.Success<UserModel>(userInfo);
+            return await _accoutService.GetUserInfo(TenantContext.CurrentTenant.Principal?.UserId);
         }
 
         /// <summary>
@@ -77,12 +56,9 @@ namespace NetX.SystemManager.Controllers
         /// <returns></returns>
         [ApiActionDescriptionAttribute("获取用户列表集合")]
         [HttpGet]
-        public async Task<ActionResult> GetAccountList([FromQuery] UserListParam userListparam)
+        public async Task<ResultModel<List<UserListModel>>> GetAccountList([FromQuery] UserListParam userListparam)
         {
-            var userList = await _accoutService.GetAccountLists(userListparam);
-            if (null == userList)
-                return base.Error(ResultEnum.ERROR, "获取用户列表失败");
-            return base.Success<List<UserListModel>>(userList);
+            return await _accoutService.GetAccountLists(userListparam);
         }
 
         /// <summary>
@@ -92,12 +68,9 @@ namespace NetX.SystemManager.Controllers
         /// <returns></returns>
         [ApiActionDescription("用户名是否存在校验")]
         [HttpGet]
-        public async Task<ActionResult> IsAccountExist([FromQuery] string account)
+        public async Task<ResultModel<bool>> IsAccountExist([FromQuery] string account)
         {
-            var isExist = await _accoutService.IsAccountExist(account);
-            if (isExist)
-                return base.Error(ResultEnum.ERROR, "用户名存在");
-            return base.Success<bool>(isExist);
+            return await _accoutService.IsAccountExist(account);
         }
 
         /// <summary>
@@ -107,10 +80,9 @@ namespace NetX.SystemManager.Controllers
         /// <returns></returns>
         [ApiActionDescriptionAttribute("获取用户按钮权限集合")]
         [HttpGet]
-        public async Task<ActionResult> GetPermCode()
+        public async Task<ResultModel<IEnumerable<string>>> GetPermCode()
         {
-            var result = await _accoutService.GetPermCode(TenantContext.CurrentTenant.Principal?.UserId ?? string.Empty);
-            return base.Success<IEnumerable<string>>(result);
+            return await _accoutService.GetPermCode(TenantContext.CurrentTenant.Principal?.UserId ?? string.Empty);
         }
 
         /// <summary>
@@ -119,9 +91,9 @@ namespace NetX.SystemManager.Controllers
         /// <returns></returns>
         [ApiActionDescriptionAttribute("登出系统")]
         [HttpGet]
-        public ActionResult Logout()
+        public async Task<ResultModel<bool>> Logout()
         {
-            return base.Success<bool>(true);
+            return await Task.FromResult(new ResultModel<bool>(ResultEnum.SUCCESS) { Result = true });
         }
 
         /// <summary>
@@ -130,13 +102,9 @@ namespace NetX.SystemManager.Controllers
         /// <returns></returns>
         [ApiActionDescription("添加用户")]
         [HttpPost]
-        public async Task<ActionResult> AddAccount(AccountRequestModel model)
+        public async Task<ResultModel<bool>> AddAccount(AccountRequestModel model)
         {
-            var result = await _accoutService.AddAccount(model);
-            return new JsonResult(new ResultModel<bool>(ResultEnum.SUCCESS)
-            {
-                Result = result
-            });
+            return await _accoutService.AddAccount(model);
         }
 
         /// <summary>
@@ -145,13 +113,9 @@ namespace NetX.SystemManager.Controllers
         /// <returns></returns>
         [ApiActionDescription("修改用户")]
         [HttpPost]
-        public async Task<ActionResult> UpdateAccount(AccountRequestModel model)
+        public async Task<ResultModel<bool>> UpdateAccount(AccountRequestModel model)
         {
-            var result = await _accoutService.UpdateAccount(model);
-            return new JsonResult(new ResultModel<bool>(ResultEnum.SUCCESS)
-            {
-                Result = result
-            });
+            return await _accoutService.UpdateAccount(model);
         }
 
         /// <summary>
@@ -161,13 +125,9 @@ namespace NetX.SystemManager.Controllers
         /// <returns></returns>
         [ApiActionDescriptionAttribute("删除用户")]
         [HttpDelete]
-        public async Task<ActionResult> RemoveAccount(DeleteParam param)
+        public async Task<ResultModel<bool>> RemoveAccount(DeleteParam param)
         {
-            var result = await _accoutService.RemoveDept(param.Id);
-            return new JsonResult(new ResultModel<bool>(ResultEnum.SUCCESS)
-            {
-                Result = result
-            });
+            return await _accoutService.RemoveDept(param.Id);
         }
     }
 }

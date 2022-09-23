@@ -1,4 +1,12 @@
 {
+  "databaseinfo": {
+    "databasehost": "www.liuping.org.cn",
+    "databasename": "netx-zeke",
+    "databaseport": "8306",
+    "databasetype": "0",
+    "userid": "root",
+    "password": "l/y+KD4Pa5Gj8jjloR5WyQ=="
+  },
   "tenants": [
     {
       "tenantid": "1",

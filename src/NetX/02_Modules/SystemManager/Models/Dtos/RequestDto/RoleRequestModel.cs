@@ -1,4 +1,4 @@
-﻿using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace NetX.SystemManager.Models;
 
@@ -10,27 +10,27 @@ public class RoleRequestModel
     /// <summary>
     /// 
     /// </summary>
-    [JsonPropertyName("id")]
+    [JsonProperty("id")]
     public string? Id { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    [JsonPropertyName("rolename")]
+    [JsonProperty("rolename")]
     public string RoleName { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    [JsonPropertyName("status")]
+    [JsonProperty("status")]
     public string Status { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    [JsonPropertyName("remark")]
+    [JsonProperty("remark")]
     public string? Remark { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    [JsonPropertyName("menu")]
+    [JsonProperty("menu")]
     public CheckMenu? Menus { get; set; }
 
     /// <summary>
@@ -57,12 +57,12 @@ public class RoleStatusModel
     /// <summary>
     /// 
     /// </summary>
-    [JsonPropertyName("id")]
+    [JsonProperty("id")]
     public string Id { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    [JsonPropertyName("status")]
+    [JsonProperty("status")]
     public string Status { get; set; }
 }
 

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NetX.Authentication.Core;
+using NetX.Common.Models;
 using NetX.Swagger;
 using NetX.SystemManager.Core;
 using NetX.SystemManager.Models;
@@ -31,12 +32,9 @@ public class MenuController : SystemManagerBaseController
     [ApiActionDescriptionAttribute("获取登录用户授权菜单列表")]
     [NoPermission]
     [HttpGet]
-    public async Task<ActionResult> GetCurrentUserMenuList()
+    public async Task<ResultModel<List<MenuModel>>> GetCurrentUserMenuList()
     {
-        var result = await this._menuService.GetCurrentUserMenuList(TenantContext.CurrentTenant.Principal?.UserId);
-        if (null == result)
-            return base.Error(Common.Models.ResultEnum.ERROR, "获取当前登录用户授权菜单列表失败");
-        return base.Success<List<MenuModel>>(result);
+        return await this._menuService.GetCurrentUserMenuList(TenantContext.CurrentTenant.Principal?.UserId);
     }
 
     /// <summary>
@@ -47,10 +45,9 @@ public class MenuController : SystemManagerBaseController
     [ApiActionDescriptionAttribute("获取菜单列表")]
     [NoPermission]
     [HttpPost]
-    public async Task<ActionResult> GetMenuList(MenuListParam param)
+    public async Task<ResultModel<List<MenuModel>>> GetMenuList(MenuListParam param)
     {
-        var result = await this._menuService.GetMenuList(param);
-        return base.Success<List<MenuModel>>(result);
+        return await this._menuService.GetMenuList(param);
     }
 
     /// <summary>
@@ -60,10 +57,9 @@ public class MenuController : SystemManagerBaseController
     /// <returns></returns>
     [ApiActionDescriptionAttribute("添加菜单")]
     [HttpPost]
-    public async Task<ActionResult> AddMenu(MenuRequestModel model)
+    public async Task<ResultModel<bool>> AddMenu(MenuRequestModel model)
     {
-        var result = await this._menuService.AddMenu(model);
-        return base.Success<bool>(result);
+        return await this._menuService.AddMenu(model);
     }
 
     /// <summary>
@@ -73,10 +69,9 @@ public class MenuController : SystemManagerBaseController
     /// <returns></returns>
     [ApiActionDescriptionAttribute("编辑菜单")]
     [HttpPost]
-    public async Task<ActionResult> UpdateMenu(MenuRequestModel model)
+    public async Task<ResultModel<bool>> UpdateMenu(MenuRequestModel model)
     {
-        var result = await this._menuService.UpdateMenu(model);
-        return base.Success<bool>(result);
+        return await this._menuService.UpdateMenu(model);
     }
 
     /// <summary>
@@ -86,9 +81,8 @@ public class MenuController : SystemManagerBaseController
     /// <returns></returns>
     [ApiActionDescriptionAttribute("删除菜单")]
     [HttpDelete]
-    public async Task<ActionResult> RemoveMenu(DeleteParam param)
+    public async Task<ResultModel<bool>> RemoveMenu(DeleteParam param)
     {
-        var result = await this._menuService.RemoveMenu(param.Id);
-        return base.Success<bool>(result);
+        return await this._menuService.RemoveMenu(param.Id);
     }
 }

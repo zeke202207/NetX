@@ -3,6 +3,7 @@ using FreeSql;
 using NetX.Authentication.Core;
 using NetX.Common;
 using NetX.Common.Attributes;
+using NetX.Common.Models;
 using NetX.SystemManager.Data.Repositories;
 using NetX.SystemManager.Models;
 
@@ -25,6 +26,7 @@ public class AccountService : BaseService, IAccountService
     /// <param name="userRepository"></param>
     /// <param name="encryption"></param>
     /// <param name="loginHandler"></param>
+    /// <param name="mapper"></param>
     public AccountService(
         IBaseRepository<sys_user> userRepository,
         IEncryption encryption,
@@ -43,12 +45,30 @@ public class AccountService : BaseService, IAccountService
     /// <param name="username"></param>
     /// <param name="password"></param>
     /// <returns></returns>
-    public async Task<UserModel> Login(string username, string password)
+    public async Task<ResultModel<LoginResult>> Login(string username, string password)
     {
+        //1. 数据库查询账号
         var user = await this._userRepository.Select.Where(p => p.username.Equals(username)).FirstAsync<sys_user>();
         if (null == user || _encryption.Encryption(password).ToLower().Equals(user.password))
-            return default(UserModel);
-       return this._mapper.Map<UserModel>(user);
+            return base.Error<LoginResult>("用户名或密码错误");
+        var userInfo = this._mapper.Map<UserModel>(user);
+        //2. 获取token
+        string token = await GetToken(new ClaimModel()
+        {
+            UserId = userInfo.Id,
+            LoginName = userInfo.UserName,
+            DisplayName = userInfo.NickName
+        });
+        if (string.IsNullOrWhiteSpace(token))
+            return base.Error<LoginResult>("获取token失败");
+        return base.Success<LoginResult>(new LoginResult()
+        {
+            UserId = userInfo.Id,
+            UserName = userInfo.UserName,
+            RealName = userInfo.NickName,
+            Token = token,
+            Desc = userInfo.Remark
+        });
     }
 
     /// <summary>
@@ -57,7 +77,7 @@ public class AccountService : BaseService, IAccountService
     /// <param name="model"></param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public async Task<string> GetToken(ClaimModel model)
+    private async Task<string> GetToken(ClaimModel model)
     {
         var result = this._loginHandler.Handle(model, string.Empty);
         if (null != result)
@@ -71,22 +91,14 @@ public class AccountService : BaseService, IAccountService
     /// <param name="userId"></param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public async Task<UserModel> GetUserInfo(string userId)
+    public async Task<ResultModel<UserModel>> GetUserInfo(string userId)
     {
         if (string.IsNullOrEmpty(userId))
-            return default(UserModel);
-        var user = await this._userRepository.Select.Where(p => p.id.Equals(userId)).FirstAsync<sys_user>();
+            return base.Error<UserModel>("获取当前登录用户id失败");
+        var user = await this._userRepository.Select.Where(p => p.id.Equals(userId) && p.status.Equals((int)Status.Enable)).FirstAsync<sys_user>();
         if (null == user)
-            return default(UserModel);
-        return new UserModel()
-        {
-            Id = user.id,
-            Avatar = user.avatar,
-            UserName = user.username,
-            NickName = user.nickname,
-            Remark = user.remark ?? string.Empty,
-            Status = user.status.ToString()
-        };
+            return base.Error<UserModel>("用户不存在");
+        return base.Success<UserModel>(this._mapper.Map<UserModel>(user));
     }
 
     /// <summary>
@@ -94,9 +106,9 @@ public class AccountService : BaseService, IAccountService
     /// </summary>
     /// <param name="userParam"></param>
     /// <returns></returns>
-    public async Task<List<UserListModel>> GetAccountLists(UserListParam userParam)
+    public async Task<ResultModel<List<UserListModel>>> GetAccountLists(UserListParam userParam)
     {
-        var list = await ((SysUserRepository)_userRepository).GetUserList(userParam.DeptId, userParam.Account, userParam.Nickname, userParam.Page, userParam.PageSize);
+        var list = await ((SysUserRepository)_userRepository).GetUserListAsync(userParam.DeptId, userParam.Account, userParam.Nickname, userParam.Page, userParam.PageSize);
         List<UserListModel> result = new List<UserListModel>();
         foreach (var item in list)
         {
@@ -105,16 +117,16 @@ public class AccountService : BaseService, IAccountService
                 Id = item.Item1.id,
                 Avatar = item.Item1.avatar,
                 NickName = item.Item1.nickname,
-                Remark = item.Item1.remark??string.Empty,
+                Remark = item.Item1.remark ?? string.Empty,
                 UserName = item.Item1.username,
                 DeptId = item.Item3?.id,
                 DeptName = item.Item3?.deptname,
                 RoleId = item.Item2?.id,
                 RoleName = item.Item2?.rolename,
-                Email = item.Item1.email??string.Empty,
+                Email = item.Item1.email ?? string.Empty,
             });
         }
-        return result;
+        return base.Success<List<UserListModel>>(result);
     }
 
     /// <summary>
@@ -122,11 +134,12 @@ public class AccountService : BaseService, IAccountService
     /// </summary>
     /// <param name="userName"></param>
     /// <returns></returns>
-    public async Task<bool> IsAccountExist(string userName)
+    public async Task<ResultModel<bool>> IsAccountExist(string userName)
     {
         if (string.IsNullOrWhiteSpace(userName))
-            return false;
-        return await this._userRepository.Select.FirstAsync(p => p.username == userName);
+            return base.Error<bool>("登录名不能为空");
+        var result = await this._userRepository.Select.FirstAsync(p => p.username == userName);
+        return base.Success<bool>(result);
     }
 
     /// <summary>
@@ -134,11 +147,13 @@ public class AccountService : BaseService, IAccountService
     /// </summary>
     /// <param name="model"></param>
     /// <returns></returns>
-    public async Task<bool> AddAccount(AccountRequestModel model)
+    public async Task<ResultModel<bool>> AddAccount(AccountRequestModel model)
     {
         var isExist = await IsAccountExist(model.UserName);
-        if (isExist)
-            return false;
+        if (isExist.Code != ResultEnum.SUCCESS)
+            return isExist;
+        if (isExist.Result)
+            return base.Error<bool>("登录名已存在");
         var userEntity = new sys_user()
         {
             id = base.CreateId(),
@@ -150,7 +165,8 @@ public class AccountService : BaseService, IAccountService
             remark = model.Remark,
             email = model.Email
         };
-        return await ((SysUserRepository)this._userRepository).AddUser(userEntity, model.RoleId, model.DeptId);
+        var result = await ((SysUserRepository)this._userRepository).AddUserAsync(userEntity, model.RoleId, model.DeptId);
+        return base.Success<bool>(result);
     }
 
     /// <summary>
@@ -158,19 +174,19 @@ public class AccountService : BaseService, IAccountService
     /// </summary>
     /// <param name="model"></param>
     /// <returns></returns>
-    public async Task<bool> UpdateAccount(AccountRequestModel model)
+    public async Task<ResultModel<bool>> UpdateAccount(AccountRequestModel model)
     {
         var entity = await this._userRepository.Select.Where(p => p.id.Equals(model.Id)).FirstAsync();
-        if (null == entity)
-            return false;
-        entity.username = model.UserName;
+        if (null == entity || entity.username.Equals(model.UserName))
+            return base.Error<bool>("登录名已存在");
+        // entity.username = model.UserName;
         entity.nickname = model.NickName;
         entity.email = model.Email;
         entity.remark = model.Remark;
         if (!string.IsNullOrEmpty(model.Remark))
             entity.remark = model.Remark;
-        return await ((SysUserRepository)this._userRepository).UpdateUser(entity, model.RoleId, model.DeptId);
-
+        var result = await ((SysUserRepository)this._userRepository).UpdateUserAsync(entity, model.RoleId, model.DeptId);
+        return base.Success<bool>(result);
     }
 
     /// <summary>
@@ -179,9 +195,10 @@ public class AccountService : BaseService, IAccountService
     /// <param name="id"></param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public async Task<bool> RemoveDept(string id)
+    public async Task<ResultModel<bool>> RemoveDept(string id)
     {
-        return await ((SysUserRepository)this._userRepository).RemoveUser(id);
+        var result = await ((SysUserRepository)this._userRepository).RemoveUserAsync(id);
+        return base.Success<bool>(result);
     }
 
     /// <summary>
@@ -189,8 +206,9 @@ public class AccountService : BaseService, IAccountService
     /// </summary>
     /// <param name="userId"></param>
     /// <returns></returns>
-    public async Task<IEnumerable<string>> GetPermCode(string userId)
+    public async Task<ResultModel<IEnumerable<string>>> GetPermCode(string userId)
     {
-        return await ((SysUserRepository)this._userRepository).GetPremCodes(userId);
+        var result = await ((SysUserRepository)this._userRepository).GetPremCodesAsync(userId);
+        return base.Success<IEnumerable<string>>(result);
     }
 }

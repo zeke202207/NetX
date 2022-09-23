@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using NetX.Common.Models;
 using NetX.SystemManager.Models;
 
 namespace NetX.SystemManager.Core;
@@ -13,26 +14,26 @@ public interface IDeptService
     /// </summary>
     /// <param name="queryParam"></param>
     /// <returns></returns>
-    Task<List<DeptModel>> GetDeptList([FromQuery] DeptListParam queryParam);
+    Task<ResultModel<List<DeptModel>>> GetDeptList([FromQuery] DeptListParam queryParam);
 
     /// <summary>
     /// 添加部门
     /// </summary>
     /// <param name="model"></param>
     /// <returns></returns>
-    Task<bool> AddDept(DeptRequestModel model);
+    Task<ResultModel<bool>> AddDept(DeptRequestModel model);
 
     /// <summary>
     /// 更新部门信息
     /// </summary>
     /// <param name="model"></param>
     /// <returns></returns>
-    Task<bool> UpdateDept(DeptRequestModel model);
+    Task<ResultModel<bool>> UpdateDept(DeptRequestModel model);
 
     /// <summary>
     /// 删除部门信息
     /// </summary>
     /// <param name="deptId"></param>
     /// <returns></returns>
-    Task<bool> RemoveDept(string deptId);
+    Task<ResultModel<bool>> RemoveDept(string deptId);
 }

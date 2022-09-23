@@ -305,7 +305,7 @@
             <param name="services"></param>
             <param name="supportDbType"></param>
         </member>
-        <member name="M:NetX.DatabaseSetup.MigrationService.SetupDatabase">
+        <member name="M:NetX.DatabaseSetup.MigrationService.SetupDatabase(System.String)">
             <summary>
             创建数据库
             </summary>

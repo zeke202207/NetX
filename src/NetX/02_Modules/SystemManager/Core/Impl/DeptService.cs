@@ -1,6 +1,9 @@
-﻿using FreeSql;
+﻿using AutoMapper;
+using FreeSql;
 using Microsoft.AspNetCore.Mvc;
 using NetX.Common.Attributes;
+using NetX.Common.Models;
+using NetX.SystemManager.Data.Repositories;
 using NetX.SystemManager.Models;
 
 namespace NetX.SystemManager.Core;
@@ -12,15 +15,19 @@ namespace NetX.SystemManager.Core;
 public class DeptService : BaseService, IDeptService
 {
     private readonly IBaseRepository<sys_dept> _deptRepository;
+    private readonly IMapper _mapper;
 
     /// <summary>
     /// 部门管理服务实例对象
     /// </summary>
     /// <param name="deptRepository"></param>
+    /// <param name="mapper"></param>
     public DeptService(
-        IBaseRepository<sys_dept> deptRepository)
+        IBaseRepository<sys_dept> deptRepository,
+        IMapper mapper)
     {
         this._deptRepository = deptRepository;
+        this._mapper = mapper;
     }
 
     /// <summary>
@@ -29,7 +36,7 @@ public class DeptService : BaseService, IDeptService
     /// <param name="model"></param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public async Task<bool> AddDept(DeptRequestModel model)
+    public async Task<ResultModel<bool>> AddDept(DeptRequestModel model)
     {
         var deptEntity = new sys_dept()
         {
@@ -42,7 +49,7 @@ public class DeptService : BaseService, IDeptService
             remark = model.Remark
         };
         await this._deptRepository.InsertAsync(deptEntity);
-        return true;
+        return base.Success<bool>(true);
     }
 
     /// <summary>
@@ -51,7 +58,7 @@ public class DeptService : BaseService, IDeptService
     /// <param name="model"></param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public async Task<bool> UpdateDept(DeptRequestModel model)
+    public async Task<ResultModel<bool>> UpdateDept(DeptRequestModel model)
     {
         var deptEntity = await _deptRepository.Select.Where(p => p.id.Equals(model.Id)).FirstAsync();
         deptEntity.deptname = model.DeptName;
@@ -59,7 +66,8 @@ public class DeptService : BaseService, IDeptService
         deptEntity.orderno = model.OrderNo;
         deptEntity.status = int.Parse(model.Status);
         deptEntity.remark = model.Remark;
-        return await this._deptRepository.UpdateAsync(deptEntity) > 0;
+        var result = await this._deptRepository.UpdateAsync(deptEntity) > 0;
+        return base.Success<bool>(result);
     }
 
     /// <summary>
@@ -68,15 +76,10 @@ public class DeptService : BaseService, IDeptService
     /// <param name="deptId"></param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public async Task<bool> RemoveDept(string deptId)
+    public async Task<ResultModel<bool>> RemoveDept(string deptId)
     {
-        //1. find all children department
-        var ids = await this._deptRepository.Select
-            .WithSql($"select id from sys_dept where find_in_set(id,get_child_dept('{deptId}'))")
-            .ToListAsync<string>("id");
-        //2. delete all
-        await this._deptRepository.DeleteAsync(p => ids.Contains(p.id));
-        return true;
+        var result = await ((SysDeptRepository)this._deptRepository).RemoveDeptAsync(deptId);
+        return base.Success<bool>(result);
     }
 
     /// <summary>
@@ -85,19 +88,11 @@ public class DeptService : BaseService, IDeptService
     /// <param name="queryParam"></param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public async Task<List<DeptModel>> GetDeptList([FromQuery] DeptListParam queryParam)
+    public async Task<ResultModel<List<DeptModel>>> GetDeptList([FromQuery] DeptListParam queryParam)
     {
         var depts = await _deptRepository.Select.ToListAsync();
-        return ToTree(depts.Select(p => new DeptModel()
-        {
-            Id = p.id,
-            ParentId = p.parentid,
-            CreateTime = p.createtime,
-            DeptName = p.deptname,
-            OrderNo = p.orderno,
-            Remark = p.remark,
-            Status = p.status.ToString(),
-        }).ToList(), "00000000000000000000000000000000");
+        var result = ToTree(this._mapper.Map<List<DeptModel>>(depts), SystemManagerConst.C_ROOT_ID);
+        return base.Success<List<DeptModel>>(result);
     }
 
     /// <summary>

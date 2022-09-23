@@ -1,4 +1,4 @@
-﻿using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace NetX.SystemManager.Models;
 
@@ -10,27 +10,27 @@ public class LoginResult
     /// <summary>
     /// 
     /// </summary>
-    [JsonPropertyName("userid")]
+    [JsonProperty("userid")]
     public string UserId { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    [JsonPropertyName("username")]
+    [JsonProperty("username")]
     public string UserName { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    [JsonPropertyName("token")]
+    [JsonProperty("token")]
     public string Token { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    [JsonPropertyName("realname")]
+    [JsonProperty("realname")]
     public string RealName { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    [JsonPropertyName("desc")]
+    [JsonProperty("desc")]
     public string Desc { get; set; }
     //public roles,
 }

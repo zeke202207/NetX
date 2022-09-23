@@ -1,7 +1,9 @@
 ﻿using FreeSql;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using NetX.Common;
 
 namespace NetX.Tenants;
 
@@ -29,12 +31,23 @@ public class TenantBuilder<T>
     }
 
     /// <summary>
+    /// 根据配置文件配置数据库信息
+    /// </summary>
+    /// <returns></returns>
+    public TenantBuilder<T> WithTenancyDatabase(IConfiguration config)
+    {
+        var database = config.GetSection("databaseinfo").Get<DatabaseInfo>();
+        return WithTenancyDatabase(database);
+    }
+
+    /// <summary>
     /// 配置数据库
     /// </summary>
     /// <param name="database"></param>
     /// <returns></returns>
-    public TenantBuilder<T> WithDatabaseInfo(DatabaseInfo database)
+    public TenantBuilder<T> WithTenancyDatabase(DatabaseInfo database)
     {
+        IEncryption des = new DES();
         _databaseInfo = new DatabaseInfo()
         {
             DatabaseHost = database.DatabaseHost,
@@ -42,9 +55,9 @@ public class TenantBuilder<T>
             DatabasePort = database.DatabasePort,
             DatabaseType = database.DatabaseType,
             UserId = database.UserId,
-            Password = database.Password,
+            Password = des.Decryption(database.Password),
         };
-        return this;
+        return WithFreeSql();
     }
 
     /// <summary>
@@ -115,7 +128,7 @@ public class TenantBuilder<T>
     /// 使用租户数据库
     /// </summary>
     /// <returns></returns>
-    public TenantBuilder<T> WithTenancyDatabase()
+    private TenantBuilder<T> WithFreeSql()
     {
         var _fsql = new FreeSqlCloud<string>();
         _fsql.DistributeTrace = log => Console.WriteLine(log.Split('\n')[0].Trim());

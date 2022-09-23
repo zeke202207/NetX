@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using NetX.Common.Models;
 using NetX.Swagger;
 using NetX.SystemManager.Core;
 using NetX.SystemManager.Models;
@@ -29,10 +30,9 @@ public class DeptController : SystemManagerBaseController
     /// <returns></returns>
     [ApiActionDescriptionAttribute("获取部门列表")]
     [HttpGet]
-    public async Task<ActionResult> GetDeptList([FromQuery] DeptListParam queryParam)
+    public async Task<ResultModel<List<DeptModel>>> GetDeptList([FromQuery] DeptListParam queryParam)
     {
-        var result = await _deptService.GetDeptList(queryParam);
-        return base.Success<List<DeptModel>>(result);
+        return await _deptService.GetDeptList(queryParam);
     }
 
     /// <summary>
@@ -42,10 +42,9 @@ public class DeptController : SystemManagerBaseController
     /// <returns></returns>
     [ApiActionDescriptionAttribute("新增部门信息")]
     [HttpPost]
-    public async Task<ActionResult> AddDept(DeptRequestModel model)
+    public async Task<ResultModel<bool>> AddDept(DeptRequestModel model)
     {
-        var result = await _deptService.AddDept(model);
-        return base.Success<bool>(result);
+        return await _deptService.AddDept(model);
     }
 
     /// <summary>
@@ -55,10 +54,9 @@ public class DeptController : SystemManagerBaseController
     /// <returns></returns>
     [ApiActionDescriptionAttribute("编辑部门信息")]
     [HttpPost]
-    public async Task<ActionResult> UpdateDept(DeptRequestModel model)
+    public async Task<ResultModel<bool>> UpdateDept(DeptRequestModel model)
     {
-        var result = await _deptService.UpdateDept(model);
-        return base.Success<bool>(result);
+        return await _deptService.UpdateDept(model);
     }
 
     /// <summary>
@@ -68,9 +66,8 @@ public class DeptController : SystemManagerBaseController
     /// <returns></returns>
     [ApiActionDescriptionAttribute("删除部门信息")]
     [HttpDelete]
-    public async Task<ActionResult> RemoveDept(DeleteParam param)
+    public async Task<ResultModel<bool>> RemoveDept(DeleteParam param)
     {
-        var result = await _deptService.RemoveDept(param.Id);
-        return base.Success<bool>(result);
+        return await _deptService.RemoveDept(param.Id);
     }
 }

@@ -1,4 +1,4 @@
-﻿using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace NetX.SystemManager.Models;
 
@@ -10,12 +10,12 @@ public class LoginModel
     /// <summary>
     /// 用户名
     /// </summary>
-    [JsonPropertyName("username")]
+    [JsonProperty("username")]
     public string UserName { get; set; }
 
     /// <summary>
     /// 密码
     /// </summary>
-    [JsonPropertyName("password")]
+    [JsonProperty("password")]
     public string Password { get; set; }
 }

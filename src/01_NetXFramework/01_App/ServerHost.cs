@@ -42,7 +42,7 @@ public static class ServerHost
         builder.InjectFrameworkService(builder.Environment, builder.Configuration);
         builder.InjectUserModulesService(options.Modules, builder.Environment, builder.Configuration);
         // 注册服应用务组件
-        options.ActionServiceCollection?.Invoke(builder.Services);
+        options.ActionServiceCollection?.Invoke(builder.Services, builder.Configuration);
         //所有模块数据库迁移配置完毕，注入数据库迁移
         builder.Services.BuildFluentMigrator();
         //添加日志

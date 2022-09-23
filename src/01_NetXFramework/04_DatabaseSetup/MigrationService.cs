@@ -5,6 +5,7 @@ using FluentMigrator.Runner.Processors.MySql;
 using FluentMigrator.Runner.VersionTableInfo;
 using Microsoft.Extensions.DependencyInjection;
 using NetX.Tenants;
+using System.Collections.Concurrent;
 
 namespace NetX.DatabaseSetup;
 
@@ -16,6 +17,7 @@ public class MigrationService
     private IServiceCollection _services;
     private readonly int _commandTimeout = 300;
     private readonly MigrationSupportDbType _supportDbType;
+    private readonly HashSet<string> _migrationTenandIds = new HashSet<string>();
 
     /// <summary>
     /// 数据迁移服务实例
@@ -32,9 +34,15 @@ public class MigrationService
     /// 创建数据库
     /// </summary>
     /// <returns></returns>
-    public bool SetupDatabase()
+    public bool SetupDatabase(string tenandId)
     {
-        return CraeteDatabase() && MigrationTables();
+        if (_migrationTenandIds.Contains(tenandId))
+            return true;
+        _migrationTenandIds.Add(tenandId);
+        var result = CraeteDatabase() && MigrationTables();
+        if(!result)
+            _migrationTenandIds.Remove(tenandId);
+        return result;
     }
 
     /// <summary>

@@ -1,4 +1,4 @@
-﻿using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace NetX.SystemManager.Models;
 
@@ -7,41 +7,41 @@ namespace NetX.SystemManager.Models;
 /// </summary>
 public class MenuMetaData
 {
-    [JsonPropertyName("title")]
+    [JsonProperty("title")]
     public string Title { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    [JsonPropertyName("hideMenu")]
+    [JsonProperty("hideMenu")]
     public bool HideMenu { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    [JsonPropertyName("ignoreKeepAlive")]
+    [JsonProperty("ignoreKeepAlive")]
     public bool IgnoreKeepAlive { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    [JsonPropertyName("hideChildrenInMenu")]
+    [JsonProperty("hideChildrenInMenu")]
     public bool HideChildrenMenu { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    [JsonPropertyName("icon")]
+    [JsonProperty("icon")]
     public string Icon { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    [JsonPropertyName("hideBreadcrumb")]
+    [JsonProperty("hideBreadcrumb")]
     public bool HideBreadcrumb { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    [JsonPropertyName("currentActiveMenu")]
+    [JsonProperty("currentActiveMenu")]
     public string CurrentActiveMenu { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    [JsonPropertyName("frameSrc")]
+    [JsonProperty("frameSrc")]
     public string FrameSrc { get; set; }
 }

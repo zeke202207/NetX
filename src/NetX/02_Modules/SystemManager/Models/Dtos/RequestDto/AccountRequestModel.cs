@@ -1,4 +1,4 @@
-﻿using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace NetX.SystemManager.Models;
 
@@ -10,36 +10,36 @@ public class AccountRequestModel
     /// <summary>
     /// 
     /// </summary>
-    [JsonPropertyName("id")]
+    [JsonProperty("id")]
     public string? Id { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    [JsonPropertyName("roleid")]
+    [JsonProperty("roleid")]
     public string? RoleId { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    [JsonPropertyName("deptid")]
+    [JsonProperty("deptid")]
     public string? DeptId { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    [JsonPropertyName("username")]
+    [JsonProperty("username")]
     public string UserName { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    [JsonPropertyName("nickname")]
+    [JsonProperty("nickname")]
     public string NickName { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    [JsonPropertyName("email")]
+    [JsonProperty("email")]
     public string? Email { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    [JsonPropertyName("remark")]
+    [JsonProperty("remark")]
     public string? Remark { get; set; }
 }

@@ -27,7 +27,7 @@ public class SysMenuRepository : BaseRepository<sys_menu, string>
     /// </summary>
     /// <param name="userId"></param>
     /// <returns></returns>
-    public async Task<IEnumerable<sys_menu>> GetCurrentUserMenuList(string userId)
+    public async Task<IEnumerable<sys_menu>> GetCurrentUserMenuListAsync(string userId)
     {
         return await this._freeSql.Select<sys_menu, sys_role_menu, sys_user_role>()
             .LeftJoin((m, rm, ur) => m.id == rm.menuid)
@@ -41,7 +41,7 @@ public class SysMenuRepository : BaseRepository<sys_menu, string>
     /// </summary>
     /// <param name="menuIds"></param>
     /// <returns></returns>
-    public async Task<bool> RemoveMenu(List<string> menuIds)
+    public async Task<bool> RemoveMenuAsync(string menuId)
     {
         bool result = true;
         using (var uow = this._freeSql.CreateUnitOfWork())
@@ -50,6 +50,8 @@ public class SysMenuRepository : BaseRepository<sys_menu, string>
             {
                 var roleMenuRep = uow.GetRepository<sys_role_menu>();
                 var menuRep = uow.GetRepository<sys_menu>();
+                var menuIds = await menuRep.Select.WithSql($"select id from sys_menu where find_in_set(id,get_child_menu('{menuId}'))")
+                    .ToListAsync<string>("id");
                 await roleMenuRep.DeleteAsync(p => menuIds.Contains(p.menuid));
                 await menuRep.DeleteAsync(p => menuIds.Contains(p.id));
                 uow.Commit();

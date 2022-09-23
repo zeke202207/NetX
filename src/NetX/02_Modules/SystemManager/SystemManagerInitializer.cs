@@ -4,7 +4,6 @@ using Microsoft.Extensions.DependencyInjection;
 using NetX.Common;
 using NetX.DatabaseSetup;
 using NetX.Module;
-using NetX.SystemManager.Profiles;
 using System.Reflection;
 
 namespace NetX.SystemManager;
@@ -22,7 +21,9 @@ internal class SystemManagerInitializer : ModuleInitializer
 
     public override void ConfigureServices(IServiceCollection services, IWebHostEnvironment env, ModuleContext context)
     {
-        services.AddAutoMapper(Assembly.GetExecutingAssembly());
+        //注入mapper
+        services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+        //注入加密算法
         services.AddSingleton<IEncryption, MD5>();
         //code first
         services.AddMigratorAssembly(new Assembly[] { Assembly.GetExecutingAssembly() });

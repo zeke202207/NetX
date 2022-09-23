@@ -1,5 +1,7 @@
-﻿using FreeSql;
+﻿using AutoMapper;
+using FreeSql;
 using NetX.Common.Attributes;
+using NetX.Common.Models;
 using NetX.SystemManager.Data.Repositories;
 using NetX.SystemManager.Models;
 
@@ -12,22 +14,26 @@ namespace NetX.SystemManager.Core;
 public class RoleService : BaseService, IRoleService
 {
     private readonly IBaseRepository<sys_role> _roleRepository;
+    private readonly IMapper _mapper;
 
     /// <summary>
     /// 角色管理服务实例对象
     /// </summary>
     /// <param name="roleRepository"></param>
+    /// <param name="mapper"></param>
     public RoleService(
-        IBaseRepository<sys_role> roleRepository)
+        IBaseRepository<sys_role> roleRepository,
+        IMapper mapper)
     {
         this._roleRepository = roleRepository;
+        this._mapper = mapper;
     }
 
     /// <summary>
     /// 获取角色列表
     /// </summary>
     /// <returns></returns>
-    public async Task<List<RoleModel>> GetRoleList()
+    public async Task<ResultModel<List<RoleModel>>> GetRoleList()
     {
         return await GetRoleList(new RoleListParam());
     }
@@ -37,19 +43,12 @@ public class RoleService : BaseService, IRoleService
     /// </summary>
     /// <param name="roleListparam"></param>
     /// <returns></returns>
-    public async Task<List<RoleModel>> GetRoleList(RoleListParam roleListparam)
+    public async Task<ResultModel<List<RoleModel>>> GetRoleList(RoleListParam roleListparam)
     {
         var roles = await ((SysRoleRepository)this._roleRepository)
-            .GetRoleList(roleListparam.RoleName, roleListparam.Page, roleListparam.PageSize);
-        return roles.ConvertAll<RoleModel>(p => new RoleModel()
-        {
-            Id = p.role.id,
-            CreateTime = p.role.createtime,
-            Remark = p.role.remark,
-            RoleName = p.role.rolename,
-            Status = p.role.status.ToString(),
-            Menus = p.menuids
-        });
+            .GetRoleListAsync(roleListparam.RoleName, roleListparam.Page, roleListparam.PageSize);
+        var result = this._mapper.Map<List<RoleModel>>(roles);
+        return base.Success<List<RoleModel>>(result);
     }
 
     /// <summary>
@@ -57,7 +56,7 @@ public class RoleService : BaseService, IRoleService
     /// </summary>
     /// <param name="model"></param>
     /// <returns></returns>
-    public Task<bool> AddRole(RoleRequestModel model)
+    public async Task<ResultModel<bool>> AddRole(RoleRequestModel model)
     {
         var roleEntity = new sys_role()
         {
@@ -65,9 +64,10 @@ public class RoleService : BaseService, IRoleService
             createtime = base.CreateInsertTime(),
             rolename = model.RoleName,
             status = int.Parse(model.Status),
-            remark = model?.Remark
+            remark = model.Remark ?? ""
         };
-        return ((SysRoleRepository)_roleRepository).AddRole(roleEntity, model.ToMenuList());
+        var result = await ((SysRoleRepository)_roleRepository).AddRoleAsync(roleEntity, model.ToMenuList());
+        return base.Success<bool>(result);
     }
 
     /// <summary>
@@ -75,14 +75,15 @@ public class RoleService : BaseService, IRoleService
     /// </summary>
     /// <param name="model"></param>
     /// <returns></returns>
-    public async Task<bool> UpdateRole(RoleRequestModel model)
+    public async Task<ResultModel<bool>> UpdateRole(RoleRequestModel model)
     {
         var roleEntity = await _roleRepository.Select.Where(p => p.id.Equals(model.Id)).FirstAsync();
         roleEntity.createtime = base.CreateInsertTime();
         roleEntity.rolename = model.RoleName;
         roleEntity.status = int.Parse(model.Status);
         roleEntity.remark = model?.Remark;
-        return await ((SysRoleRepository)_roleRepository).UpdateRole(roleEntity, model.ToMenuList());
+        var result = await ((SysRoleRepository)_roleRepository).UpdateRoleAsync(roleEntity, model.ToMenuList());
+        return base.Success<bool>(result);
     }
 
     /// <summary>
@@ -90,9 +91,10 @@ public class RoleService : BaseService, IRoleService
     /// </summary>
     /// <param name="roleId"></param>
     /// <returns></returns>
-    public Task<bool> RemoveRole(string roleId)
+    public async Task<ResultModel<bool>> RemoveRole(string roleId)
     {
-        return ((SysRoleRepository)_roleRepository).RemoveRole(roleId);
+        var result = await ((SysRoleRepository)_roleRepository).RemoveRoleAsync(roleId);
+        return base.Success<bool>(result);
     }
 
     /// <summary>
@@ -101,16 +103,16 @@ public class RoleService : BaseService, IRoleService
     /// <param name="roleId"></param>
     /// <param name="status"></param>
     /// <returns></returns>
-    public async Task<bool> UpdateRoleStatus(string roleId, string status)
+    public async Task<ResultModel<bool>> UpdateRoleStatus(string roleId, string status)
     {
         int intStatus = 0;
         if (!int.TryParse(status, out intStatus))
-            return false;
+            return base.Error<bool>("输入状态值无效");
         var roleEntity = await _roleRepository.Select.Where(p => p.id.Equals(roleId)).FirstAsync();
         if (null == roleEntity)
-            return false;
+            return base.Error<bool>("角色不存在");
         roleEntity.status = intStatus;
         await _roleRepository.UpdateAsync(roleEntity);
-        return true;
+        return base.Success<bool>(true);
     }
 }

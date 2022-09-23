@@ -1,4 +1,4 @@
-﻿using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace NetX.SystemManager.Models;
 
@@ -10,86 +10,86 @@ public class MenuRequestModel
     /// <summary>
     /// 
     /// </summary>
-    [JsonPropertyName("id")]
+    [JsonProperty("id")]
     public string? Id { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    [JsonPropertyName("parentid")]
+    [JsonProperty("parentid")]
     public string? ParentId { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    [JsonPropertyName("path")]
+    [JsonProperty("path")]
     public string? Path { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    [JsonPropertyName("name")]
+    [JsonProperty("name")]
     public string? Name { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    [JsonPropertyName("component")]
+    [JsonProperty("component")]
     public string? Component { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    [JsonPropertyName("redirect")]
+    [JsonProperty("redirect")]
     public string? Redirect { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    [JsonPropertyName("meta")]
+    [JsonProperty("meta")]
     public MenuMetaData? Meta { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    [JsonPropertyName("icon")]
+    [JsonProperty("icon")]
     public string? Icon { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    [JsonPropertyName("type")]
+    [JsonProperty("type")]
     public string Type { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    [JsonPropertyName("permission")]
+    [JsonProperty("permission")]
     public string? Permission { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    [JsonPropertyName("orderNo")]
+    [JsonProperty("orderNo")]
     public int? OrderNo { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    [JsonPropertyName("createTime")]
+    [JsonProperty("createTime")]
     public DateTime? CreateTime { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    [JsonPropertyName("status")]
+    [JsonProperty("status")]
     public string? Status { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    [JsonPropertyName("isExt")]
+    [JsonProperty("isExt")]
     public int IsExt { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    [JsonPropertyName("keepAlive")]
+    [JsonProperty("keepAlive")]
     public int KeepAlive { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    [JsonPropertyName("show")]
+    [JsonProperty("show")]
     public int Show { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    [JsonPropertyName("extpath")]
+    [JsonProperty("extpath")]
     public string? ExtPath { get; set; }
 }

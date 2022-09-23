@@ -1,4 +1,4 @@
-﻿using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace NetX.SystemManager.Models;
 
@@ -10,16 +10,16 @@ public class UserListParam : Pager
     /// <summary>
     /// 
     /// </summary>
-    [JsonPropertyName("deptId")]
+    [JsonProperty("deptId")]
     public string? DeptId { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    [JsonPropertyName("account")]
+    [JsonProperty("account")]
     public string? Account { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    [JsonPropertyName("nickname")]
+    [JsonProperty("nickname")]
     public string? Nickname { get; set; }
 }

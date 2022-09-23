@@ -2,6 +2,7 @@
 using NetX.Common;
 using NetX.DatabaseSetup;
 using NetX.Tenants;
+using System.Collections.Concurrent;
 using System.Security.Claims;
 
 namespace NetX.App;
@@ -12,7 +13,6 @@ namespace NetX.App;
 public class TenantContextFilter : BaseFilter, IResourceFilter, IAsyncResourceFilter
 {
     private readonly ITenantAccessor<Tenant> _accessor;
-    //private readonly IServiceProvider _serviceProvider;
     private readonly TenantOption _tenantOption;
     private readonly MigrationService _migrationService;
 
@@ -48,7 +48,7 @@ public class TenantContextFilter : BaseFilter, IResourceFilter, IAsyncResourceFi
         if(null != _accessor.Tenant && null != identity)
         {
             TenantContext.CurrentTenant.InitPrincipal(new NetXPrincipal(identity, _accessor.Tenant), _tenantOption);
-            _migrationService.SetupDatabase();
+            _migrationService.SetupDatabase(TenantContext.CurrentTenant.Principal.Tenant.TenantId);
         }
     }
 

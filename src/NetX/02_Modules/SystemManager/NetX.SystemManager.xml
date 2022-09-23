@@ -210,22 +210,6 @@
             api接口基类对象
             </summary>
         </member>
-        <member name="M:NetX.SystemManager.Controllers.SystemManagerBaseController.Success``1(``0)">
-            <summary>
-            返回成功结果
-            </summary>
-            <typeparam name="T"></typeparam>
-            <param name="result"></param>
-            <returns></returns>
-        </member>
-        <member name="M:NetX.SystemManager.Controllers.SystemManagerBaseController.Error(NetX.Common.Models.ResultEnum,System.String)">
-            <summary>
-            返回失败结果
-            </summary>
-            <param name="resultEnum"></param>
-            <param name="msg"></param>
-            <returns></returns>
-        </member>
         <member name="T:NetX.SystemManager.Core.IAccountService">
             <summary>
             账号管理服务接口
@@ -237,13 +221,6 @@
             </summary>
             <param name="username"></param>
             <param name="password"></param>
-            <returns></returns>
-        </member>
-        <member name="M:NetX.SystemManager.Core.IAccountService.GetToken(NetX.Authentication.Core.ClaimModel)">
-            <summary>
-            获取登录token
-            </summary>
-            <param name="model"></param>
             <returns></returns>
         </member>
         <member name="M:NetX.SystemManager.Core.IAccountService.GetUserInfo(System.String)">
@@ -380,6 +357,7 @@
             <param name="userRepository"></param>
             <param name="encryption"></param>
             <param name="loginHandler"></param>
+            <param name="mapper"></param>
         </member>
         <member name="M:NetX.SystemManager.Core.AccountService.Login(System.String,System.String)">
             <summary>
@@ -465,16 +443,41 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:NetX.SystemManager.Core.BaseService.Success``1(``0)">
+            <summary>
+            返回成功结果
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="result"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.SystemManager.Core.BaseService.Error``1(System.String)">
+            <summary>
+            返回失败结果
+            </summary>
+            <param name="resultEnum"></param>
+            <param name="msg"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.SystemManager.Core.BaseService.Error``1(NetX.Common.Models.ResultEnum,System.String)">
+            <summary>
+            返回失败结果
+            </summary>
+            <param name="resultEnum"></param>
+            <param name="msg"></param>
+            <returns></returns>
+        </member>
         <member name="T:NetX.SystemManager.Core.DeptService">
             <summary>
             部门管理服务
             </summary>
         </member>
-        <member name="M:NetX.SystemManager.Core.DeptService.#ctor(FreeSql.IBaseRepository{NetX.SystemManager.Models.sys_dept})">
+        <member name="M:NetX.SystemManager.Core.DeptService.#ctor(FreeSql.IBaseRepository{NetX.SystemManager.Models.sys_dept},AutoMapper.IMapper)">
             <summary>
             部门管理服务实例对象
             </summary>
             <param name="deptRepository"></param>
+            <param name="mapper"></param>
         </member>
         <member name="M:NetX.SystemManager.Core.DeptService.AddDept(NetX.SystemManager.Models.DeptRequestModel)">
             <summary>
@@ -521,15 +524,23 @@
             菜单管理服务
             </summary>
         </member>
-        <member name="M:NetX.SystemManager.Core.MenuService.#ctor(FreeSql.IBaseRepository{NetX.SystemManager.Models.sys_menu})">
+        <member name="M:NetX.SystemManager.Core.MenuService.#ctor(FreeSql.IBaseRepository{NetX.SystemManager.Models.sys_menu},AutoMapper.IMapper)">
             <summary>
             菜单管理实例对象
             </summary>
             <param name="menuRepository"></param>
+            <param name="mapper"></param>
         </member>
         <member name="M:NetX.SystemManager.Core.MenuService.AddMenu(NetX.SystemManager.Models.MenuRequestModel)">
             <summary>
             新增菜单
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.SystemManager.Core.MenuService.UpdateMenu(NetX.SystemManager.Models.MenuRequestModel)">
+            <summary>
+            跟新菜单信息
             </summary>
             <param name="model"></param>
             <returns></returns>
@@ -541,13 +552,6 @@
             <param name="menuId"></param>
             <returns></returns>
         </member>
-        <member name="M:NetX.SystemManager.Core.MenuService.UpdateMenu(NetX.SystemManager.Models.MenuRequestModel)">
-            <summary>
-            跟新菜单信息
-            </summary>
-            <param name="model"></param>
-            <returns></returns>
-        </member>
         <member name="M:NetX.SystemManager.Core.MenuService.GetCurrentUserMenuList(System.String)">
             <summary>
             获取当前用户可访问的菜单列表集合
@@ -555,16 +559,46 @@
             <param name="userId"></param>
             <returns></returns>
         </member>
+        <member name="M:NetX.SystemManager.Core.MenuService.GetMenuList(NetX.SystemManager.Models.MenuListParam)">
+            <summary>
+            获取菜单集合
+            </summary>
+            <param name="param"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.SystemManager.Core.MenuService.ToTree(System.Collections.Generic.List{NetX.SystemManager.Models.MenuModel},System.String)">
+            <summary>
+            生产菜单树
+            </summary>
+            <param name="menus"></param>
+            <param name="parentId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.SystemManager.Core.MenuService.ToEntity(NetX.SystemManager.Models.MenuRequestModel)">
+            <summary>
+            转换数据库实体对象
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.SystemManager.Core.MenuService.GetMenuType(System.Int32)">
+            <summary>
+            获取菜单类型
+            </summary>
+            <param name="menuType"></param>
+            <returns></returns>
+        </member>
         <member name="T:NetX.SystemManager.Core.RoleService">
             <summary>
             角色管理服务
             </summary>
         </member>
-        <member name="M:NetX.SystemManager.Core.RoleService.#ctor(FreeSql.IBaseRepository{NetX.SystemManager.Models.sys_role})">
+        <member name="M:NetX.SystemManager.Core.RoleService.#ctor(FreeSql.IBaseRepository{NetX.SystemManager.Models.sys_role},AutoMapper.IMapper)">
             <summary>
             角色管理服务实例对象
             </summary>
             <param name="roleRepository"></param>
+            <param name="mapper"></param>
         </member>
         <member name="M:NetX.SystemManager.Core.RoleService.GetRoleList">
             <summary>
@@ -891,6 +925,13 @@
             </summary>
             <param name="fsql"></param>
         </member>
+        <member name="M:NetX.SystemManager.Data.Repositories.SysDeptRepository.RemoveDeptAsync(System.String)">
+            <summary>
+            删除部门
+            </summary>
+            <param name="deptId"></param>
+            <returns></returns>
+        </member>
         <member name="T:NetX.SystemManager.Data.Repositories.SysMenuRepository">
             <summary>
             菜单仓储服务
@@ -902,14 +943,14 @@
             </summary>
             <param name="fsql"></param>
         </member>
-        <member name="M:NetX.SystemManager.Data.Repositories.SysMenuRepository.GetCurrentUserMenuList(System.String)">
+        <member name="M:NetX.SystemManager.Data.Repositories.SysMenuRepository.GetCurrentUserMenuListAsync(System.String)">
             <summary>
             获取当前登录用户访问菜单集合
             </summary>
             <param name="userId"></param>
             <returns></returns>
         </member>
-        <member name="M:NetX.SystemManager.Data.Repositories.SysMenuRepository.RemoveMenu(System.Collections.Generic.List{System.String})">
+        <member name="M:NetX.SystemManager.Data.Repositories.SysMenuRepository.RemoveMenuAsync(System.String)">
             <summary>
             删除菜单
             </summary>
@@ -927,7 +968,7 @@
             </summary>
             <param name="fsql"></param>
         </member>
-        <member name="M:NetX.SystemManager.Data.Repositories.SysRoleRepository.GetRoleList(System.String,System.Int32,System.Int32)">
+        <member name="M:NetX.SystemManager.Data.Repositories.SysRoleRepository.GetRoleListAsync(System.String,System.Int32,System.Int32)">
             <summary>
             获取role列表和role能访问的菜单列表
             menuid仅包含叶子节点
@@ -937,7 +978,7 @@
             <param name="pagesize"></param>
             <returns></returns>
         </member>
-        <member name="M:NetX.SystemManager.Data.Repositories.SysRoleRepository.AddRole(NetX.SystemManager.Models.sys_role,System.Collections.Generic.List{System.String})">
+        <member name="M:NetX.SystemManager.Data.Repositories.SysRoleRepository.AddRoleAsync(NetX.SystemManager.Models.sys_role,System.Collections.Generic.List{System.String})">
             <summary>
             新增角色
             </summary>
@@ -945,7 +986,7 @@
             <param name="menuids"></param>
             <returns></returns>
         </member>
-        <member name="M:NetX.SystemManager.Data.Repositories.SysRoleRepository.UpdateRole(NetX.SystemManager.Models.sys_role,System.Collections.Generic.List{System.String})">
+        <member name="M:NetX.SystemManager.Data.Repositories.SysRoleRepository.UpdateRoleAsync(NetX.SystemManager.Models.sys_role,System.Collections.Generic.List{System.String})">
             <summary>
             更新角色
             </summary>
@@ -953,7 +994,7 @@
             <param name="menuids"></param>
             <returns></returns>
         </member>
-        <member name="M:NetX.SystemManager.Data.Repositories.SysRoleRepository.RemoveRole(System.String)">
+        <member name="M:NetX.SystemManager.Data.Repositories.SysRoleRepository.RemoveRoleAsync(System.String)">
             <summary>
             删除角色
             </summary>
@@ -971,7 +1012,7 @@
             </summary>
             <param name="fsql"></param>
         </member>
-        <member name="M:NetX.SystemManager.Data.Repositories.SysUserRepository.GetUserList(System.String,System.String,System.String,System.Int32,System.Int32)">
+        <member name="M:NetX.SystemManager.Data.Repositories.SysUserRepository.GetUserListAsync(System.String,System.String,System.String,System.Int32,System.Int32)">
             <summary>
             获取用户列表
             </summary>
@@ -982,7 +1023,7 @@
             <param name="pagesize"></param>
             <returns></returns>
         </member>
-        <member name="M:NetX.SystemManager.Data.Repositories.SysUserRepository.AddUser(NetX.SystemManager.Models.sys_user,System.String,System.String)">
+        <member name="M:NetX.SystemManager.Data.Repositories.SysUserRepository.AddUserAsync(NetX.SystemManager.Models.sys_user,System.String,System.String)">
             <summary>
             新增用户信息
             </summary>
@@ -991,7 +1032,7 @@
             <param name="deptid"></param>
             <returns></returns>
         </member>
-        <member name="M:NetX.SystemManager.Data.Repositories.SysUserRepository.UpdateUser(NetX.SystemManager.Models.sys_user,System.String,System.String)">
+        <member name="M:NetX.SystemManager.Data.Repositories.SysUserRepository.UpdateUserAsync(NetX.SystemManager.Models.sys_user,System.String,System.String)">
             <summary>
             更新用户信息
             </summary>
@@ -1000,26 +1041,56 @@
             <param name="deptid"></param>
             <returns></returns>
         </member>
-        <member name="M:NetX.SystemManager.Data.Repositories.SysUserRepository.RemoveUser(System.String)">
+        <member name="M:NetX.SystemManager.Data.Repositories.SysUserRepository.RemoveUserAsync(System.String)">
             <summary>
             删除用户信息
             </summary>
             <param name="userId"></param>
             <returns></returns>
         </member>
-        <member name="M:NetX.SystemManager.Data.Repositories.SysUserRepository.GetPremCodes(System.String)">
+        <member name="M:NetX.SystemManager.Data.Repositories.SysUserRepository.GetPremCodesAsync(System.String)">
             <summary>
             获取用户权限标识集合
             </summary>
             <param name="userId"></param>
             <returns></returns>
         </member>
-        <member name="T:NetX.SystemManager.Profiles.AccountProfile">
+        <member name="T:NetX.SystemManager.MapperProfiles.AccountProfile">
             <summary>
             account 映射清单
             </summary>
         </member>
-        <member name="M:NetX.SystemManager.Profiles.AccountProfile.#ctor">
+        <member name="M:NetX.SystemManager.MapperProfiles.AccountProfile.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.SystemManager.MapperProfiles.DeptProfile">
+            <summary>
+            部门mapper配置清单
+            </summary>
+        </member>
+        <member name="M:NetX.SystemManager.MapperProfiles.DeptProfile.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.SystemManager.MapperProfiles.MenuProfile">
+            <summary>
+            菜单mapper配置清单
+            </summary>
+        </member>
+        <member name="M:NetX.SystemManager.MapperProfiles.MenuProfile.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.SystemManager.MapperProfiles.RoleProfile">
+            <summary>
+            角色mapper配置清单
+            </summary>
+        </member>
+        <member name="M:NetX.SystemManager.MapperProfiles.RoleProfile.#ctor">
             <summary>
             
             </summary>

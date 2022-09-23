@@ -1,4 +1,4 @@
-﻿using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace NetX.SystemManager.Models;
 
@@ -10,41 +10,41 @@ public class DeptModel
     /// <summary>
     /// 
     /// </summary>
-    [JsonPropertyName("id")]
+    [JsonProperty("id")]
     public string Id { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    [JsonPropertyName("parentid")]
+    [JsonProperty("parentid")]
     public string ParentId { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    [JsonPropertyName("deptname")]
+    [JsonProperty("deptname")]
     public string DeptName { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    [JsonPropertyName("orderno")]
+    [JsonProperty("orderno")]
     public int OrderNo { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    [JsonPropertyName("createtime")]
+    [JsonProperty("createtime")]
     public DateTime CreateTime { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    [JsonPropertyName("remark")]
+    [JsonProperty("remark")]
     public string Remark { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    [JsonPropertyName("status")]
+    [JsonProperty("status")]
     public string Status { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    [JsonPropertyName("children")]
+    [JsonProperty("children")]
     public List<DeptModel> Children { get; set; }
 }

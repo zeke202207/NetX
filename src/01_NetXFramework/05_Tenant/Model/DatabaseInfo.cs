@@ -8,12 +8,12 @@ public class DatabaseInfo
     /// <summary>
     /// 数据库名称
     /// </summary>
-    public string? DatabaseName { get; set; }
+    public string DatabaseName { get; set; }
 
     /// <summary>
     /// 数据库主机
     /// </summary>
-    public string? DatabaseHost { get; set; }
+    public string DatabaseHost { get; set; }
 
     /// <summary>
     /// 数据库端口
@@ -28,10 +28,10 @@ public class DatabaseInfo
     /// <summary>
     /// 数据库登录user
     /// </summary>
-    public string? UserId { get; set; }
+    public string UserId { get; set; }
 
     /// <summary>
     /// 数据库登录密码 
     /// </summary>
-    public string? Password { get; set; }
+    public string Password { get; set; }
 }

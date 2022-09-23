@@ -27,7 +27,7 @@ public sealed class RunOption
     /// <summary>
     /// <see cref="IServiceCollection"/>
     /// </summary>
-    internal Action<IServiceCollection>? ActionServiceCollection { get; set; }
+    internal Action<IServiceCollection, IConfiguration>? ActionServiceCollection { get; set; }
 
     /// <summary>
     /// <see cref="WebApplicationOptions"/>
@@ -111,7 +111,7 @@ public sealed class RunOption
     /// </summary>
     /// <param name="configServiceCollection"></param>
     /// <returns></returns>
-    public RunOption ConfigrationServiceCollection(Action<IServiceCollection> configServiceCollection)
+    public RunOption ConfigrationServiceCollection(Action<IServiceCollection, IConfiguration> configServiceCollection)
     {
         ActionServiceCollection = configServiceCollection;
         return this;
@@ -154,7 +154,7 @@ public sealed class RunOption
                 var refDir = Path.Combine(fi.DirectoryName, ModuleSetupConst.C_MODULE_REFDIRECTORYNAME);
                 if (Directory.Exists(refDir))
                     Directory.EnumerateFiles(refDir)
-                    .AsParallel().ForAll(p => options.Dependencies.Add(p));
+                    .ToList().ForEach(p => options.Dependencies.Add(p));
                 Modules.Add(options.Id, options);
                 InternalApp.UserModeulOptions.Add(options);
             });
