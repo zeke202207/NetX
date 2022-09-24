@@ -177,8 +177,14 @@ public class AccountService : BaseService, IAccountService
     public async Task<ResultModel<bool>> UpdateAccount(AccountRequestModel model)
     {
         var entity = await this._userRepository.Select.Where(p => p.id.Equals(model.Id)).FirstAsync();
-        if (null == entity || entity.username.Equals(model.UserName))
-            return base.Error<bool>("登录名已存在");
+        if (null == entity)
+            return base.Error<bool>("用户不存在");
+        if(!model.UserName.Equals(entity.username))
+        {
+            var isExist = await IsAccountExist(model.UserName);
+            if(isExist.Code != ResultEnum.SUCCESS)
+                return base.Error<bool>("登录名已存在");
+        }
         // entity.username = model.UserName;
         entity.nickname = model.NickName;
         entity.email = model.Email;

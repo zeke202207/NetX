@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+﻿using Newtonsoft.Json;
 
 namespace NetX.Common.Models;
 
@@ -26,19 +20,19 @@ public class ResultModel<T>
     /// <summary>
     /// 服务器处理结果状态
     /// </summary>
-    [JsonPropertyName("code")]
+    [JsonProperty("code")]
     public ResultEnum Code { get; private set; }
 
     /// <summary>
     /// 服务器处理结果对象
     /// </summary>
-    [JsonPropertyName("result")]
+    [JsonProperty("result")]
     public T? Result { get; set; }
 
     /// <summary>
     /// 异常消息内容
     /// </summary>
-    [JsonPropertyName("message")]
+    [JsonProperty("message")]
     public string? Message { get; set; }
 }
 
