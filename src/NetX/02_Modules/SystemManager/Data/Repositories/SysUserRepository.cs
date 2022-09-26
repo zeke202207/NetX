@@ -31,7 +31,7 @@ public class SysUserRepository : BaseRepository<sys_user, string>
     /// <param name="currentpage"></param>
     /// <param name="pagesize"></param>
     /// <returns></returns>
-    public async Task<IEnumerable<Tuple<sys_user, sys_role, sys_dept>>> GetUserListAsync(string deptId, string username, string nickname, int currentpage, int pagesize)
+    public async Task<(IEnumerable<Tuple<sys_user, sys_role, sys_dept>> list,int total)> GetUserListAsync(string deptId, string username, string nickname, int currentpage, int pagesize)
     {
         var result = await this._freeSql.Select<sys_user, sys_user_role, sys_user_dept, sys_role, sys_dept>()
             .LeftJoin((u, ur, ud, r, d) => u.id == ur.userid)
@@ -43,7 +43,11 @@ public class SysUserRepository : BaseRepository<sys_user, string>
             .WhereIf(!string.IsNullOrWhiteSpace(nickname), (u, ur, ud, r, d) => u.nickname == nickname)
             .Page(currentpage, pagesize)
             .ToListAsync((u, ur, ud, r, d) => new Tuple<sys_user, sys_role, sys_dept>(u, r, d));
-        return result;
+        var total = await this._freeSql.Select<sys_user>()
+            .WhereIf(!string.IsNullOrWhiteSpace(username), (u) => u.username == username)
+            .WhereIf(!string.IsNullOrWhiteSpace(nickname), (u) => u.nickname == nickname)
+            .CountAsync();
+        return (list: result, total: (int)total);
     }
 
     /// <summary>

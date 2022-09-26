@@ -115,4 +115,23 @@ public class RoleService : BaseService, IRoleService
         await _roleRepository.UpdateAsync(roleEntity);
         return base.Success<bool>(true);
     }
+
+    /// <summary>
+    /// 更新角色后台鉴权状态
+    /// </summary>
+    /// <param name="roleId"></param>
+    /// <param name="status"></param>
+    /// <returns></returns>
+    public async Task<ResultModel<bool>> UpdateRoleApiCheckStatus(string roleId, string status)
+    {
+        int intStatus = 0;
+        if (!int.TryParse(status, out intStatus))
+            return base.Error<bool>("输入状态值无效");
+        var roleEntity = await _roleRepository.Select.Where(p => p.id.Equals(roleId)).FirstAsync();
+        if (null == roleEntity)
+            return base.Error<bool>("角色不存在");
+        roleEntity.apicheck = intStatus;
+        await _roleRepository.UpdateAsync(roleEntity);
+        return base.Success<bool>(true);
+    }
 }

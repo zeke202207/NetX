@@ -28,7 +28,7 @@ public class DeptController : SystemManagerBaseController
     /// </summary>
     /// <param name="queryParam"></param>
     /// <returns></returns>
-    [ApiActionDescriptionAttribute("获取部门列表")]
+    [ApiActionDescription("获取部门列表")]
     [HttpGet]
     public async Task<ResultModel<List<DeptModel>>> GetDeptList([FromQuery] DeptListParam queryParam)
     {
@@ -40,7 +40,7 @@ public class DeptController : SystemManagerBaseController
     /// </summary>
     /// <param name="model"></param>
     /// <returns></returns>
-    [ApiActionDescriptionAttribute("新增部门信息")]
+    [ApiActionDescription("新增部门信息")]
     [HttpPost]
     public async Task<ResultModel<bool>> AddDept(DeptRequestModel model)
     {
@@ -52,7 +52,7 @@ public class DeptController : SystemManagerBaseController
     /// </summary>
     /// <param name="model"></param>
     /// <returns></returns>
-    [ApiActionDescriptionAttribute("编辑部门信息")]
+    [ApiActionDescription("编辑部门信息")]
     [HttpPost]
     public async Task<ResultModel<bool>> UpdateDept(DeptRequestModel model)
     {
@@ -64,7 +64,7 @@ public class DeptController : SystemManagerBaseController
     /// </summary>
     /// <param name="param"></param>
     /// <returns></returns>
-    [ApiActionDescriptionAttribute("删除部门信息")]
+    [ApiActionDescription("删除部门信息")]
     [HttpDelete]
     public async Task<ResultModel<bool>> RemoveDept(DeleteParam param)
     {

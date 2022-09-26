@@ -102,6 +102,19 @@ public class InitMenuData : InitDataMigration
                 type = (int)MenuType.Menu,
                 permission = "",
                 orderno = 4,
+            })
+            .Row(new
+            {
+                id = "00000000000000000000000000000008",
+                parentid = "00000000000000000000000000000003",
+                name = "接口管理",
+                path = "apicontract",
+                component = "/systemmanager/apicontract/index",
+                meta = "{\"HideMenu\":false,\"Title\":\"接口管理\",\"HideBreadcrumb\":true,\"Icon\":\"ant-design:api-outlined\"}",
+                icon = "ant-design:api-outlined",
+                type = (int)MenuType.Menu,
+                permission = "",
+                orderno = 5,
             });
     }
 

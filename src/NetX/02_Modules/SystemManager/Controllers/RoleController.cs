@@ -28,7 +28,7 @@ public class RoleController : SystemManagerBaseController
     /// </summary>
     /// <param name="roleListparam"></param>
     /// <returns></returns>
-    [ApiActionDescriptionAttribute("获取角色列表")]
+    [ApiActionDescription("获取角色列表")]
     [HttpPost]
     public async Task<ResultModel<List<RoleModel>>> GetRoleListByPage(RoleListParam roleListparam)
     {
@@ -88,5 +88,16 @@ public class RoleController : SystemManagerBaseController
     public async Task<ResultModel<bool>> SetRoleStatus(RoleStatusModel model)
     {
         return await _roleService.UpdateRoleStatus(model.Id, model.Status);
+    }
+
+    /// <summary>
+    /// 更新角色后台鉴权状态
+    /// </summary>
+    /// <returns></returns>
+    [ApiActionDescription("更新角色后台鉴权状态")]
+    [HttpPost]
+    public async Task<ResultModel<bool>> SetApiCheckStatus(RoleStatusModel model)
+    {
+        return await _roleService.UpdateRoleApiCheckStatus(model.Id, model.Status);
     }
 }

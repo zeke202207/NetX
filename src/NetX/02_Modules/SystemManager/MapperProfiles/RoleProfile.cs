@@ -29,6 +29,7 @@ public class RoleProfile : Profile
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.role.id))
             .ForMember(dest => dest.RoleName, opt => opt.MapFrom(src => src.role.rolename))
             .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.role.status))
+            .ForMember(dest => dest.ApiCheck, opt => opt.MapFrom(src => src.role.apicheck))
             .ForMember(dest => dest.Remark, opt => opt.MapFrom(src => src.role.remark))
             .ForMember(dest => dest.CreateTime, opt => opt.MapFrom(src => src.role.createtime));
     }

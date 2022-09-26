@@ -35,7 +35,7 @@ public interface IAccountService
     /// </summary>
     /// <param name="userParam"></param>
     /// <returns></returns>
-    Task<ResultModel<List<UserListModel>>> GetAccountLists(UserListParam userParam);
+    Task<ResultModel<PagerResultModel<List<UserListModel>>>> GetAccountLists(UserListParam userParam);
 
     /// <summary>
     /// 判断账号是否存在

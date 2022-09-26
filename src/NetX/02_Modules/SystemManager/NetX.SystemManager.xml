@@ -73,6 +73,45 @@
             <param name="param"></param>
             <returns></returns>
         </member>
+        <member name="T:NetX.SystemManager.Controllers.ApiController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.SystemManager.Controllers.ApiController.#ctor(NetX.SystemManager.Core.IApiService)">
+            <summary>
+            角色管理api实例对象
+            </summary>
+            <param name="apiService"></param>
+        </member>
+        <member name="M:NetX.SystemManager.Controllers.ApiController.GetApiList(NetX.SystemManager.Models.ApiListParam)">
+            <summary>
+            获取api列表
+            </summary>
+            <param name="roleListparam"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.SystemManager.Controllers.ApiController.AddApi(NetX.SystemManager.Models.ApiRequestModel)">
+            <summary>
+            添加菜单
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.SystemManager.Controllers.ApiController.UpdateApi(NetX.SystemManager.Models.ApiRequestModel)">
+            <summary>
+            编辑菜单
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.SystemManager.Controllers.ApiController.RemoveApi(NetX.SystemManager.Models.DeleteParam)">
+            <summary>
+            删除菜单
+            </summary>
+            <param name="param"></param>
+            <returns></returns>
+        </member>
         <member name="T:NetX.SystemManager.Controllers.DeptController">
             <summary>
             部门管理api接口
@@ -205,6 +244,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:NetX.SystemManager.Controllers.RoleController.SetApiCheckStatus(NetX.SystemManager.Models.RoleStatusModel)">
+            <summary>
+            更新角色后台鉴权状态
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:NetX.SystemManager.Controllers.SystemManagerBaseController">
             <summary>
             api接口基类对象
@@ -270,6 +315,39 @@
             获取访问权限标识集合
             </summary>
             <param name="userId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NetX.SystemManager.Core.IApiService">
+            <summary>
+            Api服务接口
+            </summary>
+        </member>
+        <member name="M:NetX.SystemManager.Core.IApiService.GetApiList(NetX.SystemManager.Models.ApiListParam)">
+            <summary>
+            获取Api列表
+            </summary>
+            <param name="param"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.SystemManager.Core.IApiService.AddApi(NetX.SystemManager.Models.ApiRequestModel)">
+            <summary>
+            新增Api
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.SystemManager.Core.IApiService.UpdateApi(NetX.SystemManager.Models.ApiRequestModel)">
+            <summary>
+            更新Api
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.SystemManager.Core.IApiService.RemoveApi(System.String)">
+            <summary>
+            删除Api
+            </summary>
+            <param name="apiId"></param>
             <returns></returns>
         </member>
         <member name="T:NetX.SystemManager.Core.IDeptService">
@@ -425,6 +503,50 @@
             </summary>
             <param name="userId"></param>
             <returns></returns>
+        </member>
+        <member name="T:NetX.SystemManager.Core.ApiService">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.SystemManager.Core.ApiService.#ctor(FreeSql.IBaseRepository{NetX.SystemManager.Models.sys_api},AutoMapper.IMapper)">
+            <summary>
+            api管理实例对象
+            </summary>
+            <param name="apiRepository"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="M:NetX.SystemManager.Core.ApiService.GetApiList(NetX.SystemManager.Models.ApiListParam)">
+            <summary>
+            获取api列表
+            </summary>
+            <param name="param"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:NetX.SystemManager.Core.ApiService.RemoveApi(System.String)">
+            <summary>
+            移除api
+            </summary>
+            <param name="apiId"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:NetX.SystemManager.Core.ApiService.AddApi(NetX.SystemManager.Models.ApiRequestModel)">
+            <summary>
+            添加api
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:NetX.SystemManager.Core.ApiService.UpdateApi(NetX.SystemManager.Models.ApiRequestModel)">
+            <summary>
+            更新api
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
         </member>
         <member name="T:NetX.SystemManager.Core.BaseService">
             <summary>
@@ -642,6 +764,14 @@
             <param name="status"></param>
             <returns></returns>
         </member>
+        <member name="M:NetX.SystemManager.Core.RoleService.UpdateRoleApiCheckStatus(System.String,System.String)">
+            <summary>
+            更新角色后台鉴权状态
+            </summary>
+            <param name="roleId"></param>
+            <param name="status"></param>
+            <returns></returns>
+        </member>
         <member name="T:NetX.SystemManager.Core.IRoleService">
             <summary>
             角色管理服务接口
@@ -682,12 +812,35 @@
             <param name="status"></param>
             <returns></returns>
         </member>
+        <member name="M:NetX.SystemManager.Core.IRoleService.UpdateRoleApiCheckStatus(System.String,System.String)">
+            <summary>
+            更新角色后台鉴权状态
+            </summary>
+            <param name="roleId"></param>
+            <param name="status"></param>
+            <returns></returns>
+        </member>
         <member name="M:NetX.SystemManager.Core.IRoleService.RemoveRole(System.String)">
             <summary>
             删除角色
             </summary>
             <param name="id"></param>
             <returns></returns>
+        </member>
+        <member name="T:NetX.SystemManager.DatabaseSetup.CreateTable.ApiTable">
+            <summary>
+            api资源表
+            </summary>
+        </member>
+        <member name="M:NetX.SystemManager.DatabaseSetup.CreateTable.ApiTable.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.SystemManager.DatabaseSetup.CreateTable.ApiTable.Up">
+            <summary>
+            
+            </summary>
         </member>
         <member name="T:NetX.SystemManager.DatabaseSetup.CreateTable.DeptTable">
             <summary>
@@ -735,6 +888,21 @@
             </summary>
         </member>
         <member name="M:NetX.SystemManager.DatabaseSetup.CreateTable.RecursiveFunction.Up">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.SystemManager.DatabaseSetup.CreateTable.RoleApiTable">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.SystemManager.DatabaseSetup.CreateTable.RoleApiTable.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.SystemManager.DatabaseSetup.CreateTable.RoleApiTable.Up">
             <summary>
             
             </summary>
@@ -810,6 +978,26 @@
             </summary>
         </member>
         <member name="M:NetX.SystemManager.DatabaseSetup.CreateTable.UserTable.Up">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.SystemManager.DatabaseSetup.InitData.InitApiData">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.SystemManager.DatabaseSetup.InitData.InitApiData.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.SystemManager.DatabaseSetup.InitData.InitApiData.Up">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.SystemManager.DatabaseSetup.InitData.InitApiData.Down">
             <summary>
             
             </summary>
@@ -913,6 +1101,24 @@
             <summary>
             
             </summary>
+        </member>
+        <member name="T:NetX.SystemManager.Data.Repositories.SysApiRepository">
+            <summary>
+            api 仓储服务
+            </summary>
+        </member>
+        <member name="M:NetX.SystemManager.Data.Repositories.SysApiRepository.#ctor(IFreeSql)">
+            <summary>
+            api 仓储对象实例
+            </summary>
+            <param name="fsql"></param>
+        </member>
+        <member name="M:NetX.SystemManager.Data.Repositories.SysApiRepository.RemoveApi(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="apiId"></param>
+            <returns></returns>
         </member>
         <member name="T:NetX.SystemManager.Data.Repositories.SysDeptRepository">
             <summary>
@@ -1065,6 +1271,16 @@
             
             </summary>
         </member>
+        <member name="T:NetX.SystemManager.MapperProfiles.ApiProfile">
+            <summary>
+            api 映射清单
+            </summary>
+        </member>
+        <member name="M:NetX.SystemManager.MapperProfiles.ApiProfile.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:NetX.SystemManager.MapperProfiles.DeptProfile">
             <summary>
             部门mapper配置清单
@@ -1101,6 +1317,36 @@
             </summary>
         </member>
         <member name="P:NetX.SystemManager.Models.BaseEntity.id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.SystemManager.Models.sys_api">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.SystemManager.Models.sys_api.path">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.SystemManager.Models.sys_api.group">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.SystemManager.Models.sys_api.method">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.SystemManager.Models.sys_api.createtime">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.SystemManager.Models.sys_api.description">
             <summary>
             
             </summary>
@@ -1235,12 +1481,32 @@
             
             </summary>
         </member>
+        <member name="P:NetX.SystemManager.Models.sys_role.apicheck">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="P:NetX.SystemManager.Models.sys_role.createtime">
             <summary>
             
             </summary>
         </member>
         <member name="P:NetX.SystemManager.Models.sys_role.remark">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.SystemManager.Models.sys_role_api">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.SystemManager.Models.sys_role_api.roleid">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.SystemManager.Models.sys_role_api.apiid">
             <summary>
             
             </summary>
@@ -1326,6 +1592,41 @@
             </summary>
         </member>
         <member name="P:NetX.SystemManager.Models.sys_user_role.roleid">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.SystemManager.Models.ApiModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.SystemManager.Models.ApiModel.Id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.SystemManager.Models.ApiModel.Path">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.SystemManager.Models.ApiModel.Group">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.SystemManager.Models.ApiModel.Method">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.SystemManager.Models.ApiModel.Createtime">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.SystemManager.Models.ApiModel.Description">
             <summary>
             
             </summary>
@@ -1550,6 +1851,11 @@
             
             </summary>
         </member>
+        <member name="P:NetX.SystemManager.Models.RoleModel.ApiCheck">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="P:NetX.SystemManager.Models.RoleModel.CreateTime">
             <summary>
             
@@ -1671,6 +1977,31 @@
             </summary>
         </member>
         <member name="P:NetX.SystemManager.Models.AccountRequestModel.Remark">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.SystemManager.Models.ApiRequestModel.Id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.SystemManager.Models.ApiRequestModel.Path">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.SystemManager.Models.ApiRequestModel.Group">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.SystemManager.Models.ApiRequestModel.Method">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.SystemManager.Models.ApiRequestModel.Description">
             <summary>
             
             </summary>
@@ -1826,6 +2157,11 @@
             </summary>
         </member>
         <member name="P:NetX.SystemManager.Models.Pager.PageSize">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.SystemManager.Models.ApiListParam">
             <summary>
             
             </summary>

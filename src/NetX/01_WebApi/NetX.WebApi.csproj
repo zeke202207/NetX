@@ -9,6 +9,7 @@
   <ItemGroup>
     <Folder Include="config\" />
     <Folder Include="modules\systemmanager\ref\" />
+    <Folder Include="config\" />
   </ItemGroup>
 
   <ItemGroup>

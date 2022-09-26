@@ -70,8 +70,8 @@ public class DescriptionDocumentFilter : IDocumentFilter
                 if (path.Value != null && path.Value.Operations != null && path.Value.Operations.Any())
                 {
                     var operation = path.Value.Operations.FirstOrDefault();
-                    operation.Value.Description = description;
                     operation.Value.Summary = description;
+                    operation.Value.Description = $"{path.Key}";
                 }
             }
         }
@@ -123,8 +123,7 @@ public class DescriptionDocumentFilter : IDocumentFilter
             var apiPath = "/" + apiDescription.RelativePath?.ToLower();
             if (apiPath.Equals(path) && apiDescription.TryGetMethodInfo(out MethodInfo methodInfo))
             {
-                var desc = Attribute.GetCustomAttribute(methodInfo, typeof(ApiControllerDescriptionAttribute));
-                //var descAttr = (ApiActionDescriptionAttribute)Attribute.GetCustomAttribute(methodInfo, typeof(ApiActionDescriptionAttribute));
+                var desc = Attribute.GetCustomAttribute(methodInfo, typeof(ApiActionDescriptionAttribute));
                 if (desc is ApiActionDescriptionAttribute)
                 {
                     var descAttr = (ApiActionDescriptionAttribute)desc;

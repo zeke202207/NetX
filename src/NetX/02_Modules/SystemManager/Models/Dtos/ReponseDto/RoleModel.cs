@@ -22,6 +22,11 @@ public class RoleModel
     /// <summary>
     /// 
     /// </summary>
+    [JsonProperty("apicheck")]
+    public string ApiCheck { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
     [JsonProperty("createtime")]
     public DateTime CreateTime { get; set; }
     /// <summary>

@@ -353,6 +353,22 @@
             异常消息内容
             </summary>
         </member>
+        <member name="T:NetX.Common.Models.PagerResultModel`1">
+            <summary>
+            返回分页结果集
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="P:NetX.Common.Models.PagerResultModel`1.Total">
+            <summary>
+            总数
+            </summary>
+        </member>
+        <member name="P:NetX.Common.Models.PagerResultModel`1.Items">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:NetX.Common.Models.ResultEnum">
             <summary>
             结果状态枚举

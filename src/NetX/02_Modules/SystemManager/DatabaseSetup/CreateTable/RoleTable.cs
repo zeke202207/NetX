@@ -26,6 +26,7 @@ public class RoleTable : CreateTableMigration
                .WithColumn("id").AsString().PrimaryKey()
                .WithColumn("rolename").AsString(50).NotNullable()
                .WithColumn("status").AsInt16().Nullable().WithDefaultValue(1)
+               .WithColumn("apicheck").AsInt16().Nullable().WithDefaultValue(0)
                .WithColumn("createtime").AsDateTime().WithDefaultValue(DateTime.Now)
                .WithColumn("remark").AsString(500).Nullable();
     }

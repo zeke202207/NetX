@@ -106,13 +106,13 @@ public class AccountService : BaseService, IAccountService
     /// </summary>
     /// <param name="userParam"></param>
     /// <returns></returns>
-    public async Task<ResultModel<List<UserListModel>>> GetAccountLists(UserListParam userParam)
+    public async Task<ResultModel<PagerResultModel<List<UserListModel>>>> GetAccountLists(UserListParam userParam)
     {
-        var list = await ((SysUserRepository)_userRepository).GetUserListAsync(userParam.DeptId, userParam.Account, userParam.Nickname, userParam.Page, userParam.PageSize);
-        List<UserListModel> result = new List<UserListModel>();
-        foreach (var item in list)
+        var listTotal = await ((SysUserRepository)_userRepository).GetUserListAsync(userParam.DeptId, userParam.Account, userParam.Nickname, userParam.Page, userParam.PageSize);
+        List<UserListModel> tempUsers = new List<UserListModel>();
+        foreach (var item in listTotal.list)
         {
-            result.Add(new UserListModel()
+            tempUsers.Add(new UserListModel()
             {
                 Id = item.Item1.id,
                 Avatar = item.Item1.avatar,
@@ -126,7 +126,12 @@ public class AccountService : BaseService, IAccountService
                 Email = item.Item1.email ?? string.Empty,
             });
         }
-        return base.Success<List<UserListModel>>(result);
+        var result = new PagerResultModel<List<UserListModel>>()
+        {
+            Items = tempUsers,
+            Total = listTotal.total
+        };
+        return base.Success<PagerResultModel<List<UserListModel>>>(result);
     }
 
     /// <summary>

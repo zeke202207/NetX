@@ -29,7 +29,7 @@ public class MenuController : SystemManagerBaseController
     /// 获取登录用户授权菜单列表
     /// </summary>
     /// <returns></returns>
-    [ApiActionDescriptionAttribute("获取登录用户授权菜单列表")]
+    [ApiActionDescription("获取登录用户授权菜单列表")]
     [NoPermission]
     [HttpGet]
     public async Task<ResultModel<List<MenuModel>>> GetCurrentUserMenuList()
@@ -42,7 +42,7 @@ public class MenuController : SystemManagerBaseController
     /// </summary>
     /// <param name="param"></param>
     /// <returns></returns>
-    [ApiActionDescriptionAttribute("获取菜单列表")]
+    [ApiActionDescription("获取菜单列表")]
     [NoPermission]
     [HttpPost]
     public async Task<ResultModel<List<MenuModel>>> GetMenuList(MenuListParam param)
@@ -55,7 +55,7 @@ public class MenuController : SystemManagerBaseController
     /// </summary>
     /// <param name="model"></param>
     /// <returns></returns>
-    [ApiActionDescriptionAttribute("添加菜单")]
+    [ApiActionDescription("添加菜单")]
     [HttpPost]
     public async Task<ResultModel<bool>> AddMenu(MenuRequestModel model)
     {
@@ -67,7 +67,7 @@ public class MenuController : SystemManagerBaseController
     /// </summary>
     /// <param name="model"></param>
     /// <returns></returns>
-    [ApiActionDescriptionAttribute("编辑菜单")]
+    [ApiActionDescription("编辑菜单")]
     [HttpPost]
     public async Task<ResultModel<bool>> UpdateMenu(MenuRequestModel model)
     {
@@ -79,7 +79,7 @@ public class MenuController : SystemManagerBaseController
     /// </summary>
     /// <param name="param"></param>
     /// <returns></returns>
-    [ApiActionDescriptionAttribute("删除菜单")]
+    [ApiActionDescription("删除菜单")]
     [HttpDelete]
     public async Task<ResultModel<bool>> RemoveMenu(DeleteParam param)
     {

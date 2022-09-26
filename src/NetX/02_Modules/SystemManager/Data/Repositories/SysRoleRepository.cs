@@ -138,7 +138,9 @@ public class SysRoleRepository : BaseRepository<sys_role, string>
             {
                 var roleRep = uow.GetRepository<sys_role>();
                 var roleMenuRep = uow.GetRepository<sys_role_menu>();
+                var roleApiRep = uow.GetRepository<sys_role_api>();
                 await roleMenuRep.DeleteAsync(p => p.roleid.Equals(roleId));
+                await roleApiRep.DeleteAsync(p => p.roleid.Equals(roleId));
                 await roleRep.DeleteAsync(p => p.id.Equals(roleId));
                 uow.Commit();
             }

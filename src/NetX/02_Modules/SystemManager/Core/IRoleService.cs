@@ -44,6 +44,14 @@ public interface IRoleService
     Task<ResultModel<bool>> UpdateRoleStatus(string roleId, string status);
 
     /// <summary>
+    /// 更新角色后台鉴权状态
+    /// </summary>
+    /// <param name="roleId"></param>
+    /// <param name="status"></param>
+    /// <returns></returns>
+    Task<ResultModel<bool>> UpdateRoleApiCheckStatus(string roleId, string status);
+
+    /// <summary>
     /// 删除角色
     /// </summary>
     /// <param name="id"></param>

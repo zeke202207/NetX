@@ -16,6 +16,10 @@ public class sys_role : BaseEntity
     /// <summary>
     /// 
     /// </summary>
+    public int apicheck { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
     public DateTime createtime { get; set; }
     /// <summary>
     /// 

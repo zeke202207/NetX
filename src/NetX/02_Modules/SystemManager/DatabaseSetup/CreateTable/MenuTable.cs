@@ -35,7 +35,7 @@ public class MenuTable : CreateTableMigration
                .WithColumn("component").AsString(255).Nullable()
                .WithColumn("redirect").AsString(255).Nullable()
                .WithColumn("status").AsInt16().WithDefaultValue(1)
-               .WithColumn("isext").AsInt16().WithDefaultValue(1)
+               .WithColumn("isext").AsInt16().WithDefaultValue(0)
                .WithColumn("keepalive").AsInt16().WithDefaultValue(1)
                .WithColumn("show").AsInt16().WithDefaultValue(1)
                .WithColumn("meta").AsString(500).Nullable();
