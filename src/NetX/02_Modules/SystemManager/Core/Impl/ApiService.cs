@@ -40,7 +40,7 @@ public class ApiService : BaseService, IApiService
     /// <param name="param"></param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public async Task<ResultModel<PagerResultModel<List<ApiModel>>>> GetApiList(ApiListParam param)
+    public async Task<ResultModel<PagerResultModel<List<ApiModel>>>> GetApiList(ApiPageParam param)
     {
         var result = await this._apiRepository.Select
             .OrderBy(p => p.group)
@@ -53,6 +53,20 @@ public class ApiService : BaseService, IApiService
             Total = (int)total
         };
         return base.Success<PagerResultModel<List<ApiModel>>>(resultModel);
+    }
+
+    /// <summary>
+    /// 获取api列表
+    /// </summary>
+    /// <param name="param"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    public async Task<ResultModel<List<ApiModel>>> GetApiList(ApiParam param)
+    {
+        var result = await this._apiRepository.Select
+            .OrderBy(p => p.group)
+            .ToListAsync();
+        return base.Success<List<ApiModel>>(this._mapper.Map<List<ApiModel>>(result));
     }
 
     /// <summary>

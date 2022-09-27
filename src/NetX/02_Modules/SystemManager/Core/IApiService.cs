@@ -18,7 +18,14 @@ public interface IApiService
     /// </summary>
     /// <param name="param"></param>
     /// <returns></returns>
-    Task<ResultModel<PagerResultModel<List<ApiModel>>>> GetApiList(ApiListParam param);
+    Task<ResultModel<PagerResultModel<List<ApiModel>>>> GetApiList(ApiPageParam param);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="param"></param>
+    /// <returns></returns>
+    Task<ResultModel<List<ApiModel>>> GetApiList(ApiParam param);
 
     /// <summary>
     /// 新增Api

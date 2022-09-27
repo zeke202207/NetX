@@ -3,7 +3,7 @@
 /// <summary>
 /// 
 /// </summary>
-public class DeleteParam
+public class KeyParam
 {
     /// <summary>
     /// 

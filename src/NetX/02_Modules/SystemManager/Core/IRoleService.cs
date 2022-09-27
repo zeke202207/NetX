@@ -49,7 +49,7 @@ public interface IRoleService
     /// <param name="roleId"></param>
     /// <param name="status"></param>
     /// <returns></returns>
-    Task<ResultModel<bool>> UpdateRoleApiCheckStatus(string roleId, string status);
+    Task<ResultModel<bool>> UpdateRoleApiAuthStatus(string roleId, string status);
 
     /// <summary>
     /// 删除角色
@@ -57,4 +57,19 @@ public interface IRoleService
     /// <param name="id"></param>
     /// <returns></returns>
     Task<ResultModel<bool>> RemoveRole(string id);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="roleId"></param>
+    /// <returns></returns>
+    Task<ResultModel<IEnumerable<string>>> GetApiAuth(string roleId);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="roleId"></param>
+    /// <param name="apiIds"></param>
+    /// <returns></returns>
+    Task<ResultModel<bool>> UpdateRoleApiAuth(string roleId, IEnumerable<string> apiIds);
 }

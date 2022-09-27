@@ -122,7 +122,7 @@ public class RoleService : BaseService, IRoleService
     /// <param name="roleId"></param>
     /// <param name="status"></param>
     /// <returns></returns>
-    public async Task<ResultModel<bool>> UpdateRoleApiCheckStatus(string roleId, string status)
+    public async Task<ResultModel<bool>> UpdateRoleApiAuthStatus(string roleId, string status)
     {
         int intStatus = 0;
         if (!int.TryParse(status, out intStatus))
@@ -133,5 +133,30 @@ public class RoleService : BaseService, IRoleService
         roleEntity.apicheck = intStatus;
         await _roleRepository.UpdateAsync(roleEntity);
         return base.Success<bool>(true);
+    }
+
+    /// <summary>
+    /// 获取角色后台api访问权限集合
+    /// </summary>
+    /// <param name="roleId"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    public async Task<ResultModel<IEnumerable<string>>> GetApiAuth(string roleId)
+    {
+        var result = await ((SysRoleRepository)this._roleRepository).GetApiAuth(roleId);
+        return base.Success<IEnumerable<string>>(result);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="roleId"></param>
+    /// <param name="apiIds"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    public async Task<ResultModel<bool>> UpdateRoleApiAuth(string roleId, IEnumerable<string> apiIds)
+    {
+        var result = await ((SysRoleRepository)this._roleRepository).UpdateRoleApiAuth(roleId, apiIds);
+        return base.Success<bool>(result);
     }
 }

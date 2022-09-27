@@ -66,7 +66,7 @@ public class DeptController : SystemManagerBaseController
     /// <returns></returns>
     [ApiActionDescription("删除部门信息")]
     [HttpDelete]
-    public async Task<ResultModel<bool>> RemoveDept(DeleteParam param)
+    public async Task<ResultModel<bool>> RemoveDept(KeyParam param)
     {
         return await _deptService.RemoveDept(param.Id);
     }

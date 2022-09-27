@@ -81,7 +81,7 @@ public class MenuController : SystemManagerBaseController
     /// <returns></returns>
     [ApiActionDescription("删除菜单")]
     [HttpDelete]
-    public async Task<ResultModel<bool>> RemoveMenu(DeleteParam param)
+    public async Task<ResultModel<bool>> RemoveMenu(KeyParam param)
     {
         return await this._menuService.RemoveMenu(param.Id);
     }

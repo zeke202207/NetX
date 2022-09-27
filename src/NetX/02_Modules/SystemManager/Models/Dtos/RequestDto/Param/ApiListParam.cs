@@ -9,6 +9,14 @@ namespace NetX.SystemManager.Models;
 /// <summary>
 /// 
 /// </summary>
-public class ApiListParam : Pager
+public class ApiPageParam : Pager
 {
+}
+
+/// <summary>
+/// 
+/// </summary>
+public class ApiParam
+{
+
 }

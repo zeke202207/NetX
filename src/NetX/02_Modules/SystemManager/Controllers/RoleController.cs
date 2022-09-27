@@ -74,7 +74,7 @@ public class RoleController : SystemManagerBaseController
     /// <returns></returns>
     [ApiActionDescription("删除角色")]
     [HttpDelete]
-    public async Task<ResultModel<bool>> RemoveRole(DeleteParam model)
+    public async Task<ResultModel<bool>> RemoveRole(KeyParam model)
     {
         return await _roleService.RemoveRole(model.Id);
     }
@@ -96,8 +96,31 @@ public class RoleController : SystemManagerBaseController
     /// <returns></returns>
     [ApiActionDescription("更新角色后台鉴权状态")]
     [HttpPost]
-    public async Task<ResultModel<bool>> SetApiCheckStatus(RoleStatusModel model)
+    public async Task<ResultModel<bool>> SetApiAuthStatus(RoleStatusModel model)
     {
-        return await _roleService.UpdateRoleApiCheckStatus(model.Id, model.Status);
+        return await _roleService.UpdateRoleApiAuthStatus(model.Id, model.Status);
+    }
+
+    /// <summary>
+    /// 获取后台api授权id集合
+    /// </summary>
+    /// <param name="param"></param>
+    /// <returns></returns>
+    [ApiActionDescription("获取后台api授权id集合")]
+    [HttpPost]
+    public async Task<ResultModel<IEnumerable<string>>> GetApiAuth(KeyParam param)
+    {
+        return await _roleService.GetApiAuth(param.Id);
+    }
+
+    /// <summary>
+    /// 更新角色后台鉴权状态
+    /// </summary>
+    /// <returns></returns>
+    [ApiActionDescription("设置后台api授权id集合")]
+    [HttpPost]
+    public async Task<ResultModel<bool>> SetApiAuth(RoleApiAuthModel model)
+    {
+        return await _roleService.UpdateRoleApiAuth(model.RoleId, model.ApiIds);
     }
 }

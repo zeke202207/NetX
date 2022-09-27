@@ -125,7 +125,7 @@ public class AccountController : SystemManagerBaseController
     /// <returns></returns>
     [ApiActionDescription("删除用户")]
     [HttpDelete]
-    public async Task<ResultModel<bool>> RemoveAccount(DeleteParam param)
+    public async Task<ResultModel<bool>> RemoveAccount(KeyParam param)
     {
         return await _accoutService.RemoveDept(param.Id);
     }

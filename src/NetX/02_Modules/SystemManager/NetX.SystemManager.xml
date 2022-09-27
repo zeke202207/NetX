@@ -66,7 +66,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:NetX.SystemManager.Controllers.AccountController.RemoveAccount(NetX.SystemManager.Models.DeleteParam)">
+        <member name="M:NetX.SystemManager.Controllers.AccountController.RemoveAccount(NetX.SystemManager.Models.KeyParam)">
             <summary>
             remove a user account
             </summary>
@@ -84,11 +84,18 @@
             </summary>
             <param name="apiService"></param>
         </member>
-        <member name="M:NetX.SystemManager.Controllers.ApiController.GetApiList(NetX.SystemManager.Models.ApiListParam)">
+        <member name="M:NetX.SystemManager.Controllers.ApiController.GetApiPageList(NetX.SystemManager.Models.ApiPageParam)">
             <summary>
             获取api列表
             </summary>
-            <param name="roleListparam"></param>
+            <param name="apiPageParam"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.SystemManager.Controllers.ApiController.GetApiList(NetX.SystemManager.Models.ApiParam)">
+            <summary>
+            获取api列表
+            </summary>
+            <param name="apiParam"></param>
             <returns></returns>
         </member>
         <member name="M:NetX.SystemManager.Controllers.ApiController.AddApi(NetX.SystemManager.Models.ApiRequestModel)">
@@ -105,7 +112,7 @@
             <param name="model"></param>
             <returns></returns>
         </member>
-        <member name="M:NetX.SystemManager.Controllers.ApiController.RemoveApi(NetX.SystemManager.Models.DeleteParam)">
+        <member name="M:NetX.SystemManager.Controllers.ApiController.RemoveApi(NetX.SystemManager.Models.KeyParam)">
             <summary>
             删除菜单
             </summary>
@@ -144,7 +151,7 @@
             <param name="model"></param>
             <returns></returns>
         </member>
-        <member name="M:NetX.SystemManager.Controllers.DeptController.RemoveDept(NetX.SystemManager.Models.DeleteParam)">
+        <member name="M:NetX.SystemManager.Controllers.DeptController.RemoveDept(NetX.SystemManager.Models.KeyParam)">
             <summary>
             删除部门信息
             </summary>
@@ -189,7 +196,7 @@
             <param name="model"></param>
             <returns></returns>
         </member>
-        <member name="M:NetX.SystemManager.Controllers.MenuController.RemoveMenu(NetX.SystemManager.Models.DeleteParam)">
+        <member name="M:NetX.SystemManager.Controllers.MenuController.RemoveMenu(NetX.SystemManager.Models.KeyParam)">
             <summary>
             删除菜单
             </summary>
@@ -232,7 +239,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:NetX.SystemManager.Controllers.RoleController.RemoveRole(NetX.SystemManager.Models.DeleteParam)">
+        <member name="M:NetX.SystemManager.Controllers.RoleController.RemoveRole(NetX.SystemManager.Models.KeyParam)">
             <summary>
             删除角色
             </summary>
@@ -244,7 +251,20 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:NetX.SystemManager.Controllers.RoleController.SetApiCheckStatus(NetX.SystemManager.Models.RoleStatusModel)">
+        <member name="M:NetX.SystemManager.Controllers.RoleController.SetApiAuthStatus(NetX.SystemManager.Models.RoleStatusModel)">
+            <summary>
+            更新角色后台鉴权状态
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.SystemManager.Controllers.RoleController.GetApiAuth(NetX.SystemManager.Models.KeyParam)">
+            <summary>
+            获取后台api授权id集合
+            </summary>
+            <param name="param"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.SystemManager.Controllers.RoleController.SetApiAuth(NetX.SystemManager.Models.RoleApiAuthModel)">
             <summary>
             更新角色后台鉴权状态
             </summary>
@@ -322,9 +342,16 @@
             Api服务接口
             </summary>
         </member>
-        <member name="M:NetX.SystemManager.Core.IApiService.GetApiList(NetX.SystemManager.Models.ApiListParam)">
+        <member name="M:NetX.SystemManager.Core.IApiService.GetApiList(NetX.SystemManager.Models.ApiPageParam)">
             <summary>
             获取Api列表
+            </summary>
+            <param name="param"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.SystemManager.Core.IApiService.GetApiList(NetX.SystemManager.Models.ApiParam)">
+            <summary>
+            
             </summary>
             <param name="param"></param>
             <returns></returns>
@@ -516,7 +543,15 @@
             <param name="apiRepository"></param>
             <param name="mapper"></param>
         </member>
-        <member name="M:NetX.SystemManager.Core.ApiService.GetApiList(NetX.SystemManager.Models.ApiListParam)">
+        <member name="M:NetX.SystemManager.Core.ApiService.GetApiList(NetX.SystemManager.Models.ApiPageParam)">
+            <summary>
+            获取api列表
+            </summary>
+            <param name="param"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:NetX.SystemManager.Core.ApiService.GetApiList(NetX.SystemManager.Models.ApiParam)">
             <summary>
             获取api列表
             </summary>
@@ -764,13 +799,30 @@
             <param name="status"></param>
             <returns></returns>
         </member>
-        <member name="M:NetX.SystemManager.Core.RoleService.UpdateRoleApiCheckStatus(System.String,System.String)">
+        <member name="M:NetX.SystemManager.Core.RoleService.UpdateRoleApiAuthStatus(System.String,System.String)">
             <summary>
             更新角色后台鉴权状态
             </summary>
             <param name="roleId"></param>
             <param name="status"></param>
             <returns></returns>
+        </member>
+        <member name="M:NetX.SystemManager.Core.RoleService.GetApiAuth(System.String)">
+            <summary>
+            获取角色后台api访问权限集合
+            </summary>
+            <param name="roleId"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:NetX.SystemManager.Core.RoleService.UpdateRoleApiAuth(System.String,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            
+            </summary>
+            <param name="roleId"></param>
+            <param name="apiIds"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
         </member>
         <member name="T:NetX.SystemManager.Core.IRoleService">
             <summary>
@@ -812,7 +864,7 @@
             <param name="status"></param>
             <returns></returns>
         </member>
-        <member name="M:NetX.SystemManager.Core.IRoleService.UpdateRoleApiCheckStatus(System.String,System.String)">
+        <member name="M:NetX.SystemManager.Core.IRoleService.UpdateRoleApiAuthStatus(System.String,System.String)">
             <summary>
             更新角色后台鉴权状态
             </summary>
@@ -825,6 +877,21 @@
             删除角色
             </summary>
             <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.SystemManager.Core.IRoleService.GetApiAuth(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="roleId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.SystemManager.Core.IRoleService.UpdateRoleApiAuth(System.String,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            
+            </summary>
+            <param name="roleId"></param>
+            <param name="apiIds"></param>
             <returns></returns>
         </member>
         <member name="T:NetX.SystemManager.DatabaseSetup.CreateTable.ApiTable">
@@ -1205,6 +1272,21 @@
             删除角色
             </summary>
             <param name="roleId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.SystemManager.Data.Repositories.SysRoleRepository.GetApiAuth(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="roleId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.SystemManager.Data.Repositories.SysRoleRepository.UpdateRoleApiAuth(System.String,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            
+            </summary>
+            <param name="roleId"></param>
+            <param name="apiIds"></param>
             <returns></returns>
         </member>
         <member name="T:NetX.SystemManager.Data.Repositories.SysUserRepository">
@@ -2161,22 +2243,27 @@
             
             </summary>
         </member>
-        <member name="T:NetX.SystemManager.Models.ApiListParam">
+        <member name="T:NetX.SystemManager.Models.ApiPageParam">
             <summary>
             
             </summary>
         </member>
-        <member name="T:NetX.SystemManager.Models.DeleteParam">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:NetX.SystemManager.Models.DeleteParam.Id">
+        <member name="T:NetX.SystemManager.Models.ApiParam">
             <summary>
             
             </summary>
         </member>
         <member name="T:NetX.SystemManager.Models.DeptListParam">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.SystemManager.Models.KeyParam">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.SystemManager.Models.KeyParam.Id">
             <summary>
             
             </summary>
@@ -2227,6 +2314,21 @@
             </summary>
         </member>
         <member name="P:NetX.SystemManager.Models.UserListParam.Nickname">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.SystemManager.Models.RoleApiAuthModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.SystemManager.Models.RoleApiAuthModel.RoleId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.SystemManager.Models.RoleApiAuthModel.ApiIds">
             <summary>
             
             </summary>

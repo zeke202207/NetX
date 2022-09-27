@@ -31,13 +31,25 @@ public class ApiController : SystemManagerBaseController
     /// <summary>
     /// 获取api列表
     /// </summary>
-    /// <param name="roleListparam"></param>
+    /// <param name="apiPageParam"></param>
+    /// <returns></returns>
+    [ApiActionDescription("获取api分页列表")]
+    [HttpPost]
+    public async Task<ResultModel<PagerResultModel<List<ApiModel>>>> GetApiPageList(ApiPageParam apiPageParam)
+    {
+        return await _apiService.GetApiList(apiPageParam);
+    }
+
+    /// <summary>
+    /// 获取api列表
+    /// </summary>
+    /// <param name="apiParam"></param>
     /// <returns></returns>
     [ApiActionDescription("获取api列表")]
     [HttpPost]
-    public async Task<ResultModel<PagerResultModel<List<ApiModel>>>> GetApiList(ApiListParam roleListparam)
+    public async Task<ResultModel<List<ApiModel>>> GetApiList(ApiParam apiParam)
     {
-        return await _apiService.GetApiList(roleListparam);
+        return await _apiService.GetApiList(apiParam);
     }
 
     /// <summary>
@@ -71,7 +83,7 @@ public class ApiController : SystemManagerBaseController
     /// <returns></returns>
     [ApiActionDescription("删除api")]
     [HttpDelete]
-    public async Task<ResultModel<bool>> RemoveApi(DeleteParam param)
+    public async Task<ResultModel<bool>> RemoveApi(KeyParam param)
     {
         return await this._apiService.RemoveApi(param.Id);
     }

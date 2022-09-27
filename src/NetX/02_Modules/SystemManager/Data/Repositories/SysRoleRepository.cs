@@ -153,4 +153,51 @@ public class SysRoleRepository : BaseRepository<sys_role, string>
         }
         return result;
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="roleId"></param>
+    /// <returns></returns>
+    public async Task<IEnumerable<string>> GetApiAuth(string roleId)
+    {
+        using (var uow = this._freeSql.CreateUnitOfWork())
+        {
+            var roleApiRep = uow.GetRepository<sys_role_api>();
+            var result = await roleApiRep.Select.Where(p => p.roleid.Equals(roleId))
+                .ToListAsync(p =>  p.apiid);
+            return result;
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="roleId"></param>
+    /// <param name="apiIds"></param>
+    /// <returns></returns>
+    public async Task<bool> UpdateRoleApiAuth(string roleId, IEnumerable<string> apiIds)
+    {
+        bool result = true;
+        List<sys_role_api> list = new List<sys_role_api>();
+        apiIds.ToList().ForEach(p => list.Add(new sys_role_api() { roleid = roleId, apiid = p }));
+        using (var uow = this._freeSql.CreateUnitOfWork())
+        {
+            try
+            {
+                var roleApiRep = uow.GetRepository<sys_role_api>();
+                await roleApiRep.DeleteAsync(p => p.roleid.Equals(roleId));
+                if(list.Count > 0)
+                    await roleApiRep.InsertAsync(list);
+                uow.Commit();
+            }
+            catch (Exception ex)
+            {
+                result = false;
+                uow.Rollback();
+                throw new Exception("删除角色失败", ex);
+            }
+        }
+        return result;
+    }
 }
