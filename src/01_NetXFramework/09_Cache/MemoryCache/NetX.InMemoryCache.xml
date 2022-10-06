@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>NetX.InMemoryCache</name>
+    </assembly>
+    <members>
+        <member name="T:NetX.InMemoryCache.MemoryCacheProvider">
+            <summary>
+            内存缓存器
+            </summary>
+        </member>
+        <member name="M:NetX.InMemoryCache.MemoryCacheProvider.#ctor(Microsoft.Extensions.Caching.Memory.IMemoryCache)">
+            <summary>
+            
+            </summary>
+            <param name="momoryCache"></param>
+        </member>
+        <member name="T:NetX.InMemoryCache.ServiceCollectionExtensions">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.InMemoryCache.ServiceCollectionExtensions.AddInMemoryCache(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Func{System.Collections.Generic.IEnumerable{NetX.Cache.Core.CacheKeyDescriptor}})">
+            <summary>
+            添加缓存
+            </summary>
+            <param name="services"></param>
+            <param name="CacheKeys"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

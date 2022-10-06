@@ -1,8 +1,13 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using NetX.Cache.Core;
 using NetX.Common;
 using NetX.DatabaseSetup;
+using NetX.InMemoryCache;
 using NetX.Logging;
+using System.ComponentModel;
+using System.Reflection;
 
 namespace NetX.App;
 
@@ -47,6 +52,8 @@ public static class ServerHost
         builder.Services.BuildFluentMigrator();
         //添加日志
         builder.Host.UseLogging(LoggingType.Serilog);
+        //Cache
+        AddCaches(builder.Services);
         var app = builder.Build();
         //路由
         app.UseRouting();
@@ -62,6 +69,38 @@ public static class ServerHost
         app.UseEndpoints(endpoints => endpoints.MapControllers());
         ServiceLocator.Instance = app.Services;
         app.Run();
+    }
+
+    private static void AddCaches(IServiceCollection services)
+    {
+        var moduleInitializers = App.GetModuleInitializer();
+        var moduleOptions = App.GetModuleOptions;
+        List<CacheKeyDescriptor> list = new List<CacheKeyDescriptor>();
+        foreach (var item in moduleInitializers)
+        {
+            var cacheKeysType = item.GetType().Assembly.GetTypes().Where(m => m.FullName.Contains("CacheKeys"));
+            foreach (var type in cacheKeysType)
+            {
+                var fields = type.GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy);
+                foreach (var field in fields)
+                {
+                    var module = moduleOptions.FirstOrDefault(p => p.Id.Equals(item.Key));
+                    var descriptor = new CacheKeyDescriptor
+                    {
+                        ModuleId = module.Id.ToString(),
+                        ModuleName = module.Name,
+                        Name = field.GetRawConstantValue()?.ToString(),
+                        Desc = field.Name
+                    };
+                    var descAttr = field.GetCustomAttributes().FirstOrDefault(m =>
+                        m.GetType().IsAssignableFrom(typeof(DescriptionAttribute)));
+                    if (descAttr != null)
+                        descriptor.Desc = ((DescriptionAttribute)descAttr).Description;
+                    list.Add(descriptor);
+                }
+            }
+        }
+        services.AddInMemoryCache(() => list);
     }
 }
 

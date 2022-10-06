@@ -4,6 +4,23 @@
         <name>NetX.SystemManager</name>
     </assembly>
     <members>
+        <member name="T:NetX.SystemManager.CacheKeys">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:NetX.SystemManager.CacheKeys.AUTH_REFRESH_TOKEN">
+            <summary>
+            刷新令牌 
+            <para>RBAC:ACCOUNT:REFRESH_TOKEN:刷新令牌</para>
+            </summary>
+        </member>
+        <member name="F:NetX.SystemManager.CacheKeys.ACCOUNT_PERMISSIONS">
+            <summary>
+            账户权限列表
+            <para>RBAC:ACCOUNT:PERMISSIONS:用户唯一标识</para>
+            </summary>
+        </member>
         <member name="T:NetX.SystemManager.Controllers.AccountController">
             <summary>
             账号管理api接口

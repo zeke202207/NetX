@@ -38,4 +38,23 @@ public static class App
     /// </summary>
     /// <returns></returns>
     public static IEnumerable<ModuleOptions> GetModuleOptions => InternalApp.UserModeulOptions;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    public static IEnumerable<ModuleInitializer> GetModuleInitializer()
+    {
+        List<ModuleInitializer> result = new List<ModuleInitializer>();
+        foreach(var item in InternalApp.FrameworkContextKeyValuePairs)
+        {
+            result.Add(item.Value.initializer);
+        }
+        foreach(var item in InternalApp.ModuleCotextKeyValuePairs)
+        {
+            if (null != item.Value && null != item.Value.ModuleContext && null != item.Value.ModuleContext.Initialize)
+                result.Add(item.Value.ModuleContext.Initialize);
+        }
+        return result;
+    }
 }

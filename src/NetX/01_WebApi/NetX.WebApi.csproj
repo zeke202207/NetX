@@ -26,9 +26,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="main.db">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Update="modules\copy.bat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -40,6 +37,12 @@
 
   <ItemGroup>
     <EditorConfigFiles Remove="D:\Persion\fw\netx\src\.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\01_NetXFramework\05_Tenant\main.db" Link="main.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   
 </Project>
