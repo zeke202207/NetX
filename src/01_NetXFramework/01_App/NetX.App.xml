@@ -180,25 +180,18 @@
             <param name="tenantOption"></param>
             <param name="migrationService"></param>
         </member>
+        <member name="M:NetX.App.TenantContextFilter.OnAuthorizationAsync(Microsoft.AspNetCore.Mvc.Filters.AuthorizationFilterContext)">
+            <summary>
+            
+            </summary>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
         <member name="M:NetX.App.TenantContextFilter.OnResourceExecuted(Microsoft.AspNetCore.Mvc.Filters.ResourceExecutedContext)">
             <summary>
             
             </summary>
             <param name="context"></param>
-        </member>
-        <member name="M:NetX.App.TenantContextFilter.OnResourceExecuting(Microsoft.AspNetCore.Mvc.Filters.ResourceExecutingContext)">
-            <summary>
-            
-            </summary>
-            <param name="context"></param>
-        </member>
-        <member name="M:NetX.App.TenantContextFilter.OnResourceExecutionAsync(Microsoft.AspNetCore.Mvc.Filters.ResourceExecutingContext,Microsoft.AspNetCore.Mvc.Filters.ResourceExecutionDelegate)">
-            <summary>
-            
-            </summary>
-            <param name="context"></param>
-            <param name="next"></param>
-            <returns></returns>
         </member>
         <member name="P:NetX.App.InternalApp.RootServices">
             <summary>

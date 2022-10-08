@@ -71,4 +71,11 @@ public interface IAccountService
     /// <param name="userId"></param>
     /// <returns></returns>
     Task<ResultModel<IEnumerable<string>>> GetPermCode(string userId);
+
+    /// <summary>
+    /// 获取pai访问权限列表
+    /// </summary>
+    /// <param name="userid"></param>
+    /// <returns></returns>
+    Task<ResultModel<ApiPermissionModel>> GetApiPermCode(string userid);
 }

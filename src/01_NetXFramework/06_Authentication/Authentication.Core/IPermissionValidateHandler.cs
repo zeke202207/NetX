@@ -16,5 +16,5 @@ public interface IPermissionValidateHandler
     /// 验证
     /// </summary>
     /// <returns></returns>
-    bool Validate(HttpContext context, IDictionary<string, string> routeValues);
+    Task<bool> Validate(HttpContext context, IDictionary<string, string> routeValues);
 }

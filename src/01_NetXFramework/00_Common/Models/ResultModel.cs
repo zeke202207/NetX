@@ -27,13 +27,13 @@ public class ResultModel<T>
     /// 服务器处理结果对象
     /// </summary>
     [JsonProperty("result")]
-    public T? Result { get; set; }
+    public T Result { get; set; }
 
     /// <summary>
     /// 异常消息内容
     /// </summary>
     [JsonProperty("message")]
-    public string? Message { get; set; }
+    public string Message { get; set; }
 }
 
 /// <summary>

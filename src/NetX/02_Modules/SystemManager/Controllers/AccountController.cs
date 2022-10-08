@@ -12,7 +12,6 @@ namespace NetX.SystemManager.Controllers;
 /// 账号管理api接口
 /// </summary>
 [ApiControllerDescription("SystemManager", Description = "NetX实现的系统管理模块->账号管理")]
-[PermissionValidate]
 public class AccountController : SystemManagerBaseController
 {
     private readonly IAccountService _accoutService;

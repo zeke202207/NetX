@@ -174,5 +174,27 @@ public class SysUserRepository : BaseRepository<sys_user, string>
             .ToListAsync((m, rm, ur) => m.permission);
         return result;
     }
+
+    /// <summary>
+    /// 根据用户id获取api权限认证结果集合
+    /// </summary>
+    /// <param name="userid"></param>
+    /// <returns></returns>
+    public async Task<(bool checkApi, List<string> apis)> GetApiPermCode(string userid)
+    {
+        var checkApiResult = await this._freeSql.Select<sys_user, sys_user_role, sys_role>()
+            .LeftJoin((u, ur, r) => u.id == ur.userid)
+            .LeftJoin((u, ur, r) => ur.roleid == r.id)
+            .Where((u, ur, r) => u.id.Equals(userid))
+            .FirstAsync((u, ur, r) => r);
+        if (checkApiResult.apicheck == 0)
+            return (checkApi: false, apis: new List<string>());
+        var apisResult = await this._freeSql.Select<sys_role, sys_role_api, sys_api>()
+            .LeftJoin((r, ra, a) => r.id == ra.roleid)
+            .LeftJoin((r, ra, a) => a.id == ra.apiid)
+            .Where((r,ra,a)=>r.id.Equals(checkApiResult.id))
+            .ToListAsync((r, ra, a) => a.path);
+        return (checkApi: true, apis: apisResult);
+    }
 }
 

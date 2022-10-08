@@ -222,4 +222,20 @@ public class AccountService : BaseService, IAccountService
         var result = await ((SysUserRepository)this._userRepository).GetPremCodesAsync(userId);
         return base.Success<IEnumerable<string>>(result);
     }
+
+    /// <summary>
+    /// 获取当前登录用户api权限验证集合
+    /// </summary>
+    /// <param name="userid"></param>
+    /// <returns></returns>
+    public async Task<ResultModel<ApiPermissionModel>> GetApiPermCode(string userid)
+    {
+        var checkResult = await((SysUserRepository)this._userRepository).GetApiPermCode(userid);
+        ApiPermissionModel result = new ApiPermissionModel()
+        {
+            CheckApi = checkResult.checkApi,
+            Apis = checkResult.apis
+        };
+        return base.Success<ApiPermissionModel>(result);
+    }
 }

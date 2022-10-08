@@ -10,7 +10,7 @@ namespace NetX.App;
 /// <summary>
 /// TenantContext过滤器
 /// </summary>
-public class TenantContextFilter : BaseFilter, IResourceFilter, IAsyncResourceFilter
+public class TenantContextFilter : BaseFilter, IAuthorizationFilter, IAsyncAuthorizationFilter
 {
     private readonly ITenantAccessor<Tenant> _accessor;
     private readonly TenantOption _tenantOption;
@@ -29,23 +29,10 @@ public class TenantContextFilter : BaseFilter, IResourceFilter, IAsyncResourceFi
         _migrationService = migrationService;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="context"></param>
-    public void OnResourceExecuted(ResourceExecutedContext context)
-    {
-
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="context"></param>
-    public void OnResourceExecuting(ResourceExecutingContext context)
+    public void OnAuthorization(AuthorizationFilterContext context)
     {
         var identity = context.HttpContext.User.Identity as ClaimsIdentity;
-        if(null != _accessor.Tenant && null != identity)
+        if (null != _accessor.Tenant && null != identity)
         {
             TenantContext.CurrentTenant.InitPrincipal(new NetXPrincipal(identity, _accessor.Tenant), _tenantOption);
             _migrationService.SetupDatabase(TenantContext.CurrentTenant.Principal.Tenant.TenantId);
@@ -56,11 +43,45 @@ public class TenantContextFilter : BaseFilter, IResourceFilter, IAsyncResourceFi
     /// 
     /// </summary>
     /// <param name="context"></param>
-    /// <param name="next"></param>
     /// <returns></returns>
-    public async Task OnResourceExecutionAsync(ResourceExecutingContext context, ResourceExecutionDelegate next)
+    public async Task OnAuthorizationAsync(AuthorizationFilterContext context)
     {
-        OnResourceExecuting(context);
-        OnResourceExecuted(await next());
+        OnAuthorization(context);
+        await Task.CompletedTask;
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="context"></param>
+    public void OnResourceExecuted(ResourceExecutedContext context)
+    {
+
+    }
+
+    ///// <summary>
+    ///// 
+    ///// </summary>
+    ///// <param name="context"></param>
+    //public void OnResourceExecuting(ResourceExecutingContext context)
+    //{
+    //    var identity = context.HttpContext.User.Identity as ClaimsIdentity;
+    //    if(null != _accessor.Tenant && null != identity)
+    //    {
+    //        TenantContext.CurrentTenant.InitPrincipal(new NetXPrincipal(identity, _accessor.Tenant), _tenantOption);
+    //        _migrationService.SetupDatabase(TenantContext.CurrentTenant.Principal.Tenant.TenantId);
+    //    }
+    //}
+
+    ///// <summary>
+    ///// 
+    ///// </summary>
+    ///// <param name="context"></param>
+    ///// <param name="next"></param>
+    ///// <returns></returns>
+    //public async Task OnResourceExecutionAsync(ResourceExecutingContext context, ResourceExecutionDelegate next)
+    //{
+    //    OnResourceExecuting(context);
+    //    OnResourceExecuted(await next());
+    //}
 }

@@ -21,6 +21,26 @@
             <para>RBAC:ACCOUNT:PERMISSIONS:用户唯一标识</para>
             </summary>
         </member>
+        <member name="T:NetX.SystemManager.ApiEquelCompare">
+            <summary>
+            api比较器
+            </summary>
+        </member>
+        <member name="M:NetX.SystemManager.ApiEquelCompare.Equals(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.SystemManager.ApiEquelCompare.GetHashCode(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
         <member name="T:NetX.SystemManager.Controllers.AccountController">
             <summary>
             账号管理api接口
@@ -354,6 +374,13 @@
             <param name="userId"></param>
             <returns></returns>
         </member>
+        <member name="M:NetX.SystemManager.Core.IAccountService.GetApiPermCode(System.String)">
+            <summary>
+            获取pai访问权限列表
+            </summary>
+            <param name="userid"></param>
+            <returns></returns>
+        </member>
         <member name="T:NetX.SystemManager.Core.IApiService">
             <summary>
             Api服务接口
@@ -546,6 +573,13 @@
             获取当前登录用户权限代码集合
             </summary>
             <param name="userId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.SystemManager.Core.AccountService.GetApiPermCode(System.String)">
+            <summary>
+            获取当前登录用户api权限验证集合
+            </summary>
+            <param name="userid"></param>
             <returns></returns>
         </member>
         <member name="T:NetX.SystemManager.Core.ApiService">
@@ -1360,6 +1394,13 @@
             <param name="userId"></param>
             <returns></returns>
         </member>
+        <member name="M:NetX.SystemManager.Data.Repositories.SysUserRepository.GetApiPermCode(System.String)">
+            <summary>
+            根据用户id获取api权限认证结果集合
+            </summary>
+            <param name="userid"></param>
+            <returns></returns>
+        </member>
         <member name="T:NetX.SystemManager.MapperProfiles.AccountProfile">
             <summary>
             account 映射清单
@@ -1408,6 +1449,21 @@
         <member name="M:NetX.SystemManager.MapperProfiles.RoleProfile.#ctor">
             <summary>
             
+            </summary>
+        </member>
+        <member name="T:NetX.SystemManager.Models.ApiPermissionModel">
+            <summary>
+            api访问控制实体对象
+            </summary>
+        </member>
+        <member name="P:NetX.SystemManager.Models.ApiPermissionModel.CheckApi">
+            <summary>
+            是否进行pai验证
+            </summary>
+        </member>
+        <member name="P:NetX.SystemManager.Models.ApiPermissionModel.Apis">
+            <summary>
+            api权限列表集合
             </summary>
         </member>
         <member name="T:NetX.SystemManager.Models.BaseEntity">
@@ -2420,9 +2476,33 @@
              后台权限验证器
             </summary>
         </member>
+        <member name="F:NetX.SystemManager.PermissionValidateHandler._cache">
+            <summary>
+            权限缓存
+            目前暂时不用缓存
+            如果性能出现问题，考虑缓存方式
+            </summary>
+        </member>
+        <member name="M:NetX.SystemManager.PermissionValidateHandler.#ctor(NetX.Cache.Core.ICacheProvider,NetX.SystemManager.Core.IAccountService)">
+            <summary>
+            api权限验证 
+            </summary>
+            <param name="cache"></param>
+            <param name="accountService"></param>
+        </member>
         <member name="M:NetX.SystemManager.PermissionValidateHandler.Validate(Microsoft.AspNetCore.Http.HttpContext,System.Collections.Generic.IDictionary{System.String,System.String})">
             <summary>
             后台权限验证
+            </summary>
+        </member>
+        <member name="F:NetX.SystemManager.SystemManagerConst.C_ROOT_ID">
+            <summary>
+            树跟节点编号
+            </summary>
+        </member>
+        <member name="F:NetX.SystemManager.SystemManagerConst.C_SYSTEM_MANAGER_PERMISSION_CACHEKEY">
+            <summary>
+            权限缓存key
             </summary>
         </member>
         <member name="T:NetX.SystemManager.Status">

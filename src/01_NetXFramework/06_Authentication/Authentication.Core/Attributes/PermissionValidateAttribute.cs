@@ -23,21 +23,7 @@ public class PermissionValidateAttribute : AuthorizeAttribute, IAuthorizationFil
     /// <param name="context"></param>
     public void OnAuthorization(AuthorizationFilterContext context)
     {
-        //排除匿名访问
-        if (context.ActionDescriptor.EndpointMetadata.Any(m => m.GetType() == typeof(AllowAnonymousAttribute)))
-            return;
-        //var loginInfo = context.HttpContext.RequestServices.GetService<LoginInfo>();
-        //if (null == loginInfo || string.IsNullOrEmpty(loginInfo.AccountId))
-        //{
-        //    context.Result = new ChallengeResult();
-        //    return;
-        //}
-        //排除通用接口
-        if (context.ActionDescriptor.EndpointMetadata.Any(m => m.GetType() == typeof(NoPermissionAttribute)))
-            return;
-        var handle = context.HttpContext.RequestServices.GetService<IPermissionValidateHandler>();
-        if (null == handle || !handle.Validate(context.HttpContext, context.ActionDescriptor.RouteValues))
-            context.Result = new ForbidResult();
+
     }
 
     /// <summary>
@@ -45,9 +31,17 @@ public class PermissionValidateAttribute : AuthorizeAttribute, IAuthorizationFil
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>
-    public Task OnAuthorizationAsync(AuthorizationFilterContext context)
+    public async Task OnAuthorizationAsync(AuthorizationFilterContext context)
     {
         OnAuthorization(context);
-        return Task.CompletedTask;
+        //排除匿名访问
+        if (context.ActionDescriptor.EndpointMetadata.Any(m => m.GetType() == typeof(AllowAnonymousAttribute)))
+            return;
+        //排除通用接口
+        if (context.ActionDescriptor.EndpointMetadata.Any(m => m.GetType() == typeof(NoPermissionAttribute)))
+            return;
+        var handle = context.HttpContext.RequestServices.GetService<IPermissionValidateHandler>();
+        if (null == handle || !await handle.Validate(context.HttpContext, context.ActionDescriptor.RouteValues))
+            context.Result = new ForbidResult();
     }
 }

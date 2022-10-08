@@ -2,7 +2,15 @@
 
 internal class SystemManagerConst
 {
+    /// <summary>
+    /// 树跟节点编号
+    /// </summary>
     public const string C_ROOT_ID = "00000000000000000000000000000000";
+
+    /// <summary>
+    /// 权限缓存key
+    /// </summary>
+    public const string C_SYSTEM_MANAGER_PERMISSION_CACHEKEY = "SYSTEMMANAGER:PERMISSION:ROLEID:";
 }
 
 /// <summary>
