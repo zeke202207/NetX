@@ -52,7 +52,7 @@ public sealed class ServerModuleInitializer : ModuleInitializer
                     .WithExposedHeaders("Content-Disposition"));//下载文件时，文件名称会保存在headers的Content-Disposition属性里面
         });
         //2.添加swagger文档处理
-        services.AddSwagger(App.GetModuleOptions.Select(p => (name: p.Name, version: p.Version, des:p.Description)));
+        services.AddSwagger(App.GetUserModuleOptions.Select(p => (name: p.Name, version: p.Version, des:p.Description)));
 
         //3.添加HttpContext访问上下文
         services.AddHttpContextAccessor();
@@ -95,7 +95,7 @@ public sealed class ServerModuleInitializer : ModuleInitializer
         //2. swagger
         // Configure the HTTP request pipeline.
         if (((WebApplication)app).Environment.IsDevelopment())
-            app.UseCustomSwagger(App.GetModuleOptions.Select(p => p.Name));
+            app.UseCustomSwagger(App.GetUserModuleOptions.Select(p => p.Name));
         // 添加压缩缓存
         app.UseResponseCaching();
 

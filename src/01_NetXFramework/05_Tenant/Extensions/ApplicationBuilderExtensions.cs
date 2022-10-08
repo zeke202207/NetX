@@ -46,7 +46,7 @@ public static class ApplicationBuilderExtensions
                 var tenantOptions = scope.ServiceProvider.GetService<TenantOption>();
                 if (null != accessor && null != tenantOptions)
                     TenantContext.CurrentTenant.InitPrincipal(new NetXPrincipal(accessor.Tenant), tenantOptions);
-                if (null != TenantContext.CurrentTenant.Principal)
+                if (null != TenantContext.CurrentTenant.Principal && null != TenantContext.CurrentTenant.Principal.Tenant)
                 {
                     _freeSql?.Register(TenantContext.CurrentTenant.Principal.Tenant.TenantId, () =>
                     {
@@ -67,7 +67,7 @@ public static class ApplicationBuilderExtensions
             finally
             {
                 // 切换回 main 库
-                _freeSql?.Change("main");
+                _freeSql?.Change(TenantConst.C_TENANT_DBKEY);
             }
         });
         return app;

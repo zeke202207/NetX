@@ -29,7 +29,7 @@
             构造函数
             </summary>
         </member>
-        <member name="P:NetX.App.App.GetModuleOptions">
+        <member name="P:NetX.App.App.GetUserModuleOptions">
             <summary>
             获取模块配置信息
             </summary>
@@ -40,6 +40,26 @@
             
             </summary>
             <returns></returns>
+        </member>
+        <member name="F:NetX.App.AppConst.C_APP_CACHE_ASSEMBLY_NAME">
+            <summary>
+            缓存模块程序集名称
+            </summary>
+        </member>
+        <member name="F:NetX.App.AppConst.C_APP_CACHE_CLASS_NAME">
+            <summary>
+            缓存文件名称
+            </summary>
+        </member>
+        <member name="F:NetX.App.AppConst.C_APP_CONFIG_FILE_NAME">
+            <summary>
+            配置文件目录名称
+            </summary>
+        </member>
+        <member name="F:NetX.App.AppConst.C_APP_JSON_FILE">
+            <summary>
+            json文件筛选器
+            </summary>
         </member>
         <member name="T:NetX.App.AppHandler.IAppShutdownHandler">
             <summary>
@@ -200,6 +220,11 @@
             用户组件模块设置项
             </summary>
         </member>
+        <member name="P:NetX.App.InternalApp.FrameworkModuleOptions">
+            <summary>
+            系统组件模块
+            </summary>
+        </member>
         <member name="P:NetX.App.CorsAccessorOptions.PolicyName">
             <summary>
             策略名称
@@ -322,6 +347,23 @@
             </summary>
             <param name="options"></param>
             <param name="urls"></param>
+        </member>
+        <member name="M:NetX.App.ServerHost.AddCacheKey(System.Collections.Generic.List{NetX.Cache.Core.CacheKeyDescriptor},System.Guid,NetX.Module.ModuleType,System.Type[])">
+            <summary>
+            添加fw其他模块缓存key集合
+            </summary>
+            <param name="list"></param>
+            <param name="moduleId"></param>
+            <param name="moduleType"></param>
+            <param name="types"></param>
+        </member>
+        <member name="M:NetX.App.ServerHost.GetModuleOption(System.Guid,NetX.Module.ModuleType)">
+            <summary>
+            获取模块设置
+            </summary>
+            <param name="moduleId"></param>
+            <param name="moduleType"></param>
+            <returns></returns>
         </member>
         <member name="T:NetX.App.ServerModuleInitializer">
             <summary>

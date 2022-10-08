@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace NetX.Tenants;
 
@@ -27,4 +28,31 @@ public static class ServiceCollectionExtensions
     public static TenantBuilder<Tenant> AddTenancy(this IServiceCollection service, TenantType tenantType = TenantType.Single)
     => tenantType == TenantType.Multi ? new TenantBuilder<Tenant>(service, tenantType) : new TenantBuilder<Tenant>(service, tenantType).DefaultSingleTenant();
 
+    /// <summary>
+    /// 多租户注入
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="service"></param>
+    /// <param name="config">
+    /// 租户类型：单租户、多租户
+    /// 租户解析策略
+    /// 租户存储策略
+    /// </param>
+    /// <returns></returns>
+    public static TenantBuilder<T> AddTenancy<T>(this IServiceCollection service, IConfiguration config)
+        where T : Tenant
+        => new TenantBuilder<T>(service, config);
+
+    /// <summary>
+    /// 多租户注入
+    /// </summary>
+    /// <param name="service"></param>
+    /// <param name="config">
+    /// 租户类型：单租户、多租户
+    /// 租户解析策略
+    /// 租户存储策略
+    /// </param>
+    /// <returns></returns>
+    public static TenantBuilder<Tenant> AddTenancy(this IServiceCollection service, IConfiguration config)
+        => new TenantBuilder<Tenant>(service, config);
 }

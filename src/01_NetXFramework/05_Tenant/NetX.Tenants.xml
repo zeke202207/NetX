@@ -185,6 +185,31 @@
             <param name="tenantType">租户类型，如果租户类型为单租户，<see cref="T:NetX.Tenants.TenantBuilder`1"/>将忽略所有注入</param>
             <returns></returns>
         </member>
+        <member name="M:NetX.Tenants.ServiceCollectionExtensions.AddTenancy``1(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            多租户注入
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="service"></param>
+            <param name="config">
+            租户类型：单租户、多租户
+            租户解析策略
+            租户存储策略
+            </param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.Tenants.ServiceCollectionExtensions.AddTenancy(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            多租户注入
+            </summary>
+            <param name="service"></param>
+            <param name="config">
+            租户类型：单租户、多租户
+            租户解析策略
+            租户存储策略
+            </param>
+            <returns></returns>
+        </member>
         <member name="T:NetX.Tenants.TenantBuilder`1">
             <summary>
             配置tenant的services 
@@ -196,6 +221,13 @@
             </summary>
             <param name="services"></param>
             <param name="tenantType"></param>
+        </member>
+        <member name="M:NetX.Tenants.TenantBuilder`1.#ctor(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            租户注入构建器
+            </summary>
+            <param name="services"></param>
+            <param name="config"></param>
         </member>
         <member name="M:NetX.Tenants.TenantBuilder`1.WithTenancyDatabase(Microsoft.Extensions.Configuration.IConfiguration)">
             <summary>
@@ -244,6 +276,22 @@
             <summary>
             使用租户数据库
             </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.Tenants.TenantBuilder`1.WithResolutionStrategy(System.Type,Microsoft.Extensions.DependencyInjection.ServiceLifetime)">
+            <summary>
+            注册租户解析实现
+            </summary>
+            <param name="type"></param>
+            <param name="lifetime"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.Tenants.TenantBuilder`1.WithStore(System.Type,Microsoft.Extensions.DependencyInjection.ServiceLifetime)">
+            <summary>
+            注册租户信息存储实现
+            </summary>
+            <param name="type"></param>
+            <param name="serviceLifetime"></param>
             <returns></returns>
         </member>
         <member name="M:NetX.Tenants.TenantBuilder`1.Build">
@@ -625,6 +673,41 @@
         <member name="F:NetX.Tenants.TenantConst.C_TENANT_HTTPCONTEXTTENANTKEY">
             <summary>
             tenantcontext上下文标识
+            </summary>
+        </member>
+        <member name="F:NetX.Tenants.TenantConst.C_TENANT_CONFIG_TENANTS">
+            <summary>
+            tenants配置节点 
+            </summary>
+        </member>
+        <member name="F:NetX.Tenants.TenantConst.C_TENANT_CONFIG_TENANTTYPE">
+            <summary>
+            租户类型配置
+            </summary>
+        </member>
+        <member name="F:NetX.Tenants.TenantConst.C_TENANT_CONFIG_RESOLUTIONSTRATEGY">
+            <summary>
+            解析策略配置
+            </summary>
+        </member>
+        <member name="F:NetX.Tenants.TenantConst.C_TENANT_CONFIG_STORESTRATEGY">
+            <summary>
+            存储策略配置
+            </summary>
+        </member>
+        <member name="F:NetX.Tenants.TenantConst.C_TENANT_CONFIG_DATABASEINFO">
+            <summary>
+            数据库节点配置
+            </summary>
+        </member>
+        <member name="F:NetX.Tenants.TenantConst.C_TENANT_DBKEY">
+            <summary>
+            分布式数据库key
+            </summary>
+        </member>
+        <member name="F:NetX.Tenants.TenantConst.C_TENANT_DBFILE">
+            <summary>
+            分布式db sqllite文件
             </summary>
         </member>
         <member name="T:NetX.Tenants.DatabaseType">

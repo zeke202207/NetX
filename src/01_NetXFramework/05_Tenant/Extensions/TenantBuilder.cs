@@ -31,12 +31,30 @@ public class TenantBuilder<T>
     }
 
     /// <summary>
+    /// 租户注入构建器
+    /// </summary>
+    /// <param name="services"></param>
+    /// <param name="config"></param>
+    public TenantBuilder(IServiceCollection services, IConfiguration config)
+    {
+        services.AddTransient<TenantAccessService<T>>();
+        services.AddTransient<ITenantAccessor<T>, TenantAccessor<T>>();
+        _services = services;
+        _tenantType = config.GetSection(TenantConst.C_TENANT_CONFIG_TENANTTYPE).Get<TenantType>();
+        WithTenancyDatabase(config);
+        WithResolutionStrategy(Type.GetType(config.GetSection(TenantConst.C_TENANT_CONFIG_RESOLUTIONSTRATEGY).Get<string>()));
+        WithStore(Type.GetType(config.GetSection(TenantConst.C_TENANT_CONFIG_STORESTRATEGY).Get<string>()));
+        if (_tenantType == TenantType.Single)
+            DefaultSingleTenant();
+    }
+
+    /// <summary>
     /// 根据配置文件配置数据库信息
     /// </summary>
     /// <returns></returns>
     public TenantBuilder<T> WithTenancyDatabase(IConfiguration config)
     {
-        var database = config.GetSection("databaseinfo").Get<DatabaseInfo>();
+        var database = config.GetSection(TenantConst.C_TENANT_CONFIG_DATABASEINFO).Get<DatabaseInfo>();
         return WithTenancyDatabase(database);
     }
 
@@ -47,7 +65,6 @@ public class TenantBuilder<T>
     /// <returns></returns>
     public TenantBuilder<T> WithTenancyDatabase(DatabaseInfo database)
     {
-        IEncryption des = new DES();
         _databaseInfo = new DatabaseInfo()
         {
             DatabaseHost = database.DatabaseHost,
@@ -55,7 +72,7 @@ public class TenantBuilder<T>
             DatabasePort = database.DatabasePort,
             DatabaseType = database.DatabaseType,
             UserId = database.UserId,
-            Password = des.Decryption(database.Password),
+            Password = new DES().Decryption(database.Password),
         };
         return WithFreeSql();
     }
@@ -71,9 +88,7 @@ public class TenantBuilder<T>
     {
         if (_tenantType == TenantType.Single)
             return this;
-        _services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-        _services.Add(ServiceDescriptor.Describe(typeof(ITenantResolutionStrategy), typeof(V), lifetime));
-        return this;
+        return WithResolutionStrategy(typeof(V), lifetime);
     }
 
     /// <summary>
@@ -87,8 +102,7 @@ public class TenantBuilder<T>
     {
         if (_tenantType == TenantType.Single)
             return this;
-        _services.Add(ServiceDescriptor.Describe(typeof(ITenantStore<T>), typeof(V), serviceLifetime));
-        return this;
+        return WithStore(typeof(V), serviceLifetime);
     }
 
     /// <summary>
@@ -133,13 +147,42 @@ public class TenantBuilder<T>
         var _fsql = new FreeSqlCloud<string>();
         _fsql.DistributeTrace = log => Console.WriteLine(log.Split('\n')[0].Trim());
         //分布式
-        _fsql.Register("main", () =>
+        _fsql.Register(TenantConst.C_TENANT_DBKEY, () =>
         {
-            var db = new FreeSqlBuilder().UseConnectionString(DataType.Sqlite, "data source=main.db").Build();
+            var db = new FreeSqlBuilder().UseConnectionString(DataType.Sqlite, TenantConst.C_TENANT_DBFILE).Build();
             //db.Aop.CommandAfter += ...
             return db;
         });
         _services.AddSingleton<IFreeSql>(_fsql);
+        return this;
+    }
+
+    /// <summary>
+    /// 注册租户解析实现
+    /// </summary>
+    /// <param name="type"></param>
+    /// <param name="lifetime"></param>
+    /// <returns></returns>
+    private TenantBuilder<T> WithResolutionStrategy(Type type, ServiceLifetime lifetime = ServiceLifetime.Transient)
+    {
+        if (_tenantType == TenantType.Single)
+            return this;
+        _services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+        _services.Add(ServiceDescriptor.Describe(typeof(ITenantResolutionStrategy), type, lifetime));
+        return this;
+    }
+
+    /// <summary>
+    /// 注册租户信息存储实现
+    /// </summary>
+    /// <param name="type"></param>
+    /// <param name="serviceLifetime"></param>
+    /// <returns></returns>
+    private TenantBuilder<T> WithStore(Type type, ServiceLifetime serviceLifetime = ServiceLifetime.Transient)
+    {
+        if (_tenantType == TenantType.Single)
+            return this;
+        _services.Add(ServiceDescriptor.Describe(typeof(ITenantStore<T>), type, serviceLifetime));
         return this;
     }
 

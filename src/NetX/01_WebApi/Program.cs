@@ -6,11 +6,7 @@ ServerHost.Start(
     .ConfigrationServiceCollection((services, config) =>
     {
         //1.∂‡◊‚ªß…Ë÷√
-        services.AddTenancy(TenantType.Single)
-                .WithTenancyDatabase(config)
-                .WithResolutionStrategy<HostResolutionStrategy>()
-                .WithStore<InMemoryTenantStore>()
-                .Build();
+        services.AddTenancy(config).Build();
     })
     .ConfigApplication(app =>
     {

@@ -167,6 +167,21 @@
             Ref引用文件目录
             </summary>
         </member>
+        <member name="F:NetX.Module.ModuleSetupConst.C_MODULE_FRAMEWORK_VERSION">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:NetX.Module.ModuleSetupConst.C_MODULE_FRAMEWORK_NAME">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:NetX.Module.ModuleSetupConst.C_MODULE_FRAMEWORK_DESC">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:NetX.Module.ModuleType">
             <summary>
             模块类型

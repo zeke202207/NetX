@@ -7,14 +7,19 @@
     "userid": "root",
     "password": "l/y+KD4Pa5Gj8jjloR5WyQ=="
   },
-  "tenants": [
-    {
-      "tenantid": "1",
-      "identifier": "zeke"
-    },
-    {
-      "tenantid": "2",
-      "identifier": "zeke1"
-    }
-  ]
+  "tenantconfig": {
+    "tenanttype": 0, //0:single,1:multi,
+    "resolutionstrategy": "NetX.Tenants.HostResolutionStrategy",
+    "storestrategy": "NetX.Tenants.InMemoryTenantStore",
+    "tenants": [
+      {
+        "tenantid": "1",
+        "identifier": "zeke"
+      },
+      {
+        "tenantid": "2",
+        "identifier": "zeke1"
+      }
+    ]
+  }
 }

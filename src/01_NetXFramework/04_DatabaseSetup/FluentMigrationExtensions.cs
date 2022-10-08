@@ -1,5 +1,10 @@
 ﻿using FluentMigrator.Runner;
+using FluentMigrator.Runner.Initialization;
+using FluentMigrator.Runner.Processors;
+using FluentMigrator.Runner.Processors.MySql;
+using FluentMigrator.Runner.VersionTableInfo;
 using Microsoft.Extensions.DependencyInjection;
+using NetX.Cache.Core;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -13,6 +18,7 @@ namespace NetX.DatabaseSetup;
 public static class FluentMigrationExtensions
 {
     internal readonly static List<Assembly> list = new List<Assembly>() { Assembly.GetExecutingAssembly() };
+    private readonly static int _commandTimeout = 300;
 
     /// <summary>
     /// 添加迁移程序集
@@ -49,8 +55,7 @@ public static class FluentMigrationExtensions
     /// <returns></returns>
     internal static IServiceCollection BuildFluentMigrator(this IServiceCollection services, Assembly[] assemblies, MigrationSupportDbType supportDbType)
     {
-        var sc = new ServiceCollection();
-        sc.AddFluentMigratorCore()
+        services.AddFluentMigratorCore()
             .ConfigureRunner(rb => rb
             .AddDatabase(supportDbType)
             .ScanIn(assemblies)
@@ -59,10 +64,18 @@ public static class FluentMigrationExtensions
             .For
             .EmbeddedResources())
             .AddLogging(lb => lb.AddFluentMigratorConsole());
-        services.AddSingleton(sp =>
-        {
-            return new MigrationService(sc, supportDbType);
-        });
+        services.AddScoped(typeof(MigrationSupportDbType), (sp) => supportDbType);
+        services.AddScoped<MigrationService>();
+        services.AddScoped<DbFactoryBase, MySqlDbFactory>();
+
+        var reads = new List<IConnectionStringReader>() { new TenantConnectionStringReader() };
+        var options = new TenantProcessorOptions();
+        var selectingProcessorAccessor = new ConnectionStringAccessor(options, new TenantSelectingProcessorAccessorOptions(), reads);
+        services.AddScoped<IConnectionStringAccessor>(sp => { return selectingProcessorAccessor; });
+        services.AddScoped<IVersionTableMetaData>(sp => { return new TenantMigrationVersionTable(); });
+        services.ConfigureRunner(rb => rb.WithGlobalCommandTimeout(TimeSpan.FromSeconds(_commandTimeout)));
+        services.AddScoped<IMigrationRunner,MigrationRunner>();
+
         return services;
     }
 

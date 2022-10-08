@@ -37,7 +37,7 @@ public static class App
     /// 获取模块配置信息
     /// </summary>
     /// <returns></returns>
-    public static IEnumerable<ModuleOptions> GetModuleOptions => InternalApp.UserModeulOptions;
+    public static IEnumerable<ModuleOptions> GetUserModuleOptions => InternalApp.UserModeulOptions;
 
     /// <summary>
     /// 

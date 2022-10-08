@@ -34,7 +34,7 @@ public static class AppWebApplicationBuilderExtensions
         {
             Configuration = webApplicationBuilder.Configuration,
             Initialize = Initialize,
-            ModuleOptions = new ModuleOptions() { Id = ModuleSetupConst.C_SERVERHOST_MODULE_ID }
+            ModuleOptions = InternalApp.FrameworkModuleOptions
         };
         Initialize.ConfigureServices(services, env, context);
         InternalApp.FrameworkContextKeyValuePairs.Add(context.ModuleOptions.Id, (Initialize, context));

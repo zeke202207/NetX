@@ -33,6 +33,21 @@ public class ModuleSetupConst
     /// </summary>
     public const string C_MODULE_REFDIRECTORYNAME = "ref";
 
+    /// <summary>
+    /// 
+    /// </summary>
+    public const string C_MODULE_FRAMEWORK_VERSION = "1.0.0.0";
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public const string C_MODULE_FRAMEWORK_NAME = "NetX Framework";
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public const string C_MODULE_FRAMEWORK_DESC = "NetX Framework";
+
     #endregion
 
 }

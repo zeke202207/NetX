@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace NetX.InMemoryCache;
 
 /// <summary>
-/// 
+/// 缓冲注入类
 /// </summary>
 public static class ServiceCollectionExtensions
 {

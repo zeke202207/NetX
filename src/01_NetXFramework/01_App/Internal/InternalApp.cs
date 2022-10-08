@@ -26,4 +26,24 @@ internal class InternalApp
     /// 用户组件模块设置项
     /// </summary>
     internal static List<ModuleOptions> UserModeulOptions = new List<ModuleOptions>();
+
+    /// <summary>
+    /// 系统组件模块
+    /// </summary>
+    internal static ModuleOptions FrameworkModuleOptions
+    {
+        get
+        {
+            return new ModuleOptions()
+            {
+                Id = ModuleSetupConst.C_SERVERHOST_MODULE_ID,
+                Enabled = true,
+                Dependencies = new List<string>(),
+                IsSharedAssemblyContext = true,
+                Description = ModuleSetupConst.C_MODULE_FRAMEWORK_DESC,
+                Name = ModuleSetupConst.C_MODULE_FRAMEWORK_NAME,
+                Version = ModuleSetupConst.C_MODULE_FRAMEWORK_VERSION
+            };
+        }
+    }
 }

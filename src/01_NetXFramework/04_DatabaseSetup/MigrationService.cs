@@ -4,6 +4,7 @@ using FluentMigrator.Runner.Processors;
 using FluentMigrator.Runner.Processors.MySql;
 using FluentMigrator.Runner.VersionTableInfo;
 using Microsoft.Extensions.DependencyInjection;
+using NetX.Cache.Core;
 using NetX.Tenants;
 using System.Collections.Concurrent;
 
@@ -14,20 +15,28 @@ namespace NetX.DatabaseSetup;
 /// </summary>
 public class MigrationService
 {
-    private IServiceCollection _services;
-    private readonly int _commandTimeout = 300;
     private readonly MigrationSupportDbType _supportDbType;
-    private readonly HashSet<string> _migrationTenandIds = new HashSet<string>();
+    private readonly ICacheProvider _cacheProvider;
+    private readonly DbFactoryBase _dbFactory;
+    private IMigrationRunner _runner;
 
     /// <summary>
     /// 数据迁移服务实例
     /// </summary>
-    /// <param name="services"></param>
     /// <param name="supportDbType"></param>
-    public MigrationService(IServiceCollection services, MigrationSupportDbType supportDbType)
+    /// <param name="cacheProvider"></param>
+    /// <param name="dbFactories"></param>
+    /// <param name="runner"></param>
+    public MigrationService(
+        MigrationSupportDbType supportDbType,
+        ICacheProvider cacheProvider,
+        IEnumerable<DbFactoryBase> dbFactories,
+        IMigrationRunner runner)
     {
-        _services = services;
-        _supportDbType = supportDbType;
+        this._supportDbType = supportDbType;
+        this._cacheProvider = cacheProvider;
+        this._dbFactory = GetDbFactoryBase(dbFactories);
+        this._runner = runner;
     }
 
     /// <summary>
@@ -36,13 +45,28 @@ public class MigrationService
     /// <returns></returns>
     public bool SetupDatabase(string tenandId)
     {
-        if (_migrationTenandIds.Contains(tenandId))
+        if (_cacheProvider.Exists(CacheKeys.DATABASESETUP_TENANT_ID))
             return true;
-        _migrationTenandIds.Add(tenandId);
+        _cacheProvider.Set(CacheKeys.DATABASESETUP_TENANT_ID, tenandId);
         var result = CraeteDatabase() && MigrationTables();
-        if(!result)
-            _migrationTenandIds.Remove(tenandId);
+        if (!result)
+            _cacheProvider.Remove(tenandId);
         return result;
+    }
+
+    /// <summary>
+    /// 获取数据库连接工厂
+    /// </summary>
+    /// <param name="dbFactories"></param>
+    /// <returns></returns>
+    private DbFactoryBase GetDbFactoryBase(IEnumerable<DbFactoryBase> dbFactories)
+    {
+        switch(this._supportDbType)
+        {
+            case MigrationSupportDbType.MySql5:
+            default:
+                return dbFactories.FirstOrDefault(p => p.GetType().Equals(typeof(MySqlDbFactory)));
+        }
     }
 
     /// <summary>
@@ -52,50 +76,29 @@ public class MigrationService
     {
         try
         {
-            var serviceProvider = _services.BuildServiceProvider(false);
-            using (var scope = serviceProvider.CreateScope())
+            //创建数据库
+            using (var conn = this._dbFactory?.Factory.CreateConnection())
             {
-                var dbFactory = GetDatabaseFactory(serviceProvider);
+                if (null == conn)
+                    return false;
+                conn.ConnectionString = TenantContext.CurrentTenant.CreateSchemaConnectionStr;
+                if (conn.State != System.Data.ConnectionState.Open)
+                    conn.Open();
+                var cmd = conn.CreateCommand();
+                cmd.CommandText = QueryDatabaseSql();
+                var result = cmd.ExecuteScalar();
+                if (null != result)
+                    return true;
                 //创建数据库
-                using (var conn = dbFactory?.Factory.CreateConnection())
-                {
-                    if (null == conn)
-                        return false;
-                    conn.ConnectionString = TenantContext.CurrentTenant.CreateSchemaConnectionStr;
-                    if (conn.State != System.Data.ConnectionState.Open)
-                        conn.Open();
-                    var cmd = conn.CreateCommand();
-                    cmd.CommandText = QueryDatabaseSql();
-                    var result = cmd.ExecuteScalar();
-                    if (null != result)
-                        return true;
-                    //创建数据库
-                    cmd.CommandText = CreateDatabaseSql();
-                    cmd.ExecuteNonQuery();
-                }
-                return true;
+                cmd.CommandText = CreateDatabaseSql();
+                cmd.ExecuteNonQuery();
             }
+            return true;
+
         }
         catch (Exception ex)
         {
             throw new Exception("创建数据库失败", ex);
-        }
-    }
-
-    /// <summary>
-    /// 获取数据库连接工厂
-    /// </summary>
-    /// <param name="serviceProvider"></param>
-    /// <returns></returns>
-    private ReflectionBasedDbFactory? GetDatabaseFactory(IServiceProvider serviceProvider)
-    {
-        if (null == serviceProvider)
-            return null;
-        switch (_supportDbType)
-        {
-            case MigrationSupportDbType.MySql5:
-            default:
-                return serviceProvider.GetService<MySqlDbFactory>();
         }
     }
 
@@ -133,44 +136,14 @@ public class MigrationService
     /// <returns></returns>
     private bool MigrationTables()
     {
-        var reads = new List<IConnectionStringReader>() { new TenantConnectionStringReader() };
-        var options = new TenantProcessorOptions();
-        var selectingProcessorAccessor = new ConnectionStringAccessor(options, new TenantSelectingProcessorAccessorOptions(), reads);
-        _services.AddScoped<IConnectionStringAccessor>(sp => { return selectingProcessorAccessor; });
-        _services.AddScoped<IVersionTableMetaData>(sp => { return new TenantMigrationVersionTable(); });
-        _services.ConfigureRunner(rb => rb.WithGlobalCommandTimeout(TimeSpan.FromSeconds(_commandTimeout)));
-        var serviceProvider = _services.BuildServiceProvider(false);        
-        using (var scope = serviceProvider.CreateScope())
+        try
         {
-            var profileLoader = serviceProvider.GetService(typeof(IProfileLoader)) as IProfileLoader;
-            var processorAccessor = serviceProvider.GetService(typeof(IProcessorAccessor)) as IProcessorAccessor;
-            var maintenanceLoader = serviceProvider.GetService(typeof(IMaintenanceLoader)) as IMaintenanceLoader;
-            var migrationLoader = serviceProvider.GetService(typeof(IMigrationInformationLoader)) as IMigrationInformationLoader;
-            var migrationRunnerConventionsAccessor = serviceProvider.GetService(typeof(IMigrationRunnerConventionsAccessor)) as IMigrationRunnerConventionsAccessor;
-            var runner = new MigrationRunner(
-                new TenantRunnerOptions(),
-                options,
-                profileLoader,
-                processorAccessor,
-                maintenanceLoader,
-                migrationLoader,
-                new MigrationRunnerLogger(),
-                new StopWatch(),
-                migrationRunnerConventionsAccessor,
-                new MigrationAssemblySource(),
-                new MigrationValidator(new MigrationValidatorlogger(), new DefaultConventionSet()),
-                serviceProvider
-                );
-
-            try
-            {
-                runner.MigrateUp();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("数据库迁移失败", ex);
-            }
+            this._runner.MigrateUp();
+            return true;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("数据库迁移失败", ex);
         }
     }
 }

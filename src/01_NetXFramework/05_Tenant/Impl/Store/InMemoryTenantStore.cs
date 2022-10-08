@@ -63,7 +63,7 @@ internal class InMemoryTenantProvider
         var config = ServiceLocator.Instance.GetService<IConfiguration>();
         if (null == config)
             return;
-        var tenants = config.GetSection("tenants").Get<Tenant[]>();
+        var tenants = config.GetSection(TenantConst.C_TENANT_CONFIG_TENANTS).Get<Tenant[]>();
         if (tenants != null && tenants.Length > 0)
             Tenants.AddRange(tenants);
     }
