@@ -8,7 +8,7 @@ namespace NetX.RBAC.Controllers;
 /// </summary>
 [ApiController]
 [Route("api/[controller]/[action]")]
-public abstract class SystemManagerBaseController : ApiPermissionController
+public abstract class RBACBaseController : ApiPermissionController
 {
 
 }

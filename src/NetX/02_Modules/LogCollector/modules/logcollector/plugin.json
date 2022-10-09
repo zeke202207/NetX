@@ -1,0 +1,9 @@
+{
+  "Id": "10000000000000000000000000000002",
+  "Name": "logcollector",
+  "Version": "1.0.0.0",
+  "Enabled": true,
+  "FileName": "NetX.LogCollector.dll",
+  "IsSharedAssemblyContext": true,
+  "Description": "netx实现的系统日志采集模块，包含系统日志，审计等"
+}

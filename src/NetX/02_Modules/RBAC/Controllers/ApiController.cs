@@ -15,7 +15,7 @@ namespace NetX.RBAC.Controllers;
 /// 
 /// </summary>
 [ApiControllerDescription("RBAC", Description = "NetX实现的系统管理模块->接口管理")]
-public class ApiController : SystemManagerBaseController
+public class ApiController : RBACBaseController
 {
     private IApiService _apiService;
 

@@ -43,7 +43,7 @@ public class DeptService : BaseService, IDeptService
             id = base.CreateId(),
             createtime = base.CreateInsertTime(),
             deptname = model.DeptName,
-            parentid = string.IsNullOrWhiteSpace(model.ParentId) ? SystemManagerConst.C_ROOT_ID : model.ParentId,
+            parentid = string.IsNullOrWhiteSpace(model.ParentId) ? RBACConst.C_ROOT_ID : model.ParentId,
             orderno = model.OrderNo,
             status = int.Parse(model.Status),
             remark = model.Remark
@@ -62,7 +62,7 @@ public class DeptService : BaseService, IDeptService
     {
         var deptEntity = await _deptRepository.Select.Where(p => p.id.Equals(model.Id)).FirstAsync();
         deptEntity.deptname = model.DeptName;
-        deptEntity.parentid = string.IsNullOrWhiteSpace(model.ParentId) ? SystemManagerConst.C_ROOT_ID : model.ParentId;
+        deptEntity.parentid = string.IsNullOrWhiteSpace(model.ParentId) ? RBACConst.C_ROOT_ID : model.ParentId;
         deptEntity.orderno = model.OrderNo;
         deptEntity.status = int.Parse(model.Status);
         deptEntity.remark = model.Remark;
@@ -91,7 +91,7 @@ public class DeptService : BaseService, IDeptService
     public async Task<ResultModel<List<DeptModel>>> GetDeptList([FromQuery] DeptListParam queryParam)
     {
         var depts = await _deptRepository.Select.ToListAsync();
-        var result = ToTree(this._mapper.Map<List<DeptModel>>(depts), SystemManagerConst.C_ROOT_ID);
+        var result = ToTree(this._mapper.Map<List<DeptModel>>(depts), RBACConst.C_ROOT_ID);
         return base.Success<List<DeptModel>>(result);
     }
 

@@ -26,81 +26,6 @@
             背景色
             </summary>
         </member>
-        <member name="T:NetX.Logging.LogContext">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="T:NetX.Logging.LogMessage">
-            <summary>
-            日志实体类
-            </summary>
-        </member>
-        <member name="M:NetX.Logging.LogMessage.#ctor(System.String,Microsoft.Extensions.Logging.LogLevel,Microsoft.Extensions.Logging.EventId,System.String,System.Exception,NetX.Logging.LogContext,System.Object,System.DateTime,System.Int32)">
-            <summary>
-            日志对象实例
-            </summary>
-            <param name="logName">记录器类别名称</param>
-            <param name="logLevel">日志级别</param>
-            <param name="eventId">事件 Id</param>
-            <param name="message">日志消息</param>
-            <param name="exception">异常对象</param>
-            <param name="context">日志上下文</param>
-            <param name="state"></param>
-            <param name="logDateTime">日志记录时间</param>
-            <param name="threadId">线程id</param>
-        </member>
-        <member name="F:NetX.Logging.LogMessage.LogName">
-            <summary>
-            记录器类别名称
-            </summary>
-        </member>
-        <member name="F:NetX.Logging.LogMessage.LogLevel">
-            <summary>
-            日志级别
-            </summary>
-        </member>
-        <member name="F:NetX.Logging.LogMessage.EventId">
-            <summary>
-            事件 Id
-            </summary>
-        </member>
-        <member name="P:NetX.Logging.LogMessage.Message">
-            <summary>
-            日志消息
-            </summary>
-        </member>
-        <member name="F:NetX.Logging.LogMessage.Exception">
-            <summary>
-            异常对象
-            </summary>
-        </member>
-        <member name="F:NetX.Logging.LogMessage.State">
-            <summary>
-            状态
-            </summary>
-        </member>
-        <member name="F:NetX.Logging.LogMessage.LogDateTime">
-            <summary>
-            日志记录时间
-            </summary>
-        </member>
-        <member name="F:NetX.Logging.LogMessage.ThreadId">
-            <summary>
-            线程 Id
-            </summary>
-        </member>
-        <member name="F:NetX.Logging.LogMessage.Context">
-            <summary>
-            日志上下文
-            </summary>
-        </member>
-        <member name="M:NetX.Logging.LogMessage.ToString">
-            <summary>
-            重写默认输出
-            </summary>
-            <returns></returns>
-        </member>
         <member name="T:NetX.Logging.NetXLogger">
             <summary>
             数据库日志记录器
@@ -262,7 +187,6 @@
             <summary>
             释放托管资源
             </summary>
-            <exception cref="T:System.NotImplementedException"></exception>
         </member>
         <member name="M:NetX.Logging.NetXLoggerProvider.WriteToQueue(NetX.Logging.LogMessage)">
             <summary>
@@ -382,6 +306,87 @@
             写入日志
             </summary>
             <param name="message"></param>
+        </member>
+        <member name="T:NetX.Logging.LogContext">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.Logging.LogMessage">
+            <summary>
+            日志实体类
+            </summary>
+        </member>
+        <member name="M:NetX.Logging.LogMessage.#ctor(System.String,Microsoft.Extensions.Logging.LogLevel,Microsoft.Extensions.Logging.EventId,System.String,System.Exception,NetX.Logging.LogContext,System.Object,System.DateTime,System.Int32,System.String)">
+            <summary>
+            日志对象实例
+            </summary>
+            <param name="logName">记录器类别名称</param>
+            <param name="logLevel">日志级别</param>
+            <param name="eventId">事件 Id</param>
+            <param name="message">日志消息</param>
+            <param name="exception">异常对象</param>
+            <param name="context">日志上下文</param>
+            <param name="state"></param>
+            <param name="logDateTime">日志记录时间</param>
+            <param name="threadId">线程id</param>
+            <param name="tenandId"></param>
+        </member>
+        <member name="F:NetX.Logging.LogMessage.TenandId">
+            <summary>
+            租户唯一标识
+            </summary>
+        </member>
+        <member name="F:NetX.Logging.LogMessage.LogName">
+            <summary>
+            记录器类别名称
+            </summary>
+        </member>
+        <member name="F:NetX.Logging.LogMessage.LogLevel">
+            <summary>
+            日志级别
+            </summary>
+        </member>
+        <member name="F:NetX.Logging.LogMessage.EventId">
+            <summary>
+            事件 Id
+            </summary>
+        </member>
+        <member name="P:NetX.Logging.LogMessage.Message">
+            <summary>
+            日志消息
+            </summary>
+        </member>
+        <member name="F:NetX.Logging.LogMessage.Exception">
+            <summary>
+            异常对象
+            </summary>
+        </member>
+        <member name="F:NetX.Logging.LogMessage.State">
+            <summary>
+            状态
+            </summary>
+        </member>
+        <member name="F:NetX.Logging.LogMessage.LogDateTime">
+            <summary>
+            日志记录时间
+            </summary>
+        </member>
+        <member name="F:NetX.Logging.LogMessage.ThreadId">
+            <summary>
+            线程 Id
+            </summary>
+        </member>
+        <member name="F:NetX.Logging.LogMessage.Context">
+            <summary>
+            日志上下文
+            </summary>
+        </member>
+        <member name="M:NetX.Logging.LogMessage.ToString">
+            <summary>
+            重写默认输出
+            </summary>
+            <returns></returns>
         </member>
         <member name="T:NetX.Logging.Penetrates">
             <summary>

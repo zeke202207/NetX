@@ -12,7 +12,7 @@ namespace NetX.RBAC.Controllers;
 /// 菜单管理api接口
 /// </summary>
 [ApiControllerDescription("RBAC", Description = "NetX实现的系统管理模块->菜单管理")]
-public class MenuController : SystemManagerBaseController
+public class MenuController : RBACBaseController
 {
     private IMenuService _menuService;
 

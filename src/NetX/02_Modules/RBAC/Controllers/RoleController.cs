@@ -10,7 +10,7 @@ namespace NetX.RBAC.Controllers;
 /// 角色管理api接口
 /// </summary>
 [ApiControllerDescription("RBAC", Description = "NetX实现的系统管理模块->角色管理")]
-public class RoleController : SystemManagerBaseController
+public class RoleController : RBACBaseController
 {
     private IRoleService _roleService;
 

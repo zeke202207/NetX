@@ -10,7 +10,7 @@ namespace NetX.RBAC.Controllers;
 /// 部门管理api接口
 /// </summary>
 [ApiControllerDescription("RBAC", Description = "NetX实现的系统管理模块->部门管理")]
-public class DeptController : SystemManagerBaseController
+public class DeptController : RBACBaseController
 {
     private readonly IDeptService _deptService;
 

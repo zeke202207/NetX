@@ -91,6 +91,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetX.Cache.Core", "01_NetXF
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetX.InMemoryCache", "01_NetXFramework\09_Cache\MemoryCache\NetX.InMemoryCache.csproj", "{BD24C9EC-4F8A-41CD-9545-40307588BAC2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetX.LogCollector", "NetX\02_Modules\LogCollector\NetX.LogCollector.csproj", "{021889C7-0BA6-4258-9A83-9171420D0A31}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -177,6 +179,10 @@ Global
 		{BD24C9EC-4F8A-41CD-9545-40307588BAC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD24C9EC-4F8A-41CD-9545-40307588BAC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD24C9EC-4F8A-41CD-9545-40307588BAC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{021889C7-0BA6-4258-9A83-9171420D0A31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{021889C7-0BA6-4258-9A83-9171420D0A31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{021889C7-0BA6-4258-9A83-9171420D0A31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{021889C7-0BA6-4258-9A83-9171420D0A31}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -221,6 +227,7 @@ Global
 		{F90B11CE-F64E-42B6-9D66-C578527B1DDA} = {54205D67-3381-4BF0-B639-FD721793413F}
 		{4D599D85-D653-4EBE-A77D-91E44DA456FA} = {F90B11CE-F64E-42B6-9D66-C578527B1DDA}
 		{BD24C9EC-4F8A-41CD-9545-40307588BAC2} = {F90B11CE-F64E-42B6-9D66-C578527B1DDA}
+		{021889C7-0BA6-4258-9A83-9171420D0A31} = {0E0C7D85-52A6-4139-A6A2-A4095C8B47C6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E8782471-74F4-48CA-9551-1D4CF94CA9CC}

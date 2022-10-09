@@ -1,16 +1,25 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using NetX.Common;
 using NetX.DatabaseSetup;
+using NetX.LogCollector.Core;
+using NetX.Logging;
 using NetX.Module;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace NetX.RBAC;
+namespace NetX.LogCollector;
 
-internal class SystemManagerInitializer : ModuleInitializer
+/// <summary>
+/// 日志采集器入口类
+/// </summary>
+internal class LogCollectorInitializer : ModuleInitializer
 {
-    public override Guid Key => new Guid("10000000000000000000000000000001");
+    public override Guid Key => new Guid("10000000000000000000000000000002");
 
     public override ModuleType ModuleType => ModuleType.UserModule;
 
@@ -23,9 +32,12 @@ internal class SystemManagerInitializer : ModuleInitializer
     {
         //注入mapper
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-        //注入加密算法
-        services.AddSingleton<IEncryption, MD5>();
         //code first
         services.AddMigratorAssembly(new Assembly[] { Assembly.GetExecutingAssembly() });
+        //add log
+        services.AddDatabaseLogging<DatabaseLoggingWriter>(p =>
+        {
+            p.MinimumLevel = Microsoft.Extensions.Logging.LogLevel.Trace;
+        });
     }
 }

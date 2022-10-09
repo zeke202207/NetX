@@ -81,7 +81,7 @@ public class MenuService : BaseService, IMenuService
     public async Task<ResultModel<List<MenuModel>>> GetCurrentUserMenuList(string userId)
     {
         var menus = await ((SysMenuRepository)_menuRepository).GetCurrentUserMenuListAsync(userId);
-        var result = ToTree(this._mapper.Map<List<MenuModel>>(menus), SystemManagerConst.C_ROOT_ID);
+        var result = ToTree(this._mapper.Map<List<MenuModel>>(menus), RBACConst.C_ROOT_ID);
         return base.Success<List<MenuModel>>(result);
     }
 
@@ -97,7 +97,7 @@ public class MenuService : BaseService, IMenuService
            .WhereIf(int.TryParse(param.Status, out int _), p => p.status == int.Parse(param.Status))
            .Page(param.Page, param.PageSize)
            .ToListAsync();
-        var result = ToTree(this._mapper.Map<List<MenuModel>>(menus), SystemManagerConst.C_ROOT_ID);
+        var result = ToTree(this._mapper.Map<List<MenuModel>>(menus), RBACConst.C_ROOT_ID);
         return base.Success<List<MenuModel>>(result);
     }
 
@@ -133,7 +133,7 @@ public class MenuService : BaseService, IMenuService
     {
         var menuType = GetMenuType(int.Parse(model.Type));
         var menuEntity = this._mapper.Map<sys_menu>(model);
-        menuEntity.parentid = string.IsNullOrWhiteSpace(model.ParentId) ? SystemManagerConst.C_ROOT_ID : model.ParentId;
+        menuEntity.parentid = string.IsNullOrWhiteSpace(model.ParentId) ? RBACConst.C_ROOT_ID : model.ParentId;
         menuEntity.component = (Ext)model.IsExt == Ext.Yes ?
             "IFrame" : menuType == MenuType.Dir ?
             "LAYOUT" : string.IsNullOrWhiteSpace(model.Component) ? "" : model.Component;

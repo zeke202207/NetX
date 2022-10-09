@@ -1,6 +1,6 @@
 ﻿namespace NetX.RBAC;
 
-internal class SystemManagerConst
+internal class RBACConst
 {
     /// <summary>
     /// 树跟节点编号
@@ -10,7 +10,7 @@ internal class SystemManagerConst
     /// <summary>
     /// 权限缓存key
     /// </summary>
-    public const string C_SYSTEM_MANAGER_PERMISSION_CACHEKEY = "SYSTEMMANAGER:PERMISSION:ROLEID:";
+    public const string C_RBAC_PERMISSION_CACHEKEY = "RBAC:PERMISSION:ROLEID:";
 }
 
 /// <summary>

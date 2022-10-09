@@ -78,7 +78,7 @@ public static class LoggingBuilderExtensions
         if (netXLoggerProvider == default)
             return builder;
         // 注册数据库日志记录器提供器
-        builder.Services.AddSingleton<ILoggerProvider, NetXLoggerProvider>((serviceProvider) =>
+        builder.Services.AddTransient<ILoggerProvider, NetXLoggerProvider>((serviceProvider) =>
         {
             // 解决数据库写入器中循环引用数据库仓储问题
             if (netXLoggerProvider._serviceScope == null)

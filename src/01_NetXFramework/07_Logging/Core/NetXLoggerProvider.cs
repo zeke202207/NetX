@@ -68,10 +68,14 @@ public sealed class NetXLoggerProvider : ILoggerProvider
     /// <summary>
     /// 释放托管资源
     /// </summary>
-    /// <exception cref="NotImplementedException"></exception>
     public void Dispose()
     {
-        throw new NotImplementedException();
+        // 标记日志消息队列停止写入
+        _logMessageQueue.CompleteAdding();
+        // 清空数据库日志记录器
+        _databaseLoggers.Clear();
+        // 释放数据库写入器作用域范围
+        _serviceScope?.Dispose();
     }
 
     /// <summary>
@@ -102,13 +106,10 @@ public sealed class NetXLoggerProvider : ILoggerProvider
     {
         // 解析服务作用域工厂服务
         var serviceScopeFactory = serviceProvider.GetRequiredService<IServiceScopeFactory>();
-
         // 创建服务作用域
         _serviceScope = serviceScopeFactory.CreateScope();
-
         // 基于当前作用域创建数据库日志写入器
         _databaseLoggingWriter = _serviceScope.ServiceProvider.GetRequiredService(databaseLoggingWriterType) as ILoggingWriter;
-
         // 创建长时间运行的后台任务，并将日志消息队列中数据写入存储中
         _processQueueTask = Task.Factory.StartNew(state => ((NetXLoggerProvider)state).ProcessQueue()
             , this, TaskCreationOptions.LongRunning);

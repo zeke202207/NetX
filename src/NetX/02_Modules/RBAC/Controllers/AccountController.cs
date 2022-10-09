@@ -12,7 +12,7 @@ namespace NetX.RBAC.Controllers;
 /// 账号管理api接口
 /// </summary>
 [ApiControllerDescription("RBAC", Description = "NetX实现的系统管理模块->账号管理")]
-public class AccountController : SystemManagerBaseController
+public class AccountController : RBACBaseController
 {
     private readonly IAccountService _accoutService;
 
@@ -34,6 +34,7 @@ public class AccountController : SystemManagerBaseController
     [HttpPost]
     public async Task<ResultModel<LoginResult>> Login(LoginModel model)
     {
+        throw new Exception("hi,zeke");
         return await _accoutService.Login(model.UserName, model.Password);
     }
 

@@ -1,0 +1,233 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>NetX.LogCollector</name>
+    </assembly>
+    <members>
+        <member name="T:NetX.LogCollector.Core.BaseService">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.LogCollector.Core.BaseService.CreateId">
+            <summary>
+            统一id生成器
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.LogCollector.Core.BaseService.CreateInsertTime">
+            <summary>
+            统一时间生成器
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.LogCollector.Core.BaseService.SerializeObject``1(``0)">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NetX.LogCollector.Core.DatabaseLoggingWriter">
+            <summary>
+            数据库日志记录器
+            </summary>
+        </member>
+        <member name="M:NetX.LogCollector.Core.DatabaseLoggingWriter.#ctor(FreeSql.IBaseRepository{NetX.LogCollector.Models.sys_logging},IFreeSql)">
+            <summary>
+            
+            </summary>
+            <param name="logRepository"></param>
+            <param name="freeSql"></param>
+        </member>
+        <member name="M:NetX.LogCollector.Core.DatabaseLoggingWriter.Write(NetX.Logging.LogMessage)">
+            <summary>
+            记录日志
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="T:NetX.LogCollector.DatabaseSetup.CreateTable.AuditLogTable">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.LogCollector.DatabaseSetup.CreateTable.AuditLogTable.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.LogCollector.DatabaseSetup.CreateTable.AuditLogTable.Up">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.LogCollector.DatabaseSetup.CreateTable.LoggingTable">
+            <summary>
+            系统日志表
+            </summary>
+        </member>
+        <member name="M:NetX.LogCollector.DatabaseSetup.CreateTable.LoggingTable.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.LogCollector.DatabaseSetup.CreateTable.LoggingTable.Up">
+            <summary>
+            
+            </summary>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="T:NetX.LogCollector.DatabaseSetup.CreateTable.LoginLoggingTable">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.LogCollector.DatabaseSetup.CreateTable.LoginLoggingTable.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.LogCollector.DatabaseSetup.CreateTable.LoginLoggingTable.Up">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.LogCollector.Data.Repositories.SysLoggingRepository">
+            <summary>
+            系统日志仓储
+            </summary>
+        </member>
+        <member name="M:NetX.LogCollector.Data.Repositories.SysLoggingRepository.#ctor(IFreeSql)">
+            <summary>
+            logging 仓储对象实例
+            </summary>
+            <param name="fsql"></param>
+        </member>
+        <member name="T:NetX.LogCollector.LogCollectorInitializer">
+            <summary>
+            日志采集器入口类
+            </summary>
+        </member>
+        <member name="T:NetX.LogCollector.Models.BaseEntity">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.LogCollector.Models.BaseEntity.id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.LogCollector.Models.BaseEntity.createtime">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.LogCollector.Models.sys_audit_logging">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.LogCollector.Models.sys_audit_logging.userid">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.LogCollector.Models.sys_audit_logging.nickname">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.LogCollector.Models.sys_audit_logging.operation">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.LogCollector.Models.sys_audit_logging.requestparams">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.LogCollector.Models.sys_audit_logging.ip">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.LogCollector.Models.sys_audit_logging.response">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.LogCollector.Models.sys_audit_logging.influencedata">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.LogCollector.Models.sys_logging">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.LogCollector.Models.sys_logging.name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.LogCollector.Models.sys_logging.level">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.LogCollector.Models.sys_logging.eventid">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.LogCollector.Models.sys_logging.message">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.LogCollector.Models.sys_logging.exception">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.LogCollector.Models.sys_logging.context">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.LogCollector.Models.sys_logging.state">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.LogCollector.Models.sys_logging.threadid">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.LogCollector.Models.sys_login_logging">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.LogCollector.Models.sys_login_logging.userid">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.LogCollector.Models.sys_login_logging.nickname">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.LogCollector.Models.sys_login_logging.ip">
+            <summary>
+            
+            </summary>
+        </member>
+    </members>
+</doc>
