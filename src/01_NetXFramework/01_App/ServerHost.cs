@@ -52,7 +52,7 @@ public static class ServerHost
         //所有模块数据库迁移配置完毕，注入数据库迁移
         builder.Services.BuildFluentMigrator();
         //添加日志
-        builder.Host.UseLogging(LoggingType.Serilog);
+        //builder.Host.UseLogging(LoggingType.Serilog);
         //Cache
         AddCaches(builder.Services);
         var app = builder.Build();

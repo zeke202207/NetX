@@ -187,12 +187,6 @@
             <param name="context"></param>
             <returns></returns>
         </member>
-        <member name="M:NetX.App.TenantContextFilter.OnResourceExecuted(Microsoft.AspNetCore.Mvc.Filters.ResourceExecutedContext)">
-            <summary>
-            
-            </summary>
-            <param name="context"></param>
-        </member>
         <member name="P:NetX.App.InternalApp.RootServices">
             <summary>
             根服务

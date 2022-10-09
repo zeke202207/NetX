@@ -4,29 +4,457 @@
         <name>NetX.Logging</name>
     </assembly>
     <members>
-        <member name="T:NetX.Logging.LoggingHostBuilderExtensions">
+        <member name="T:NetX.Logging.ConsoleColors">
+            <summary>
+            控制台颜色结构
+            </summary>
+        </member>
+        <member name="M:NetX.Logging.ConsoleColors.#ctor(System.Nullable{System.ConsoleColor},System.Nullable{System.ConsoleColor})">
+            <summary>
+            构造函数
+            </summary>
+            <param name="foreground"></param>
+            <param name="background"></param>
+        </member>
+        <member name="P:NetX.Logging.ConsoleColors.Foreground">
+            <summary>
+            前景色
+            </summary>
+        </member>
+        <member name="P:NetX.Logging.ConsoleColors.Background">
+            <summary>
+            背景色
+            </summary>
+        </member>
+        <member name="T:NetX.Logging.LogContext">
             <summary>
             
             </summary>
         </member>
-        <member name="M:NetX.Logging.LoggingHostBuilderExtensions.UseLogging(Microsoft.Extensions.Hosting.IHostBuilder,NetX.Logging.LoggingType)">
+        <member name="T:NetX.Logging.LogMessage">
             <summary>
-            
+            日志实体类
             </summary>
-            <param name="builder"></param>
-            <param name="logType"></param>
+        </member>
+        <member name="M:NetX.Logging.LogMessage.#ctor(System.String,Microsoft.Extensions.Logging.LogLevel,Microsoft.Extensions.Logging.EventId,System.String,System.Exception,NetX.Logging.LogContext,System.Object,System.DateTime,System.Int32)">
+            <summary>
+            日志对象实例
+            </summary>
+            <param name="logName">记录器类别名称</param>
+            <param name="logLevel">日志级别</param>
+            <param name="eventId">事件 Id</param>
+            <param name="message">日志消息</param>
+            <param name="exception">异常对象</param>
+            <param name="context">日志上下文</param>
+            <param name="state"></param>
+            <param name="logDateTime">日志记录时间</param>
+            <param name="threadId">线程id</param>
+        </member>
+        <member name="F:NetX.Logging.LogMessage.LogName">
+            <summary>
+            记录器类别名称
+            </summary>
+        </member>
+        <member name="F:NetX.Logging.LogMessage.LogLevel">
+            <summary>
+            日志级别
+            </summary>
+        </member>
+        <member name="F:NetX.Logging.LogMessage.EventId">
+            <summary>
+            事件 Id
+            </summary>
+        </member>
+        <member name="P:NetX.Logging.LogMessage.Message">
+            <summary>
+            日志消息
+            </summary>
+        </member>
+        <member name="F:NetX.Logging.LogMessage.Exception">
+            <summary>
+            异常对象
+            </summary>
+        </member>
+        <member name="F:NetX.Logging.LogMessage.State">
+            <summary>
+            状态
+            </summary>
+        </member>
+        <member name="F:NetX.Logging.LogMessage.LogDateTime">
+            <summary>
+            日志记录时间
+            </summary>
+        </member>
+        <member name="F:NetX.Logging.LogMessage.ThreadId">
+            <summary>
+            线程 Id
+            </summary>
+        </member>
+        <member name="F:NetX.Logging.LogMessage.Context">
+            <summary>
+            日志上下文
+            </summary>
+        </member>
+        <member name="M:NetX.Logging.LogMessage.ToString">
+            <summary>
+            重写默认输出
+            </summary>
             <returns></returns>
-            <exception cref="T:System.NotSupportedException"></exception>
         </member>
-        <member name="T:NetX.Logging.LoggingType">
+        <member name="T:NetX.Logging.NetXLogger">
             <summary>
-            日志类型
+            数据库日志记录器
+            </summary>
+            <remarks>https://docs.microsoft.com/zh-cn/dotnet/core/extensions/custom-logging-provider</remarks>
+        </member>
+        <member name="F:NetX.Logging.NetXLogger.ExcludesOfLogCategoryName">
+            <summary>
+            排除日志分类名
+            </summary>
+            <remarks>避免数据库日志死循环</remarks>
+        </member>
+        <member name="F:NetX.Logging.NetXLogger._logName">
+            <summary>
+            记录器类别名称
             </summary>
         </member>
-        <member name="F:NetX.Logging.LoggingType.Serilog">
+        <member name="F:NetX.Logging.NetXLogger._databaseLoggerProvider">
+            <summary>
+            数据库记录器提供器
+            </summary>
+        </member>
+        <member name="F:NetX.Logging.NetXLogger._options">
+            <summary>
+            日志配置选项
+            </summary>
+        </member>
+        <member name="P:NetX.Logging.NetXLogger.Context">
+            <summary>
+            日志上下文
+            </summary>
+        </member>
+        <member name="M:NetX.Logging.NetXLogger.#ctor(System.String,NetX.Logging.NetXLoggerProvider)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="logName">记录器类别名称</param>
+            <param name="databaseLoggerProvider">数据库记录器提供器</param>
+        </member>
+        <member name="M:NetX.Logging.NetXLogger.BeginScope``1(``0)">
+            <summary>
+            开始逻辑操作范围
+            </summary>
+            <typeparam name="TState">标识符类型参数</typeparam>
+            <param name="state">要写入的项/对象</param>
+            <returns><see cref="T:System.IDisposable"/></returns>
+        </member>
+        <member name="M:NetX.Logging.NetXLogger.IsEnabled(Microsoft.Extensions.Logging.LogLevel)">
+            <summary>
+            检查是否已启用给定日志级别
+            </summary>
+            <param name="logLevel">日志级别</param>
+            <returns><see cref="T:System.Boolean"/></returns>
+        </member>
+        <member name="M:NetX.Logging.NetXLogger.Log``1(Microsoft.Extensions.Logging.LogLevel,Microsoft.Extensions.Logging.EventId,``0,System.Exception,System.Func{``0,System.Exception,System.String})">
+            <summary>
+            写入日志项
+            </summary>
+            <typeparam name="TState">标识符类型参数</typeparam>
+            <param name="logLevel">日志级别</param>
+            <param name="eventId">事件 Id</param>
+            <param name="state">要写入的项/对象</param>
+            <param name="exception">异常对象</param>
+            <param name="formatter">日志格式化器</param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="T:NetX.Logging.NetXLoggerOptions">
+            <summary>
+            数据库记录器配置选项
+            </summary>
+        </member>
+        <member name="P:NetX.Logging.NetXLoggerOptions.WriteFilter">
+            <summary>
+            自定义日志筛选器
+            </summary>
+        </member>
+        <member name="P:NetX.Logging.NetXLoggerOptions.MinimumLevel">
+            <summary>
+            最低日志记录级别
+            </summary>
+        </member>
+        <member name="P:NetX.Logging.NetXLoggerOptions.MessageFormat">
+            <summary>
+            自定义日志消息格式化程序
+            </summary>
+        </member>
+        <member name="P:NetX.Logging.NetXLoggerOptions.HandleWriteError">
+            <summary>
+            自定义数据库日志写入错误程序
+            </summary>
+            <remarks>主要解决日志在写入过程出现异常问题</remarks>
+            <example>
+            options.HandleWriteError = (err) => {
+                // do anything
+            };
+            </example>
+        </member>
+        <member name="P:NetX.Logging.NetXLoggerOptions.UseUtcTimestamp">
+            <summary>
+            是否使用 UTC 时间戳，默认 false
+            </summary>
+        </member>
+        <member name="P:NetX.Logging.NetXLoggerOptions.DateFormat">
+            <summary>
+            日期格式化
+            </summary>
+        </member>
+        <member name="T:NetX.Logging.NetXLoggerProvider">
+            <summary>
+            数据库日志记录器提供程序
+            </summary>
+            <remarks>https://docs.microsoft.com/zh-cn/dotnet/core/extensions/custom-logging-provider</remarks>
+        </member>
+        <member name="F:NetX.Logging.NetXLoggerProvider._databaseLoggers">
+            <summary>
+            存储多日志类的日志记录器
+            </summary>
+        </member>
+        <member name="P:NetX.Logging.NetXLoggerProvider.LoggerOptions">
+            <summary>
+            数据库日志配置选项
+            </summary>
+        </member>
+        <member name="F:NetX.Logging.NetXLoggerProvider._logMessageQueue">
+            <summary>
+            日志消息队列（线程安全）
+            </summary>
+        </member>
+        <member name="F:NetX.Logging.NetXLoggerProvider._databaseLoggingWriter">
+            <summary>
+            数据库日志写入器
+            </summary>
+        </member>
+        <member name="F:NetX.Logging.NetXLoggerProvider._serviceScope">
+            <summary>
+            数据库日志写入器作用域范围
+            </summary>
+        </member>
+        <member name="F:NetX.Logging.NetXLoggerProvider._processQueueTask">
+            <summary>
+            长时间运行的后台任务
+            </summary>
+            <remarks>实现不间断写入</remarks>
+        </member>
+        <member name="M:NetX.Logging.NetXLoggerProvider.#ctor(NetX.Logging.NetXLoggerOptions)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="databaseLoggerOptions"></param>
+        </member>
+        <member name="M:NetX.Logging.NetXLoggerProvider.CreateLogger(System.String)">
             <summary>
             
             </summary>
+            <param name="categoryName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.Logging.NetXLoggerProvider.Dispose">
+            <summary>
+            释放托管资源
+            </summary>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:NetX.Logging.NetXLoggerProvider.WriteToQueue(NetX.Logging.LogMessage)">
+            <summary>
+            将日志消息写入队列中等待后台任务出队写入数据库
+            </summary>
+            <param name="logMsg">结构化日志消息</param>
+        </member>
+        <member name="M:NetX.Logging.NetXLoggerProvider.SetServiceProvider(System.IServiceProvider,System.Type)">
+            <summary>
+            设置服务提供器
+            </summary>
+            <param name="serviceProvider"></param>
+            <param name="databaseLoggingWriterType"></param>
+        </member>
+        <member name="M:NetX.Logging.NetXLoggerProvider.ProcessQueue">
+            <summary>
+            将日志消息写入数据库中
+            </summary>
+        </member>
+        <member name="M:NetX.Logging.NetXLoggerProvider.ClearScopeContext(System.String)">
+            <summary>
+            清空日志上下文
+            </summary>
+            <param name="categoryName"></param>
+        </member>
+        <member name="T:NetX.Logging.NetXWriteError">
+            <summary>
+            数据库写入错误信息上下文
+            </summary>
+        </member>
+        <member name="P:NetX.Logging.NetXWriteError.Exception">
+            <summary>
+            引发数据库写入异常信息
+            </summary>
+        </member>
+        <member name="T:NetX.Logging.LoggingBuilderExtensions">
+            <summary>
+            日志构建起扩展类
+            </summary>
+        </member>
+        <member name="M:NetX.Logging.LoggingBuilderExtensions.AddDatabase``1(Microsoft.Extensions.Logging.ILoggingBuilder,System.Action{NetX.Logging.NetXLoggerOptions})">
+            <summary>
+            添加数据库日志记录器
+            </summary>
+            <typeparam name="TLoggingWriter">实现自 <see cref="T:NetX.Logging.ILoggingWriter"/></typeparam>
+            <param name="builder">日志构建器</param>
+            <param name="configure">数据库日志记录器配置选项委托</param>
+            <returns><see cref="T:Microsoft.Extensions.Logging.ILoggingBuilder"/></returns>
+        </member>
+        <member name="M:NetX.Logging.LoggingBuilderExtensions.AddDatabase``1(Microsoft.Extensions.Logging.ILoggingBuilder,System.String,System.Action{NetX.Logging.NetXLoggerOptions})">
+            <summary>
+            添加数据库日志记录器
+            </summary>
+            <typeparam name="TDatabaseLoggingWriter">实现自 <see cref="T:NetX.Logging.ILoggingWriter"/></typeparam>
+            <param name="builder">日志构建器</param>
+            <param name="configuraionKey">配置文件对于的 Key</param>
+            <param name="configure">数据库日志记录器配置选项委托</param>
+            <returns><see cref="T:Microsoft.Extensions.Logging.ILoggingBuilder"/></returns>
+        </member>
+        <member name="M:NetX.Logging.LoggingBuilderExtensions.AddDatabase``1(Microsoft.Extensions.Logging.ILoggingBuilder,System.Func{System.String},System.Action{NetX.Logging.NetXLoggerOptions})">
+            <summary>
+            添加数据库日志记录器（从配置文件中）
+            </summary>
+            <typeparam name="TLoggingWriter">实现自 <see cref="T:NetX.Logging.ILoggingWriter"/></typeparam>
+            <param name="builder">日志构建器</param>
+            <param name="configuraionKey">获取配置文件对于的 Key</param>
+            <param name="configure">数据库日志记录器配置选项委托</param>
+            <returns><see cref="T:Microsoft.Extensions.Logging.ILoggingBuilder"/></returns>
+        </member>
+        <member name="M:NetX.Logging.LoggingBuilderExtensions.AddProvider``1(NetX.Logging.NetXLoggerProvider,Microsoft.Extensions.Logging.ILoggingBuilder)">
+            <summary>
+            注入日志提供器
+            </summary>
+            <typeparam name="TLoggingWriter"></typeparam>
+            <param name="netXLoggerProvider"></param>
+            <param name="builder"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NetX.Logging.LoggingServiceCollectionExtensions">
+            <summary>
+            日志访问扩展类
+            </summary>
+        </member>
+        <member name="M:NetX.Logging.LoggingServiceCollectionExtensions.AddDatabaseLogging``1(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{NetX.Logging.NetXLoggerOptions})">
+            <summary>
+            添加数据库日志服务
+            </summary>
+            <param name="services"></param>
+            <param name="configure">数据库日志记录器配置选项委托</param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.Logging.LoggingServiceCollectionExtensions.AddDatabaseLogging``1(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String,System.Action{NetX.Logging.NetXLoggerOptions})">
+            <summary>
+            添加数据库日志服务
+            </summary>
+            <param name="services"></param>
+            <param name="configuraionKey">配置文件对于的 Key</param>
+            <param name="configure">数据库日志记录器配置选项委托</param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.Logging.LoggingServiceCollectionExtensions.AddDatabaseLogging``1(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Func{System.String},System.Action{NetX.Logging.NetXLoggerOptions})">
+            <summary>
+            添加数据库日志服务
+            </summary>
+            <param name="services"></param>
+            <param name="configuraionKey">获取配置文件对于的 Key</param>
+            <param name="configure">数据库日志记录器配置选项委托</param>
+            <returns></returns>
+        </member>
+        <member name="T:NetX.Logging.ILoggingWriter">
+            <summary>
+            日志写入器
+            </summary>
+        </member>
+        <member name="M:NetX.Logging.ILoggingWriter.Write(NetX.Logging.LogMessage)">
+            <summary>
+            写入日志
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="T:NetX.Logging.Penetrates">
+            <summary>
+            常量、公共方法配置类
+            </summary>
+        </member>
+        <member name="F:NetX.Logging.Penetrates.EXCEPTION_SEPARATOR">
+            <summary>
+            异常分隔符
+            </summary>
+        </member>
+        <member name="M:NetX.Logging.Penetrates.CreateFromConfiguration(System.Func{System.String},System.Action{NetX.Logging.NetXLoggerOptions})">
+            <summary>
+            从配置文件中加载配置并创建数据库日志记录器提供程序
+            </summary>
+            <param name="configuraionKey">获取配置文件对应的 Key</param>
+            <param name="configure">数据库日志记录器配置选项委托</param>
+            <returns><see cref="T:NetX.Logging.NetXLoggerProvider"/></returns>
+        </member>
+        <member name="M:NetX.Logging.Penetrates.OutputStandardMessage(NetX.Logging.LogMessage,System.String,System.Boolean,System.Boolean)">
+            <summary>
+            输出标准日志消息
+            </summary>
+            <param name="logMsg"></param>
+            <param name="dateFormat"></param>
+            <param name="disableColors"></param>
+            <param name="isConsole"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.Logging.Penetrates.PadLeftAlign(System.String)">
+            <summary>
+            将日志内容进行对齐
+            </summary>
+            <param name="message"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.Logging.Penetrates.GetLogLevelString(Microsoft.Extensions.Logging.LogLevel)">
+            <summary>
+            获取日志级别短名称
+            </summary>
+            <param name="logLevel">日志级别</param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.Logging.Penetrates.AppendWithColor(System.Text.StringBuilder,System.String,NetX.Logging.ConsoleColors)">
+            <summary>
+            拓展 StringBuilder 增加带颜色写入
+            </summary>
+            <param name="message"></param>
+            <param name="colors"></param>
+            <param name="formatString"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.Logging.Penetrates.GetForegroundColorEscapeCode(System.ConsoleColor)">
+            <summary>
+            输出控制台字体颜色 UniCode 码
+            </summary>
+            <param name="color"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.Logging.Penetrates.GetBackgroundColorEscapeCode(System.ConsoleColor)">
+            <summary>
+            输出控制台背景颜色 UniCode 码
+            </summary>
+            <param name="color"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.Logging.Penetrates.GetLogLevelConsoleColors(Microsoft.Extensions.Logging.LogLevel,System.Boolean)">
+            <summary>
+            获取控制台日志级别对应的颜色
+            </summary>
+            <param name="logLevel"></param>
+            <param name="disableColors"></param>
+            <returns></returns>
         </member>
     </members>
 </doc>

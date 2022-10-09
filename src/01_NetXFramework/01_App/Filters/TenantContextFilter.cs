@@ -49,39 +49,4 @@ public class TenantContextFilter : BaseFilter, IAuthorizationFilter, IAsyncAutho
         OnAuthorization(context);
         await Task.CompletedTask;
     }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="context"></param>
-    public void OnResourceExecuted(ResourceExecutedContext context)
-    {
-
-    }
-
-    ///// <summary>
-    ///// 
-    ///// </summary>
-    ///// <param name="context"></param>
-    //public void OnResourceExecuting(ResourceExecutingContext context)
-    //{
-    //    var identity = context.HttpContext.User.Identity as ClaimsIdentity;
-    //    if(null != _accessor.Tenant && null != identity)
-    //    {
-    //        TenantContext.CurrentTenant.InitPrincipal(new NetXPrincipal(identity, _accessor.Tenant), _tenantOption);
-    //        _migrationService.SetupDatabase(TenantContext.CurrentTenant.Principal.Tenant.TenantId);
-    //    }
-    //}
-
-    ///// <summary>
-    ///// 
-    ///// </summary>
-    ///// <param name="context"></param>
-    ///// <param name="next"></param>
-    ///// <returns></returns>
-    //public async Task OnResourceExecutionAsync(ResourceExecutingContext context, ResourceExecutionDelegate next)
-    //{
-    //    OnResourceExecuting(context);
-    //    OnResourceExecuted(await next());
-    //}
 }
