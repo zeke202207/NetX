@@ -1,0 +1,2559 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>NetX.RBAC</name>
+    </assembly>
+    <members>
+        <member name="T:NetX.RBAC.CacheKeys">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:NetX.RBAC.CacheKeys.AUTH_REFRESH_TOKEN">
+            <summary>
+            刷新令牌 
+            <para>RBAC:ACCOUNT:REFRESH_TOKEN:刷新令牌</para>
+            </summary>
+        </member>
+        <member name="F:NetX.RBAC.CacheKeys.ACCOUNT_PERMISSIONS">
+            <summary>
+            账户权限列表
+            <para>RBAC:ACCOUNT:PERMISSIONS:用户唯一标识</para>
+            </summary>
+        </member>
+        <member name="T:NetX.RBAC.ApiEquelCompare">
+            <summary>
+            api比较器
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.ApiEquelCompare.Equals(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.ApiEquelCompare.GetHashCode(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NetX.RBAC.Controllers.AccountController">
+            <summary>
+            账号管理api接口
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.Controllers.AccountController.#ctor(NetX.RBAC.Core.IAccountService)">
+            <summary>
+            账号管理api实例对象
+            </summary>
+            <param name="accountService"></param>
+        </member>
+        <member name="M:NetX.RBAC.Controllers.AccountController.Login(NetX.RBAC.Models.LoginModel)">
+            <summary>
+            系统登录
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Controllers.AccountController.GetUserInfo">
+            <summary>
+            Token验证并获取用户信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Controllers.AccountController.GetAccountList(NetX.RBAC.Models.UserListParam)">
+            <summary>
+            获取用户列表集合
+            </summary>
+            <param name="userListparam"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Controllers.AccountController.IsAccountExist(System.String)">
+            <summary>
+            判断用户是否存在
+            </summary>
+            <param name="account"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Controllers.AccountController.GetPermCode">
+            <summary>
+            获取登录用户访问权限code集合
+            v-auth="'menu:zeke'"
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Controllers.AccountController.Logout">
+            <summary>
+            等处系统
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Controllers.AccountController.AddAccount(NetX.RBAC.Models.AccountRequestModel)">
+            <summary>
+            add a new user account
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Controllers.AccountController.UpdateAccount(NetX.RBAC.Models.AccountRequestModel)">
+            <summary>
+            edit a new user account
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Controllers.AccountController.RemoveAccount(NetX.RBAC.Models.KeyParam)">
+            <summary>
+            remove a user account
+            </summary>
+            <param name="param"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NetX.RBAC.Controllers.ApiController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.Controllers.ApiController.#ctor(NetX.RBAC.Core.IApiService)">
+            <summary>
+            角色管理api实例对象
+            </summary>
+            <param name="apiService"></param>
+        </member>
+        <member name="M:NetX.RBAC.Controllers.ApiController.GetApiPageList(NetX.RBAC.Models.ApiPageParam)">
+            <summary>
+            获取api列表
+            </summary>
+            <param name="apiPageParam"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Controllers.ApiController.GetApiList(NetX.RBAC.Models.ApiParam)">
+            <summary>
+            获取api列表
+            </summary>
+            <param name="apiParam"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Controllers.ApiController.AddApi(NetX.RBAC.Models.ApiRequestModel)">
+            <summary>
+            添加菜单
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Controllers.ApiController.UpdateApi(NetX.RBAC.Models.ApiRequestModel)">
+            <summary>
+            编辑菜单
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Controllers.ApiController.RemoveApi(NetX.RBAC.Models.KeyParam)">
+            <summary>
+            删除菜单
+            </summary>
+            <param name="param"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NetX.RBAC.Controllers.DeptController">
+            <summary>
+            部门管理api接口
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.Controllers.DeptController.#ctor(NetX.RBAC.Core.IDeptService)">
+            <summary>
+            部门管理api实例对象
+            </summary>
+            <param name="deptService"></param>
+        </member>
+        <member name="M:NetX.RBAC.Controllers.DeptController.GetDeptList(NetX.RBAC.Models.DeptListParam)">
+            <summary>
+            获取部门列表
+            </summary>
+            <param name="queryParam"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Controllers.DeptController.AddDept(NetX.RBAC.Models.DeptRequestModel)">
+            <summary>
+            新增部门信息
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Controllers.DeptController.UpdateDept(NetX.RBAC.Models.DeptRequestModel)">
+            <summary>
+            编辑部门信息
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Controllers.DeptController.RemoveDept(NetX.RBAC.Models.KeyParam)">
+            <summary>
+            删除部门信息
+            </summary>
+            <param name="param"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NetX.RBAC.Controllers.MenuController">
+            <summary>
+            菜单管理api接口
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.Controllers.MenuController.#ctor(NetX.RBAC.Core.IMenuService)">
+            <summary>
+            菜单管理api接口实例对象
+            </summary>
+            <param name="menuService"></param>
+        </member>
+        <member name="M:NetX.RBAC.Controllers.MenuController.GetCurrentUserMenuList">
+            <summary>
+            获取登录用户授权菜单列表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Controllers.MenuController.GetMenuList(NetX.RBAC.Models.MenuListParam)">
+            <summary>
+            获取菜单列表
+            </summary>
+            <param name="param"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Controllers.MenuController.AddMenu(NetX.RBAC.Models.MenuRequestModel)">
+            <summary>
+            添加菜单
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Controllers.MenuController.UpdateMenu(NetX.RBAC.Models.MenuRequestModel)">
+            <summary>
+            编辑菜单
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Controllers.MenuController.RemoveMenu(NetX.RBAC.Models.KeyParam)">
+            <summary>
+            删除菜单
+            </summary>
+            <param name="param"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NetX.RBAC.Controllers.RoleController">
+            <summary>
+            角色管理api接口
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.Controllers.RoleController.#ctor(NetX.RBAC.Core.IRoleService)">
+            <summary>
+            角色管理api实例对象
+            </summary>
+            <param name="roleService"></param>
+        </member>
+        <member name="M:NetX.RBAC.Controllers.RoleController.GetRoleListByPage(NetX.RBAC.Models.RoleListParam)">
+            <summary>
+            获取角色列表
+            </summary>
+            <param name="roleListparam"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Controllers.RoleController.GetAllRoleList">
+            <summary>
+            获取全部角色列表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Controllers.RoleController.AddRole(NetX.RBAC.Models.RoleRequestModel)">
+            <summary>
+            添加角色
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Controllers.RoleController.UpdateRole(NetX.RBAC.Models.RoleRequestModel)">
+            <summary>
+            更新角色
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Controllers.RoleController.RemoveRole(NetX.RBAC.Models.KeyParam)">
+            <summary>
+            删除角色
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Controllers.RoleController.SetRoleStatus(NetX.RBAC.Models.RoleStatusModel)">
+            <summary>
+            更新角色状态
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Controllers.RoleController.SetApiAuthStatus(NetX.RBAC.Models.RoleStatusModel)">
+            <summary>
+            更新角色后台鉴权状态
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Controllers.RoleController.GetApiAuth(NetX.RBAC.Models.KeyParam)">
+            <summary>
+            获取后台api授权id集合
+            </summary>
+            <param name="param"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Controllers.RoleController.SetApiAuth(NetX.RBAC.Models.RoleApiAuthModel)">
+            <summary>
+            更新角色后台鉴权状态
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:NetX.RBAC.Controllers.SystemManagerBaseController">
+            <summary>
+            api接口基类对象
+            </summary>
+        </member>
+        <member name="T:NetX.RBAC.Core.IAccountService">
+            <summary>
+            账号管理服务接口
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.Core.IAccountService.Login(System.String,System.String)">
+            <summary>
+            登录系统
+            </summary>
+            <param name="username"></param>
+            <param name="password"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Core.IAccountService.GetUserInfo(System.String)">
+            <summary>
+            获取登录用户信息
+            </summary>
+            <param name="userId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Core.IAccountService.GetAccountLists(NetX.RBAC.Models.UserListParam)">
+            <summary>
+            获取账号列表
+            </summary>
+            <param name="userParam"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Core.IAccountService.IsAccountExist(System.String)">
+            <summary>
+            判断账号是否存在
+            </summary>
+            <param name="userName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Core.IAccountService.AddAccount(NetX.RBAC.Models.AccountRequestModel)">
+            <summary>
+            添加账号
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Core.IAccountService.UpdateAccount(NetX.RBAC.Models.AccountRequestModel)">
+            <summary>
+            更新账号信息
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Core.IAccountService.RemoveDept(System.String)">
+            <summary>
+            删除账号信息
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Core.IAccountService.GetPermCode(System.String)">
+            <summary>
+            获取访问权限标识集合
+            </summary>
+            <param name="userId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Core.IAccountService.GetApiPermCode(System.String)">
+            <summary>
+            获取pai访问权限列表
+            </summary>
+            <param name="userid"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NetX.RBAC.Core.IApiService">
+            <summary>
+            Api服务接口
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.Core.IApiService.GetApiList(NetX.RBAC.Models.ApiPageParam)">
+            <summary>
+            获取Api列表
+            </summary>
+            <param name="param"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Core.IApiService.GetApiList(NetX.RBAC.Models.ApiParam)">
+            <summary>
+            
+            </summary>
+            <param name="param"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Core.IApiService.AddApi(NetX.RBAC.Models.ApiRequestModel)">
+            <summary>
+            新增Api
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Core.IApiService.UpdateApi(NetX.RBAC.Models.ApiRequestModel)">
+            <summary>
+            更新Api
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Core.IApiService.RemoveApi(System.String)">
+            <summary>
+            删除Api
+            </summary>
+            <param name="apiId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NetX.RBAC.Core.IDeptService">
+            <summary>
+            部门管理服务接口
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.Core.IDeptService.GetDeptList(NetX.RBAC.Models.DeptListParam)">
+            <summary>
+            获取部门列表
+            </summary>
+            <param name="queryParam"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Core.IDeptService.AddDept(NetX.RBAC.Models.DeptRequestModel)">
+            <summary>
+            添加部门
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Core.IDeptService.UpdateDept(NetX.RBAC.Models.DeptRequestModel)">
+            <summary>
+            更新部门信息
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Core.IDeptService.RemoveDept(System.String)">
+            <summary>
+            删除部门信息
+            </summary>
+            <param name="deptId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NetX.RBAC.Core.IMenuService">
+            <summary>
+            菜单管理服务接口
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.Core.IMenuService.GetCurrentUserMenuList(System.String)">
+            <summary>
+            获取当前登录用户访问菜单列表
+            </summary>
+            <param name="userId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Core.IMenuService.GetMenuList(NetX.RBAC.Models.MenuListParam)">
+            <summary>
+            获取菜单列表
+            </summary>
+            <param name="param"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Core.IMenuService.AddMenu(NetX.RBAC.Models.MenuRequestModel)">
+            <summary>
+            新增菜单
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Core.IMenuService.UpdateMenu(NetX.RBAC.Models.MenuRequestModel)">
+            <summary>
+            更新菜单
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Core.IMenuService.RemoveMenu(System.String)">
+            <summary>
+            删除菜单
+            </summary>
+            <param name="menuId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NetX.RBAC.Core.AccountService">
+            <summary>
+            账号管理服务
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.Core.AccountService.#ctor(FreeSql.IBaseRepository{NetX.RBAC.Models.sys_user},NetX.Common.IEncryption,NetX.Authentication.Core.ILoginHandler,AutoMapper.IMapper)">
+            <summary>
+            账号管理服务实例对象
+            </summary>
+            <param name="userRepository"></param>
+            <param name="encryption"></param>
+            <param name="loginHandler"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="M:NetX.RBAC.Core.AccountService.Login(System.String,System.String)">
+            <summary>
+            登录
+            </summary>
+            <param name="username"></param>
+            <param name="password"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Core.AccountService.GetToken(NetX.Authentication.Core.ClaimModel)">
+            <summary>
+            获取Token信息
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:NetX.RBAC.Core.AccountService.GetUserInfo(System.String)">
+            <summary>
+            获取用户信息
+            </summary>
+            <param name="userId"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:NetX.RBAC.Core.AccountService.GetAccountLists(NetX.RBAC.Models.UserListParam)">
+            <summary>
+            获取用户列表
+            </summary>
+            <param name="userParam"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Core.AccountService.IsAccountExist(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="userName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Core.AccountService.AddAccount(NetX.RBAC.Models.AccountRequestModel)">
+            <summary>
+            add a new user account
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Core.AccountService.UpdateAccount(NetX.RBAC.Models.AccountRequestModel)">
+            <summary>
+            update a user account information
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Core.AccountService.RemoveDept(System.String)">
+            <summary>
+            remove a account
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:NetX.RBAC.Core.AccountService.GetPermCode(System.String)">
+            <summary>
+            获取当前登录用户权限代码集合
+            </summary>
+            <param name="userId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Core.AccountService.GetApiPermCode(System.String)">
+            <summary>
+            获取当前登录用户api权限验证集合
+            </summary>
+            <param name="userid"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NetX.RBAC.Core.ApiService">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.Core.ApiService.#ctor(FreeSql.IBaseRepository{NetX.RBAC.Models.sys_api},AutoMapper.IMapper)">
+            <summary>
+            api管理实例对象
+            </summary>
+            <param name="apiRepository"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="M:NetX.RBAC.Core.ApiService.GetApiList(NetX.RBAC.Models.ApiPageParam)">
+            <summary>
+            获取api列表
+            </summary>
+            <param name="param"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:NetX.RBAC.Core.ApiService.GetApiList(NetX.RBAC.Models.ApiParam)">
+            <summary>
+            获取api列表
+            </summary>
+            <param name="param"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:NetX.RBAC.Core.ApiService.RemoveApi(System.String)">
+            <summary>
+            移除api
+            </summary>
+            <param name="apiId"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:NetX.RBAC.Core.ApiService.AddApi(NetX.RBAC.Models.ApiRequestModel)">
+            <summary>
+            添加api
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:NetX.RBAC.Core.ApiService.UpdateApi(NetX.RBAC.Models.ApiRequestModel)">
+            <summary>
+            更新api
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="T:NetX.RBAC.Core.BaseService">
+            <summary>
+            服务基类
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.Core.BaseService.CreateId">
+            <summary>
+            统一id生成器
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Core.BaseService.CreateInsertTime">
+            <summary>
+            统一时间生成器
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Core.BaseService.Success``1(``0)">
+            <summary>
+            返回成功结果
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="result"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Core.BaseService.Error``1(System.String)">
+            <summary>
+            返回失败结果
+            </summary>
+            <param name="resultEnum"></param>
+            <param name="msg"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Core.BaseService.Error``1(NetX.Common.Models.ResultEnum,System.String)">
+            <summary>
+            返回失败结果
+            </summary>
+            <param name="resultEnum"></param>
+            <param name="msg"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NetX.RBAC.Core.DeptService">
+            <summary>
+            部门管理服务
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.Core.DeptService.#ctor(FreeSql.IBaseRepository{NetX.RBAC.Models.sys_dept},AutoMapper.IMapper)">
+            <summary>
+            部门管理服务实例对象
+            </summary>
+            <param name="deptRepository"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="M:NetX.RBAC.Core.DeptService.AddDept(NetX.RBAC.Models.DeptRequestModel)">
+            <summary>
+            新增部門
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:NetX.RBAC.Core.DeptService.UpdateDept(NetX.RBAC.Models.DeptRequestModel)">
+            <summary>
+            update the department info
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:NetX.RBAC.Core.DeptService.RemoveDept(System.String)">
+            <summary>
+            hard remove a department
+            </summary>
+            <param name="deptId"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:NetX.RBAC.Core.DeptService.GetDeptList(NetX.RBAC.Models.DeptListParam)">
+            <summary>
+            get the deptment list
+            </summary>
+            <param name="queryParam"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:NetX.RBAC.Core.DeptService.ToTree(System.Collections.Generic.List{NetX.RBAC.Models.DeptModel},System.String)">
+            <summary>
+            构建部门树
+            </summary>
+            <param name="depts"></param>
+            <param name="parentId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NetX.RBAC.Core.MenuService">
+            <summary>
+            菜单管理服务
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.Core.MenuService.#ctor(FreeSql.IBaseRepository{NetX.RBAC.Models.sys_menu},AutoMapper.IMapper)">
+            <summary>
+            菜单管理实例对象
+            </summary>
+            <param name="menuRepository"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="M:NetX.RBAC.Core.MenuService.AddMenu(NetX.RBAC.Models.MenuRequestModel)">
+            <summary>
+            新增菜单
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Core.MenuService.UpdateMenu(NetX.RBAC.Models.MenuRequestModel)">
+            <summary>
+            跟新菜单信息
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Core.MenuService.RemoveMenu(System.String)">
+            <summary>
+            删除菜单
+            </summary>
+            <param name="menuId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Core.MenuService.GetCurrentUserMenuList(System.String)">
+            <summary>
+            获取当前用户可访问的菜单列表集合
+            </summary>
+            <param name="userId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Core.MenuService.GetMenuList(NetX.RBAC.Models.MenuListParam)">
+            <summary>
+            获取菜单集合
+            </summary>
+            <param name="param"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Core.MenuService.ToTree(System.Collections.Generic.List{NetX.RBAC.Models.MenuModel},System.String)">
+            <summary>
+            生产菜单树
+            </summary>
+            <param name="menus"></param>
+            <param name="parentId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Core.MenuService.ToEntity(NetX.RBAC.Models.MenuRequestModel)">
+            <summary>
+            转换数据库实体对象
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Core.MenuService.GetMenuType(System.Int32)">
+            <summary>
+            获取菜单类型
+            </summary>
+            <param name="menuType"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NetX.RBAC.Core.RoleService">
+            <summary>
+            角色管理服务
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.Core.RoleService.#ctor(FreeSql.IBaseRepository{NetX.RBAC.Models.sys_role},AutoMapper.IMapper)">
+            <summary>
+            角色管理服务实例对象
+            </summary>
+            <param name="roleRepository"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="M:NetX.RBAC.Core.RoleService.GetRoleList">
+            <summary>
+            获取角色列表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Core.RoleService.GetRoleList(NetX.RBAC.Models.RoleListParam)">
+            <summary>
+            获取角色列表
+            </summary>
+            <param name="roleListparam"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Core.RoleService.AddRole(NetX.RBAC.Models.RoleRequestModel)">
+            <summary>
+            添加角色
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Core.RoleService.UpdateRole(NetX.RBAC.Models.RoleRequestModel)">
+            <summary>
+            更新角色
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Core.RoleService.RemoveRole(System.String)">
+            <summary>
+            删除角色
+            </summary>
+            <param name="roleId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Core.RoleService.UpdateRoleStatus(System.String,System.String)">
+            <summary>
+            更新角色状态
+            </summary>
+            <param name="roleId"></param>
+            <param name="status"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Core.RoleService.UpdateRoleApiAuthStatus(System.String,System.String)">
+            <summary>
+            更新角色后台鉴权状态
+            </summary>
+            <param name="roleId"></param>
+            <param name="status"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Core.RoleService.GetApiAuth(System.String)">
+            <summary>
+            获取角色后台api访问权限集合
+            </summary>
+            <param name="roleId"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:NetX.RBAC.Core.RoleService.UpdateRoleApiAuth(System.String,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            
+            </summary>
+            <param name="roleId"></param>
+            <param name="apiIds"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="T:NetX.RBAC.Core.IRoleService">
+            <summary>
+            角色管理服务接口
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.Core.IRoleService.GetRoleList">
+            <summary>
+            获取角色列表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Core.IRoleService.GetRoleList(NetX.RBAC.Models.RoleListParam)">
+            <summary>
+            获取角色列表
+            </summary>
+            <param name="roleListparam"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Core.IRoleService.AddRole(NetX.RBAC.Models.RoleRequestModel)">
+            <summary>
+            添加角色
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Core.IRoleService.UpdateRole(NetX.RBAC.Models.RoleRequestModel)">
+            <summary>
+            更新角色信息
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Core.IRoleService.UpdateRoleStatus(System.String,System.String)">
+            <summary>
+            更新角色状态
+            </summary>
+            <param name="roleId"></param>
+            <param name="status"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Core.IRoleService.UpdateRoleApiAuthStatus(System.String,System.String)">
+            <summary>
+            更新角色后台鉴权状态
+            </summary>
+            <param name="roleId"></param>
+            <param name="status"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Core.IRoleService.RemoveRole(System.String)">
+            <summary>
+            删除角色
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Core.IRoleService.GetApiAuth(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="roleId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Core.IRoleService.UpdateRoleApiAuth(System.String,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            
+            </summary>
+            <param name="roleId"></param>
+            <param name="apiIds"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NetX.RBAC.DatabaseSetup.CreateTable.ApiTable">
+            <summary>
+            api资源表
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.DatabaseSetup.CreateTable.ApiTable.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.DatabaseSetup.CreateTable.ApiTable.Up">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.RBAC.DatabaseSetup.CreateTable.DeptTable">
+            <summary>
+            部门表
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.DatabaseSetup.CreateTable.DeptTable.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.DatabaseSetup.CreateTable.DeptTable.Up">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.RBAC.DatabaseSetup.CreateTable.MenuTable">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.DatabaseSetup.CreateTable.MenuTable.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.DatabaseSetup.CreateTable.MenuTable.Up">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.RBAC.DatabaseSetup.CreateTable.RecursiveFunction">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.DatabaseSetup.CreateTable.RecursiveFunction.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.DatabaseSetup.CreateTable.RecursiveFunction.Down">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.DatabaseSetup.CreateTable.RecursiveFunction.Up">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.RBAC.DatabaseSetup.CreateTable.RoleApiTable">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.DatabaseSetup.CreateTable.RoleApiTable.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.DatabaseSetup.CreateTable.RoleApiTable.Up">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.RBAC.DatabaseSetup.CreateTable.RoleMenuTable">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.DatabaseSetup.CreateTable.RoleMenuTable.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.DatabaseSetup.CreateTable.RoleMenuTable.Up">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.RBAC.DatabaseSetup.CreateTable.RoleTable">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.DatabaseSetup.CreateTable.RoleTable.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.DatabaseSetup.CreateTable.RoleTable.Up">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.RBAC.DatabaseSetup.CreateTable.UserDeptTable">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.DatabaseSetup.CreateTable.UserDeptTable.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.DatabaseSetup.CreateTable.UserDeptTable.Up">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.RBAC.DatabaseSetup.CreateTable.UserRoleTable">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.DatabaseSetup.CreateTable.UserRoleTable.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.DatabaseSetup.CreateTable.UserRoleTable.Up">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.RBAC.DatabaseSetup.CreateTable.UserTable">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.DatabaseSetup.CreateTable.UserTable.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.DatabaseSetup.CreateTable.UserTable.Up">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.RBAC.DatabaseSetup.InitData.InitApiData">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.DatabaseSetup.InitData.InitApiData.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.DatabaseSetup.InitData.InitApiData.Up">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.DatabaseSetup.InitData.InitApiData.Down">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.RBAC.DatabaseSetup.InitData.InitMenuData">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.DatabaseSetup.InitData.InitMenuData.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.DatabaseSetup.InitData.InitMenuData.Up">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.DatabaseSetup.InitData.InitMenuData.Down">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.RBAC.DatabaseSetup.InitData.InitRoleData">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.DatabaseSetup.InitData.InitRoleData.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.DatabaseSetup.InitData.InitRoleData.Down">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.DatabaseSetup.InitData.InitRoleData.Up">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.RBAC.DatabaseSetup.InitData.InitRoleMenuData">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.DatabaseSetup.InitData.InitRoleMenuData.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.DatabaseSetup.InitData.InitRoleMenuData.Up">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.DatabaseSetup.InitData.InitRoleMenuData.Down">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.RBAC.DatabaseSetup.InitData.InitUserData">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.DatabaseSetup.InitData.InitUserData.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.DatabaseSetup.InitData.InitUserData.Up">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.DatabaseSetup.InitData.InitUserData.Down">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.RBAC.DatabaseSetup.InitData.InitUserRoleData">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.DatabaseSetup.InitData.InitUserRoleData.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.DatabaseSetup.InitData.InitUserRoleData.Up">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.DatabaseSetup.InitData.InitUserRoleData.Down">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.RBAC.Data.Repositories.SysApiRepository">
+            <summary>
+            api 仓储服务
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.Data.Repositories.SysApiRepository.#ctor(IFreeSql)">
+            <summary>
+            api 仓储对象实例
+            </summary>
+            <param name="fsql"></param>
+        </member>
+        <member name="M:NetX.RBAC.Data.Repositories.SysApiRepository.RemoveApi(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="apiId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NetX.RBAC.Data.Repositories.SysDeptRepository">
+            <summary>
+            部门仓储
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.Data.Repositories.SysDeptRepository.#ctor(IFreeSql)">
+            <summary>
+            部门仓储对象实例
+            </summary>
+            <param name="fsql"></param>
+        </member>
+        <member name="M:NetX.RBAC.Data.Repositories.SysDeptRepository.RemoveDeptAsync(System.String)">
+            <summary>
+            删除部门
+            </summary>
+            <param name="deptId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NetX.RBAC.Data.Repositories.SysMenuRepository">
+            <summary>
+            菜单仓储服务
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.Data.Repositories.SysMenuRepository.#ctor(IFreeSql)">
+            <summary>
+            菜单仓储对象实例
+            </summary>
+            <param name="fsql"></param>
+        </member>
+        <member name="M:NetX.RBAC.Data.Repositories.SysMenuRepository.GetCurrentUserMenuListAsync(System.String)">
+            <summary>
+            获取当前登录用户访问菜单集合
+            </summary>
+            <param name="userId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Data.Repositories.SysMenuRepository.RemoveMenuAsync(System.String)">
+            <summary>
+            删除菜单
+            </summary>
+            <param name="menuIds"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NetX.RBAC.Data.Repositories.SysRoleRepository">
+            <summary>
+            角色仓储
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.Data.Repositories.SysRoleRepository.#ctor(IFreeSql)">
+            <summary>
+            角色仓储对象实例
+            </summary>
+            <param name="fsql"></param>
+        </member>
+        <member name="M:NetX.RBAC.Data.Repositories.SysRoleRepository.GetRoleListAsync(System.String,System.Int32,System.Int32)">
+            <summary>
+            获取role列表和role能访问的菜单列表
+            menuid仅包含叶子节点
+            </summary>
+            <param name="rolename"></param>
+            <param name="currentpage"></param>
+            <param name="pagesize"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Data.Repositories.SysRoleRepository.AddRoleAsync(NetX.RBAC.Models.sys_role,System.Collections.Generic.List{System.String})">
+            <summary>
+            新增角色
+            </summary>
+            <param name="role"></param>
+            <param name="menuids"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Data.Repositories.SysRoleRepository.UpdateRoleAsync(NetX.RBAC.Models.sys_role,System.Collections.Generic.List{System.String})">
+            <summary>
+            更新角色
+            </summary>
+            <param name="role"></param>
+            <param name="menuids"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Data.Repositories.SysRoleRepository.RemoveRoleAsync(System.String)">
+            <summary>
+            删除角色
+            </summary>
+            <param name="roleId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Data.Repositories.SysRoleRepository.GetApiAuth(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="roleId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Data.Repositories.SysRoleRepository.UpdateRoleApiAuth(System.String,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            
+            </summary>
+            <param name="roleId"></param>
+            <param name="apiIds"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NetX.RBAC.Data.Repositories.SysUserRepository">
+            <summary>
+            用户仓储
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.Data.Repositories.SysUserRepository.#ctor(IFreeSql)">
+            <summary>
+            用户仓储对象实例
+            </summary>
+            <param name="fsql"></param>
+        </member>
+        <member name="M:NetX.RBAC.Data.Repositories.SysUserRepository.GetUserListAsync(System.String,System.String,System.String,System.Int32,System.Int32)">
+            <summary>
+            获取用户列表
+            </summary>
+            <param name="deptId"></param>
+            <param name="username"></param>
+            <param name="nickname"></param>
+            <param name="currentpage"></param>
+            <param name="pagesize"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Data.Repositories.SysUserRepository.AddUserAsync(NetX.RBAC.Models.sys_user,System.String,System.String)">
+            <summary>
+            新增用户信息
+            </summary>
+            <param name="user"></param>
+            <param name="roleid"></param>
+            <param name="deptid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Data.Repositories.SysUserRepository.UpdateUserAsync(NetX.RBAC.Models.sys_user,System.String,System.String)">
+            <summary>
+            更新用户信息
+            </summary>
+            <param name="user"></param>
+            <param name="roleid"></param>
+            <param name="deptid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Data.Repositories.SysUserRepository.RemoveUserAsync(System.String)">
+            <summary>
+            删除用户信息
+            </summary>
+            <param name="userId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Data.Repositories.SysUserRepository.GetPremCodesAsync(System.String)">
+            <summary>
+            获取用户权限标识集合
+            </summary>
+            <param name="userId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.RBAC.Data.Repositories.SysUserRepository.GetApiPermCode(System.String)">
+            <summary>
+            根据用户id获取api权限认证结果集合
+            </summary>
+            <param name="userid"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NetX.RBAC.MapperProfiles.AccountProfile">
+            <summary>
+            account 映射清单
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.MapperProfiles.AccountProfile.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.RBAC.MapperProfiles.ApiProfile">
+            <summary>
+            api 映射清单
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.MapperProfiles.ApiProfile.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.RBAC.MapperProfiles.DeptProfile">
+            <summary>
+            部门mapper配置清单
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.MapperProfiles.DeptProfile.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.RBAC.MapperProfiles.MenuProfile">
+            <summary>
+            菜单mapper配置清单
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.MapperProfiles.MenuProfile.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.RBAC.MapperProfiles.RoleProfile">
+            <summary>
+            角色mapper配置清单
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.MapperProfiles.RoleProfile.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.RBAC.Models.ApiPermissionModel">
+            <summary>
+            api访问控制实体对象
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.ApiPermissionModel.CheckApi">
+            <summary>
+            是否进行pai验证
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.ApiPermissionModel.Apis">
+            <summary>
+            api权限列表集合
+            </summary>
+        </member>
+        <member name="T:NetX.RBAC.Models.BaseEntity">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.BaseEntity.id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.RBAC.Models.sys_api">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.sys_api.path">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.sys_api.group">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.sys_api.method">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.sys_api.createtime">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.sys_api.description">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.RBAC.Models.sys_dept">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.sys_dept.parentid">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.sys_dept.deptname">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.sys_dept.orderno">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.sys_dept.createtime">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.sys_dept.status">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.sys_dept.remark">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.RBAC.Models.sys_menu">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.sys_menu.parentid">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.sys_menu.icon">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.sys_menu.type">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.sys_menu.orderno">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.sys_menu.permission">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.sys_menu.name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.sys_menu.path">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.sys_menu.component">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.sys_menu.redirect">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.sys_menu.status">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.sys_menu.isext">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.sys_menu.keepalive">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.sys_menu.show">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.sys_menu.meta">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.sys_menu.createtime">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.RBAC.Models.sys_role">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.sys_role.rolename">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.sys_role.status">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.sys_role.apicheck">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.sys_role.createtime">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.sys_role.remark">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.RBAC.Models.sys_role_api">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.sys_role_api.roleid">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.sys_role_api.apiid">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.RBAC.Models.sys_role_menu">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.sys_role_menu.roleid">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.sys_role_menu.menuid">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.RBAC.Models.sys_user">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.sys_user.username">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.sys_user.password">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.sys_user.nickname">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.sys_user.avatar">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.sys_user.status">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.sys_user.email">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.sys_user.remark">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.RBAC.Models.sys_user_dept">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.sys_user_dept.userid">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.sys_user_dept.deptid">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.RBAC.Models.sys_user_role">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.sys_user_role.userid">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.sys_user_role.roleid">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.RBAC.Models.ApiModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.ApiModel.Id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.ApiModel.Path">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.ApiModel.Group">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.ApiModel.Method">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.ApiModel.Createtime">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.ApiModel.Description">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.RBAC.Models.DeptModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.DeptModel.Id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.DeptModel.ParentId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.DeptModel.DeptName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.DeptModel.OrderNo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.DeptModel.CreateTime">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.DeptModel.Remark">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.DeptModel.Status">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.DeptModel.Children">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.RBAC.Models.LoginResult">
+            <summary>
+            登录返回结果实体对象
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.LoginResult.UserId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.LoginResult.UserName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.LoginResult.Token">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.LoginResult.RealName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.LoginResult.Desc">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.RBAC.Models.MenuMetaData">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.MenuMetaData.HideMenu">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.MenuMetaData.IgnoreKeepAlive">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.MenuMetaData.HideChildrenMenu">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.MenuMetaData.Icon">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.MenuMetaData.HideBreadcrumb">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.MenuMetaData.CurrentActiveMenu">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.MenuMetaData.FrameSrc">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.RBAC.Models.MenuModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.MenuModel.Id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.MenuModel.ParentId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.MenuModel.Path">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.MenuModel.Name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.MenuModel.Component">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.MenuModel.Redirect">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.MenuModel.Meta">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.MenuModel.Icon">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.MenuModel.Type">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.MenuModel.Permission">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.MenuModel.OrderNo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.MenuModel.CreateTime">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.MenuModel.Status">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.MenuModel.Children">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.MenuModel.Show">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.MenuModel.IsExt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.MenuModel.ExtPath">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.RBAC.Models.RoleModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.RoleModel.RoleName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.RoleModel.Status">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.RoleModel.ApiCheck">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.RoleModel.CreateTime">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.RoleModel.Menus">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.RoleModel.Remark">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.RBAC.Models.UserListModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.UserListModel.RoleId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.UserListModel.RoleName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.UserListModel.DeptId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.UserListModel.DeptName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.RBAC.Models.UserModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.UserModel.Id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.UserModel.UserName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.UserModel.Password">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.UserModel.NickName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.UserModel.Avatar">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.UserModel.Status">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.UserModel.Remark">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.UserModel.Email">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.RBAC.Models.AccountRequestModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.AccountRequestModel.Id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.AccountRequestModel.RoleId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.AccountRequestModel.DeptId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.AccountRequestModel.UserName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.AccountRequestModel.NickName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.AccountRequestModel.Email">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.AccountRequestModel.Remark">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.ApiRequestModel.Id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.ApiRequestModel.Path">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.ApiRequestModel.Group">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.ApiRequestModel.Method">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.ApiRequestModel.Description">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.RBAC.Models.DeptRequestModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.DeptRequestModel.Id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.DeptRequestModel.ParentId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.DeptRequestModel.DeptName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.DeptRequestModel.Status">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.DeptRequestModel.OrderNo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.DeptRequestModel.Remark">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.RBAC.Models.LoginModel">
+            <summary>
+            登录实体对象
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.LoginModel.UserName">
+            <summary>
+            用户名
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.LoginModel.Password">
+            <summary>
+            密码
+            </summary>
+        </member>
+        <member name="T:NetX.RBAC.Models.MenuRequestModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.MenuRequestModel.Id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.MenuRequestModel.ParentId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.MenuRequestModel.Path">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.MenuRequestModel.Name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.MenuRequestModel.Component">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.MenuRequestModel.Redirect">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.MenuRequestModel.Meta">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.MenuRequestModel.Icon">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.MenuRequestModel.Type">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.MenuRequestModel.Permission">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.MenuRequestModel.OrderNo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.MenuRequestModel.CreateTime">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.MenuRequestModel.Status">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.MenuRequestModel.IsExt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.MenuRequestModel.KeepAlive">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.MenuRequestModel.Show">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.MenuRequestModel.ExtPath">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.RBAC.Models.Pager">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.Pager.Page">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.Pager.PageSize">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.RBAC.Models.ApiPageParam">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.RBAC.Models.ApiParam">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.RBAC.Models.DeptListParam">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.RBAC.Models.KeyParam">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.KeyParam.Id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.RBAC.Models.MenuListParam">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.MenuListParam.MenuName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.MenuListParam.Status">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.RBAC.Models.RoleListParam">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.RoleListParam.RoleName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.RoleListParam.Status">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.RBAC.Models.UserListParam">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.UserListParam.DeptId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.UserListParam.Account">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.UserListParam.Nickname">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.RBAC.Models.RoleApiAuthModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.RoleApiAuthModel.RoleId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.RoleApiAuthModel.ApiIds">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.RBAC.Models.RoleRequestModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.RoleRequestModel.Id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.RoleRequestModel.RoleName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.RoleRequestModel.Status">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.RoleRequestModel.Remark">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.RoleRequestModel.Menus">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.Models.RoleRequestModel.ToMenuList">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.RBAC.Models.RoleStatusModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.RoleStatusModel.Id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.RoleStatusModel.Status">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.RBAC.Models.CheckMenu">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.CheckMenu.Checked">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.RBAC.Models.CheckMenu.HalfChecked">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.RBAC.PermissionValidateHandler">
+            <summary>
+             后台权限验证器
+            </summary>
+        </member>
+        <member name="F:NetX.RBAC.PermissionValidateHandler._cache">
+            <summary>
+            权限缓存
+            目前暂时不用缓存
+            如果性能出现问题，考虑缓存方式
+            </summary>
+        </member>
+        <member name="M:NetX.RBAC.PermissionValidateHandler.#ctor(NetX.Cache.Core.ICacheProvider,NetX.RBAC.Core.IAccountService)">
+            <summary>
+            api权限验证 
+            </summary>
+            <param name="cache"></param>
+            <param name="accountService"></param>
+        </member>
+        <member name="M:NetX.RBAC.PermissionValidateHandler.Validate(Microsoft.AspNetCore.Http.HttpContext,System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            后台权限验证
+            </summary>
+        </member>
+        <member name="F:NetX.RBAC.SystemManagerConst.C_ROOT_ID">
+            <summary>
+            树跟节点编号
+            </summary>
+        </member>
+        <member name="F:NetX.RBAC.SystemManagerConst.C_SYSTEM_MANAGER_PERMISSION_CACHEKEY">
+            <summary>
+            权限缓存key
+            </summary>
+        </member>
+        <member name="T:NetX.RBAC.Status">
+            <summary>
+            启用状态
+            </summary>
+        </member>
+        <member name="F:NetX.RBAC.Status.Disabled">
+            <summary>
+            禁用
+            </summary>
+        </member>
+        <member name="F:NetX.RBAC.Status.Enable">
+            <summary>
+            启用
+            </summary>
+        </member>
+        <member name="T:NetX.RBAC.Ext">
+            <summary>
+            外链枚举
+            </summary>
+        </member>
+        <member name="F:NetX.RBAC.Ext.No">
+            <summary>
+            非外链
+            </summary>
+        </member>
+        <member name="F:NetX.RBAC.Ext.Yes">
+            <summary>
+            外链
+            </summary>
+        </member>
+        <member name="T:NetX.RBAC.MenuType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:NetX.RBAC.MenuType.Dir">
+            <summary>
+            目录
+            </summary>
+        </member>
+        <member name="F:NetX.RBAC.MenuType.Menu">
+            <summary>
+            菜单
+            </summary>
+        </member>
+        <member name="F:NetX.RBAC.MenuType.Button">
+            <summary>
+            按钮
+            </summary>
+        </member>
+    </members>
+</doc>

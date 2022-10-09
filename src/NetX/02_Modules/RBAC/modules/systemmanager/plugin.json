@@ -1,0 +1,9 @@
+{
+  "Id": "10000000000000000000000000000001",
+  "Name": "systemmanager",
+  "Version": "1.0.0.0",
+  "Enabled": true,
+  "FileName": "NetX.RBAC.dll",
+  "IsSharedAssemblyContext": true,
+  "Description": "netx实现的系统管理模块，主要用于用户、权限、菜单等配置工作"
+}

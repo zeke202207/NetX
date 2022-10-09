@@ -87,7 +87,7 @@ namespace Module2.Controllers
         [HttpGet]
         public Task<string> Test()
         {
-            _migrationService.SetupDatabase();
+            //_migrationService.SetupDatabase();
             return Task.FromResult("hi,zeke");
         }
     }
