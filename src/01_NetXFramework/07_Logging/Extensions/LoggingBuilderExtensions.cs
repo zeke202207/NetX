@@ -33,36 +33,21 @@ public static class LoggingBuilderExtensions
     /// <summary>
     /// 添加数据库日志记录器
     /// </summary>
-    /// <typeparam name="TDatabaseLoggingWriter">实现自 <see cref="ILoggingWriter"/></typeparam>
-    /// <param name="builder">日志构建器</param>
-    /// <param name="configuraionKey">配置文件对于的 Key</param>
-    /// <param name="configure">数据库日志记录器配置选项委托</param>
-    /// <returns><see cref="ILoggingBuilder"/></returns>
-    public static ILoggingBuilder AddDatabase<TDatabaseLoggingWriter>(this ILoggingBuilder builder, 
-        string configuraionKey = default, 
-        Action<NetXLoggerOptions> configure = default)
-        where TDatabaseLoggingWriter : class, ILoggingWriter
-    {
-        return builder.AddDatabase<TDatabaseLoggingWriter>(() => configuraionKey ?? "Logging:Database", configure);
-    }
-
-    /// <summary>
-    /// 添加数据库日志记录器（从配置文件中）
-    /// </summary>
-    /// <typeparam name="TLoggingWriter">实现自 <see cref="ILoggingWriter"/></typeparam>
-    /// <param name="builder">日志构建器</param>
-    /// <param name="configuraionKey">获取配置文件对于的 Key</param>
-    /// <param name="configure">数据库日志记录器配置选项委托</param>
-    /// <returns><see cref="ILoggingBuilder"/></returns>
-    public static ILoggingBuilder AddDatabase<TLoggingWriter>(this ILoggingBuilder builder, 
-        Func<string> configuraionKey, 
+    /// <typeparam name="TLoggingWriter"></typeparam>
+    /// <param name="builder"></param>
+    /// <param name="options"></param>
+    /// <param name="configure"></param>
+    /// <returns></returns>
+    public static ILoggingBuilder AddDatabase<TLoggingWriter>(this ILoggingBuilder builder,
+        NetXLoggerOptions options = default, 
         Action<NetXLoggerOptions> configure = default)
         where TLoggingWriter : class, ILoggingWriter
     {
         // 注册数据库日志写入器
         builder.Services.TryAddTransient<TLoggingWriter, TLoggingWriter>();
-        // 创建数据库日志记录器提供程序
-        return Penetrates.CreateFromConfiguration(configuraionKey, configure).AddProvider<TLoggingWriter>(builder);
+        configure?.Invoke(options);
+        // 数据库日志记录器提供程序
+        return new NetXLoggerProvider(options).AddProvider<TLoggingWriter>(builder);
     }
 
     /// <summary>

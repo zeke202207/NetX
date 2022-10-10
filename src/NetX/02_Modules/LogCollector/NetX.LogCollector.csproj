@@ -24,15 +24,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\01_NetXFramework\01_App\NetX.App.csproj" />
     <ProjectReference Include="..\..\..\01_NetXFramework\02_Module\NetX.Module.csproj" />
     <ProjectReference Include="..\..\..\01_NetXFramework\04_DatabaseSetup\NetX.DatabaseSetup.csproj" />
     <ProjectReference Include="..\..\..\01_NetXFramework\07_Logging\NetX.Logging.csproj" />
+    <ProjectReference Include="..\..\..\01_NetXFramework\08_ApiDoc\Swagger\NetX.Swagger.csproj" />
   </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="copy $(TargetDir)NetX.LogCollector.dll $(SolutionDir)NetX\01_WebApi\bin\Debug\net6.0\modules\logcollector\NetX.LogCollector.dll&#xD;&#xA;copy $(TargetDir)AutoMapper.Extensions.Microsoft.DependencyInjection.dll $(SolutionDir)NetX\01_WebApi\bin\Debug\net6.0\modules\logcollector\ref\AutoMapper.Extensions.Microsoft.DependencyInjection.dll&#xD;&#xA;copy $(TargetDir)AutoMapper.dll $(SolutionDir)NetX\01_WebApi\bin\Debug\net6.0\modules\logcollector\ref\AutoMapper.dll" />
   </Target>
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
 
 </Project>

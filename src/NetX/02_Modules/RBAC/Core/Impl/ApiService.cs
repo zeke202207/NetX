@@ -16,7 +16,7 @@ namespace NetX.RBAC.Core;
 /// 
 /// </summary>
 [Scoped]
-public class ApiService : BaseService, IApiService
+public class ApiService : RBACBaseService, IApiService
 {
     private readonly IBaseRepository<sys_api> _apiRepository;
     private readonly IMapper _mapper;

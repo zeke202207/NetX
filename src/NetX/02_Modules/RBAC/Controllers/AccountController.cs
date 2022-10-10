@@ -5,6 +5,7 @@ using NetX.Swagger;
 using NetX.RBAC.Core;
 using NetX.RBAC.Models;
 using NetX.Tenants;
+using NetX.Logging.Monitors;
 
 namespace NetX.RBAC.Controllers;
 
@@ -34,7 +35,6 @@ public class AccountController : RBACBaseController
     [HttpPost]
     public async Task<ResultModel<LoginResult>> Login(LoginModel model)
     {
-        throw new Exception("hi,zeke");
         return await _accoutService.Login(model.UserName, model.Password);
     }
 

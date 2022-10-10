@@ -3,6 +3,11 @@
 internal class RBACConst
 {
     /// <summary>
+    /// rbac唯一标识
+    /// </summary>
+    public const string C_RBAC_KEY = "10000000000000000000000000000001";
+
+    /// <summary>
     /// 树跟节点编号
     /// </summary>
     public const string C_ROOT_ID = "00000000000000000000000000000000";

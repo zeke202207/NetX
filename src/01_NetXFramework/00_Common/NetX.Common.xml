@@ -216,6 +216,90 @@
             <param name="content"></param>
             <returns></returns>
         </member>
+        <member name="T:NetX.Common.HttpContextExtensions">
+            <summary>
+            Http 拓展类
+            </summary>
+        </member>
+        <member name="M:NetX.Common.HttpContextExtensions.GetMetadata``1(Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            获取 Action 特性
+            </summary>
+            <typeparam name="TAttribute"></typeparam>
+            <param name="httpContext"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.Common.HttpContextExtensions.GetControllerActionDescriptor(Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            获取 控制器/Action 描述器
+            </summary>
+            <param name="httpContext"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.Common.HttpContextExtensions.SigninToSwagger(Microsoft.AspNetCore.Http.HttpContext,System.String)">
+            <summary>
+            设置规范化文档自动登录
+            </summary>
+            <param name="httpContext"></param>
+            <param name="accessToken"></param>
+        </member>
+        <member name="M:NetX.Common.HttpContextExtensions.SignoutToSwagger(Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            设置规范化文档退出登录
+            </summary>
+            <param name="httpContext"></param>
+        </member>
+        <member name="M:NetX.Common.HttpContextExtensions.SetTokensOfResponseHeaders(Microsoft.AspNetCore.Http.HttpContext,System.String,System.String)">
+            <summary>
+            设置响应头 Tokens
+            </summary>
+            <param name="httpContext"></param>
+            <param name="accessToken"></param>
+            <param name="refreshToken"></param>
+        </member>
+        <member name="M:NetX.Common.HttpContextExtensions.GetLocalIpAddressToIPv4(Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            获取本机 IPv4地址
+            </summary>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.Common.HttpContextExtensions.GetLocalIpAddressToIPv6(Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            获取本机 IPv6地址
+            </summary>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.Common.HttpContextExtensions.GetRemoteIpAddressToIPv4(Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            获取远程 IPv4地址
+            </summary>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.Common.HttpContextExtensions.GetRemoteIpAddressToIPv6(Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            获取远程 IPv6地址
+            </summary>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.Common.HttpContextExtensions.GetRequestUrlAddress(Microsoft.AspNetCore.Http.HttpRequest)">
+            <summary>
+            获取完整请求地址
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.Common.HttpContextExtensions.GetRefererUrlAddress(Microsoft.AspNetCore.Http.HttpRequest,System.String)">
+            <summary>
+            获取来源地址
+            </summary>
+            <param name="request"></param>
+            <param name="refererHeaderKey"></param>
+            <returns></returns>
+        </member>
         <member name="T:NetX.Common.BaseFilter">
             <summary>
             netcore filter 过滤器基类
@@ -325,6 +409,62 @@
             <param name="context"></param>
             <param name="next"></param>
             <returns></returns>
+        </member>
+        <member name="T:NetX.Common.BaseService">
+            <summary>
+            服务基类
+            </summary>
+        </member>
+        <member name="M:NetX.Common.BaseService.CreateId">
+            <summary>
+            统一id生成器
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.Common.BaseService.CreateInsertTime">
+            <summary>
+            统一时间生成器
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.Common.BaseService.Success``1(``0)">
+            <summary>
+            返回成功结果
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="result"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.Common.BaseService.Error``1(System.String)">
+            <summary>
+            返回失败结果
+            </summary>
+            <param name="resultEnum"></param>
+            <param name="msg"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NetX.Common.BaseService.Error``1(NetX.Common.Models.ResultEnum,System.String)">
+            <summary>
+            返回失败结果
+            </summary>
+            <param name="resultEnum"></param>
+            <param name="msg"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NetX.Common.Models.Pager">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.Common.Models.Pager.Page">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:NetX.Common.Models.Pager.PageSize">
+            <summary>
+            
+            </summary>
         </member>
         <member name="T:NetX.Common.Models.ResultModel`1">
             <summary>

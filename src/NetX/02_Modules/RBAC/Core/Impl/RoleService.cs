@@ -11,7 +11,7 @@ namespace NetX.RBAC.Core;
 /// 角色管理服务
 /// </summary>
 [Scoped]
-public class RoleService : BaseService, IRoleService
+public class RoleService : RBACBaseService, IRoleService
 {
     private readonly IBaseRepository<sys_role> _roleRepository;
     private readonly IMapper _mapper;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NetX.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,26 +10,8 @@ namespace NetX.LogCollector.Core
     /// <summary>
     /// 
     /// </summary>
-    public abstract class BaseService
+    public abstract class LoggingBaseService : BaseService
     {
-        /// <summary>
-        /// 统一id生成器
-        /// </summary>
-        /// <returns></returns>
-        protected string CreateId()
-        {
-            return Guid.NewGuid().ToString("N");
-        }
-
-        /// <summary>
-        /// 统一时间生成器
-        /// </summary>
-        /// <returns></returns>
-        protected DateTime CreateInsertTime()
-        {
-            return DateTime.Now;
-        }
-
         /// <summary>
         /// 
         /// </summary>

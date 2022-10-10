@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using NetX.Common.Models;
+using Newtonsoft.Json;
 
 namespace NetX.RBAC.Models;
 

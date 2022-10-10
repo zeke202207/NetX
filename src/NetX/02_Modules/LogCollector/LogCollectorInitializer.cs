@@ -19,7 +19,7 @@ namespace NetX.LogCollector;
 /// </summary>
 internal class LogCollectorInitializer : ModuleInitializer
 {
-    public override Guid Key => new Guid("10000000000000000000000000000002");
+    public override Guid Key => new Guid(LoggingConstEnum.C_LOGGING_KEY);
 
     public override ModuleType ModuleType => ModuleType.UserModule;
 
@@ -35,9 +35,7 @@ internal class LogCollectorInitializer : ModuleInitializer
         //code first
         services.AddMigratorAssembly(new Assembly[] { Assembly.GetExecutingAssembly() });
         //add log
-        services.AddDatabaseLogging<DatabaseLoggingWriter>(p =>
-        {
-            p.MinimumLevel = Microsoft.Extensions.Logging.LogLevel.Trace;
-        });
+        services.AddDatabaseLogging<DatabaseLoggingWriter>(context.Configuration);
+        services.AddMonitorLogging(context.Configuration);
     }
 }

@@ -12,7 +12,7 @@ namespace NetX.RBAC.Core;
 /// 部门管理服务
 /// </summary>
 [Scoped]
-public class DeptService : BaseService, IDeptService
+public class DeptService : RBACBaseService, IDeptService
 {
     private readonly IBaseRepository<sys_dept> _deptRepository;
     private readonly IMapper _mapper;

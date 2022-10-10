@@ -13,7 +13,7 @@ namespace NetX.RBAC.Core;
 /// 账号管理服务
 /// </summary>
 [Scoped]
-public class AccountService : BaseService, IAccountService
+public class AccountService : RBACBaseService, IAccountService
 {
     private readonly IBaseRepository<sys_user> _userRepository;
     private readonly IEncryption _encryption;

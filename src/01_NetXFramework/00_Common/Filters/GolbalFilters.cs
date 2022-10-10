@@ -119,7 +119,7 @@ public class ExceptionFilter : BaseFilter, IExceptionFilter, IAsyncExceptionFilt
         {
             StatusCode = 500,
         };
-        logger.LogError(ex, "系统内部错误");
+        //logger.LogError(ex, "系统内部错误");
     }
 
     /// <summary>

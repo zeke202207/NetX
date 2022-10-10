@@ -30,14 +30,14 @@ namespace NetX.LogCollector.DatabaseSetup.CreateTable
         {
             Create.Table(_tableName)
               .WithColumn("id").AsString(50).PrimaryKey()
+              .WithColumn("threadid").AsString(50).Nullable()
+              .WithColumn("eventid").AsString(255).Nullable()
               .WithColumn("name").AsString(255).NotNullable()
               .WithColumn("level").AsInt16().NotNullable()
-              .WithColumn("eventid").AsString(255).Nullable()
-              .WithColumn("message").AsString(500).Nullable()
-              .WithColumn("exception").AsString(500).Nullable()
-              .WithColumn("context").AsString(500).Nullable()
-              .WithColumn("state").AsString(500).Nullable()
-              .WithColumn("threadid").AsString(50).Nullable()
+              .WithColumn("message").AsCustom("text").Nullable()
+              .WithColumn("exception").AsCustom("text").Nullable()
+              .WithColumn("context").AsCustom("text").Nullable()
+              .WithColumn("state").AsCustom("text").Nullable()
               .WithColumn("createtime").AsDateTime().WithDefaultValue(DateTime.Now);
         }
     }

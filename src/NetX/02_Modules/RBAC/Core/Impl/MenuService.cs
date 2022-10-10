@@ -13,7 +13,7 @@ namespace NetX.RBAC.Core;
 /// 菜单管理服务
 /// </summary>
 [Scoped]
-public class MenuService : BaseService, IMenuService
+public class MenuService : RBACBaseService, IMenuService
 {
     private readonly IBaseRepository<sys_menu> _menuRepository;
     private readonly IMapper _mapper;

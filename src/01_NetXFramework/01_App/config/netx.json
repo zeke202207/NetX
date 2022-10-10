@@ -8,9 +8,9 @@
       //秘钥
       "Key": "twZJ$j5##pVc5*y&",
       //发行商
-      "Issuer": "http://www.lndhqh.com/",
+      "Issuer": "http://www.liuping.org.cn/",
       //订阅者
-      "Audience": "http://www.lndhqh.com/",
+      "Audience": "http://www.liuping.org.cn/",
       //有效期(分钟)
       "Expires": 120
     }

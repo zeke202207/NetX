@@ -9,34 +9,42 @@ namespace NetX.LogCollector.Models;
 /// <summary>
 /// 
 /// </summary>
-public class sys_audit_logging : BaseEntity
+public class LoggingModel
 {
     /// <summary>
     /// 
     /// </summary>
-    public string userid { get;set; }
+    public string Id { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    public string nickname { get; set; }
+    public string Name { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    public string operation { get; set; }
+    public int Level { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    public string requestparams { get; set; }
+    public string EventId { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    public string ip { get; set; }
+    public string Message { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    public string response { get; set; }
+    public string Exception { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    public string influencedata { get; set; }
+    public string Context { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
+    public string State { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
+    public string ThreadId { get; set; }
 }

@@ -1,41 +1,10 @@
 {
-  "Serilog": {
-    "Using": [ "Serilog.Sinks.File", "Serilog.Sinks.Async", "Serilog.Sinks.Console" ],
-    "MinimumLevel": {
-      "Default": "Verbose",
-      //覆盖掉微软自带的日志
-      "Override": {
-        "Microsoft": "Information",
-        "System": "Error"
-      }
-    },
-    "WriteTo": [
-      {
-        "Name": "Console",
-        "Args": {}
-      },
-      {
-        "Name": "Async",
-        "Args": {
-          "configure": [
-            {
-              "Name": "File",
-              "Args": {
-                //文件路径
-                "path": "log/log.log",
-                //文件滚动方式
-                "rollingInterval": "Day",
-                //消息输出格式json
-                "formatter": "Serilog.Formatting.Json.JsonFormatter, Serilog",
-                //消息输出格式
-                "outputTemplate": "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}",
-                //文件数量
-                "retainedFileCountLimit": 60
-              }
-            }
-          ]
-        }
-      }
-    ]
+  "loggingoption": {
+    "MinimumLevel": "Trace"
+  },
+  "loggingmonitor": {
+    "withreturnvalue": true, // 审计中是否包含返回值结果
+    "returnvaluethreshold": 0, // 返回值结果大于returnvaluethreshold长度将被截断,0：从不截断
+    "jsonbehavior": 1 //日志输出格式  0: 包装文本格式 1 : json格式 
   }
 }

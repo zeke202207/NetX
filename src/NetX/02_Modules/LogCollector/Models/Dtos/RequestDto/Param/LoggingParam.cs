@@ -5,19 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetX.RBAC.Models;
+namespace NetX.LogCollector.Models;
 
 /// <summary>
 /// 
 /// </summary>
-public class ApiPageParam : Pager
-{
-}
-
-/// <summary>
-/// 
-/// </summary>
-public class ApiParam
+public class LoggingParam : Pager
 {
 
 }

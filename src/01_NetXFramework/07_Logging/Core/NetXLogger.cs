@@ -63,12 +63,12 @@ public sealed class NetXLogger : ILogger
     /// <returns><see cref="IDisposable"/></returns>
     public IDisposable BeginScope<TState>(TState state)
     {
-        //// 设置日志上下文
-        //if (state is LogContext context)
-        //{
-        //    if (Context == null) Context = new LogContext().SetRange(context.Properties);
-        //    else Context.SetRange(context.Properties);
-        //}
+        // 设置日志上下文
+        if (state is LogContext context)
+        {
+            if (Context == null) Context = new LogContext().SetRange(context.Properties);
+            else Context.SetRange(context.Properties);
+        }
 
         return default;
     }
@@ -134,6 +134,5 @@ public sealed class NetXLogger : ILogger
             return;
         // 写入日志队列
         _databaseLoggerProvider.WriteToQueue(logMsg);
-
     }
 }

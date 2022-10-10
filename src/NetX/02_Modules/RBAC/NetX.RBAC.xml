@@ -634,47 +634,6 @@
             <returns></returns>
             <exception cref="T:System.NotImplementedException"></exception>
         </member>
-        <member name="T:NetX.RBAC.Core.BaseService">
-            <summary>
-            服务基类
-            </summary>
-        </member>
-        <member name="M:NetX.RBAC.Core.BaseService.CreateId">
-            <summary>
-            统一id生成器
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:NetX.RBAC.Core.BaseService.CreateInsertTime">
-            <summary>
-            统一时间生成器
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:NetX.RBAC.Core.BaseService.Success``1(``0)">
-            <summary>
-            返回成功结果
-            </summary>
-            <typeparam name="T"></typeparam>
-            <param name="result"></param>
-            <returns></returns>
-        </member>
-        <member name="M:NetX.RBAC.Core.BaseService.Error``1(System.String)">
-            <summary>
-            返回失败结果
-            </summary>
-            <param name="resultEnum"></param>
-            <param name="msg"></param>
-            <returns></returns>
-        </member>
-        <member name="M:NetX.RBAC.Core.BaseService.Error``1(NetX.Common.Models.ResultEnum,System.String)">
-            <summary>
-            返回失败结果
-            </summary>
-            <param name="resultEnum"></param>
-            <param name="msg"></param>
-            <returns></returns>
-        </member>
         <member name="T:NetX.RBAC.Core.DeptService">
             <summary>
             部门管理服务
@@ -795,6 +754,11 @@
             </summary>
             <param name="menuType"></param>
             <returns></returns>
+        </member>
+        <member name="T:NetX.RBAC.Core.RBACBaseService">
+            <summary>
+            服务基类
+            </summary>
         </member>
         <member name="T:NetX.RBAC.Core.RoleService">
             <summary>
@@ -2016,21 +1980,6 @@
             
             </summary>
         </member>
-        <member name="T:NetX.RBAC.Models.Pager">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:NetX.RBAC.Models.Pager.Page">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:NetX.RBAC.Models.Pager.PageSize">
-            <summary>
-            
-            </summary>
-        </member>
         <member name="T:NetX.RBAC.Models.ApiPageParam">
             <summary>
             
@@ -2493,6 +2442,11 @@
         <member name="M:NetX.RBAC.PermissionValidateHandler.Validate(Microsoft.AspNetCore.Http.HttpContext,System.Collections.Generic.IDictionary{System.String,System.String})">
             <summary>
             后台权限验证
+            </summary>
+        </member>
+        <member name="F:NetX.RBAC.RBACConst.C_RBAC_KEY">
+            <summary>
+            rbac唯一标识
             </summary>
         </member>
         <member name="F:NetX.RBAC.RBACConst.C_ROOT_ID">

@@ -10,7 +10,7 @@ namespace NetX.RBAC;
 
 internal class RBACInitializer : ModuleInitializer
 {
-    public override Guid Key => new Guid("10000000000000000000000000000001");
+    public override Guid Key => new Guid(RBACConst.C_RBAC_KEY);
 
     public override ModuleType ModuleType => ModuleType.UserModule;
 
