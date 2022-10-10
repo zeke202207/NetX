@@ -11,7 +11,7 @@ namespace NetX.RBAC.Controllers;
 /// <summary>
 /// 账号管理api接口
 /// </summary>
-[ApiControllerDescription("RBAC", Description = "NetX实现的系统管理模块->账号管理")]
+[ApiControllerDescription(RBACConst.C_RBAC_GROUPNAME, Description = "NetX实现的系统管理模块->账号管理")]
 public class AccountController : RBACBaseController
 {
     private readonly IAccountService _accoutService;

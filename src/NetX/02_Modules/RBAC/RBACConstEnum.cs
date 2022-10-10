@@ -11,6 +11,11 @@ internal class RBACConst
     /// 权限缓存key
     /// </summary>
     public const string C_RBAC_PERMISSION_CACHEKEY = "RBAC:PERMISSION:ROLEID:";
+
+    /// <summary>
+    /// swagger分组名称
+    /// </summary>
+    public const string C_RBAC_GROUPNAME = "systemmanager";
 }
 
 /// <summary>

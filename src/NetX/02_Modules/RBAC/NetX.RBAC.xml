@@ -2505,6 +2505,11 @@
             权限缓存key
             </summary>
         </member>
+        <member name="F:NetX.RBAC.RBACConst.C_RBAC_GROUPNAME">
+            <summary>
+            swagger分组名称
+            </summary>
+        </member>
         <member name="T:NetX.RBAC.Status">
             <summary>
             启用状态

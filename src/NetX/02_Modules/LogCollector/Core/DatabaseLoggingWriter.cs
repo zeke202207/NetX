@@ -37,6 +37,8 @@ public class DatabaseLoggingWriter : BaseService,ILoggingWriter
     {
         try
         {
+            if (null == TenantContext.CurrentTenant.Principal)
+                return;
             _freeSqlClould?.Change(TenantContext.CurrentTenant.Principal.Tenant.TenantId);
             var v = _logRepository.Insert(new sys_logging()
             {
