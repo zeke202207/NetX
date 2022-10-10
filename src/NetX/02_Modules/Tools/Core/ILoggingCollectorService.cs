@@ -1,12 +1,7 @@
 ﻿using NetX.Common.Models;
-using NetX.LogCollector.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using NetX.Tools.Models;
 
-namespace NetX.LogCollector.Core
+namespace NetX.Tools.Core
 {
     /// <summary>
     /// 

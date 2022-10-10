@@ -15,9 +15,10 @@
 
   <ItemGroup>
     <Folder Include="config\" />
+    <Folder Include="modules\admintools\ref\" />
     <Folder Include="modules\systemmanager\ref\" />
     <Folder Include="config\" />
-    <Folder Include="modules\logcollector\" />
+    <Folder Include="modules\systemmanager\ref\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,10 +31,16 @@
     <Content Include="..\..\01_NetXFramework\01_App\config\tenants.json" Link="config\tenants.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\02_Modules\LogCollector\modules\logcollector\plugin.json" Link="modules\logcollector\plugin.json">
+    <Content Include="..\02_Modules\RBAC\modules\systemmanager\plugin.json" Link="modules\systemmanager\plugin.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\02_Modules\RBAC\modules\systemmanager\plugin.json" Link="modules\systemmanager\plugin.json">
+    <Content Include="..\02_Modules\RBAC\modules\systemmanager\ref\readme.txt" Link="modules\systemmanager\ref\readme.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\02_Modules\Tools\modules\admintools\plugin.json" Link="modules\admintools\plugin.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\02_Modules\Tools\modules\admintools\ref\readme.txt" Link="modules\admintools\ref\readme.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

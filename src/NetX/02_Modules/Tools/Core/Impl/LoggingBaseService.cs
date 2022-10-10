@@ -1,11 +1,6 @@
 ﻿using NetX.Common;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace NetX.LogCollector.Core
+namespace NetX.Tools.Core
 {
     /// <summary>
     /// 

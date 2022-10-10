@@ -87,7 +87,7 @@ public sealed class CollectibleAssemblyLoadContextProvider
             //0. 将程序集装在到context中
             var assembly = AssemblyLoadContext.Default.LoadFromStream(fs);
             //1. 将程序集引用装在到context中
-            options.Dependencies?.ForEach(p =>
+            options.Dependencies.ForEach(p =>
             {
                 if (AssemblyLoadContext.Default.Assemblies.ToList().Exists(a =>
                 {

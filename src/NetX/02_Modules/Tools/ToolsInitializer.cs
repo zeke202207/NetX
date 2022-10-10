@@ -2,24 +2,19 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using NetX.DatabaseSetup;
-using NetX.LogCollector.Core;
 using NetX.Logging;
 using NetX.Module;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using NetX.Tools.Core;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace NetX.LogCollector;
+namespace NetX.Tools;
 
 /// <summary>
-/// 日志采集器入口类
+/// 管理员工具箱入口类
 /// </summary>
-internal class LogCollectorInitializer : ModuleInitializer
+internal class ToolsInitializer : ModuleInitializer
 {
-    public override Guid Key => new Guid(LoggingConstEnum.C_LOGGING_KEY);
+    public override Guid Key => new Guid(ToolsConstEnum.C_LOGGING_KEY);
 
     public override ModuleType ModuleType => ModuleType.UserModule;
 

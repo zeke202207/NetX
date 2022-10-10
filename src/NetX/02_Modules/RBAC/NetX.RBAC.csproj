@@ -26,10 +26,6 @@
     <EmbeddedResource Include="DatabaseSetup\CreateTable\get_child_dept.sql" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="modules\systemmanager\ref\" />
-  </ItemGroup>
-
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="copy $(TargetDir)NetX.RBAC.dll $(SolutionDir)NetX\01_WebApi\bin\Debug\net6.0\modules\systemmanager\NetX.RBAC.dll&#xD;&#xA;copy $(TargetDir)AutoMapper.Extensions.Microsoft.DependencyInjection.dll $(SolutionDir)NetX\01_WebApi\bin\Debug\net6.0\modules\systemmanager\ref\AutoMapper.Extensions.Microsoft.DependencyInjection.dll&#xD;&#xA;copy $(TargetDir)AutoMapper.dll $(SolutionDir)NetX\01_WebApi\bin\Debug\net6.0\modules\systemmanager\ref\AutoMapper.dll" />
   </Target>
@@ -48,6 +44,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\01_NetXFramework\01_App\NetX.App.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="modules\systemmanager\ref\readme.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

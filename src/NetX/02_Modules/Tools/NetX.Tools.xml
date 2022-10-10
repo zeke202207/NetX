@@ -1,62 +1,62 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>NetX.LogCollector</name>
+        <name>NetX.Tools</name>
     </assembly>
     <members>
-        <member name="T:NetX.LogCollector.Controllers.BaseController">
+        <member name="T:NetX.Tools.Controllers.BaseController">
             <summary>
             api接口基类对象
             </summary>
         </member>
-        <member name="T:NetX.LogCollector.Controllers.LoggingController">
+        <member name="T:NetX.Tools.Controllers.LoggingController">
             <summary>
             
             </summary>
         </member>
-        <member name="M:NetX.LogCollector.Controllers.LoggingController.#ctor(NetX.LogCollector.Core.ILoggingCollectorService)">
+        <member name="M:NetX.Tools.Controllers.LoggingController.#ctor(NetX.Tools.Core.ILoggingCollectorService)">
             <summary>
             账号管理api实例对象
             </summary>
             <param name="loggingService"></param>
         </member>
-        <member name="M:NetX.LogCollector.Controllers.LoggingController.GetLogList(NetX.LogCollector.Models.LoggingParam)">
+        <member name="M:NetX.Tools.Controllers.LoggingController.GetLogList(NetX.Tools.Models.LoggingParam)">
             <summary>
             系统登录
             </summary>
             <returns></returns>
         </member>
-        <member name="T:NetX.LogCollector.Core.ILoggingCollectorService">
+        <member name="T:NetX.Tools.Core.ILoggingCollectorService">
             <summary>
             
             </summary>
         </member>
-        <member name="M:NetX.LogCollector.Core.ILoggingCollectorService.GetLoggingList(NetX.LogCollector.Models.LoggingParam)">
+        <member name="M:NetX.Tools.Core.ILoggingCollectorService.GetLoggingList(NetX.Tools.Models.LoggingParam)">
             <summary>
             
             </summary>
             <param name="loggingParam"></param>
             <returns></returns>
         </member>
-        <member name="T:NetX.LogCollector.Core.DatabaseLoggingWriter">
+        <member name="T:NetX.Tools.Core.DatabaseLoggingWriter">
             <summary>
             数据库日志记录器
             </summary>
         </member>
-        <member name="M:NetX.LogCollector.Core.DatabaseLoggingWriter.#ctor(FreeSql.IBaseRepository{NetX.LogCollector.Models.sys_logging},IFreeSql)">
+        <member name="M:NetX.Tools.Core.DatabaseLoggingWriter.#ctor(FreeSql.IBaseRepository{NetX.Tools.Models.sys_logging},IFreeSql)">
             <summary>
             
             </summary>
             <param name="logRepository"></param>
             <param name="freeSql"></param>
         </member>
-        <member name="M:NetX.LogCollector.Core.DatabaseLoggingWriter.Write(NetX.Logging.LogMessage)">
+        <member name="M:NetX.Tools.Core.DatabaseLoggingWriter.Write(NetX.Logging.LogMessage)">
             <summary>
             记录日志
             </summary>
             <param name="message"></param>
         </member>
-        <member name="M:NetX.LogCollector.Core.DatabaseLoggingWriter.Serialize``1(``0)">
+        <member name="M:NetX.Tools.Core.DatabaseLoggingWriter.Serialize``1(``0)">
             <summary>
             序列话对象实体
             </summary>
@@ -64,12 +64,12 @@
             <param name="data"></param>
             <returns></returns>
         </member>
-        <member name="T:NetX.LogCollector.Core.LoggingBaseService">
+        <member name="T:NetX.Tools.Core.LoggingBaseService">
             <summary>
             
             </summary>
         </member>
-        <member name="M:NetX.LogCollector.Core.LoggingBaseService.SerializeObject``1(``0)">
+        <member name="M:NetX.Tools.Core.LoggingBaseService.SerializeObject``1(``0)">
             <summary>
             
             </summary>
@@ -77,19 +77,19 @@
             <param name="data"></param>
             <returns></returns>
         </member>
-        <member name="T:NetX.LogCollector.Core.LoggingCollectorService">
+        <member name="T:NetX.Tools.Core.LoggingCollectorService">
             <summary>
             
             </summary>
         </member>
-        <member name="M:NetX.LogCollector.Core.LoggingCollectorService.#ctor(FreeSql.IBaseRepository{NetX.LogCollector.Models.sys_logging},AutoMapper.IMapper)">
+        <member name="M:NetX.Tools.Core.LoggingCollectorService.#ctor(FreeSql.IBaseRepository{NetX.Tools.Models.sys_logging},AutoMapper.IMapper)">
             <summary>
             日志管理实例对象
             </summary>
             <param name="loggingRepository"></param>
             <param name="mapper"></param>
         </member>
-        <member name="M:NetX.LogCollector.Core.LoggingCollectorService.GetLoggingList(NetX.LogCollector.Models.LoggingParam)">
+        <member name="M:NetX.Tools.Core.LoggingCollectorService.GetLoggingList(NetX.Tools.Models.LoggingParam)">
             <summary>
             
             </summary>
@@ -97,171 +97,191 @@
             <returns></returns>
             <exception cref="T:System.NotImplementedException"></exception>
         </member>
-        <member name="T:NetX.LogCollector.DatabaseSetup.CreateTable.LoggingTable">
+        <member name="T:NetX.Tools.DatabaseSetup.CreateTable.LoggingTable">
             <summary>
             系统日志表
             </summary>
         </member>
-        <member name="M:NetX.LogCollector.DatabaseSetup.CreateTable.LoggingTable.#ctor">
+        <member name="M:NetX.Tools.DatabaseSetup.CreateTable.LoggingTable.#ctor">
             <summary>
             
             </summary>
         </member>
-        <member name="M:NetX.LogCollector.DatabaseSetup.CreateTable.LoggingTable.Up">
+        <member name="M:NetX.Tools.DatabaseSetup.CreateTable.LoggingTable.Up">
             <summary>
             
             </summary>
             <exception cref="T:System.NotImplementedException"></exception>
         </member>
-        <member name="T:NetX.LogCollector.Data.Repositories.SysLoggingRepository">
+        <member name="T:NetX.Tools.DatabaseSetup.InitData.InitMenuData">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.Tools.DatabaseSetup.InitData.InitMenuData.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.Tools.DatabaseSetup.InitData.InitMenuData.Up">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:NetX.Tools.DatabaseSetup.InitData.InitMenuData.Down">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:NetX.Tools.Data.SysLoggingRepository">
             <summary>
             系统日志仓储
             </summary>
         </member>
-        <member name="M:NetX.LogCollector.Data.Repositories.SysLoggingRepository.#ctor(IFreeSql)">
+        <member name="M:NetX.Tools.Data.SysLoggingRepository.#ctor(IFreeSql)">
             <summary>
             logging 仓储对象实例
             </summary>
             <param name="fsql"></param>
         </member>
-        <member name="T:NetX.LogCollector.LogCollectorInitializer">
-            <summary>
-            日志采集器入口类
-            </summary>
-        </member>
-        <member name="F:NetX.LogCollector.LoggingConstEnum.C_LOGGING_KEY">
-            <summary>
-            唯一标识
-            </summary>
-        </member>
-        <member name="F:NetX.LogCollector.LoggingConstEnum.C_LOGGING_GROUPNAME">
-            <summary>
-            swagger分组名称
-            </summary>
-        </member>
-        <member name="T:NetX.LogCollector.MapperProfiles.LoggingProfile">
+        <member name="T:NetX.Tools.MapperProfiles.LoggingProfile">
             <summary>
             logging 映射清单
             </summary>
         </member>
-        <member name="M:NetX.LogCollector.MapperProfiles.LoggingProfile.#ctor">
+        <member name="M:NetX.Tools.MapperProfiles.LoggingProfile.#ctor">
             <summary>
             
             </summary>
         </member>
-        <member name="T:NetX.LogCollector.Models.LoggingModel">
+        <member name="T:NetX.Tools.Models.LoggingModel">
             <summary>
             
             </summary>
         </member>
-        <member name="P:NetX.LogCollector.Models.LoggingModel.Id">
+        <member name="P:NetX.Tools.Models.LoggingModel.Id">
             <summary>
             
             </summary>
         </member>
-        <member name="P:NetX.LogCollector.Models.LoggingModel.Name">
+        <member name="P:NetX.Tools.Models.LoggingModel.Name">
             <summary>
             
             </summary>
         </member>
-        <member name="P:NetX.LogCollector.Models.LoggingModel.Level">
+        <member name="P:NetX.Tools.Models.LoggingModel.Level">
             <summary>
             
             </summary>
         </member>
-        <member name="P:NetX.LogCollector.Models.LoggingModel.EventId">
+        <member name="P:NetX.Tools.Models.LoggingModel.EventId">
             <summary>
             
             </summary>
         </member>
-        <member name="P:NetX.LogCollector.Models.LoggingModel.Message">
+        <member name="P:NetX.Tools.Models.LoggingModel.Message">
             <summary>
             
             </summary>
         </member>
-        <member name="P:NetX.LogCollector.Models.LoggingModel.Exception">
+        <member name="P:NetX.Tools.Models.LoggingModel.Exception">
             <summary>
             
             </summary>
         </member>
-        <member name="P:NetX.LogCollector.Models.LoggingModel.Context">
+        <member name="P:NetX.Tools.Models.LoggingModel.Context">
             <summary>
             
             </summary>
         </member>
-        <member name="P:NetX.LogCollector.Models.LoggingModel.State">
+        <member name="P:NetX.Tools.Models.LoggingModel.State">
             <summary>
             
             </summary>
         </member>
-        <member name="P:NetX.LogCollector.Models.LoggingModel.ThreadId">
+        <member name="P:NetX.Tools.Models.LoggingModel.ThreadId">
             <summary>
             
             </summary>
         </member>
-        <member name="T:NetX.LogCollector.Models.LoggingParam">
+        <member name="T:NetX.Tools.Models.LoggingParam">
             <summary>
             
             </summary>
         </member>
-        <member name="T:NetX.LogCollector.Models.BaseEntity">
+        <member name="T:NetX.Tools.Models.BaseEntity">
             <summary>
             
             </summary>
         </member>
-        <member name="P:NetX.LogCollector.Models.BaseEntity.id">
+        <member name="P:NetX.Tools.Models.BaseEntity.id">
             <summary>
             
             </summary>
         </member>
-        <member name="P:NetX.LogCollector.Models.BaseEntity.createtime">
+        <member name="P:NetX.Tools.Models.BaseEntity.createtime">
             <summary>
             
             </summary>
         </member>
-        <member name="T:NetX.LogCollector.Models.sys_logging">
+        <member name="T:NetX.Tools.Models.sys_logging">
             <summary>
             
             </summary>
         </member>
-        <member name="P:NetX.LogCollector.Models.sys_logging.name">
+        <member name="P:NetX.Tools.Models.sys_logging.name">
             <summary>
             
             </summary>
         </member>
-        <member name="P:NetX.LogCollector.Models.sys_logging.level">
+        <member name="P:NetX.Tools.Models.sys_logging.level">
             <summary>
             
             </summary>
         </member>
-        <member name="P:NetX.LogCollector.Models.sys_logging.eventid">
+        <member name="P:NetX.Tools.Models.sys_logging.eventid">
             <summary>
             
             </summary>
         </member>
-        <member name="P:NetX.LogCollector.Models.sys_logging.message">
+        <member name="P:NetX.Tools.Models.sys_logging.message">
             <summary>
             
             </summary>
         </member>
-        <member name="P:NetX.LogCollector.Models.sys_logging.exception">
+        <member name="P:NetX.Tools.Models.sys_logging.exception">
             <summary>
             
             </summary>
         </member>
-        <member name="P:NetX.LogCollector.Models.sys_logging.context">
+        <member name="P:NetX.Tools.Models.sys_logging.context">
             <summary>
             
             </summary>
         </member>
-        <member name="P:NetX.LogCollector.Models.sys_logging.state">
+        <member name="P:NetX.Tools.Models.sys_logging.state">
             <summary>
             
             </summary>
         </member>
-        <member name="P:NetX.LogCollector.Models.sys_logging.threadid">
+        <member name="P:NetX.Tools.Models.sys_logging.threadid">
             <summary>
             
+            </summary>
+        </member>
+        <member name="F:NetX.Tools.ToolsConstEnum.C_LOGGING_KEY">
+            <summary>
+            唯一标识
+            </summary>
+        </member>
+        <member name="F:NetX.Tools.ToolsConstEnum.C_LOGGING_GROUPNAME">
+            <summary>
+            swagger分组名称
+            </summary>
+        </member>
+        <member name="T:NetX.Tools.ToolsInitializer">
+            <summary>
+            日志采集器入口类
             </summary>
         </member>
     </members>

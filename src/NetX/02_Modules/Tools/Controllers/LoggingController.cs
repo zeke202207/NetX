@@ -1,21 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NetX.Common.Models;
-using NetX.LogCollector.Core;
-using NetX.LogCollector.Models;
 using NetX.Swagger;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using NetX.Tools.Core;
+using NetX.Tools.Models;
 
-namespace NetX.LogCollector.Controllers
+namespace NetX.Tools.Controllers
 {
     /// <summary>
     /// 
     /// </summary>
-    [ApiControllerDescription(LoggingConstEnum.C_LOGGING_GROUPNAME, Description = "NetX实现的日志采集模块->日志管理")]
-    public class LoggingController: BaseController
+    [ApiControllerDescription(ToolsConstEnum.C_LOGGING_GROUPNAME, Description = "NetX实现的日志采集模块->日志管理")]
+    public class LoggingController : BaseController
     {
         private readonly ILoggingCollectorService _loggingService;
 

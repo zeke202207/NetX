@@ -1,19 +1,14 @@
 ﻿using FreeSql;
-using NetX.LogCollector.Models;
 using NetX.Logging;
 using NetX.Tenants;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using NetX.Tools.Models;
 
-namespace NetX.LogCollector.Core;
+namespace NetX.Tools.Core;
 
 /// <summary>
 /// 数据库日志记录器
 /// </summary>
-public class DatabaseLoggingWriter : LoggingBaseService,ILoggingWriter
+public class DatabaseLoggingWriter : LoggingBaseService, ILoggingWriter
 {
     private readonly IBaseRepository<sys_logging> _logRepository;
     private readonly FreeSqlCloud<string>? _freeSqlClould;

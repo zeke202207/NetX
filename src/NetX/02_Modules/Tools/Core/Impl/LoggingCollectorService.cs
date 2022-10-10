@@ -2,14 +2,9 @@
 using FreeSql;
 using NetX.Common.Attributes;
 using NetX.Common.Models;
-using NetX.LogCollector.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using NetX.Tools.Models;
 
-namespace NetX.LogCollector.Core;
+namespace NetX.Tools.Core;
 
 /// <summary>
 /// 
@@ -41,7 +36,7 @@ public class LoggingCollectorService : LoggingBaseService, ILoggingCollectorServ
     /// <exception cref="NotImplementedException"></exception>
     public async Task<ResultModel<PagerResultModel<List<LoggingModel>>>> GetLoggingList(LoggingParam loggingParam)
     {
-        var list = await _loggingRepository.Select.Page(loggingParam.Page,loggingParam.PageSize).ToListAsync();
+        var list = await _loggingRepository.Select.Page(loggingParam.Page, loggingParam.PageSize).ToListAsync();
         var total = await _loggingRepository.Select.CountAsync();
         var result = new PagerResultModel<List<LoggingModel>>()
         {

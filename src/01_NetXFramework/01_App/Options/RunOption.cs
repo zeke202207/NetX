@@ -153,7 +153,7 @@ public sealed class RunOption
                     return;
                 var refDir = Path.Combine(fi.DirectoryName, ModuleSetupConst.C_MODULE_REFDIRECTORYNAME);
                 if (Directory.Exists(refDir))
-                    Directory.EnumerateFiles(refDir)
+                    Directory.EnumerateFiles(refDir,"*.dll")
                     .ToList().ForEach(p => options.Dependencies.Add(p));
                 Modules.Add(options.Id, options);
                 InternalApp.UserModeulOptions.Add(options);

@@ -8,11 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="modules\logcollector\plugin.json" />
+    <None Remove="modules\admintools\plugin.json" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="modules\logcollector\plugin.json">
+    <Content Include="modules\admintools\plugin.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
@@ -30,8 +30,14 @@
     <ProjectReference Include="..\..\..\01_NetXFramework\07_Logging\NetX.Logging.csproj" />
     <ProjectReference Include="..\..\..\01_NetXFramework\08_ApiDoc\Swagger\NetX.Swagger.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Update="modules\admintools\ref\readme.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="copy $(TargetDir)NetX.LogCollector.dll $(SolutionDir)NetX\01_WebApi\bin\Debug\net6.0\modules\logcollector\NetX.LogCollector.dll&#xD;&#xA;copy $(TargetDir)AutoMapper.Extensions.Microsoft.DependencyInjection.dll $(SolutionDir)NetX\01_WebApi\bin\Debug\net6.0\modules\logcollector\ref\AutoMapper.Extensions.Microsoft.DependencyInjection.dll&#xD;&#xA;copy $(TargetDir)AutoMapper.dll $(SolutionDir)NetX\01_WebApi\bin\Debug\net6.0\modules\logcollector\ref\AutoMapper.dll" />
+    <Exec Command="copy $(TargetDir)NetX.Tools.dll $(SolutionDir)NetX\01_WebApi\bin\Debug\net6.0\modules\admintools\NetX.Tools.dll&#xD;&#xA;copy $(TargetDir)AutoMapper.Extensions.Microsoft.DependencyInjection.dll $(SolutionDir)NetX\01_WebApi\bin\Debug\net6.0\modules\admintools\ref\AutoMapper.Extensions.Microsoft.DependencyInjection.dll&#xD;&#xA;copy $(TargetDir)AutoMapper.dll $(SolutionDir)NetX\01_WebApi\bin\Debug\net6.0\modules\admintools\ref\AutoMapper.dll" />
   </Target>
 
 </Project>

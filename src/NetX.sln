@@ -91,7 +91,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetX.Cache.Core", "01_NetXF
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetX.InMemoryCache", "01_NetXFramework\09_Cache\MemoryCache\NetX.InMemoryCache.csproj", "{BD24C9EC-4F8A-41CD-9545-40307588BAC2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetX.LogCollector", "NetX\02_Modules\LogCollector\NetX.LogCollector.csproj", "{021889C7-0BA6-4258-9A83-9171420D0A31}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetX.Tools", "NetX\02_Modules\Tools\NetX.Tools.csproj", "{021889C7-0BA6-4258-9A83-9171420D0A31}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

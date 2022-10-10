@@ -1,12 +1,7 @@
 ﻿using FluentMigrator;
 using NetX.DatabaseSetup;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace NetX.LogCollector.DatabaseSetup.CreateTable
+namespace NetX.Tools.DatabaseSetup.CreateTable
 {
     /// <summary>
     /// 系统日志表
@@ -17,7 +12,7 @@ namespace NetX.LogCollector.DatabaseSetup.CreateTable
         /// <summary>
         /// 
         /// </summary>
-        public LoggingTable() 
+        public LoggingTable()
             : base(DatabaseSetupConst.C_DATABASESETUP_TABLENAME_LOGGING)
         {
         }
