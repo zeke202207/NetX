@@ -30,7 +30,7 @@
 NetX 前身是 ``` sagittarius ``` ,一个我业余时间开发的模块化组件框架，在小范围使用后，效果还不错，能提高很大一部分开发效率。随着，Net6的问世，遂将其升级为Net6版本。
 
 > 本框架仅支持webapi开发，暂不考虑带view试图模式开发
-> 前台将开发配套模块化框架，敬请期待
+> 前台将开发配套模块化框架，请参考：[netx app](https://github.com/zeke202207/netx-app)
 
 ##  3. <a name=':rose:'></a>软件架构 :rose:
 
@@ -74,9 +74,12 @@ NetX 前身是 ``` sagittarius ``` ,一个我业余时间开发的模块化组�
      [√] web主机构建完成
      [√] 模块化功能集成 
      [√] 消息总线
+     [√] 多租户支持
+     [√] swagger文档组件扩展
+     [doing] 可扩展的日志组件
+     [doing] 基于内存的缓存模块
      [-] 基础设施组件完善
-     [开发中] 数据库访问层构建
-     [开发中] 多租户支持
+     
 
 ##  5. <a name='MRIssues:pray:'></a>欢迎提交MR和Issues :pray:
 
@@ -97,9 +100,8 @@ NetX 前身是 ``` sagittarius ``` ,一个我业余时间开发的模块化组�
      <!-- 图标生成工具 :https://shields.io/category/version -->
      
      | 依赖项  |  版本|
-     |  ----  | ---- |
-     | serilog| <img src="https://img.shields.io/badge/serilog-2.11.0-blue"/> |
+     |  ----  | ---- |     
      | swagger | <img src="https://img.shields.io/badge/swagger-6.4.0-blue"/>  |
-     | freesql cloud | <img src="https://img.shields.io/badge/swagger-1.5.2-blue"/>  |
+     | freesql cloud | <img src="https://img.shields.io/badge/freesql cloud-1.5.2-blue"/>  |
 
              
