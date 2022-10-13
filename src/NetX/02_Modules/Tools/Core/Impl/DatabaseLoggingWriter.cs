@@ -55,9 +55,9 @@ public class DatabaseLoggingWriter : LoggingBaseService, ILoggingWriter
                 createtime = message.LogDateTime,
             });
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-
+            throw new Exception("日志记录出错", ex);
         }
         finally
         {

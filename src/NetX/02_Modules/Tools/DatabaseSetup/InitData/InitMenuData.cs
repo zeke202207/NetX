@@ -25,8 +25,8 @@ namespace NetX.Tools.DatabaseSetup.InitData
             Insert.IntoTable(_tableName)
                 .Row(new
                 {
-                    id = "00000000000000000000000000000004",
-                    parentid = "00000000000000000000000000000009",
+                    id = "00000000000000000000000000000009",
+                    parentid = "00000000000000000000000000000003",
                     name = "日志管理",
                     path = "logging",
                     component = "/systemmanager/account/index",

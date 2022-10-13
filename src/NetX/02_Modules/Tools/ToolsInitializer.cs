@@ -30,7 +30,10 @@ internal class ToolsInitializer : ModuleInitializer
         //code first
         services.AddMigratorAssembly(new Assembly[] { Assembly.GetExecutingAssembly() });
         //add log
-        services.AddDatabaseLogging<DatabaseLoggingWriter>(context.Configuration);
+        services.AddDatabaseLogging<DatabaseLoggingWriter>(context.Configuration, option =>
+        {
+            option.HandleWriteError = error => Console.WriteLine(error.ToString());
+        });
         services.AddMonitorLogging(context.Configuration);
     }
 }
