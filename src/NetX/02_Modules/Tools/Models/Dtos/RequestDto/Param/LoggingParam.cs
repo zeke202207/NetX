@@ -1,4 +1,5 @@
 ﻿using NetX.Common.Models;
+using Newtonsoft.Json;
 
 namespace NetX.Tools.Models;
 
@@ -7,5 +8,6 @@ namespace NetX.Tools.Models;
 /// </summary>
 public class LoggingParam : Pager
 {
-
+    [JsonProperty("level")]
+    public int Level { get; set; }
 }

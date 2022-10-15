@@ -36,8 +36,12 @@ public class LoggingCollectorService : LoggingBaseService, ILoggingCollectorServ
     /// <exception cref="NotImplementedException"></exception>
     public async Task<ResultModel<PagerResultModel<List<LoggingModel>>>> GetLoggingList(LoggingParam loggingParam)
     {
-        var list = await _loggingRepository.Select.Page(loggingParam.Page, loggingParam.PageSize).ToListAsync();
-        var total = await _loggingRepository.Select.CountAsync();
+        var list = await _loggingRepository.Select
+            .WhereIf(loggingParam.Level > 0,p=>p.level == loggingParam.Level - 1)
+            .OrderByDescending(p => p.createtime)
+            .Page(loggingParam.Page, loggingParam.PageSize).ToListAsync();
+        var total = await _loggingRepository.Select
+            .WhereIf(loggingParam.Level > 0, p => p.level == loggingParam.Level -1).CountAsync();
         var result = new PagerResultModel<List<LoggingModel>>()
         {
             Items = _mapper.Map<List<LoggingModel>>(list),
