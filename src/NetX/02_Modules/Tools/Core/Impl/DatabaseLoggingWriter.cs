@@ -2,6 +2,7 @@
 using NetX.Logging;
 using NetX.Tenants;
 using NetX.Tools.Models;
+using Newtonsoft.Json.Linq;
 
 namespace NetX.Tools.Core;
 
@@ -11,6 +12,7 @@ namespace NetX.Tools.Core;
 public class DatabaseLoggingWriter : LoggingBaseService, ILoggingWriter
 {
     private readonly IBaseRepository<sys_logging> _logRepository;
+    private readonly IBaseRepository<sys_audit_logging> _auditlogRepository;
     private readonly FreeSqlCloud<string>? _freeSqlClould;
 
     /// <summary>
@@ -18,9 +20,10 @@ public class DatabaseLoggingWriter : LoggingBaseService, ILoggingWriter
     /// </summary>
     /// <param name="logRepository"></param>
     /// <param name="freeSql"></param>
-    public DatabaseLoggingWriter(IBaseRepository<sys_logging> logRepository, IFreeSql freeSql)
+    public DatabaseLoggingWriter(IBaseRepository<sys_logging> logRepository, IBaseRepository<sys_audit_logging> auditlogRepository, IFreeSql freeSql)
     {
         this._logRepository = logRepository;
+        this._auditlogRepository = auditlogRepository;
         this._freeSqlClould = freeSql as FreeSqlCloud<string>;
     }
 
@@ -41,7 +44,36 @@ public class DatabaseLoggingWriter : LoggingBaseService, ILoggingWriter
                 || string.IsNullOrWhiteSpace(tenantContext.Principal.Tenant.TenantId))
                 return;
             _freeSqlClould?.Change(tenantContext.Principal.Tenant.TenantId);
-            var v = _logRepository.Insert(new sys_logging()
+            SaveLogging(message);
+            SaveAuditLogging(message);
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("日志记录出错", ex);
+        }
+        finally
+        {
+            _freeSqlClould?.Change(TenantConst.C_TENANT_DBKEY);
+        }
+    }
+
+    /// <summary>
+    /// 记录系统日志
+    /// </summary>
+    /// <param name="message"></param>
+    private void SaveLogging(LogMessage message)
+    {
+        try
+        {
+            var elapsed = 0L;
+            var loggingMonitorMsg = message.Context.Get("loggingMonitor")?.ToString();
+            if (!string.IsNullOrEmpty(loggingMonitorMsg))
+            {
+                var loggingMonitoer = Newtonsoft.Json.JsonConvert.DeserializeObject<LoggingMonitor>(loggingMonitorMsg);
+                if (null != loggingMonitoer)
+                    elapsed = loggingMonitoer.TimeOperationElapsedMilliseconds;
+            }
+            _logRepository.Insert(new sys_logging()
             {
                 id = base.CreateId(),
                 threadid = message.ThreadId.ToString(),
@@ -55,13 +87,42 @@ public class DatabaseLoggingWriter : LoggingBaseService, ILoggingWriter
                 createtime = message.LogDateTime,
             });
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            throw new Exception("日志记录出错", ex);
         }
-        finally
+    }
+
+    /// <summary>
+    /// 记录审计日志
+    /// </summary>
+    /// <param name="message"></param>
+    private void SaveAuditLogging(LogMessage message)
+    {
+        try
         {
-            _freeSqlClould?.Change(TenantConst.C_TENANT_DBKEY);
+            if (message.LogLevel != Microsoft.Extensions.Logging.LogLevel.Information)
+                return;
+            var loggingMonitorMsg = message.Context.Get("loggingMonitor")?.ToString();
+            if (string.IsNullOrEmpty(loggingMonitorMsg))
+                return;
+            var loggingMonitoer = Newtonsoft.Json.JsonConvert.DeserializeObject<LoggingMonitor>(loggingMonitorMsg);
+            if (null == loggingMonitoer || loggingMonitoer.HttpMethod.ToUpper() == "GET")
+                return;
+            this._auditlogRepository.Insert(new sys_audit_logging()
+            {
+                id = base.CreateId(),
+                createtime = message.LogDateTime,
+                userid = loggingMonitoer.AuthorizationClaims.FirstOrDefault(p => p.Type.ToLower() == "userid")?.Value,
+                username = loggingMonitoer.AuthorizationClaims.FirstOrDefault(p => p.Type.ToLower() == "displayname")?.Value,
+                controller = loggingMonitoer.ControllerName,
+                action = loggingMonitoer.ActionName,
+                detail = loggingMonitorMsg,
+                remoteipv4 = loggingMonitoer.RemoteIPv4,
+                httpmethod = loggingMonitoer.HttpMethod
+            });
+        }
+        catch (Exception)
+        {
         }
     }
 

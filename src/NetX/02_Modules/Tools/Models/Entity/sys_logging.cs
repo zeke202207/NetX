@@ -16,6 +16,10 @@ public class sys_logging : BaseEntity
     /// <summary>
     /// 
     /// </summary>
+    public long elapsed { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
     public string eventid { get; set; }
     /// <summary>
     /// 
