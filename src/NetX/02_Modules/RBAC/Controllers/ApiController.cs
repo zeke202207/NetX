@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NetX.Logging.Monitors;
 
 namespace NetX.RBAC.Controllers;
 
@@ -57,6 +58,7 @@ public class ApiController : RBACBaseController
     /// </summary>
     /// <param name="model"></param>
     /// <returns></returns>
+    [Audit]
     [ApiActionDescription("添加api")]
     [HttpPost]
     public async Task<ResultModel<bool>> AddApi(ApiRequestModel model)
@@ -69,6 +71,7 @@ public class ApiController : RBACBaseController
     /// </summary>
     /// <param name="model"></param>
     /// <returns></returns>
+    [Audit]
     [ApiActionDescription("编辑api")]
     [HttpPost]
     public async Task<ResultModel<bool>> UpdateApi(ApiRequestModel model)
@@ -81,6 +84,7 @@ public class ApiController : RBACBaseController
     /// </summary>
     /// <param name="param"></param>
     /// <returns></returns>
+    [Audit]
     [ApiActionDescription("删除api")]
     [HttpDelete]
     public async Task<ResultModel<bool>> RemoveApi(KeyParam param)

@@ -24,6 +24,7 @@ public struct LogMessage
     /// <param name="state"></param>
     /// <param name="logDateTime">日志记录时间</param>
     /// <param name="threadId">线程id</param>
+    /// <param name="isAudit">s是否记录审计表</param>
     public LogMessage(
         string logName,
         LogLevel logLevel,
@@ -33,7 +34,8 @@ public struct LogMessage
         LogContext context,
         object state,
         DateTime logDateTime,
-        int threadId
+        int threadId,
+        bool isAudit
         )
     {
         LogName = logName;
@@ -45,6 +47,7 @@ public struct LogMessage
         State = state;
         LogDateTime = logDateTime;
         ThreadId = threadId;
+        IsWriteToAudit = isAudit;
     }
 
     /// <summary>
@@ -91,6 +94,11 @@ public struct LogMessage
     /// 日志上下文
     /// </summary>
     public LogContext Context;
+
+    /// <summary>
+    /// 是否记录审计日志
+    /// </summary>
+    public bool IsWriteToAudit;
 
     /// <summary>
     /// 重写默认输出

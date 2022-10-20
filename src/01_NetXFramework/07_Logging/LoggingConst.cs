@@ -27,6 +27,11 @@ namespace NetX.Logging
         public static string C_LOGGING_TENANTCONTEXT_KEY = "tenantContext";
 
         /// <summary>
+        /// 
+        /// </summary>
+        public static string C_LOGGING_AUDIT = "isaudit";
+
+        /// <summary>
         /// 异常分隔符
         /// </summary>
         public const string C_LOGGING_EXCEPTION_SEPARATOR = "++++++++++++++++++++++++++++++++++++++++++++++++++++++++";

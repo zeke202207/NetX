@@ -112,6 +112,12 @@ public sealed class NetXLogger : ILogger
         // 获取格式化后的消息
         var message = formatter(state, exception);
         var logDateTime = _options.UseUtcTimestamp ? DateTime.UtcNow : DateTime.Now;
+        bool isAudit = false;
+        if (null != Context)
+        {
+            var value = Context.Get(LoggingConst.C_LOGGING_AUDIT);
+            bool.TryParse(value?.ToString(), out isAudit);
+        }
         var logMsg = new LogMessage(
             _logName, 
             logLevel, 
@@ -121,7 +127,8 @@ public sealed class NetXLogger : ILogger
             Context, 
             state, 
             logDateTime, 
-            Environment.CurrentManagedThreadId);
+            Environment.CurrentManagedThreadId,
+            isAudit);
         // 判断是否自定义了日志筛选器，如果是则检查是否符合条件
         if (_options.WriteFilter?.Invoke(logMsg) == false) 
             return;

@@ -5,6 +5,7 @@ using NetX.Swagger;
 using NetX.RBAC.Core;
 using NetX.RBAC.Models;
 using NetX.Tenants;
+using NetX.Logging.Monitors;
 
 namespace NetX.RBAC.Controllers;
 
@@ -55,6 +56,7 @@ public class MenuController : RBACBaseController
     /// </summary>
     /// <param name="model"></param>
     /// <returns></returns>
+    [Audit]
     [ApiActionDescription("添加菜单")]
     [HttpPost]
     public async Task<ResultModel<bool>> AddMenu(MenuRequestModel model)
@@ -67,6 +69,7 @@ public class MenuController : RBACBaseController
     /// </summary>
     /// <param name="model"></param>
     /// <returns></returns>
+    [Audit]
     [ApiActionDescription("编辑菜单")]
     [HttpPost]
     public async Task<ResultModel<bool>> UpdateMenu(MenuRequestModel model)
@@ -79,6 +82,7 @@ public class MenuController : RBACBaseController
     /// </summary>
     /// <param name="param"></param>
     /// <returns></returns>
+    [Audit]
     [ApiActionDescription("删除菜单")]
     [HttpDelete]
     public async Task<ResultModel<bool>> RemoveMenu(KeyParam param)

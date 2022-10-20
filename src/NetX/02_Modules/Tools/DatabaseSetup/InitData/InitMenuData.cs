@@ -26,15 +26,42 @@ namespace NetX.Tools.DatabaseSetup.InitData
                 .Row(new
                 {
                     id = "00000000000000000000000000000009",
-                    parentid = "00000000000000000000000000000003",
+                    parentid = "00000000000000000000000000000000",
                     name = "日志管理",
-                    path = "logging",
-                    component = "/systemmanager/account/index",
-                    meta = "{\"HideMenu\":false,\"Title\":\"日志管理\",\"HideBreadcrumb\":true,\"Icon\":\"ant-design:usergroup-add-outlined\"}",
-                    icon = "ant-design:usergroup-add-outlined",
+                    path = "/log",
+                    component = "/LAYOUT",
+                    redirect = "",
+                    type = 0,
+                    meta = "{\"Title\":\"日志管理\",\"Icon\":\"ant-design:book-outlined\"}",
+                    icon = "ant-design:book-outlined",
+                    permission = "",
+                    orderno = 3,
+                })
+                .Row(new
+                {
+                    id = "00000000000000000000000000000010",
+                    parentid = "00000000000000000000000000000009",
+                    name = "系统日志",
+                    path = "syslogging",
+                    component = "/logmanager/syslogging/index",
+                    meta = "{\"HideMenu\":false,\"Title\":\"系统日志\",\"HideBreadcrumb\":true,\"Icon\":\"ant-design:snippets-twotone\"}",
+                    icon = "ant-design:snippets-twotone",
                     type = 1,
                     permission = "",
-                    orderno = 6,
+                    orderno = 1,
+                })
+                .Row(new
+                {
+                    id = "00000000000000000000000000000011",
+                    parentid = "00000000000000000000000000000009",
+                    name = "审计日志",
+                    path = "auditlogging",
+                    component = "/logmanager/auditlogging/index",
+                    meta = "{\"HideMenu\":false,\"Title\":\"审计日志\",\"HideBreadcrumb\":true,\"Icon\":\"ant-design:solution-outlined\"}",
+                    icon = "ant-design:solution-outlined",
+                    type = 1,
+                    permission = "",
+                    orderno = 2,
                 });
         }
 

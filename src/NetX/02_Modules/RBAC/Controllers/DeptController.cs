@@ -3,6 +3,7 @@ using NetX.Common.Models;
 using NetX.Swagger;
 using NetX.RBAC.Core;
 using NetX.RBAC.Models;
+using NetX.Logging.Monitors;
 
 namespace NetX.RBAC.Controllers;
 
@@ -40,6 +41,7 @@ public class DeptController : RBACBaseController
     /// </summary>
     /// <param name="model"></param>
     /// <returns></returns>
+    [Audit]
     [ApiActionDescription("新增部门信息")]
     [HttpPost]
     public async Task<ResultModel<bool>> AddDept(DeptRequestModel model)
@@ -52,6 +54,7 @@ public class DeptController : RBACBaseController
     /// </summary>
     /// <param name="model"></param>
     /// <returns></returns>
+    [Audit]
     [ApiActionDescription("编辑部门信息")]
     [HttpPost]
     public async Task<ResultModel<bool>> UpdateDept(DeptRequestModel model)
@@ -64,6 +67,7 @@ public class DeptController : RBACBaseController
     /// </summary>
     /// <param name="param"></param>
     /// <returns></returns>
+    [Audit]
     [ApiActionDescription("删除部门信息")]
     [HttpDelete]
     public async Task<ResultModel<bool>> RemoveDept(KeyParam param)

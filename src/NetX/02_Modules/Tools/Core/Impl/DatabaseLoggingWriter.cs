@@ -45,7 +45,8 @@ public class DatabaseLoggingWriter : LoggingBaseService, ILoggingWriter
                 return;
             _freeSqlClould?.Change(tenantContext.Principal.Tenant.TenantId);
             SaveLogging(message);
-            SaveAuditLogging(message);
+            if (message.IsWriteToAudit)
+                SaveAuditLogging(message);
         }
         catch (Exception ex)
         {

@@ -13,14 +13,17 @@ namespace NetX.Tools.Controllers
     public class LoggingController : BaseController
     {
         private readonly ILoggingCollectorService _loggingService;
+        private readonly IAuditLoggingService _auditLoggingService;
 
         /// <summary>
         /// 账号管理api实例对象
         /// </summary>
         /// <param name="loggingService"></param>
-        public LoggingController(ILoggingCollectorService loggingService)
+        public LoggingController(ILoggingCollectorService loggingService, 
+            IAuditLoggingService auditLoggingService)
         {
             this._loggingService = loggingService;
+            this._auditLoggingService = auditLoggingService;
         }
 
         /// <summary>
@@ -32,6 +35,17 @@ namespace NetX.Tools.Controllers
         public async Task<ResultModel<PagerResultModel<List<LoggingModel>>>> GetLogList(LoggingParam model)
         {
             return await _loggingService.GetLoggingList(model);
+        }
+
+        /// <summary>
+        /// 系统登录
+        /// </summary>
+        /// <returns></returns>
+        [ApiActionDescription("获取审计日志列表")]
+        [HttpPost]
+        public async Task<ResultModel<PagerResultModel<List<AuditLoggingModel>>>> GetAuditLogList(AuditLoggingParam model)
+        {
+            return await _auditLoggingService.GetAuditLoggingList(model);
         }
 
     }

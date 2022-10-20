@@ -20,11 +20,13 @@ public class LoggingProfile : Profile
     private void ToEntity()
     {
         CreateMap<LoggingModel, sys_logging>();
+        CreateMap<AuditLoggingModel, sys_audit_logging>();
     }
 
     private void ToModel()
     {
         CreateMap<sys_logging, LoggingModel>()
             .ForMember(dest => dest.Message, opt => opt.MapFrom(src => src.message));
+        CreateMap<sys_audit_logging, AuditLoggingModel>();
     }
 }

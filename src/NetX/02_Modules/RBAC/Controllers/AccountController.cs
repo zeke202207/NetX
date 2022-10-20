@@ -111,6 +111,7 @@ public class AccountController : RBACBaseController
     /// edit a new user account
     /// </summary>
     /// <returns></returns>
+    [Audit]
     [ApiActionDescription("修改用户")]
     [HttpPost]
     public async Task<ResultModel<bool>> UpdateAccount(AccountRequestModel model)
@@ -123,6 +124,7 @@ public class AccountController : RBACBaseController
     /// </summary>
     /// <param name="param"></param>
     /// <returns></returns>
+    [Audit]
     [ApiActionDescription("删除用户")]
     [HttpDelete]
     public async Task<ResultModel<bool>> RemoveAccount(KeyParam param)

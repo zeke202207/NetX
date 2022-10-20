@@ -211,6 +211,7 @@ public sealed class LoggingMonitorAttribute : Attribute, IAsyncActionFilter, IOr
         var jsonString = Encoding.UTF8.GetString(stream.ToArray());
         logContext.Set("loggingMonitor", jsonString);
         logContext.Set(LoggingConst.C_LOGGING_TENANTCONTEXT_KEY, TenantContext.CurrentTenant);
+        logContext.Set(LoggingConst.C_LOGGING_AUDIT, actionMethod.IsDefined(typeof(AuditAttribute), true));
         // 设置日志上下文
         logger.ScopeContext(logContext);
         // 获取最终写入日志消息格式

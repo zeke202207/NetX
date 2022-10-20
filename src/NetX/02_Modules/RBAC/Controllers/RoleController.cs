@@ -3,6 +3,7 @@ using NetX.Common.Models;
 using NetX.Swagger;
 using NetX.RBAC.Core;
 using NetX.RBAC.Models;
+using NetX.Logging.Monitors;
 
 namespace NetX.RBAC.Controllers;
 
@@ -50,6 +51,7 @@ public class RoleController : RBACBaseController
     /// 添加角色
     /// </summary>
     /// <returns></returns>
+    [Audit]
     [ApiActionDescription("添加角色")]
     [HttpPost]
     public async Task<ResultModel<bool>> AddRole(RoleRequestModel model)
@@ -61,6 +63,7 @@ public class RoleController : RBACBaseController
     /// 更新角色
     /// </summary>
     /// <returns></returns>
+    [Audit]
     [ApiActionDescription("更新角色信息")]
     [HttpPost]
     public async Task<ResultModel<bool>> UpdateRole(RoleRequestModel model)
@@ -72,6 +75,7 @@ public class RoleController : RBACBaseController
     /// 删除角色
     /// </summary>
     /// <returns></returns>
+    [Audit]
     [ApiActionDescription("删除角色")]
     [HttpDelete]
     public async Task<ResultModel<bool>> RemoveRole(KeyParam model)
@@ -83,6 +87,7 @@ public class RoleController : RBACBaseController
     /// 更新角色状态
     /// </summary>
     /// <returns></returns>
+    [Audit]
     [ApiActionDescription("更新角色状态")]
     [HttpPost]
     public async Task<ResultModel<bool>> SetRoleStatus(RoleStatusModel model)
@@ -94,6 +99,7 @@ public class RoleController : RBACBaseController
     /// 更新角色后台鉴权状态
     /// </summary>
     /// <returns></returns>
+    [Audit]
     [ApiActionDescription("更新角色后台鉴权状态")]
     [HttpPost]
     public async Task<ResultModel<bool>> SetApiAuthStatus(RoleStatusModel model)
@@ -117,6 +123,7 @@ public class RoleController : RBACBaseController
     /// 更新角色后台鉴权状态
     /// </summary>
     /// <returns></returns>
+    [Audit]
     [ApiActionDescription("设置后台api授权id集合")]
     [HttpPost]
     public async Task<ResultModel<bool>> SetApiAuth(RoleApiAuthModel model)
