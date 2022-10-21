@@ -49,11 +49,11 @@ public class LoggingModel
     //[JsonProperty("context")]
     //public string Context { get; set; }
 
-    ///// <summary>
-    ///// 
-    ///// </summary>
-    //[JsonProperty("state")]
-    //public string State { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
+    [JsonProperty("elapsed")]
+    public long Elapsed { get; set; }
 
     /// <summary>
     /// 

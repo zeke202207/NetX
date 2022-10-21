@@ -12,6 +12,9 @@ namespace NetX.Tools.Models;
 /// </summary>
 public class AuditLoggingModel
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [JsonProperty("id")]
     public string Id { get; set; }
 

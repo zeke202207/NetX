@@ -21,7 +21,7 @@ public static class LoggingServiceCollectionExtensions
     /// <param name="services"></param>
     /// <param name="configure">添加更多配置</param>
     /// <returns></returns>
-    public static IServiceCollection AddMonitorLogging(this IServiceCollection services, IConfiguration config, Action<LoggingMonitorSettings> configure = default)
+    public static IServiceCollection AddMonitorLogging(this IServiceCollection services, IConfiguration? config, Action<LoggingMonitorSettings> configure = default)
     {
         // 读取配置
         var settings = config.GetSection(LoggingConst.C_LOGGING_CONFIG_MONITOR).Get<LoggingMonitorSettings>() ?? new LoggingMonitorSettings();
@@ -54,7 +54,7 @@ public static class LoggingServiceCollectionExtensions
     /// <param name="configuraionKey">配置文件对于的 Key</param>
     /// <param name="configure">数据库日志记录器配置选项委托</param>
     /// <returns></returns>
-    public static IServiceCollection AddDatabaseLogging<TDatabaseLoggingWriter>(this IServiceCollection services, IConfiguration config, Action<NetXLoggerOptions> configure = default)
+    public static IServiceCollection AddDatabaseLogging<TDatabaseLoggingWriter>(this IServiceCollection services, IConfiguration? config, Action<NetXLoggerOptions> configure = default)
         where TDatabaseLoggingWriter : class, ILoggingWriter
     {
         // 读取配置

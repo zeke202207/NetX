@@ -46,8 +46,9 @@ public class RoleService : RBACBaseService, IRoleService
     public async Task<ResultModel<List<RoleModel>>> GetRoleList(RoleListParam roleListparam)
     {
         var roles = await ((SysRoleRepository)this._roleRepository)
-            .GetRoleListAsync(roleListparam.RoleName, roleListparam.Page, roleListparam.PageSize);
+            .GetRoleListAsync(roleListparam.RoleName ?? string.Empty, roleListparam.Page, roleListparam.PageSize);
         var result = this._mapper.Map<List<RoleModel>>(roles);
+
         return base.Success<List<RoleModel>>(result);
     }
 
@@ -81,7 +82,7 @@ public class RoleService : RBACBaseService, IRoleService
         roleEntity.createtime = base.CreateInsertTime();
         roleEntity.rolename = model.RoleName;
         roleEntity.status = int.Parse(model.Status);
-        roleEntity.remark = model?.Remark;
+        roleEntity.remark = model.Remark ?? string.Empty;
         var result = await ((SysRoleRepository)_roleRepository).UpdateRoleAsync(roleEntity, model.ToMenuList());
         return base.Success<bool>(result);
     }

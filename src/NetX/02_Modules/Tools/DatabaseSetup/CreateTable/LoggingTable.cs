@@ -20,7 +20,6 @@ namespace NetX.Tools.DatabaseSetup.CreateTable
         /// <summary>
         /// 
         /// </summary>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Up()
         {
             Create.Table(_tableName)
@@ -30,10 +29,10 @@ namespace NetX.Tools.DatabaseSetup.CreateTable
               .WithColumn("name").AsString(255).Nullable()
               .WithColumn("level").AsInt16().Nullable()
               .WithColumn("elapsed").AsInt64().Nullable()
-              .WithColumn("message").AsCustom("text").Nullable()
-              .WithColumn("exception").AsCustom("text").Nullable()
-              .WithColumn("context").AsCustom("text").Nullable()
-              .WithColumn("state").AsCustom("text").Nullable()
+              .WithColumn("message").AsCustom("mediumtext").Nullable()
+              .WithColumn("exception").AsCustom("mediumtext").Nullable()
+              .WithColumn("context").AsCustom("mediumtext").Nullable()
+              .WithColumn("state").AsCustom("mediumtext").Nullable()
               .WithColumn("createtime").AsDateTime().WithDefaultValue(DateTime.Now);
         }
     }

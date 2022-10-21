@@ -3,7 +3,7 @@
     "MinimumLevel": "Trace"
   },
   "loggingmonitor": {
-    "withreturnvalue": true, // 日志是否包含返回值结果
+    "withreturnvalue": false, // 日志是否包含返回值结果
     "returnvaluethreshold": 0, // 返回值结果大于returnvaluethreshold长度将被截断,0：从不截断
     "jsonbehavior": 1 //日志输出格式  0: 包装文本格式 1 : json格式 
   }

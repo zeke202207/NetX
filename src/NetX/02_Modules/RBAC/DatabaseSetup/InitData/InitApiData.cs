@@ -236,6 +236,46 @@ namespace NetX.RBAC.DatabaseSetup.InitData
 
             #region api
 
+            .Row(new
+            {
+                id = "50000000000000000000000000000000",
+                path = "/api/api/getapipagelist",
+                group = "api",
+                method = "post",
+                description = "获取接口分页列表"
+            })
+            .Row(new
+            {
+                id = "50000000000000000000000000000001",
+                path = "/api/api/getapilist",
+                group = "api",
+                method = "post",
+                description = "获取全部接口列表"
+            })
+            .Row(new
+            {
+                id = "50000000000000000000000000000002",
+                path = "/api/api/addapi",
+                group = "api",
+                method = "post",
+                description = "添加新的接口"
+            })
+            .Row(new
+            {
+                id = "50000000000000000000000000000003",
+                path = "/api/api/updateapi",
+                group = "api",
+                method = "post",
+                description = "更新接口信息"
+            })
+            .Row(new
+            {
+                id = "50000000000000000000000000000004",
+                path = "/api/api/removeapi",
+                group = "api",
+                method = "delete",
+                description = "删除接口"
+            })
 
             #endregion
                 ;

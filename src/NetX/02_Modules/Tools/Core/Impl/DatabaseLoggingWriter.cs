@@ -11,19 +11,14 @@ namespace NetX.Tools.Core;
 /// </summary>
 public class DatabaseLoggingWriter : LoggingBaseService, ILoggingWriter
 {
-    private readonly IBaseRepository<sys_logging> _logRepository;
-    private readonly IBaseRepository<sys_audit_logging> _auditlogRepository;
     private readonly FreeSqlCloud<string>? _freeSqlClould;
 
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="logRepository"></param>
     /// <param name="freeSql"></param>
-    public DatabaseLoggingWriter(IBaseRepository<sys_logging> logRepository, IBaseRepository<sys_audit_logging> auditlogRepository, IFreeSql freeSql)
+    public DatabaseLoggingWriter(IFreeSql freeSql)
     {
-        this._logRepository = logRepository;
-        this._auditlogRepository = auditlogRepository;
         this._freeSqlClould = freeSql as FreeSqlCloud<string>;
     }
 
@@ -64,33 +59,29 @@ public class DatabaseLoggingWriter : LoggingBaseService, ILoggingWriter
     /// <param name="message"></param>
     private void SaveLogging(LogMessage message)
     {
-        try
+        var elapsed = 0L;
+        var loggingMonitorMsg = message.Context.Get("loggingMonitor")?.ToString();
+        if (!string.IsNullOrEmpty(loggingMonitorMsg))
         {
-            var elapsed = 0L;
-            var loggingMonitorMsg = message.Context.Get("loggingMonitor")?.ToString();
-            if (!string.IsNullOrEmpty(loggingMonitorMsg))
-            {
-                var loggingMonitoer = Newtonsoft.Json.JsonConvert.DeserializeObject<LoggingMonitor>(loggingMonitorMsg);
-                if (null != loggingMonitoer)
-                    elapsed = loggingMonitoer.TimeOperationElapsedMilliseconds;
-            }
-            _logRepository.Insert(new sys_logging()
-            {
-                id = base.CreateId(),
-                threadid = message.ThreadId.ToString(),
-                eventid = message.EventId.ToString(),
-                name = message.LogName,
-                level = (int)message.LogLevel,
-                message = message.Message,
-                exception = Serialize<Exception>(message.Exception),
-                context = Serialize<LogContext>(message.Context),
-                state = Serialize<object>(message.State),
-                createtime = message.LogDateTime,
-            });
+            var loggingMonitoer = Newtonsoft.Json.JsonConvert.DeserializeObject<LoggingMonitor>(loggingMonitorMsg);
+            if (null != loggingMonitoer)
+                elapsed = loggingMonitoer.TimeOperationElapsedMilliseconds;
         }
-        catch (Exception)
+        var _logRepository = _freeSqlClould.GetCloudRepository<sys_logging>();
+        _logRepository.Insert(new sys_logging()
         {
-        }
+            id = base.CreateId(),
+            threadid = message.ThreadId.ToString(),
+            eventid = message.EventId.ToString(),
+            name = message.LogName,
+            level = (int)message.LogLevel,
+            message = message.Message,
+            exception = Serialize<Exception>(message.Exception),
+            context = Serialize<LogContext>(message.Context),
+            state = Serialize<object>(message.State),
+            createtime = message.LogDateTime,
+            elapsed = elapsed,
+        });
     }
 
     /// <summary>
@@ -99,32 +90,27 @@ public class DatabaseLoggingWriter : LoggingBaseService, ILoggingWriter
     /// <param name="message"></param>
     private void SaveAuditLogging(LogMessage message)
     {
-        try
+        if (message.LogLevel != Microsoft.Extensions.Logging.LogLevel.Information)
+            return;
+        var loggingMonitorMsg = message.Context.Get("loggingMonitor")?.ToString();
+        if (string.IsNullOrEmpty(loggingMonitorMsg))
+            return;
+        var loggingMonitoer = Newtonsoft.Json.JsonConvert.DeserializeObject<LoggingMonitor>(loggingMonitorMsg);
+        if (null == loggingMonitoer || loggingMonitoer.HttpMethod.ToUpper() == "GET")
+            return;
+        var _auditlogRepository = _freeSqlClould.GetCloudRepository<sys_audit_logging>();
+        _auditlogRepository.Insert(new sys_audit_logging()
         {
-            if (message.LogLevel != Microsoft.Extensions.Logging.LogLevel.Information)
-                return;
-            var loggingMonitorMsg = message.Context.Get("loggingMonitor")?.ToString();
-            if (string.IsNullOrEmpty(loggingMonitorMsg))
-                return;
-            var loggingMonitoer = Newtonsoft.Json.JsonConvert.DeserializeObject<LoggingMonitor>(loggingMonitorMsg);
-            if (null == loggingMonitoer || loggingMonitoer.HttpMethod.ToUpper() == "GET")
-                return;
-            this._auditlogRepository.Insert(new sys_audit_logging()
-            {
-                id = base.CreateId(),
-                createtime = message.LogDateTime,
-                userid = loggingMonitoer.AuthorizationClaims.FirstOrDefault(p => p.Type.ToLower() == "userid")?.Value,
-                username = loggingMonitoer.AuthorizationClaims.FirstOrDefault(p => p.Type.ToLower() == "displayname")?.Value,
-                controller = loggingMonitoer.ControllerName,
-                action = loggingMonitoer.ActionName,
-                detail = loggingMonitorMsg,
-                remoteipv4 = loggingMonitoer.RemoteIPv4,
-                httpmethod = loggingMonitoer.HttpMethod
-            });
-        }
-        catch (Exception)
-        {
-        }
+            id = base.CreateId(),
+            createtime = message.LogDateTime,
+            userid = loggingMonitoer.AuthorizationClaims.FirstOrDefault(p => p.Type.ToLower() == "userid")?.Value??string.Empty,
+            username = loggingMonitoer.AuthorizationClaims.FirstOrDefault(p => p.Type.ToLower() == "displayname")?.Value??string.Empty,
+            controller = loggingMonitoer.ControllerName,
+            action = loggingMonitoer.ActionName,
+            detail = loggingMonitorMsg,
+            remoteipv4 = loggingMonitoer.RemoteIPv4,
+            httpmethod = loggingMonitoer.HttpMethod,
+        });
     }
 
     /// <summary>

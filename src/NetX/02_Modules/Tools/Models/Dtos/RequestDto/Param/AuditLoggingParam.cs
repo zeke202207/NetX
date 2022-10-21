@@ -17,6 +17,6 @@ namespace NetX.Tools.Models
         /// 
         /// </summary>
         [JsonProperty("username")]
-        public string UserName { get; set; }
+        public string? UserName { get; set; }
     }
 }

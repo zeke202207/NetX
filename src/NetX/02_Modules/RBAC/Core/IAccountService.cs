@@ -17,18 +17,11 @@ public interface IAccountService
     Task<ResultModel<LoginResult>> Login(string username, string password);
 
     /// <summary>
-    /// 获取登录token
-    /// </summary>
-    /// <param name="model"></param>
-    /// <returns></returns>
-    // Task<string> GetToken(ClaimModel model);
-
-    /// <summary>
     /// 获取登录用户信息
     /// </summary>
     /// <param name="userId"></param>
     /// <returns></returns>
-    Task<ResultModel<UserModel>> GetUserInfo(string? userId);
+    Task<ResultModel<UserModel>> GetUserInfo(string userId);
 
     /// <summary>
     /// 获取账号列表

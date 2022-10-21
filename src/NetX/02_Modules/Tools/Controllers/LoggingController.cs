@@ -18,7 +18,8 @@ namespace NetX.Tools.Controllers
         /// <summary>
         /// 账号管理api实例对象
         /// </summary>
-        /// <param name="loggingService"></param>
+        /// <param name="loggingService">系统日志服务</param>
+        /// <param name="auditLoggingService">审核日志服务</param>
         public LoggingController(ILoggingCollectorService loggingService, 
             IAuditLoggingService auditLoggingService)
         {

@@ -35,7 +35,7 @@ namespace NetX.Tools.DatabaseSetup.CreateTable
               .WithColumn("action").AsString(50).Nullable()
               .WithColumn("remoteipv4").AsString(50).Nullable()
               .WithColumn("httpmethod").AsString(10).Nullable()
-              .WithColumn("detail").AsCustom("text").Nullable()
+              .WithColumn("detail").AsCustom("mediumtext").Nullable()
               .WithColumn("createtime").AsDateTime().WithDefaultValue(DateTime.Now);
         }
     }

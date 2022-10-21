@@ -90,7 +90,6 @@ public class AccountService : RBACBaseService, IAccountService
     /// </summary>
     /// <param name="userId"></param>
     /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
     public async Task<ResultModel<UserModel>> GetUserInfo(string userId)
     {
         if (string.IsNullOrEmpty(userId))

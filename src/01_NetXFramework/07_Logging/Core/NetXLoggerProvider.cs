@@ -153,9 +153,9 @@ public sealed class NetXLoggerProvider : ILoggerProvider
     private void ClearScopeContext(string categoryName)
     {
         var isExist = _databaseLoggers.TryGetValue(categoryName, out var fileLogger);
-        if (isExist)
+        if (isExist && null != fileLogger)
         {
-            //fileLogger.Context?.Properties?.Clear();
+            fileLogger.Context?.Properties?.Clear();
             fileLogger.Context = null;
         }
     }

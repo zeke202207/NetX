@@ -56,7 +56,7 @@ public static class ApplicationBuilderExtensions
                             TenantContext.CurrentTenant.DatabaseInfo.DatabaseType.ToDatabaseType(),
                             TenantContext.CurrentTenant.ConnectionStr)
                         .Build();
-                    //db.Aop.CommandAfter += ...
+                        //db.Aop.CommandAfter += ...
                         return db;
                     });
                     // 切换租户

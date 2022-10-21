@@ -74,9 +74,9 @@ public class CheckMenu
     /// <summary>
     /// 
     /// </summary>
-    public List<string> Checked { get; set; }
+    public List<string> Checked { get; set; } = new List<string>();
     /// <summary>
     /// 
     /// </summary>
-    public List<string> HalfChecked { get; set; }
+    public List<string> HalfChecked { get; set; } = new List<string>();
 }

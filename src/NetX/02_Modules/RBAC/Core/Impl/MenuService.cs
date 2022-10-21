@@ -56,7 +56,7 @@ public class MenuService : RBACBaseService, IMenuService
         var menuType = GetMenuType(int.Parse(model.Type));
         var entity = await this._menuRepository.Select.Where(p => p.id.Equals(model.Id)).FirstAsync();
         var menuEntity = ToEntity(model);
-        menuEntity.id = model.Id;
+        menuEntity.id = model.Id ?? string.Empty;
         menuEntity.createtime = entity.createtime;
         var result = await this._menuRepository.UpdateAsync(menuEntity) > 0;
         return base.Success<bool>(result);
