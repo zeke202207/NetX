@@ -108,16 +108,12 @@ public class SysUserRepository : BaseRepository<sys_user, string>
                 userRoleRep.UnitOfWork = uow;
                 userDeptRep.UnitOfWork = uow;
                 await userRep.UpdateAsync(user);
+                await userRoleRep.DeleteAsync(p => p.userid.Equals(user.id));
                 if (!string.IsNullOrWhiteSpace(roleid))
-                {
-                    await userRoleRep.DeleteAsync(p => p.userid.Equals(user.id));
                     await userRoleRep.InsertAsync(new sys_user_role() { userid = user.id, roleid = roleid });
-                }
+                await userDeptRep.DeleteAsync(p => p.userid.Equals(user.id));
                 if (!string.IsNullOrWhiteSpace(deptid))
-                {
-                    await userDeptRep.DeleteAsync(p => p.userid.Equals(user.id));
                     await userDeptRep.InsertAsync(new sys_user_dept() { userid = user.id, deptid = deptid });
-                }
                 uow.Commit();
             }
             catch (Exception ex)
