@@ -231,6 +231,30 @@ namespace NetX.RBAC.DatabaseSetup.InitData
                     method = "post",
                     description = "更新角色状态"
                 })
+                .Row(new
+                {
+                    id = "40000000000000000000000000000006",
+                    path = "/api/role/setapiauthstatus",
+                    group = "role",
+                    method = "post",
+                    description = "更新角色后台鉴权状态"
+                })
+                .Row(new
+                {
+                    id = "40000000000000000000000000000007",
+                    path = "/api/role/getapiauth",
+                    group = "role",
+                    method = "post",
+                    description = "获取api鉴权id集合"
+                })
+                .Row(new
+                {
+                    id = "40000000000000000000000000000008",
+                    path = "/api/role/setapiauth",
+                    group = "role",
+                    method = "post",
+                    description = "设置api鉴权id集合"
+                })
 
             #endregion
 
