@@ -1,27 +1,7 @@
-<!-- vscode-markdown-toc -->
-* 1. [注意 :snowflake:](#:snowflake:)
-* 2. [前言 :book:](#:book:)
-* 3. [软件架构 :rose:](#:rose:)
-	* 3.1. [AssemblyLoadContext](#AssemblyLoadContext)
-	* 3.2. [Application Part](#ApplicationPart)
-		* 3.2.1. [**版本调整**](#)
-	* 3.3. [Multi Tenant](#MultiTenant)
-	* 3.4. [框架对多租户的支持](#-1)
-	* 3.5. [数据库对多租户的支持](#-1)
-* 4. [开发计划 :fire:](#:fire:)
-* 5. [欢迎提交MR和Issues :pray:](#MRIssues:pray:)
-* 6. [感谢 :pray:](#:pray:)
-
-<!-- vscode-markdown-toc-config
-	numbering=true
-	autoSave=true
-	/vscode-markdown-toc-config -->
-<!-- /vscode-markdown-toc -->
-
 ##  1. <a name=':snowflake:'></a>注意 :snowflake:
-1. 一定要阅读wiki文档
-2. 一定要阅读wiki文档
-3. 一定要阅读wiki文档
+1. ~~一定要阅读wiki文档~~ [参考文档](http://doc.netx.net.cn) 🤣
+2. ~~一定要阅读wiki文档~~ [预览地址](http://www.netx.net.cn) :fire:
+3. ~~一定要阅读wiki文档~~ :fire: 
 
 ##  2. <a name=':book:'></a>前言 :book:
 
@@ -52,21 +32,6 @@ NetX 前身是 ``` sagittarius ``` ,一个我业余时间开发的模块化组�
 |序号|修正内容                                          | 修正日期  |
 |--- | ---                                             | ---      |
 |1   |支持配置独立```Context```和```SharedContext```    |2022/08/19|
-
-
-###  3.3. <a name='MultiTenant'></a>Multi Tenant
-
-###  3.4. <a name='-1'></a>框架对多租户的支持
-
-多租户实现逻辑图
-
-![mutil tenant](./doc/images/mutil-tenant.png#pic_center)
-
-> 借助 Tenant中间件，在每次http请求中，根据Tenant选择策略和存储方式（均可自定义）获取Tenant信息，并将其封装到HttpContext请求上下文中。
-
-###  3.5. <a name='-1'></a>数据库对多租户的支持
-
-![tenant workflow](./doc/images/tenantworkflow.png#pic_center)
 
 
 ##  4. <a name=':fire:'></a>开发计划 :fire:
