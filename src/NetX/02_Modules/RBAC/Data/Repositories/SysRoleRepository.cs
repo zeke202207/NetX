@@ -34,7 +34,7 @@ public class SysRoleRepository : BaseRepository<sys_role, string>
     {
         List<(sys_role role, List<string> menuids)> result = new List<(sys_role role, List<string> menuids)>();
         var roles = this._freeSql.Select<sys_role>()
-            .WhereIf(!string.IsNullOrWhiteSpace(rolename), p => p.rolename.Equals(rolename));
+            .WhereIf(!string.IsNullOrWhiteSpace(rolename), p => p.rolename.Contains(rolename));
         if (currentpage >= 0 && pagesize > 0)
             roles.Page(currentpage, pagesize);
         var roleEntities = await roles.ToListAsync();

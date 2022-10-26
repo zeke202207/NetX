@@ -54,7 +54,7 @@ public class PermissionValidateHandler : IPermissionValidateHandler
         //1.判断缓存中是否存在key
         var cacheKey = $"{CacheKeys.ACCOUNT_PERMISSIONS}{roleId}";
         var router = $"{routeValues["controller"]}/{routeValues["action"]}";
-        if (await _cache.ExistsAsync(cacheKey))
+        if (await _cache.ExistsAsync<PermissionCacheModel>(cacheKey))
             return await GetFromeCache(cacheKey, router);
         else
             return await GetFromeDababase(cacheKey, userId, router);
@@ -68,10 +68,12 @@ public class PermissionValidateHandler : IPermissionValidateHandler
     /// <returns></returns>
     private async Task<bool> GetFromeCache(string cacheKey, string router)
     {
-        var model = await _cache.GetAsync<ApiPermissionModel>(cacheKey);
+        var model = await _cache.GetAsync<PermissionCacheModel>(cacheKey);
         if (null == model)
             return false;
-        return Check(model, router);
+        var apiModel = new ApiPermissionModel() { CheckApi = model.CheckApi, Apis = new List<string>() };
+        apiModel.Apis.AddRange(model.Apis);
+        return Check(apiModel, router);
     }
 
     /// <summary>

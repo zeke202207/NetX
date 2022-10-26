@@ -19,6 +19,6 @@ namespace NetX.RBAC.Models
         /// <summary>
         /// api权限列表集合
         /// </summary>
-        public IEnumerable<string> Apis { get; set; }
+        public List<string> Apis { get; set; }
     }
 }

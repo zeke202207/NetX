@@ -91,9 +91,9 @@ public class MenuService : RBACBaseService, IMenuService
     public async Task<ResultModel<List<MenuModel>>> GetMenuList(MenuListParam param)
     {
         var menus = await this._menuRepository.Select
-           .WhereIf(!string.IsNullOrWhiteSpace(param.MenuName), p => p.name.Equals(param.MenuName))
+           .WhereIf(!string.IsNullOrWhiteSpace(param.MenuName), p => p.name.Contains(param.MenuName))
            .WhereIf(int.TryParse(param.Status, out int _), p => p.status == int.Parse(param.Status))
-           .Page(param.Page, param.PageSize)
+           //.Page(param.Page, param.PageSize)
            .ToListAsync();
         var result = ToTree(this._mapper.Map<List<MenuModel>>(menus), RBACConst.C_ROOT_ID);
         return base.Success<List<MenuModel>>(result);

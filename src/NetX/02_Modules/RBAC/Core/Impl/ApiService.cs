@@ -42,10 +42,12 @@ public class ApiService : RBACBaseService, IApiService
     public async Task<ResultModel<PagerResultModel<List<ApiModel>>>> GetApiList(ApiPageParam queryParam)
     {
         var result = await this._apiRepository.Select
+            .WhereIf(!string.IsNullOrWhiteSpace(queryParam.Ggroup),p=>p.group.Contains(queryParam.Ggroup))
             .OrderBy(p => p.group)
             .Page(pageNumber: queryParam.Page, pageSize: queryParam.PageSize)
             .ToListAsync();
-        var total = await this._apiRepository.Select.CountAsync();
+        var total = await this._apiRepository.Select
+            .WhereIf(!string.IsNullOrWhiteSpace(queryParam.Ggroup), p => p.group.Contains(queryParam.Ggroup)).CountAsync();
         var resultModel = new PagerResultModel<List<ApiModel>>()
         {
             Items = this._mapper.Map<List<ApiModel>>(result),

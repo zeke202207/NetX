@@ -39,13 +39,13 @@ public class SysUserRepository : BaseRepository<sys_user, string>
             .LeftJoin((u, ur, ud, r, d) => ur.roleid == r.id)
             .LeftJoin((u, ur, ud, r, d) => ud.deptid == d.id)
             .Where((u, ur, ud, r, d) => ud.deptid == deptId)
-            .WhereIf(!string.IsNullOrWhiteSpace(username), (u, ur, ud, r, d) => u.username == username)
-            .WhereIf(!string.IsNullOrWhiteSpace(nickname), (u, ur, ud, r, d) => u.nickname == nickname)
+            .WhereIf(!string.IsNullOrWhiteSpace(username), (u, ur, ud, r, d) => u.username.Contains(username))
+            .WhereIf(!string.IsNullOrWhiteSpace(nickname), (u, ur, ud, r, d) => u.nickname.Contains(nickname))
             .Page(currentpage, pagesize)
             .ToListAsync((u, ur, ud, r, d) => new Tuple<sys_user, sys_role, sys_dept>(u, r, d));
         var total = await this._freeSql.Select<sys_user>()
-            .WhereIf(!string.IsNullOrWhiteSpace(username), (u) => u.username == username)
-            .WhereIf(!string.IsNullOrWhiteSpace(nickname), (u) => u.nickname == nickname)
+            .WhereIf(!string.IsNullOrWhiteSpace(username), (u) => u.username.Contains(username))
+            .WhereIf(!string.IsNullOrWhiteSpace(nickname), (u) => u.nickname.Contains(nickname))
             .CountAsync();
         return (list: result, total: (int)total);
     }

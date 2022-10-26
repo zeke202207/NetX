@@ -86,7 +86,11 @@ public class DeptService : RBACBaseService, IDeptService
     /// <returns></returns>
     public async Task<ResultModel<List<DeptModel>>> GetDeptList([FromQuery] DeptListParam queryParam)
     {
-        var depts = await _deptRepository.Select.WhereIf(!queryParam.ContainDisabled, p => p.status == (int)Status.Enable).ToListAsync();
+        var depts = await _deptRepository.Select
+            .WhereIf(!queryParam.ContainDisabled, p => p.status == (int)Status.Enable)
+            .WhereIf(!string.IsNullOrWhiteSpace(queryParam.DeptName),p=>p.deptname.Contains(queryParam.DeptName))
+            .WhereIf(!string.IsNullOrWhiteSpace(queryParam.Status),p=>p.status == int.Parse(queryParam.Status))
+            .ToListAsync();
         var result = ToTree(this._mapper.Map<List<DeptModel>>(depts), RBACConst.C_ROOT_ID);
         return base.Success<List<DeptModel>>(result);
     }

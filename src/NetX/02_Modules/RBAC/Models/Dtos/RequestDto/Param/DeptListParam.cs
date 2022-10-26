@@ -12,4 +12,16 @@ public class DeptListParam
     /// </summary>
     [JsonProperty("containdisabled")]
     public bool ContainDisabled { get; set; }
+
+    /// <summary>
+    /// 部门名称
+    /// </summary>
+    [JsonProperty("deptname")]
+    public string? DeptName { get; set; }
+
+    /// <summary>
+    /// 启用禁用状态
+    /// </summary>
+    [JsonProperty("status")]
+    public string? Status { get; set; }
 }

@@ -132,4 +132,11 @@ public interface ICacheProvider
     /// <param name="key"></param>
     /// <returns></returns>
     Task<bool> ExistsAsync(string key);
+
+    /// <summary>
+    /// 指定键是否存在
+    /// </summary>
+    /// <param name="key"></param>
+    /// <returns></returns>
+    Task<bool> ExistsAsync<T>(string key);
 }

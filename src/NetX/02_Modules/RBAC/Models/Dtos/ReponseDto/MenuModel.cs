@@ -92,4 +92,10 @@ public class MenuModel
     /// </summary>
     [JsonProperty("extpath")]
     public string ExtPath { get; set; }
+
+    ///// <summary>
+    ///// 
+    ///// </summary>
+    //[JsonProperty("keepalive")]
+    //public bool KeepAlive { get; set; } = true;
 }

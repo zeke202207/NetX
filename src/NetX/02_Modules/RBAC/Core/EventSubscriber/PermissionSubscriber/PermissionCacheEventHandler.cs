@@ -1,4 +1,6 @@
-﻿using NetX.Cache.Core;
+﻿using Microsoft.Extensions.DependencyInjection;
+using NetX.Cache.Core;
+using NetX.Common;
 using NetX.Common.Attributes;
 using NetX.EventBus;
 using System;
@@ -23,10 +25,9 @@ public class PermissionCacheEventHandler : IEventSubscriber
     /// <summary>
     /// 权限验证缓存实例
     /// </summary>
-    /// <param name="cache"></param>
-    public PermissionCacheEventHandler(ICacheProvider cache)
+    public PermissionCacheEventHandler()
     {
-        this._cache = cache;
+        this._cache = ServiceLocator.Instance.GetService<ICacheProvider>();
     }
 
     /// <summary>
@@ -49,15 +50,13 @@ public class PermissionCacheEventHandler : IEventSubscriber
     [EventSubscribe(RBACConst.C_RBAC_EVENT_KEY)]
     public async Task Handler(EventHandlerExecutingContext context)
     {
-        if (null == context || context.Properties.Count == 0)
+        if (null == context || null == context.Source.Payload)
             return;
-        var playload = context.Properties[0] as PermissionPayload;
+        var playload = context.Source.Payload as PermissionPayload;
         if (null == playload || null == playload.CacheModel)
             return;
-        if (!await _cache.ExistsAsync(playload.CacheKey))
-            return;
-        if (playload.OperationType == CacheOperationType.Remove)
-            _cache.Remove(playload.CacheKey);
+        if (playload.OperationType == CacheOperationType.Remove && await _cache.ExistsAsync(playload.CacheKey))
+            await _cache.RemoveAsync(playload.CacheKey);
         else
             await _cache.SetAsync(playload.CacheKey, playload.CacheModel);
     }

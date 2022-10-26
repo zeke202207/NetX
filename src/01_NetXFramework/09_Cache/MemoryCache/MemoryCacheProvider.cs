@@ -53,9 +53,20 @@ public class MemoryCacheProvider : ICacheProvider
     /// </summary>
     /// <param name="key"></param>
     /// <returns></returns>
-    public Task<bool> ExistsAsync(string key)
+    public async Task<bool> ExistsAsync(string key)
     {
-        return Task.FromResult(TryGetValue(key, out _));
+        return await Task.FromResult(TryGetValue(key, out _));
+    }
+
+    /// <summary>
+    /// 缓存key是否存在
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="key"></param>
+    /// <returns></returns>
+    public async Task<bool> ExistsAsync<T>(string key)
+    {
+        return await Task.FromResult(TryGetValue<T>(key, out _));
     }
 
     /// <summary>
@@ -102,9 +113,9 @@ public class MemoryCacheProvider : ICacheProvider
     /// </summary>
     /// <param name="key"></param>
     /// <returns></returns>
-    public Task<string> GetAsync(string key)
+    public async Task<string> GetAsync(string key)
     {
-        return Task.FromResult(Get(key));
+        return await Task.FromResult(Get(key));
     }
 
     /// <summary>
@@ -113,9 +124,9 @@ public class MemoryCacheProvider : ICacheProvider
     /// <typeparam name="T"></typeparam>
     /// <param name="key"></param>
     /// <returns></returns>
-    public Task<T> GetAsync<T>(string key)
+    public async Task<T> GetAsync<T>(string key)
     {
-        return Task.FromResult(Get<T>(key));
+        return await Task.FromResult(Get<T>(key));
     }
 
     /// <summary>
@@ -134,9 +145,9 @@ public class MemoryCacheProvider : ICacheProvider
     /// </summary>
     /// <param name="key"></param>
     /// <returns></returns>
-    public Task<bool> RemoveAsync(string key)
+    public async Task<bool> RemoveAsync(string key)
     {
-        return Task.FromResult(Remove(key));
+        return await Task.FromResult(Remove(key));
     }
 
     /// <summary>
@@ -189,9 +200,9 @@ public class MemoryCacheProvider : ICacheProvider
     /// <param name="key"></param>
     /// <param name="value"></param>
     /// <returns></returns>
-    public Task<bool> SetAsync<T>(string key, T value)
+    public async Task<bool> SetAsync<T>(string key, T value)
     {
-        return Task.FromResult(Set<T>(key, value));
+        return await Task.FromResult(Set<T>(key, value));
     }
 
     /// <summary>
@@ -202,9 +213,9 @@ public class MemoryCacheProvider : ICacheProvider
     /// <param name="value"></param>
     /// <param name="ts"></param>
     /// <returns></returns>
-    public Task<bool> SetAsync<T>(string key, T value, TimeSpan ts)
+    public async Task<bool> SetAsync<T>(string key, T value, TimeSpan ts)
     {
-        return Task.FromResult(Set<T>(key, value, ts));
+        return await Task.FromResult(Set<T>(key, value, ts));
     }
 
     /// <summary>
