@@ -8,11 +8,10 @@ using System.Threading.Tasks;
 namespace NetX.RBAC;
 
 /// <summary>
-/// 
+/// 缓存主键常量
 /// </summary>
 public static class CacheKeys
 {
-
     /// <summary>
     /// 刷新令牌 
     /// <para>RBAC:ACCOUNT:REFRESH_TOKEN:刷新令牌</para>

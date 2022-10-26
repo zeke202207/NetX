@@ -14,37 +14,37 @@ namespace NetX.RBAC.Core;
 public interface IApiService
 {
     /// <summary>
-    /// 获取Api列表
+    /// 获取Api分页列表
     /// </summary>
-    /// <param name="param"></param>
+    /// <param name="queryParam">查询条件实体</param>
     /// <returns></returns>
-    Task<ResultModel<PagerResultModel<List<ApiModel>>>> GetApiList(ApiPageParam param);
+    Task<ResultModel<PagerResultModel<List<ApiModel>>>> GetApiList(ApiPageParam queryParam);
 
     /// <summary>
-    /// 
+    /// 获取api列表
     /// </summary>
-    /// <param name="param"></param>
+    /// <param name="queryParam">查询条件实体</param>
     /// <returns></returns>
-    Task<ResultModel<List<ApiModel>>> GetApiList(ApiParam param);
+    Task<ResultModel<List<ApiModel>>> GetApiList(ApiParam queryParam);
 
     /// <summary>
     /// 新增Api
     /// </summary>
-    /// <param name="model"></param>
+    /// <param name="model">api实体对象</param>
     /// <returns></returns>
     Task<ResultModel<bool>> AddApi(ApiRequestModel model);
 
     /// <summary>
     /// 更新Api
     /// </summary>
-    /// <param name="model"></param>
+    /// <param name="model">api实体对象</param>
     /// <returns></returns>
     Task<ResultModel<bool>> UpdateApi(ApiRequestModel model);
 
     /// <summary>
     /// 删除Api
     /// </summary>
-    /// <param name="apiId"></param>
+    /// <param name="apiId">api实体对象</param>
     /// <returns></returns>
     Task<ResultModel<bool>> RemoveApi(string apiId);
 

@@ -20,7 +20,7 @@ public class MenuController : RBACBaseController
     /// <summary>
     /// 菜单管理api接口实例对象
     /// </summary>
-    /// <param name="menuService"></param>
+    /// <param name="menuService">菜单服务</param>
     public MenuController(IMenuService menuService)
     {
         this._menuService = menuService;
@@ -39,11 +39,11 @@ public class MenuController : RBACBaseController
     }
 
     /// <summary>
-    /// 获取菜单列表
+    /// 根据条件获取菜单列表
     /// </summary>
-    /// <param name="param"></param>
+    /// <param name="param">获取条件实体</param>
     /// <returns></returns>
-    [ApiActionDescription("获取菜单列表")]
+    [ApiActionDescription("根据条件获取菜单列表")]
     [NoPermission]
     [HttpPost]
     public async Task<ResultModel<List<MenuModel>>> GetMenuList(MenuListParam param)
@@ -54,7 +54,7 @@ public class MenuController : RBACBaseController
     /// <summary>
     /// 添加菜单
     /// </summary>
-    /// <param name="model"></param>
+    /// <param name="model">菜单实体对象</param>
     /// <returns></returns>
     [Audit]
     [ApiActionDescription("添加菜单")]
@@ -67,7 +67,7 @@ public class MenuController : RBACBaseController
     /// <summary>
     /// 编辑菜单
     /// </summary>
-    /// <param name="model"></param>
+    /// <param name="model">菜单实体对象</param>
     /// <returns></returns>
     [Audit]
     [ApiActionDescription("编辑菜单")]
@@ -80,7 +80,7 @@ public class MenuController : RBACBaseController
     /// <summary>
     /// 删除菜单
     /// </summary>
-    /// <param name="param"></param>
+    /// <param name="param">删除实体对象</param>
     /// <returns></returns>
     [Audit]
     [ApiActionDescription("删除菜单")]

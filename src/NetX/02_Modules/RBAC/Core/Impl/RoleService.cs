@@ -2,6 +2,7 @@
 using FreeSql;
 using NetX.Common.Attributes;
 using NetX.Common.Models;
+using NetX.EventBus;
 using NetX.RBAC.Data.Repositories;
 using NetX.RBAC.Models;
 
@@ -14,19 +15,23 @@ namespace NetX.RBAC.Core;
 public class RoleService : RBACBaseService, IRoleService
 {
     private readonly IBaseRepository<sys_role> _roleRepository;
+    private readonly IEventPublisher _publisher;
     private readonly IMapper _mapper;
 
     /// <summary>
     /// 角色管理服务实例对象
     /// </summary>
-    /// <param name="roleRepository"></param>
-    /// <param name="mapper"></param>
+    /// <param name="roleRepository">角色仓储实例</param>
+    /// <param name="publisher">事件发布者实例</param>
+    /// <param name="mapper">实体对象映射实例</param>
     public RoleService(
         IBaseRepository<sys_role> roleRepository,
+        IEventPublisher publisher,
         IMapper mapper)
     {
         this._roleRepository = roleRepository;
         this._mapper = mapper;
+        this._publisher = publisher;
     }
 
     /// <summary>
@@ -41,21 +46,20 @@ public class RoleService : RBACBaseService, IRoleService
     /// <summary>
     /// 获取角色列表
     /// </summary>
-    /// <param name="roleListparam"></param>
+    /// <param name="queryParam">查询参数实体</param>
     /// <returns></returns>
-    public async Task<ResultModel<List<RoleModel>>> GetRoleList(RoleListParam roleListparam)
+    public async Task<ResultModel<List<RoleModel>>> GetRoleList(RoleListParam queryParam)
     {
         var roles = await ((SysRoleRepository)this._roleRepository)
-            .GetRoleListAsync(roleListparam.RoleName ?? string.Empty, roleListparam.Page, roleListparam.PageSize);
+            .GetRoleListAsync(queryParam.RoleName ?? string.Empty, queryParam.Page, queryParam.PageSize);
         var result = this._mapper.Map<List<RoleModel>>(roles);
-
         return base.Success<List<RoleModel>>(result);
     }
 
     /// <summary>
     /// 添加角色
     /// </summary>
-    /// <param name="model"></param>
+    /// <param name="model">角色实体对象</param>
     /// <returns></returns>
     public async Task<ResultModel<bool>> AddRole(RoleRequestModel model)
     {
@@ -74,7 +78,7 @@ public class RoleService : RBACBaseService, IRoleService
     /// <summary>
     /// 更新角色
     /// </summary>
-    /// <param name="model"></param>
+    /// <param name="model">角色实体对象</param>
     /// <returns></returns>
     public async Task<ResultModel<bool>> UpdateRole(RoleRequestModel model)
     {
@@ -84,25 +88,27 @@ public class RoleService : RBACBaseService, IRoleService
         roleEntity.status = int.Parse(model.Status);
         roleEntity.remark = model.Remark ?? string.Empty;
         var result = await ((SysRoleRepository)_roleRepository).UpdateRoleAsync(roleEntity, model.ToMenuList());
+        await RefreshPermissionApiCache(model.Id);
         return base.Success<bool>(result);
     }
 
     /// <summary>
     /// 删除角色
     /// </summary>
-    /// <param name="roleId"></param>
+    /// <param name="roleId">角色唯一标识</param>
     /// <returns></returns>
     public async Task<ResultModel<bool>> RemoveRole(string roleId)
     {
         var result = await ((SysRoleRepository)_roleRepository).RemoveRoleAsync(roleId);
+        await RefreshPermissionApiCache(roleId);
         return base.Success<bool>(result);
     }
 
     /// <summary>
     /// 更新角色状态
     /// </summary>
-    /// <param name="roleId"></param>
-    /// <param name="status"></param>
+    /// <param name="roleId">角色唯一标识</param>
+    /// <param name="status">角色启用状态</param>
     /// <returns></returns>
     public async Task<ResultModel<bool>> UpdateRoleStatus(string roleId, string status)
     {
@@ -114,14 +120,15 @@ public class RoleService : RBACBaseService, IRoleService
             return base.Error<bool>("角色不存在");
         roleEntity.status = intStatus;
         await _roleRepository.UpdateAsync(roleEntity);
+        await RefreshPermissionApiCache(roleId);
         return base.Success<bool>(true);
     }
 
     /// <summary>
     /// 更新角色后台鉴权状态
     /// </summary>
-    /// <param name="roleId"></param>
-    /// <param name="status"></param>
+    /// <param name="roleId">角色唯一标识</param>
+    /// <param name="status">角色启动后台api校验状态标识</param>
     /// <returns></returns>
     public async Task<ResultModel<bool>> UpdateRoleApiAuthStatus(string roleId, string status)
     {
@@ -133,15 +140,15 @@ public class RoleService : RBACBaseService, IRoleService
             return base.Error<bool>("角色不存在");
         roleEntity.apicheck = intStatus;
         await _roleRepository.UpdateAsync(roleEntity);
+        await RefreshPermissionApiCache(roleId);
         return base.Success<bool>(true);
     }
 
     /// <summary>
     /// 获取角色后台api访问权限集合
     /// </summary>
-    /// <param name="roleId"></param>
+    /// <param name="roleId">角色唯一标识</param>
     /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
     public async Task<ResultModel<IEnumerable<string>>> GetApiAuth(string roleId)
     {
         var result = await ((SysRoleRepository)this._roleRepository).GetApiAuth(roleId);
@@ -149,15 +156,37 @@ public class RoleService : RBACBaseService, IRoleService
     }
 
     /// <summary>
-    /// 
+    /// 更新后台鉴权api集合列表
     /// </summary>
-    /// <param name="roleId"></param>
-    /// <param name="apiIds"></param>
+    /// <param name="roleId">角色唯一标识</param>
+    /// <param name="apiIds">访问api集合列表</param>
     /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
     public async Task<ResultModel<bool>> UpdateRoleApiAuth(string roleId, IEnumerable<string> apiIds)
     {
         var result = await ((SysRoleRepository)this._roleRepository).UpdateRoleApiAuth(roleId, apiIds);
+        await RefreshPermissionApiCache(roleId);
         return base.Success<bool>(result);
+    }
+
+    /// <summary>
+    /// 刷新后台api访问权限集合
+    /// </summary>
+    /// <param name="roleId">角色唯一标识</param>
+    /// <remarks>
+    /// 只要有修改，就将缓存清空
+    /// 暂时没有区分更新情况
+    /// 一次数据库获取，对性能影响不大
+    /// </remarks>
+    /// <returns></returns>
+    private async Task RefreshPermissionApiCache(string roleId)
+    {
+        if (string.IsNullOrWhiteSpace(roleId))
+            return;
+        var playload = new PermissionPayload()
+        {
+            CacheKey = $"{CacheKeys.ACCOUNT_PERMISSIONS}{roleId}",
+            OperationType = CacheOperationType.Remove
+        };
+        await _publisher.PublishAsync(new EventSource(RBACConst.C_RBAC_EVENT_KEY, playload), CancellationToken.None);
     }
 }

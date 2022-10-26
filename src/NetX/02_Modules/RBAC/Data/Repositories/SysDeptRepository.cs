@@ -15,7 +15,7 @@ public class SysDeptRepository : BaseRepository<sys_dept, string>
     /// <summary>
     /// 部门仓储对象实例
     /// </summary>
-    /// <param name="fsql"></param>
+    /// <param name="fsql">ORM实例</param>
     public SysDeptRepository(IFreeSql fsql)
         : base(fsql, null, null)
     {
@@ -25,7 +25,7 @@ public class SysDeptRepository : BaseRepository<sys_dept, string>
     /// <summary>
     /// 删除部门
     /// </summary>
-    /// <param name="deptId"></param>
+    /// <param name="deptId">部门唯一标识</param>
     /// <returns></returns>
     public async Task<bool> RemoveDeptAsync(string deptId)
     {

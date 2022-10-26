@@ -6,10 +6,10 @@
 public sealed class EventHandlerExecutingContext : EventHandlerContext
 {
     /// <summary>
-    /// 
+    /// 事件执行上下文实例
     /// </summary>
-    /// <param name="source"></param>
-    /// <param name="properties"></param>
+    /// <param name="source">事件源</param>
+    /// <param name="properties">共享上下文数据</param>
     public EventHandlerExecutingContext(IEventSource source, IDictionary<object, object> properties)
         : base(source, properties)
     {

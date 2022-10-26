@@ -53,6 +53,15 @@ public class NetXPrincipal
     }
 
     /// <summary>
+    /// 角色唯一标识
+    /// </summary>
+    public string? RoleId
+    {
+        get;
+        private set;
+    }
+
+    /// <summary>
     /// 是否已授权
     /// </summary>
     internal bool IsAuthenticated
@@ -105,6 +114,7 @@ public class NetXPrincipal
                 this.UserId = model.UserId;
                 this.UserName = model.LoginName;
                 this.DisplayName = model.DisplayName;
+                this.RoleId = model.RoleId;
             }
         }
     }

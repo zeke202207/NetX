@@ -13,14 +13,19 @@ internal class RBACConst
     public const string C_ROOT_ID = "00000000000000000000000000000000";
 
     /// <summary>
-    /// 权限缓存key
-    /// </summary>
-    public const string C_RBAC_PERMISSION_CACHEKEY = "RBAC:PERMISSION:ROLEID:";
-
-    /// <summary>
     /// swagger分组名称
     /// </summary>
     public const string C_RBAC_GROUPNAME = "systemmanager";
+
+    /// <summary>
+    /// 注册账号默认密码
+    /// </summary>
+    public const string C_RBAC_DEFAULT_PASSWORD = "netx";
+
+    /// <summary>
+    /// 事件总线事件唯一标识
+    /// </summary>
+    public const string C_RBAC_EVENT_KEY = "rbac_permission_cache_key";
 }
 
 /// <summary>
@@ -55,7 +60,7 @@ public enum Ext
 }
 
 /// <summary>
-/// 
+/// 菜单类型枚举
 /// </summary>
 public enum MenuType
 {
@@ -63,12 +68,30 @@ public enum MenuType
     /// 目录
     /// </summary>
     Dir = 0,
+
     /// <summary>
     /// 菜单
     /// </summary>
     Menu,
+
     /// <summary>
     /// 按钮
     /// </summary>
     Button
+}
+
+/// <summary>
+/// api检测缓存操作类型
+/// </summary>
+public enum CacheOperationType
+{
+    /// <summary>
+    /// 缓存添加
+    /// </summary>
+    Set,
+
+    /// <summary>
+    /// 缓存移除
+    /// </summary>
+    Remove
 }

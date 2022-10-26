@@ -20,7 +20,7 @@ public class AccountController : RBACBaseController
     /// <summary>
     /// 账号管理api实例对象
     /// </summary>
-    /// <param name="accountService"></param>
+    /// <param name="accountService">账户管理服务</param>
     public AccountController(IAccountService accountService)
     {
         this._accoutService = accountService;
@@ -29,6 +29,7 @@ public class AccountController : RBACBaseController
     /// <summary>
     /// 系统登录
     /// </summary>
+    /// <param name="model">登录系统实体对象</param>
     /// <returns></returns>
     [ApiActionDescription("登录")]
     [NoPermission]
@@ -39,10 +40,10 @@ public class AccountController : RBACBaseController
     }
 
     /// <summary>
-    /// Token验证并获取用户信息
+    /// 获取登录用户信息
     /// </summary>
     /// <returns></returns>
-    [ApiActionDescription("获取用户信息")]
+    [ApiActionDescription("获取登录用户信息")]
     [HttpGet]
     public async Task<ResultModel<UserModel>> GetUserInfo()
     {
@@ -50,11 +51,11 @@ public class AccountController : RBACBaseController
     }
 
     /// <summary>
-    /// 获取用户列表集合
+    /// 获取用户列表分页数据集合
     /// </summary>
-    /// <param name="userListparam"></param>
+    /// <param name="userListparam">筛选条件</param>
     /// <returns></returns>
-    [ApiActionDescription("获取用户列表集合")]
+    [ApiActionDescription("获取用户列表分页数据集合")]
     [HttpGet]
     public async Task<ResultModel<PagerResultModel<List<UserListModel>>>> GetAccountList([FromQuery] UserListParam userListparam)
     {
@@ -64,7 +65,7 @@ public class AccountController : RBACBaseController
     /// <summary>
     /// 判断用户是否存在
     /// </summary>
-    /// <param name="account"></param>
+    /// <param name="account">用户名</param>
     /// <returns></returns>
     [ApiActionDescription("用户名是否存在校验")]
     [HttpGet]
@@ -86,7 +87,7 @@ public class AccountController : RBACBaseController
     }
 
     /// <summary>
-    /// 等处系统
+    /// 登出系统
     /// </summary>
     /// <returns></returns>
     [ApiActionDescription("登出系统")]
@@ -97,10 +98,11 @@ public class AccountController : RBACBaseController
     }
 
     /// <summary>
-    /// add a new user account
+    /// 注册添加新用户
     /// </summary>
+    /// <param name="model">用户信息对象</param>
     /// <returns></returns>
-    [ApiActionDescription("添加用户")]
+    [ApiActionDescription("注册添加新用户")]
     [HttpPost]
     public async Task<ResultModel<bool>> AddAccount(AccountRequestModel model)
     {
@@ -108,11 +110,12 @@ public class AccountController : RBACBaseController
     }
 
     /// <summary>
-    /// edit a new user account
+    /// 编辑用户信息
     /// </summary>
+    /// <param name="model">用户信息实体对象</param>
     /// <returns></returns>
     [Audit]
-    [ApiActionDescription("修改用户")]
+    [ApiActionDescription("编辑用户信息")]
     [HttpPost]
     public async Task<ResultModel<bool>> UpdateAccount(AccountRequestModel model)
     {
@@ -120,9 +123,9 @@ public class AccountController : RBACBaseController
     }
 
     /// <summary>
-    /// remove a user account
+    /// 删除用户
     /// </summary>
-    /// <param name="param"></param>
+    /// <param name="param">删除参数</param>
     /// <returns></returns>
     [Audit]
     [ApiActionDescription("删除用户")]

@@ -15,7 +15,7 @@ public class SysRoleRepository : BaseRepository<sys_role, string>
     /// <summary>
     /// 角色仓储对象实例
     /// </summary>
-    /// <param name="fsql"></param>
+    /// <param name="fsql">ORM实例</param>
     public SysRoleRepository(IFreeSql fsql)
         : base(fsql, null, null)
     {
@@ -26,9 +26,9 @@ public class SysRoleRepository : BaseRepository<sys_role, string>
     /// 获取role列表和role能访问的菜单列表
     /// menuid仅包含叶子节点
     /// </summary>
-    /// <param name="rolename"></param>
-    /// <param name="currentpage"></param>
-    /// <param name="pagesize"></param>
+    /// <param name="rolename">角色名称</param>
+    /// <param name="currentpage">当前页码</param>
+    /// <param name="pagesize">每页大小</param>
     /// <returns></returns>
     public async Task<List<(sys_role role, List<string> menuids)>> GetRoleListAsync(string rolename, int currentpage, int pagesize)
     {
@@ -55,8 +55,8 @@ public class SysRoleRepository : BaseRepository<sys_role, string>
     /// <summary>
     /// 新增角色
     /// </summary>
-    /// <param name="role"></param>
-    /// <param name="menuids"></param>
+    /// <param name="role">角色实体</param>
+    /// <param name="menuids">角色拥有的菜单集合</param>
     /// <returns></returns>
     public async Task<bool> AddRoleAsync(sys_role role, List<string> menuids)
     {
@@ -91,8 +91,8 @@ public class SysRoleRepository : BaseRepository<sys_role, string>
     /// <summary>
     /// 更新角色
     /// </summary>
-    /// <param name="role"></param>
-    /// <param name="menuids"></param>
+    /// <param name="role">角色实体</param>
+    /// <param name="menuids">角色拥有的菜单集合</param>
     /// <returns></returns>
     public async Task<bool> UpdateRoleAsync(sys_role role, List<string> menuids)
     {
@@ -127,7 +127,7 @@ public class SysRoleRepository : BaseRepository<sys_role, string>
     /// <summary>
     /// 删除角色
     /// </summary>
-    /// <param name="roleId"></param>
+    /// <param name="roleId">角色唯一标识</param>
     /// <returns></returns>
     public async Task<bool> RemoveRoleAsync(string roleId)
     {
@@ -155,9 +155,9 @@ public class SysRoleRepository : BaseRepository<sys_role, string>
     }
 
     /// <summary>
-    /// 
+    /// 获取后台api鉴权集合
     /// </summary>
-    /// <param name="roleId"></param>
+    /// <param name="roleId">角色唯一标识</param>
     /// <returns></returns>
     public async Task<IEnumerable<string>> GetApiAuth(string roleId)
     {
@@ -171,10 +171,10 @@ public class SysRoleRepository : BaseRepository<sys_role, string>
     }
 
     /// <summary>
-    /// 
+    /// 更新后台api鉴权权限
     /// </summary>
-    /// <param name="roleId"></param>
-    /// <param name="apiIds"></param>
+    /// <param name="roleId">角色唯一标识</param>
+    /// <param name="apiIds">后台可访问api列表</param>
     /// <returns></returns>
     public async Task<bool> UpdateRoleApiAuth(string roleId, IEnumerable<string> apiIds)
     {

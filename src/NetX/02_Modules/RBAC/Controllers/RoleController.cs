@@ -18,7 +18,7 @@ public class RoleController : RBACBaseController
     /// <summary>
     /// 角色管理api实例对象
     /// </summary>
-    /// <param name="roleService"></param>
+    /// <param name="roleService">角色服务</param>
     public RoleController(IRoleService roleService)
     {
         this._roleService = roleService;
@@ -27,7 +27,7 @@ public class RoleController : RBACBaseController
     /// <summary>
     /// 获取角色列表
     /// </summary>
-    /// <param name="roleListparam"></param>
+    /// <param name="roleListparam">角色筛选实体对象</param>
     /// <returns></returns>
     [ApiActionDescription("获取角色列表")]
     [HttpPost]
@@ -50,6 +50,7 @@ public class RoleController : RBACBaseController
     /// <summary>
     /// 添加角色
     /// </summary>
+    /// <param name="model">角色实体对象</param>
     /// <returns></returns>
     [Audit]
     [ApiActionDescription("添加角色")]
@@ -62,6 +63,7 @@ public class RoleController : RBACBaseController
     /// <summary>
     /// 更新角色
     /// </summary>
+    /// <param name="model">角色实体对象</param>
     /// <returns></returns>
     [Audit]
     [ApiActionDescription("更新角色信息")]
@@ -74,6 +76,7 @@ public class RoleController : RBACBaseController
     /// <summary>
     /// 删除角色
     /// </summary>
+    /// <param name="model">删除实体</param>
     /// <returns></returns>
     [Audit]
     [ApiActionDescription("删除角色")]
@@ -86,6 +89,7 @@ public class RoleController : RBACBaseController
     /// <summary>
     /// 更新角色状态
     /// </summary>
+    /// <param name="model">角色状态实体对象</param>
     /// <returns></returns>
     [Audit]
     [ApiActionDescription("更新角色状态")]
@@ -98,6 +102,7 @@ public class RoleController : RBACBaseController
     /// <summary>
     /// 更新角色后台鉴权状态
     /// </summary>
+    /// <param name="model">橘色状态实体对象</param>
     /// <returns></returns>
     [Audit]
     [ApiActionDescription("更新角色后台鉴权状态")]
@@ -110,7 +115,7 @@ public class RoleController : RBACBaseController
     /// <summary>
     /// 获取后台api授权id集合
     /// </summary>
-    /// <param name="param"></param>
+    /// <param name="param">角色id实体对象</param>
     /// <returns></returns>
     [ApiActionDescription("获取后台api授权id集合")]
     [HttpPost]
@@ -122,6 +127,7 @@ public class RoleController : RBACBaseController
     /// <summary>
     /// 更新角色后台鉴权状态
     /// </summary>
+    /// <param name="model">角色api鉴权集合</param>
     /// <returns></returns>
     [Audit]
     [ApiActionDescription("设置后台api授权id集合")]

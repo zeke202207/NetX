@@ -8,7 +8,7 @@ public sealed class EventSource : IEventSource
     /// <summary>
     /// 事件源对象
     /// </summary>
-    /// <param name="eventId"></param>
+    /// <param name="eventId">事件id</param>
     public EventSource(string @eventId)
     {
         EventId = @eventId;
