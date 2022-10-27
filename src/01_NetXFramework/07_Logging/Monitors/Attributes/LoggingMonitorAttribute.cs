@@ -28,7 +28,7 @@ namespace NetX.Logging.Monitors;
 /// </summary>
 /// <remarks>主要用于将请求的信息打印出来</remarks>
 [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, Inherited = true, AllowMultiple = false)]
-public sealed class LoggingMonitorAttribute : Attribute, IAsyncActionFilter, IOrderedFilter
+public sealed class LoggingMonitorAttribute : Attribute, IAsyncActionFilter, IActionFilter, IOrderedFilter
 {
     /// <summary>
     /// 模板正则表达式对象
@@ -209,7 +209,7 @@ public sealed class LoggingMonitorAttribute : Attribute, IAsyncActionFilter, IOr
         writer.Flush();
         // 获取 json 字符串
         var jsonString = Encoding.UTF8.GetString(stream.ToArray());
-        logContext.Set("loggingMonitor", jsonString);
+        logContext.Set(LoggingConst.C_LOGGING_MONITOR_KEY, jsonString);
         logContext.Set(LoggingConst.C_LOGGING_TENANTCONTEXT_KEY, TenantContext.CurrentTenant);
         logContext.Set(LoggingConst.C_LOGGING_AUDIT, actionMethod.IsDefined(typeof(AuditAttribute), true));
         // 设置日志上下文
@@ -545,5 +545,15 @@ public sealed class LoggingMonitorAttribute : Attribute, IAsyncActionFilter, IOr
         }
         var w = str.PadRight(totalByteCount - dcount);
         return w;
+    }
+
+    public void OnActionExecuting(ActionExecutingContext context)
+    {
+        
+    }
+
+    public void OnActionExecuted(ActionExecutedContext context)
+    {
+        
     }
 }

@@ -29,6 +29,11 @@ namespace NetX.Logging
         /// <summary>
         /// 
         /// </summary>
+        public static string C_LOGGING_MONITOR_KEY = "loggingMonitor";
+
+        /// <summary>
+        /// 
+        /// </summary>
         public static string C_LOGGING_AUDIT = "isaudit";
 
         /// <summary>

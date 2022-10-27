@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using IP2Region.Net.XDB;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using NetX.DatabaseSetup;
@@ -35,5 +36,7 @@ internal class ToolsInitializer : ModuleInitializer
             option.HandleWriteError = error => Console.WriteLine(error.ToString());
         });
         services.AddMonitorLogging(context.Configuration);
+        //ip search
+        services.AddSingleton<ISearcher, Searcher>();
     }
 }
