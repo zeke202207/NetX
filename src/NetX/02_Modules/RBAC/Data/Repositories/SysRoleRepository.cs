@@ -27,13 +27,15 @@ public class SysRoleRepository : BaseRepository<sys_role, string>
     /// menuid仅包含叶子节点
     /// </summary>
     /// <param name="rolename">角色名称</param>
+    /// <param name="status">启用禁用状态</param>
     /// <param name="currentpage">当前页码</param>
     /// <param name="pagesize">每页大小</param>
     /// <returns></returns>
-    public async Task<List<(sys_role role, List<string> menuids)>> GetRoleListAsync(string rolename, int currentpage, int pagesize)
+    public async Task<List<(sys_role role, List<string> menuids)>> GetRoleListAsync(string rolename,int? status, int currentpage, int pagesize)
     {
         List<(sys_role role, List<string> menuids)> result = new List<(sys_role role, List<string> menuids)>();
         var roles = this._freeSql.Select<sys_role>()
+            .WhereIf(null != status,p=>p.status == status)
             .WhereIf(!string.IsNullOrWhiteSpace(rolename), p => p.rolename.Contains(rolename));
         if (currentpage >= 0 && pagesize > 0)
             roles.Page(currentpage, pagesize);

@@ -26,7 +26,12 @@ public class MenuModel
     /// 
     /// </summary>
     [JsonProperty("name")]
-    public string Name { get; set; }
+    public string? Name { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
+    [JsonProperty("title")]
+    public string Title { get; set; }
     /// <summary>
     /// 
     /// </summary>
@@ -93,9 +98,9 @@ public class MenuModel
     [JsonProperty("extpath")]
     public string ExtPath { get; set; }
 
-    ///// <summary>
-    ///// 
-    ///// </summary>
-    //[JsonProperty("keepalive")]
-    //public bool KeepAlive { get; set; } = true;
+    /// <summary>
+    /// 
+    /// </summary>
+    [JsonProperty("keepalive")]
+    public string KeepAlive { get; set; }
 }

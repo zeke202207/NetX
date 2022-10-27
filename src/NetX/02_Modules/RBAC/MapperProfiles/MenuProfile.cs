@@ -25,7 +25,7 @@ public class MenuProfile : Profile
             .ForMember(dest => dest.icon, opt => opt.MapFrom(src => src.Icon))
             .ForMember(dest => dest.isext, opt => opt.MapFrom(src => src.IsExt))
             .ForMember(dest => dest.keepalive, opt => opt.MapFrom(src => src.KeepAlive))
-            .ForMember(dest => dest.name, opt => opt.MapFrom(src => src.Name))
+            .ForMember(dest => dest.title, opt => opt.MapFrom(src => src.Title))
             .ForMember(dest => dest.orderno, opt => opt.MapFrom(src => src.OrderNo))
             .ForMember(dest => dest.permission, opt => opt.MapFrom(src => src.Permission))
             .ForMember(dest => dest.redirect, opt => opt.MapFrom(src => src.Redirect))
@@ -33,13 +33,14 @@ public class MenuProfile : Profile
             .ForMember(dest => dest.show, opt => opt.MapFrom(src => src.Show));
 
         CreateMap<MenuRequestModel, MenuMetaData>()
-            .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Name))
+            .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Title))
             .ForMember(dest => dest.HideChildrenMenu, opt => opt.MapFrom(src => false))
             .ForMember(dest => dest.HideBreadcrumb, opt => opt.MapFrom(src => (Status)src.Show == Status.Disabled ? true : false))
             .ForMember(dest => dest.HideMenu, opt => opt.MapFrom(src => (Status)src.Show == Status.Disabled ? true : false))
             .ForMember(dest => dest.Icon, opt => opt.MapFrom(src => src.Icon))
-            .ForMember(dest => dest.IgnoreKeepAlive, opt => opt.MapFrom(src => (Status)src.Show == Status.Enable ? true : false))
-            .ForMember(dest => dest.FrameSrc, opt => opt.MapFrom(src => (Ext)src.IsExt == Ext.Yes ? src.ExtPath : "")); ;
+            .ForMember(dest => dest.KeepAlive, opt => opt.MapFrom(src => src.KeepAlive))
+            .ForMember(dest => dest.IgnoreKeepAlive, opt => opt.MapFrom(src => (Status)src.KeepAlive == Status.Disabled ? true : false))
+            .ForMember(dest => dest.FrameSrc, opt => opt.MapFrom(src => (Ext)src.IsExt == Ext.Yes ? src.ExtPath : ""));
     }
 
     private void ToModel()
@@ -50,7 +51,8 @@ public class MenuProfile : Profile
              .ForMember(dest => dest.Path, opt => opt.MapFrom(src => src.path))
              .ForMember(dest => dest.Component, opt => opt.MapFrom(src => src.component))
              .ForMember(dest => dest.Meta, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<MenuMetaData>(src.meta)))
-             .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.name))
+             .ForMember(dest => dest.Title, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<MenuMetaData>(src.meta).Title))
+             .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.path))
              .ForMember(dest => dest.Redirect, opt => opt.MapFrom(src => src.redirect))
              .ForMember(dest => dest.CreateTime, opt => opt.MapFrom(src => src.createtime))
              .ForMember(dest => dest.Icon, opt => opt.MapFrom(src => src.icon))
@@ -60,6 +62,7 @@ public class MenuProfile : Profile
              .ForMember(dest => dest.Show, opt => opt.MapFrom(src => src.show))
              .ForMember(dest => dest.IsExt, opt => opt.MapFrom(src => src.isext))
              .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.type))
+             .ForMember(dest => dest.KeepAlive, opt => opt.MapFrom(src => src.keepalive))
              .ForMember(dest => dest.ExtPath, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<MenuMetaData>(src.meta).FrameSrc));
     }
 }

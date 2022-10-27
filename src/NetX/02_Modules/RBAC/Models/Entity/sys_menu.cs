@@ -28,7 +28,7 @@ public class sys_menu : BaseEntity
     /// <summary>
     /// 
     /// </summary>
-    public string name { get; set; }
+    public string title { get; set; }
     /// <summary>
     /// 
     /// </summary>

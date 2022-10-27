@@ -50,8 +50,10 @@ public class RoleService : RBACBaseService, IRoleService
     /// <returns></returns>
     public async Task<ResultModel<List<RoleModel>>> GetRoleList(RoleListParam queryParam)
     {
+        int status;
+        int.TryParse(queryParam.Status, out status);
         var roles = await ((SysRoleRepository)this._roleRepository)
-            .GetRoleListAsync(queryParam.RoleName ?? string.Empty, queryParam.Page, queryParam.PageSize);
+            .GetRoleListAsync(queryParam.RoleName ?? string.Empty, string.IsNullOrWhiteSpace(queryParam.Status) ? null : int.Parse(queryParam.Status), queryParam.Page, queryParam.PageSize);
         var result = this._mapper.Map<List<RoleModel>>(roles);
         return base.Success<List<RoleModel>>(result);
     }

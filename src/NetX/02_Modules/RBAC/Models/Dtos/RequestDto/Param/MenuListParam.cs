@@ -12,7 +12,7 @@ public class MenuListParam : Pager
     /// 
     /// </summary>
     [JsonProperty("menuname")]
-    public string? MenuName { get; set; }
+    public string? Title { get; set; }
     /// <summary>
     /// 
     /// </summary>
