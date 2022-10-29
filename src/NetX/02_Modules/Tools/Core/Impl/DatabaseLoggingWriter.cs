@@ -1,5 +1,7 @@
 ﻿using FreeSql;
 using IP2Region.Net.XDB;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Mvc;
 using NetX.Logging;
 using NetX.Tenants;
 using NetX.Tools.Models;
@@ -49,7 +51,8 @@ public class DatabaseLoggingWriter : LoggingBaseService, ILoggingWriter
                 return;
             if (message.IsWriteToAudit)
                 SaveAuditLogging(message, monitorMessage);
-            SaveLoginLogging(message, monitorMessage);
+            if (message.IsWriteToLogin)
+                SaveLoginLogging(message, monitorMessage);
         }
         catch (Exception ex)
         {
@@ -85,7 +88,7 @@ public class DatabaseLoggingWriter : LoggingBaseService, ILoggingWriter
             level = (int)message.LogLevel,
             message = message.Message,
             exception = Serialize<Exception>(message.Exception),
-            context = Serialize<LogContext>(message.Context),
+            //context = Serialize<LogContext>(message.Context),
             state = Serialize<object>(message.State),
             createtime = message.LogDateTime,
             elapsed = elapsed,
@@ -121,15 +124,19 @@ public class DatabaseLoggingWriter : LoggingBaseService, ILoggingWriter
     /// <param name="monitorMessage"></param>
     private void SaveLoginLogging(LogMessage message, LoggingMonitor monitorMessage)
     {
-        if (null == monitorMessage || monitorMessage.ActionName.ToUpper() != "LOGIN" || null == monitorMessage.AuthorizationClaims)
+        if (null == monitorMessage)
+            return;
+        var loginResult = message.Context.Get<ObjectResult>(LoggingConst.C_LOGIN_RESULT);
+        var objectResult = JObject.FromObject(loginResult.Value).GetValue("result");
+        if (null == objectResult)
             return;
         var _loginLoggingRepository = _freeSqlClould.GetCloudRepository<sys_login_logging>();
         var entity = new sys_login_logging()
         {
             id = base.CreateId(),
             createtime = message.LogDateTime,
-            userid = monitorMessage.AuthorizationClaims.FirstOrDefault(p => p.Type.ToLower() == "userid")?.Value ?? string.Empty,
-            username = monitorMessage.AuthorizationClaims.FirstOrDefault(p => p.Type.ToLower() == "displayname")?.Value ?? string.Empty,
+            userid = objectResult.Value<string>("userid")??string.Empty,
+            username = objectResult.Value<string>("username") ?? string.Empty,
             loginip = monitorMessage.RemoteIPv4,
             loginaddress = _searcher.Search(monitorMessage.RemoteIPv4) ?? string.Empty,
         };

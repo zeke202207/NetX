@@ -113,22 +113,26 @@ public sealed class NetXLogger : ILogger
         var message = formatter(state, exception);
         var logDateTime = _options.UseUtcTimestamp ? DateTime.UtcNow : DateTime.Now;
         bool isAudit = false;
+        bool isLogin = false;
         if (null != Context)
         {
             var value = Context.Get(LoggingConst.C_LOGGING_AUDIT);
             bool.TryParse(value?.ToString(), out isAudit);
+            var login = Context.Get(LoggingConst.C_LOGGING_LOGIN);
+            bool.TryParse(login?.ToString(), out isLogin);
         }
         var logMsg = new LogMessage(
-            _logName, 
-            logLevel, 
-            eventId, 
-            message, 
-            exception, 
-            Context, 
-            state, 
-            logDateTime, 
+            _logName,
+            logLevel,
+            eventId,
+            message,
+            exception,
+            Context,
+            state,
+            logDateTime,
             Environment.CurrentManagedThreadId,
-            isAudit);
+            isAudit,
+            isLogin);
         // 判断是否自定义了日志筛选器，如果是则检查是否符合条件
         if (_options.WriteFilter?.Invoke(logMsg) == false) 
             return;

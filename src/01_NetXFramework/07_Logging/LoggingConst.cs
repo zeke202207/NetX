@@ -37,6 +37,16 @@ namespace NetX.Logging
         public static string C_LOGGING_AUDIT = "isaudit";
 
         /// <summary>
+        /// 
+        /// </summary>
+        public static string C_LOGGING_LOGIN = "islogin";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static string C_LOGIN_RESULT = "loginresult";
+
+        /// <summary>
         /// 异常分隔符
         /// </summary>
         public const string C_LOGGING_EXCEPTION_SEPARATOR = "++++++++++++++++++++++++++++++++++++++++++++++++++++++++";

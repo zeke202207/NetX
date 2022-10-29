@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata;
@@ -9,6 +11,7 @@ using Microsoft.Extensions.Primitives;
 using NetX.Common;
 using NetX.Tenants;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
@@ -212,6 +215,14 @@ public sealed class LoggingMonitorAttribute : Attribute, IAsyncActionFilter, IAc
         logContext.Set(LoggingConst.C_LOGGING_MONITOR_KEY, jsonString);
         logContext.Set(LoggingConst.C_LOGGING_TENANTCONTEXT_KEY, TenantContext.CurrentTenant);
         logContext.Set(LoggingConst.C_LOGGING_AUDIT, actionMethod.IsDefined(typeof(AuditAttribute), true));
+        //记录登录日志
+        if (IsLoggingLogin(context, resultContext))
+        {
+            logContext.Set(LoggingConst.C_LOGGING_LOGIN, true);
+            logContext.Set(LoggingConst.C_LOGIN_RESULT, resultContext.Result);
+        }
+        else
+            logContext.Set(LoggingConst.C_LOGGING_LOGIN, false);
         // 设置日志上下文
         logger.ScopeContext(logContext);
         // 获取最终写入日志消息格式
@@ -221,6 +232,31 @@ public sealed class LoggingMonitorAttribute : Attribute, IAsyncActionFilter, IAc
             logger.LogInformation(finalMessage);
         else
             logger.LogError(exception, finalMessage);
+    }
+
+    /// <summary>
+    /// 是否记录登录日志
+    /// </summary>
+    /// <returns></returns>
+    private bool IsLoggingLogin(ActionExecutingContext context, ActionExecutedContext executedContext)
+    {
+        var loginSuccess = false;
+        if (null != context.HttpContext.Request.Path.Value
+           && context.HttpContext.Request.Path.Value.ToLower().Contains("login"))
+        {
+            var objResult = executedContext.Result as ObjectResult;
+            if (null != objResult && null != objResult.Value)
+            {
+                var jResult = JObject.FromObject(objResult.Value);
+                if (null != jResult)
+                {
+                    var intResult = jResult.GetValue("code")?.ToObject<int>();
+                    if (null != intResult && intResult == 0)
+                        loginSuccess = true;
+                }
+            }
+        }
+        return loginSuccess;
     }
 
     /// <summary>
