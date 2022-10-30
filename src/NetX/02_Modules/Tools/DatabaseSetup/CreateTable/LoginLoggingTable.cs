@@ -12,12 +12,12 @@ namespace NetX.Tools.DatabaseSetup.CreateTable
     /// 登录日志
     /// </summary>
     [Migration(2003)]
-    public class LoginLogging : CreateTableMigration
+    public class LoginLoggingTable : CreateTableMigration
     {
         /// <summary>
         /// 
         /// </summary>
-        public LoginLogging()
+        public LoginLoggingTable()
             : base(DatabaseSetupConst.C_DATABASESETUP_TABLENAME_LOGIN_LOGGING)
         {
         }

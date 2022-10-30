@@ -62,6 +62,19 @@ namespace NetX.Tools.DatabaseSetup.InitData
                     type = 1,
                     permission = "",
                     orderno = 2,
+                })
+                .Row(new
+                {
+                    id = "00000000000000000000000000000012",
+                    parentid = "00000000000000000000000000000009",
+                    title = "登录日志",
+                    path = "loginlogging",
+                    component = "/logmanager/loginlogging/index",
+                    meta = "{\"ignoreKeepAlive\":false,\"currentActiveMenu\":null,\"KeepAlive\":true,\"HideMenu\":false,\"Title\":\"登录日志\",\"HideBreadcrumb\":true,\"Icon\":\"ant-design:solution-outlined\"}",
+                    icon = "ant-design:file-twotone",
+                    type = 1,
+                    permission = "",
+                    orderno = 3,
                 });
         }
 

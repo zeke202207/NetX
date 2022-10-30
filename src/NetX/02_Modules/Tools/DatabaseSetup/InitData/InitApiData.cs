@@ -37,6 +37,14 @@ namespace NetX.Tools.DatabaseSetup.InitData
                      method = "post",
                      description = "获取审计日志列表"
                  })
+                 .Row(new
+                 {
+                     id = "60000000000000000000000000000002",
+                     path = "/api/logging/getloginloglist",
+                     group = "log",
+                     method = "post",
+                     description = "获取登录日志列表"
+                 })
                  ;
         }
 

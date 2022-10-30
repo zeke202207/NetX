@@ -242,7 +242,7 @@ public sealed class LoggingMonitorAttribute : Attribute, IAsyncActionFilter, IAc
     {
         var loginSuccess = false;
         if (null != context.HttpContext.Request.Path.Value
-           && context.HttpContext.Request.Path.Value.ToLower().Contains("login"))
+           && context.HttpContext.Request.Path.Value.ToLower().Equals("/api/account/login"))
         {
             var objResult = executedContext.Result as ObjectResult;
             if (null != objResult && null != objResult.Value)
