@@ -13,7 +13,7 @@ using NetX.Logging.Monitors;
 namespace NetX.RBAC.Controllers;
 
 /// <summary>
-/// 
+/// 系统Api管理对外开放api接口
 /// </summary>
 [ApiControllerDescription(RBACConst.C_RBAC_GROUPNAME, Description = "NetX实现的系统管理模块->接口管理")]
 public class ApiController : RBACBaseController
@@ -23,18 +23,18 @@ public class ApiController : RBACBaseController
     /// <summary>
     /// 角色管理api实例对象
     /// </summary>
-    /// <param name="apiService"></param>
+    /// <param name="apiService">api服务</param>
     public ApiController(IApiService apiService)
     {
         this._apiService = apiService;
     }
 
     /// <summary>
-    /// 获取api列表
+    /// 获取API分页列表
     /// </summary>
-    /// <param name="apiPageParam"></param>
+    /// <param name="apiPageParam">分页查询条件</param>
     /// <returns></returns>
-    [ApiActionDescription("获取api分页列表")]
+    [ApiActionDescription("获取API分页列表")]
     [HttpPost]
     public async Task<ResultModel<PagerResultModel<List<ApiModel>>>> GetApiPageList(ApiPageParam apiPageParam)
     {
@@ -42,11 +42,11 @@ public class ApiController : RBACBaseController
     }
 
     /// <summary>
-    /// 获取api列表
+    /// 获取API列表
     /// </summary>
-    /// <param name="apiParam"></param>
+    /// <param name="apiParam">查询条件</param>
     /// <returns></returns>
-    [ApiActionDescription("获取api列表")]
+    [ApiActionDescription("获取API列表")]
     [HttpPost]
     public async Task<ResultModel<List<ApiModel>>> GetApiList(ApiParam apiParam)
     {
@@ -54,12 +54,12 @@ public class ApiController : RBACBaseController
     }
 
     /// <summary>
-    /// 添加菜单
+    /// 添加API
     /// </summary>
-    /// <param name="model"></param>
+    /// <param name="model">API实体对象</param>
     /// <returns></returns>
     [Audit]
-    [ApiActionDescription("添加api")]
+    [ApiActionDescription("添加API")]
     [HttpPost]
     public async Task<ResultModel<bool>> AddApi(ApiRequestModel model)
     {
@@ -67,12 +67,12 @@ public class ApiController : RBACBaseController
     }
 
     /// <summary>
-    /// 编辑菜单
+    /// 编辑API信息
     /// </summary>
-    /// <param name="model"></param>
+    /// <param name="model">API实体对象</param>
     /// <returns></returns>
     [Audit]
-    [ApiActionDescription("编辑api")]
+    [ApiActionDescription("编辑API信息")]
     [HttpPost]
     public async Task<ResultModel<bool>> UpdateApi(ApiRequestModel model)
     {
@@ -80,12 +80,12 @@ public class ApiController : RBACBaseController
     }
 
     /// <summary>
-    /// 删除菜单
+    /// 删除API
     /// </summary>
-    /// <param name="param"></param>
+    /// <param name="param">删除主键信息</param>
     /// <returns></returns>
     [Audit]
-    [ApiActionDescription("删除api")]
+    [ApiActionDescription("删除API")]
     [HttpDelete]
     public async Task<ResultModel<bool>> RemoveApi(KeyParam param)
     {

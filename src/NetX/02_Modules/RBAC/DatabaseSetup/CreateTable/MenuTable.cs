@@ -30,7 +30,7 @@ public class MenuTable : CreateTableMigration
                .WithColumn("orderno").AsInt32()
                .WithColumn("permission").AsString(50).Nullable()
                .WithColumn("createtime").AsDateTime().WithDefaultValue(DateTime.Now)
-               .WithColumn("name").AsString(50)
+               .WithColumn("title").AsString(50)
                .WithColumn("path").AsString(255).Nullable()
                .WithColumn("component").AsString(255).Nullable()
                .WithColumn("redirect").AsString(255).Nullable()

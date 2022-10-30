@@ -19,31 +19,35 @@ public class AccountService : RBACBaseService, IAccountService
     private readonly IEncryption _encryption;
     private readonly ILoginHandler _loginHandler;
     private readonly IMapper _mapper;
+    private readonly IPasswordStrategy _pwdStrategy;
 
     /// <summary>
     /// 账号管理服务实例对象
     /// </summary>
-    /// <param name="userRepository"></param>
-    /// <param name="encryption"></param>
-    /// <param name="loginHandler"></param>
-    /// <param name="mapper"></param>
+    /// <param name="userRepository">用户仓储</param>
+    /// <param name="encryption">加密算法</param>
+    /// <param name="loginHandler">JWT票据处理实例</param>
+    /// <param name="mapper">实体对象映射实例</param>
+    /// <param name="strategy">密码生成策略</param>
     public AccountService(
         IBaseRepository<sys_user> userRepository,
         IEncryption encryption,
         ILoginHandler loginHandler,
-        IMapper mapper)
+        IMapper mapper,
+        IPasswordStrategy strategy)
     {
         this._userRepository = userRepository;
         this._encryption = encryption;
         this._loginHandler = loginHandler;
         this._mapper = mapper;
+        this._pwdStrategy=strategy;
     }
 
     /// <summary>
     /// 登录
     /// </summary>
-    /// <param name="username"></param>
-    /// <param name="password"></param>
+    /// <param name="username">用户名</param>
+    /// <param name="password">密码</param>
     /// <returns></returns>
     public async Task<ResultModel<LoginResult>> Login(string username, string password)
     {
@@ -52,12 +56,14 @@ public class AccountService : RBACBaseService, IAccountService
         if (null == user || _encryption.Encryption(password).ToLower().Equals(user.password))
             return base.Error<LoginResult>("用户名或密码错误");
         var userInfo = this._mapper.Map<UserModel>(user);
+        var userRoleId = await GetRoleId(userInfo.Id);
         //2. 获取token
         string token = await GetToken(new ClaimModel()
         {
             UserId = userInfo.Id,
             LoginName = userInfo.UserName,
-            DisplayName = userInfo.NickName
+            DisplayName = userInfo.NickName,
+            RoleId = userRoleId
         });
         if (string.IsNullOrWhiteSpace(token))
             return base.Error<LoginResult>("获取token失败");
@@ -74,9 +80,8 @@ public class AccountService : RBACBaseService, IAccountService
     /// <summary>
     /// 获取Token信息
     /// </summary>
-    /// <param name="model"></param>
+    /// <param name="model">token声明实体</param>
     /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
     private async Task<string> GetToken(ClaimModel model)
     {
         var result = this._loginHandler.Handle(model, string.Empty);
@@ -86,9 +91,19 @@ public class AccountService : RBACBaseService, IAccountService
     }
 
     /// <summary>
+    /// 根据用户Id获取角色id
+    /// </summary>
+    /// <param name="userId">用户id</param>
+    /// <returns></returns>
+    private async Task<string> GetRoleId(string userId)
+    {
+        return await ((SysUserRepository)_userRepository).GetRoleId(userId);
+    }
+
+    /// <summary>
     /// 获取用户信息
     /// </summary>
-    /// <param name="userId"></param>
+    /// <param name="userId">用户唯一标识</param>
     /// <returns></returns>
     public async Task<ResultModel<UserModel>> GetUserInfo(string userId)
     {
@@ -103,11 +118,12 @@ public class AccountService : RBACBaseService, IAccountService
     /// <summary>
     /// 获取用户列表
     /// </summary>
-    /// <param name="userParam"></param>
+    /// <param name="queryParam">查询条件实体</param>
     /// <returns></returns>
-    public async Task<ResultModel<PagerResultModel<List<UserListModel>>>> GetAccountLists(UserListParam userParam)
+    public async Task<ResultModel<PagerResultModel<List<UserListModel>>>> GetAccountLists(UserListParam queryParam)
     {
-        var listTotal = await ((SysUserRepository)_userRepository).GetUserListAsync(userParam.DeptId, userParam.Account, userParam.Nickname, userParam.Page, userParam.PageSize);
+        var listTotal = await ((SysUserRepository)_userRepository)
+            .GetUserListAsync(queryParam.DeptId, queryParam.Account, queryParam.Nickname, queryParam.Page, queryParam.PageSize);
         List<UserListModel> tempUsers = new List<UserListModel>();
         foreach (var item in listTotal.list)
         {
@@ -134,9 +150,9 @@ public class AccountService : RBACBaseService, IAccountService
     }
 
     /// <summary>
-    /// 
+    /// 验证用户名是否存在
     /// </summary>
-    /// <param name="userName"></param>
+    /// <param name="userName">用户名</param>
     /// <returns></returns>
     public async Task<ResultModel<bool>> IsAccountExist(string userName)
     {
@@ -149,7 +165,7 @@ public class AccountService : RBACBaseService, IAccountService
     /// <summary>
     /// add a new user account
     /// </summary>
-    /// <param name="model"></param>
+    /// <param name="model">用户实体</param>
     /// <returns></returns>
     public async Task<ResultModel<bool>> AddAccount(AccountRequestModel model)
     {
@@ -163,7 +179,7 @@ public class AccountService : RBACBaseService, IAccountService
             id = base.CreateId(),
             nickname = model.NickName,
             username = model.UserName,
-            password = "zeke",
+            password = await _pwdStrategy.GeneratePassword(),
             avatar = "",
             status = 1,
             remark = model.Remark,
@@ -176,7 +192,7 @@ public class AccountService : RBACBaseService, IAccountService
     /// <summary>
     /// update a user account information
     /// </summary>
-    /// <param name="model"></param>
+    /// <param name="model">用户实体</param>
     /// <returns></returns>
     public async Task<ResultModel<bool>> UpdateAccount(AccountRequestModel model)
     {
@@ -202,19 +218,18 @@ public class AccountService : RBACBaseService, IAccountService
     /// <summary>
     /// remove a account
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="userId">用户唯一标识</param>
     /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
-    public async Task<ResultModel<bool>> RemoveDept(string id)
+    public async Task<ResultModel<bool>> RemoveDept(string userId)
     {
-        var result = await ((SysUserRepository)this._userRepository).RemoveUserAsync(id);
+        var result = await ((SysUserRepository)this._userRepository).RemoveUserAsync(userId);
         return base.Success<bool>(result);
     }
 
     /// <summary>
     /// 获取当前登录用户权限代码集合
     /// </summary>
-    /// <param name="userId"></param>
+    /// <param name="userId">用户唯一标识</param>
     /// <returns></returns>
     public async Task<ResultModel<IEnumerable<string>>> GetPermCode(string userId)
     {
@@ -225,7 +240,7 @@ public class AccountService : RBACBaseService, IAccountService
     /// <summary>
     /// 获取当前登录用户api权限验证集合
     /// </summary>
-    /// <param name="userid"></param>
+    /// <param name="userid">用户唯一标识</param>
     /// <returns></returns>
     public async Task<ResultModel<ApiPermissionModel>> GetApiPermCode(string userid)
     {

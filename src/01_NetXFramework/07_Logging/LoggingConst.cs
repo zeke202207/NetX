@@ -29,7 +29,22 @@ namespace NetX.Logging
         /// <summary>
         /// 
         /// </summary>
+        public static string C_LOGGING_MONITOR_KEY = "loggingMonitor";
+
+        /// <summary>
+        /// 
+        /// </summary>
         public static string C_LOGGING_AUDIT = "isaudit";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static string C_LOGGING_LOGIN = "islogin";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static string C_LOGIN_RESULT = "loginresult";
 
         /// <summary>
         /// 异常分隔符

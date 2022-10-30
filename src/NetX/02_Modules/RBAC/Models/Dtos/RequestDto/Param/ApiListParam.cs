@@ -1,4 +1,5 @@
 ﻿using NetX.Common.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,8 @@ namespace NetX.RBAC.Models;
 /// </summary>
 public class ApiPageParam : Pager
 {
+    [JsonProperty("group")]
+    public string? Ggroup { get; set; }
 }
 
 /// <summary>

@@ -25,8 +25,8 @@ public class MenuRequestModel
     /// <summary>
     /// 
     /// </summary>
-    [JsonProperty("name")]
-    public string? Name { get; set; }
+    [JsonProperty("title")]
+    public string? Title { get; set; }
     /// <summary>
     /// 
     /// </summary>
@@ -60,12 +60,12 @@ public class MenuRequestModel
     /// <summary>
     /// 
     /// </summary>
-    [JsonProperty("orderNo")]
+    [JsonProperty("orderno")]
     public int? OrderNo { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    [JsonProperty("createTime")]
+    [JsonProperty("createtime")]
     public DateTime? CreateTime { get; set; }
     /// <summary>
     /// 
@@ -75,12 +75,12 @@ public class MenuRequestModel
     /// <summary>
     /// 
     /// </summary>
-    [JsonProperty("isExt")]
+    [JsonProperty("isext")]
     public int IsExt { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    [JsonProperty("keepAlive")]
+    [JsonProperty("keepalive")]
     public int KeepAlive { get; set; }
     /// <summary>
     /// 

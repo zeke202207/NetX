@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace NetX.RBAC.Core;
 
 /// <summary>
-/// 
+/// API管理服务
 /// </summary>
 [Scoped]
 public class ApiService : RBACBaseService, IApiService
@@ -24,8 +24,8 @@ public class ApiService : RBACBaseService, IApiService
     /// <summary>
     /// api管理实例对象
     /// </summary>
-    /// <param name="apiRepository"></param>
-    /// <param name="mapper"></param>
+    /// <param name="apiRepository">api数据库仓储实例</param>
+    /// <param name="mapper">对象映射实例</param>
     public ApiService(
         IBaseRepository<sys_api> apiRepository,
         IMapper mapper)
@@ -37,16 +37,17 @@ public class ApiService : RBACBaseService, IApiService
     /// <summary>
     /// 获取api列表
     /// </summary>
-    /// <param name="param"></param>
+    /// <param name="queryParam">查询条件实体</param>
     /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
-    public async Task<ResultModel<PagerResultModel<List<ApiModel>>>> GetApiList(ApiPageParam param)
+    public async Task<ResultModel<PagerResultModel<List<ApiModel>>>> GetApiList(ApiPageParam queryParam)
     {
         var result = await this._apiRepository.Select
+            .WhereIf(!string.IsNullOrWhiteSpace(queryParam.Ggroup),p=>p.group.Contains(queryParam.Ggroup))
             .OrderBy(p => p.group)
-            .Page(pageNumber: param.Page, pageSize: param.PageSize)
+            .Page(pageNumber: queryParam.Page, pageSize: queryParam.PageSize)
             .ToListAsync();
-        var total = await this._apiRepository.Select.CountAsync();
+        var total = await this._apiRepository.Select
+            .WhereIf(!string.IsNullOrWhiteSpace(queryParam.Ggroup), p => p.group.Contains(queryParam.Ggroup)).CountAsync();
         var resultModel = new PagerResultModel<List<ApiModel>>()
         {
             Items = this._mapper.Map<List<ApiModel>>(result),
@@ -58,10 +59,9 @@ public class ApiService : RBACBaseService, IApiService
     /// <summary>
     /// 获取api列表
     /// </summary>
-    /// <param name="param"></param>
+    /// <param name="queryParam">查询条件实体</param>
     /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
-    public async Task<ResultModel<List<ApiModel>>> GetApiList(ApiParam param)
+    public async Task<ResultModel<List<ApiModel>>> GetApiList(ApiParam queryParam)
     {
         var result = await this._apiRepository.Select
             .OrderBy(p => p.group)
@@ -72,9 +72,8 @@ public class ApiService : RBACBaseService, IApiService
     /// <summary>
     /// 移除api
     /// </summary>
-    /// <param name="apiId"></param>
+    /// <param name="apiId">api唯一标识</param>
     /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
     public async Task<ResultModel<bool>> RemoveApi(string apiId)
     {
         var result = await ((SysApiRepository)this._apiRepository).RemoveApi(apiId);
@@ -84,9 +83,8 @@ public class ApiService : RBACBaseService, IApiService
     /// <summary>
     /// 添加api
     /// </summary>
-    /// <param name="model"></param>
+    /// <param name="model">API实体对象</param>
     /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
     public async Task<ResultModel<bool>> AddApi(ApiRequestModel model)
     {
         var entity = _mapper.Map<sys_api>(model);
@@ -101,9 +99,8 @@ public class ApiService : RBACBaseService, IApiService
     /// <summary>
     /// 更新api
     /// </summary>
-    /// <param name="model"></param>
+    /// <param name="model">API实体对象</param>
     /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
     public async Task<ResultModel<bool>> UpdateApi(ApiRequestModel model)
     {
         var entity = await this._apiRepository.Select.Where(p => p.id.Equals(model.Id)).FirstAsync();

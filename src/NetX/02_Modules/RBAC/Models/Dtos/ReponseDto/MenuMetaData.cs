@@ -44,4 +44,10 @@ public class MenuMetaData
     /// </summary>
     [JsonProperty("frameSrc")]
     public string FrameSrc { get; set; }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    [JsonProperty("KeepAlive")]
+    public bool KeepAlive { get; set; } = true;
 }

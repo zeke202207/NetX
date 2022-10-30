@@ -21,8 +21,8 @@ public class MenuService : RBACBaseService, IMenuService
     /// <summary>
     /// 菜单管理实例对象
     /// </summary>
-    /// <param name="menuRepository"></param>
-    /// <param name="mapper"></param>
+    /// <param name="menuRepository">菜单仓储实例</param>
+    /// <param name="mapper">对象映射实例</param>
     public MenuService(
         IBaseRepository<sys_menu> menuRepository,
         IMapper mapper)
@@ -34,11 +34,10 @@ public class MenuService : RBACBaseService, IMenuService
     /// <summary>
     /// 新增菜单
     /// </summary>
-    /// <param name="model"></param>
+    /// <param name="model">菜单实体</param>
     /// <returns></returns>
     public async Task<ResultModel<bool>> AddMenu(MenuRequestModel model)
     {
-        var menuType = GetMenuType(int.Parse(model.Type));
         var menuEntity = ToEntity(model);
         menuEntity.id = base.CreateId();
         menuEntity.createtime = base.CreateInsertTime();
@@ -47,13 +46,12 @@ public class MenuService : RBACBaseService, IMenuService
     }
 
     /// <summary>
-    /// 跟新菜单信息
+    /// 更新菜单信息
     /// </summary>
-    /// <param name="model"></param>
+    /// <param name="model">菜单实体</param>
     /// <returns></returns>
     public async Task<ResultModel<bool>> UpdateMenu(MenuRequestModel model)
     {
-        var menuType = GetMenuType(int.Parse(model.Type));
         var entity = await this._menuRepository.Select.Where(p => p.id.Equals(model.Id)).FirstAsync();
         var menuEntity = ToEntity(model);
         menuEntity.id = model.Id ?? string.Empty;
@@ -65,7 +63,7 @@ public class MenuService : RBACBaseService, IMenuService
     /// <summary>
     /// 删除菜单
     /// </summary>
-    /// <param name="menuId"></param>
+    /// <param name="menuId">菜单唯一标识</param>
     /// <returns></returns>
     public async Task<ResultModel<bool>> RemoveMenu(string menuId)
     {
@@ -76,7 +74,7 @@ public class MenuService : RBACBaseService, IMenuService
     /// <summary>
     /// 获取当前用户可访问的菜单列表集合
     /// </summary>
-    /// <param name="userId"></param>
+    /// <param name="userId">用户唯一标识</param>
     /// <returns></returns>
     public async Task<ResultModel<List<MenuModel>>> GetCurrentUserMenuList(string userId)
     {
@@ -88,14 +86,13 @@ public class MenuService : RBACBaseService, IMenuService
     /// <summary>
     /// 获取菜单集合
     /// </summary>
-    /// <param name="param"></param>
+    /// <param name="param">菜单查询条件对象</param>
     /// <returns></returns>
     public async Task<ResultModel<List<MenuModel>>> GetMenuList(MenuListParam param)
     {
         var menus = await this._menuRepository.Select
-           .WhereIf(!string.IsNullOrWhiteSpace(param.MenuName), p => p.name.Equals(param.MenuName))
+           .WhereIf(!string.IsNullOrWhiteSpace(param.Title), p => p.title.Contains(param.Title))
            .WhereIf(int.TryParse(param.Status, out int _), p => p.status == int.Parse(param.Status))
-           .Page(param.Page, param.PageSize)
            .ToListAsync();
         var result = ToTree(this._mapper.Map<List<MenuModel>>(menus), RBACConst.C_ROOT_ID);
         return base.Success<List<MenuModel>>(result);
@@ -104,8 +101,8 @@ public class MenuService : RBACBaseService, IMenuService
     /// <summary>
     /// 生产菜单树
     /// </summary>
-    /// <param name="menus"></param>
-    /// <param name="parentId"></param>
+    /// <param name="menus">菜单集合</param>
+    /// <param name="parentId">父菜单唯一标识</param>
     /// <returns></returns>
     private List<MenuModel> ToTree(List<MenuModel> menus, string parentId)
     {
@@ -127,11 +124,11 @@ public class MenuService : RBACBaseService, IMenuService
     /// <summary>
     /// 转换数据库实体对象
     /// </summary>
-    /// <param name="model"></param>
+    /// <param name="model">菜单实体</param>
     /// <returns></returns>
     private sys_menu ToEntity(MenuRequestModel model)
     {
-        var menuType = GetMenuType(int.Parse(model.Type));
+        var menuType = model.Type.ToMenuType();
         var menuEntity = this._mapper.Map<sys_menu>(model);
         menuEntity.parentid = string.IsNullOrWhiteSpace(model.ParentId) ? RBACConst.C_ROOT_ID : model.ParentId;
         menuEntity.component = (Ext)model.IsExt == Ext.Yes ?
@@ -143,15 +140,5 @@ public class MenuService : RBACBaseService, IMenuService
             model.Path : $"/{model.Path}" : model.Path;
         menuEntity.meta = JsonConvert.SerializeObject(this._mapper.Map<MenuMetaData>(model));
         return menuEntity;
-    }
-
-    /// <summary>
-    /// 获取菜单类型
-    /// </summary>
-    /// <param name="menuType"></param>
-    /// <returns></returns>
-    private MenuType GetMenuType(int menuType)
-    {
-        return (MenuType)menuType;
     }
 }

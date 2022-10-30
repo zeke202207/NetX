@@ -20,7 +20,7 @@ public class SysApiRepository : BaseRepository<sys_api, string>
     /// <summary>
     /// api 仓储对象实例
     /// </summary>
-    /// <param name="fsql"></param>
+    /// <param name="fsql">ORM实例</param>
     public SysApiRepository(IFreeSql fsql)
         : base(fsql, null, null)
     {
@@ -28,9 +28,9 @@ public class SysApiRepository : BaseRepository<sys_api, string>
     }
 
     /// <summary>
-    /// 
+    /// 删除配置api
     /// </summary>
-    /// <param name="apiId"></param>
+    /// <param name="apiId">api唯一标识</param>
     /// <returns></returns>
     public async Task<bool> RemoveApi(string apiId)
     {
@@ -49,7 +49,7 @@ public class SysApiRepository : BaseRepository<sys_api, string>
             {
                 result = false;
                 uow.Rollback();
-                throw new Exception("api菜单失败", ex);
+                throw new Exception("api删除失败", ex);
             }
         }
         return result;

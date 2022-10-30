@@ -1,4 +1,7 @@
 ﻿using FreeSql;
+using IP2Region.Net.XDB;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Mvc;
 using NetX.Logging;
 using NetX.Tenants;
 using NetX.Tools.Models;
@@ -12,14 +15,17 @@ namespace NetX.Tools.Core;
 public class DatabaseLoggingWriter : LoggingBaseService, ILoggingWriter
 {
     private readonly FreeSqlCloud<string>? _freeSqlClould;
+    private readonly ISearcher _searcher;
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="freeSql"></param>
-    public DatabaseLoggingWriter(IFreeSql freeSql)
+    /// <param name="searcher"></param>
+    public DatabaseLoggingWriter(IFreeSql freeSql, ISearcher searcher)
     {
         this._freeSqlClould = freeSql as FreeSqlCloud<string>;
+        this._searcher = searcher;
     }
 
     /// <summary>
@@ -40,8 +46,13 @@ public class DatabaseLoggingWriter : LoggingBaseService, ILoggingWriter
                 return;
             _freeSqlClould?.Change(tenantContext.Principal.Tenant.TenantId);
             SaveLogging(message);
+            var monitorMessage = GetLoggingMonitoerMessage(message);
+            if (null == monitorMessage)
+                return;
             if (message.IsWriteToAudit)
-                SaveAuditLogging(message);
+                SaveAuditLogging(message, monitorMessage);
+            if (message.IsWriteToLogin)
+                SaveLoginLogging(message, monitorMessage);
         }
         catch (Exception ex)
         {
@@ -77,7 +88,7 @@ public class DatabaseLoggingWriter : LoggingBaseService, ILoggingWriter
             level = (int)message.LogLevel,
             message = message.Message,
             exception = Serialize<Exception>(message.Exception),
-            context = Serialize<LogContext>(message.Context),
+            //context = Serialize<LogContext>(message.Context),
             state = Serialize<object>(message.State),
             createtime = message.LogDateTime,
             elapsed = elapsed,
@@ -88,29 +99,48 @@ public class DatabaseLoggingWriter : LoggingBaseService, ILoggingWriter
     /// 记录审计日志
     /// </summary>
     /// <param name="message"></param>
-    private void SaveAuditLogging(LogMessage message)
+    /// <param name="monitorMessage"></param>
+    private void SaveAuditLogging(LogMessage message, LoggingMonitor monitorMessage)
     {
-        if (message.LogLevel != Microsoft.Extensions.Logging.LogLevel.Information)
-            return;
-        var loggingMonitorMsg = message.Context.Get("loggingMonitor")?.ToString();
-        if (string.IsNullOrEmpty(loggingMonitorMsg))
-            return;
-        var loggingMonitoer = Newtonsoft.Json.JsonConvert.DeserializeObject<LoggingMonitor>(loggingMonitorMsg);
-        if (null == loggingMonitoer || loggingMonitoer.HttpMethod.ToUpper() == "GET")
-            return;
         var _auditlogRepository = _freeSqlClould.GetCloudRepository<sys_audit_logging>();
         _auditlogRepository.Insert(new sys_audit_logging()
         {
             id = base.CreateId(),
             createtime = message.LogDateTime,
-            userid = loggingMonitoer.AuthorizationClaims.FirstOrDefault(p => p.Type.ToLower() == "userid")?.Value??string.Empty,
-            username = loggingMonitoer.AuthorizationClaims.FirstOrDefault(p => p.Type.ToLower() == "displayname")?.Value??string.Empty,
-            controller = loggingMonitoer.ControllerName,
-            action = loggingMonitoer.ActionName,
-            detail = loggingMonitorMsg,
-            remoteipv4 = loggingMonitoer.RemoteIPv4,
-            httpmethod = loggingMonitoer.HttpMethod,
+            userid = monitorMessage.AuthorizationClaims.FirstOrDefault(p => p.Type.ToLower() == "userid")?.Value??string.Empty,
+            username = monitorMessage.AuthorizationClaims.FirstOrDefault(p => p.Type.ToLower() == "displayname")?.Value??string.Empty,
+            controller = monitorMessage.ControllerName,
+            action = monitorMessage.ActionName,
+            detail = message.Context.Get<string>(LoggingConst.C_LOGGING_MONITOR_KEY),
+            remoteipv4 = monitorMessage.RemoteIPv4,
+            httpmethod = monitorMessage.HttpMethod,
         });
+    }
+
+    /// <summary>
+    /// 记录登录日志
+    /// </summary>
+    /// <param name="message">日志消息实体</param>
+    /// <param name="monitorMessage"></param>
+    private void SaveLoginLogging(LogMessage message, LoggingMonitor monitorMessage)
+    {
+        if (null == monitorMessage)
+            return;
+        var loginResult = message.Context.Get<ObjectResult>(LoggingConst.C_LOGIN_RESULT);
+        var objectResult = JObject.FromObject(loginResult.Value).GetValue("result");
+        if (null == objectResult)
+            return;
+        var _loginLoggingRepository = _freeSqlClould.GetCloudRepository<sys_login_logging>();
+        var entity = new sys_login_logging()
+        {
+            id = base.CreateId(),
+            createtime = message.LogDateTime,
+            userid = objectResult.Value<string>("userid")??string.Empty,
+            username = objectResult.Value<string>("username") ?? string.Empty,
+            loginip = monitorMessage.RemoteIPv4,
+            loginaddress = _searcher.Search(monitorMessage.RemoteIPv4) ?? string.Empty,
+        };
+        _loginLoggingRepository.Insert(entity);
     }
 
     /// <summary>
@@ -124,5 +154,18 @@ public class DatabaseLoggingWriter : LoggingBaseService, ILoggingWriter
         if (null == data)
             return string.Empty;
         return SerializeObject<T>(data);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="message">日志实体</param>
+    /// <returns></returns>
+    private LoggingMonitor GetLoggingMonitoerMessage(LogMessage message)
+    {
+        var loggingMonitorMsg = message.Context.Get<string>(LoggingConst.C_LOGGING_MONITOR_KEY);
+        if (string.IsNullOrWhiteSpace(loggingMonitorMsg))
+            return default(LoggingMonitor);
+        return Newtonsoft.Json.JsonConvert.DeserializeObject<LoggingMonitor>(loggingMonitorMsg);
     }
 }

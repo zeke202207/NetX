@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NetX.App.Extensions;
@@ -84,7 +85,12 @@ public sealed class ServerModuleInitializer : ModuleInitializer
     /// <param name="context"></param>
     public override void ConfigureApplication(IApplicationBuilder app, IWebHostEnvironment env, ModuleContext context)
     {
-        // 配置静态
+        //配置转发
+        app.UseForwardedHeaders(new ForwardedHeadersOptions
+        {
+            ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+        });
+        // 配置静态目录
         app.UseStaticFiles();
 
         //1.跨域
@@ -97,7 +103,6 @@ public sealed class ServerModuleInitializer : ModuleInitializer
             app.UseCustomSwagger(App.GetUserModuleOptions.Select(p => p.Name));
         // 添加压缩缓存
         app.UseResponseCaching();
-
         app.UseStartupHandler();
         app.UseShutdownHandler();
     }

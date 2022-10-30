@@ -18,7 +18,7 @@ public class DeptController : RBACBaseController
     /// <summary>
     /// 部门管理api实例对象
     /// </summary>
-    /// <param name="deptService"></param>
+    /// <param name="deptService">部门管理服务</param>
     public DeptController(IDeptService deptService)
     {
         _deptService = deptService;
@@ -27,7 +27,7 @@ public class DeptController : RBACBaseController
     /// <summary>
     /// 获取部门列表
     /// </summary>
-    /// <param name="queryParam"></param>
+    /// <param name="queryParam">查询部门条件</param>
     /// <returns></returns>
     [ApiActionDescription("获取部门列表")]
     [HttpGet]
@@ -39,7 +39,7 @@ public class DeptController : RBACBaseController
     /// <summary>
     /// 新增部门信息
     /// </summary>
-    /// <param name="model"></param>
+    /// <param name="model">部门实体对象</param>
     /// <returns></returns>
     [Audit]
     [ApiActionDescription("新增部门信息")]
@@ -52,7 +52,7 @@ public class DeptController : RBACBaseController
     /// <summary>
     /// 编辑部门信息
     /// </summary>
-    /// <param name="model"></param>
+    /// <param name="model">部门实体对象</param>
     /// <returns></returns>
     [Audit]
     [ApiActionDescription("编辑部门信息")]
@@ -65,7 +65,7 @@ public class DeptController : RBACBaseController
     /// <summary>
     /// 删除部门信息
     /// </summary>
-    /// <param name="param"></param>
+    /// <param name="param">删除实体</param>
     /// <returns></returns>
     [Audit]
     [ApiActionDescription("删除部门信息")]

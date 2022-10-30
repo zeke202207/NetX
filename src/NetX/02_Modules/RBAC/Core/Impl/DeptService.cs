@@ -20,8 +20,8 @@ public class DeptService : RBACBaseService, IDeptService
     /// <summary>
     /// 部门管理服务实例对象
     /// </summary>
-    /// <param name="deptRepository"></param>
-    /// <param name="mapper"></param>
+    /// <param name="deptRepository">部门仓储实例</param>
+    /// <param name="mapper">对象映射实例</param>
     public DeptService(
         IBaseRepository<sys_dept> deptRepository,
         IMapper mapper)
@@ -31,11 +31,10 @@ public class DeptService : RBACBaseService, IDeptService
     }
 
     /// <summary>
-    /// 新增部門
+    /// 新增部门
     /// </summary>
-    /// <param name="model"></param>
+    /// <param name="model">部门实体对象</param>
     /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
     public async Task<ResultModel<bool>> AddDept(DeptRequestModel model)
     {
         var deptEntity = new sys_dept()
@@ -55,9 +54,8 @@ public class DeptService : RBACBaseService, IDeptService
     /// <summary>
     /// update the department info
     /// </summary>
-    /// <param name="model"></param>
+    /// <param name="model">部门实体对象</param>
     /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
     public async Task<ResultModel<bool>> UpdateDept(DeptRequestModel model)
     {
         var deptEntity = await _deptRepository.Select.Where(p => p.id.Equals(model.Id)).FirstAsync();
@@ -73,9 +71,8 @@ public class DeptService : RBACBaseService, IDeptService
     /// <summary>
     /// hard remove a department
     /// </summary>
-    /// <param name="deptId"></param>
+    /// <param name="deptId">部门唯一标识</param>
     /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
     public async Task<ResultModel<bool>> RemoveDept(string deptId)
     {
         var result = await ((SysDeptRepository)this._deptRepository).RemoveDeptAsync(deptId);
@@ -85,12 +82,15 @@ public class DeptService : RBACBaseService, IDeptService
     /// <summary>
     /// get the deptment list
     /// </summary>
-    /// <param name="queryParam"></param>
+    /// <param name="queryParam">部门查询条件实体</param>
     /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
     public async Task<ResultModel<List<DeptModel>>> GetDeptList([FromQuery] DeptListParam queryParam)
     {
-        var depts = await _deptRepository.Select.ToListAsync();
+        var depts = await _deptRepository.Select
+            .WhereIf(!queryParam.ContainDisabled, p => p.status == (int)Status.Enable)
+            .WhereIf(!string.IsNullOrWhiteSpace(queryParam.DeptName),p=>p.deptname.Contains(queryParam.DeptName))
+            .WhereIf(!string.IsNullOrWhiteSpace(queryParam.Status),p=>p.status == int.Parse(queryParam.Status))
+            .ToListAsync();
         var result = ToTree(this._mapper.Map<List<DeptModel>>(depts), RBACConst.C_ROOT_ID);
         return base.Success<List<DeptModel>>(result);
     }
@@ -98,8 +98,8 @@ public class DeptService : RBACBaseService, IDeptService
     /// <summary>
     /// 构建部门树
     /// </summary>
-    /// <param name="depts"></param>
-    /// <param name="parentId"></param>
+    /// <param name="depts">部门集合</param>
+    /// <param name="parentId">父部门编号</param>
     /// <returns></returns>
     private List<DeptModel> ToTree(List<DeptModel> depts, string parentId)
     {

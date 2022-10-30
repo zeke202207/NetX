@@ -26,8 +26,8 @@ namespace NetX.Tools.DatabaseSetup.InitData
                 .Row(new
                 {
                     id = "00000000000000000000000000000009",
-                    parentid = "00000000000000000000000000000000",
-                    name = "日志管理",
+                    parentid = "00000000000000000000000000000003",
+                    title = "日志管理",
                     path = "/log",
                     component = "/LAYOUT",
                     redirect = "",
@@ -35,16 +35,16 @@ namespace NetX.Tools.DatabaseSetup.InitData
                     meta = "{\"Title\":\"日志管理\",\"Icon\":\"ant-design:book-outlined\"}",
                     icon = "ant-design:book-outlined",
                     permission = "",
-                    orderno = 3,
+                    orderno = 6,
                 })
                 .Row(new
                 {
                     id = "00000000000000000000000000000010",
                     parentid = "00000000000000000000000000000009",
-                    name = "系统日志",
+                    title = "系统日志",
                     path = "syslogging",
                     component = "/logmanager/syslogging/index",
-                    meta = "{\"HideMenu\":false,\"Title\":\"系统日志\",\"HideBreadcrumb\":true,\"Icon\":\"ant-design:snippets-twotone\"}",
+                    meta = "{\"ignoreKeepAlive\":false,\"currentActiveMenu\":null,\"KeepAlive\":true,\"HideMenu\":false,\"Title\":\"系统日志\",\"HideBreadcrumb\":true,\"Icon\":\"ant-design:snippets-twotone\"}",
                     icon = "ant-design:snippets-twotone",
                     type = 1,
                     permission = "",
@@ -54,14 +54,27 @@ namespace NetX.Tools.DatabaseSetup.InitData
                 {
                     id = "00000000000000000000000000000011",
                     parentid = "00000000000000000000000000000009",
-                    name = "审计日志",
+                    title = "审计日志",
                     path = "auditlogging",
                     component = "/logmanager/auditlogging/index",
-                    meta = "{\"HideMenu\":false,\"Title\":\"审计日志\",\"HideBreadcrumb\":true,\"Icon\":\"ant-design:solution-outlined\"}",
+                    meta = "{\"ignoreKeepAlive\":false,\"currentActiveMenu\":null,\"KeepAlive\":true,\"HideMenu\":false,\"Title\":\"审计日志\",\"HideBreadcrumb\":true,\"Icon\":\"ant-design:solution-outlined\"}",
                     icon = "ant-design:solution-outlined",
                     type = 1,
                     permission = "",
                     orderno = 2,
+                })
+                .Row(new
+                {
+                    id = "00000000000000000000000000000012",
+                    parentid = "00000000000000000000000000000009",
+                    title = "登录日志",
+                    path = "loginlogging",
+                    component = "/logmanager/loginlogging/index",
+                    meta = "{\"ignoreKeepAlive\":false,\"currentActiveMenu\":null,\"KeepAlive\":true,\"HideMenu\":false,\"Title\":\"登录日志\",\"HideBreadcrumb\":true,\"Icon\":\"ant-design:solution-outlined\"}",
+                    icon = "ant-design:file-twotone",
+                    type = 1,
+                    permission = "",
+                    orderno = 3,
                 });
         }
 

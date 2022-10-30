@@ -15,7 +15,7 @@ public class SysUserRepository : BaseRepository<sys_user, string>
     /// <summary>
     /// 用户仓储对象实例
     /// </summary>
-    /// <param name="fsql"></param>
+    /// <param name="fsql">ORM实例</param>
     public SysUserRepository(IFreeSql fsql)
         : base(fsql, null, null)
     {
@@ -25,11 +25,11 @@ public class SysUserRepository : BaseRepository<sys_user, string>
     /// <summary>
     /// 获取用户列表
     /// </summary>
-    /// <param name="deptId"></param>
-    /// <param name="username"></param>
-    /// <param name="nickname"></param>
-    /// <param name="currentpage"></param>
-    /// <param name="pagesize"></param>
+    /// <param name="deptId">部门唯一标识</param>
+    /// <param name="username">用户名</param>
+    /// <param name="nickname">昵称</param>
+    /// <param name="currentpage">当前页码</param>
+    /// <param name="pagesize">每页大小</param>
     /// <returns></returns>
     public async Task<(IEnumerable<Tuple<sys_user, sys_role, sys_dept>> list,int total)> GetUserListAsync(string deptId, string username, string nickname, int currentpage, int pagesize)
     {
@@ -39,13 +39,13 @@ public class SysUserRepository : BaseRepository<sys_user, string>
             .LeftJoin((u, ur, ud, r, d) => ur.roleid == r.id)
             .LeftJoin((u, ur, ud, r, d) => ud.deptid == d.id)
             .Where((u, ur, ud, r, d) => ud.deptid == deptId)
-            .WhereIf(!string.IsNullOrWhiteSpace(username), (u, ur, ud, r, d) => u.username == username)
-            .WhereIf(!string.IsNullOrWhiteSpace(nickname), (u, ur, ud, r, d) => u.nickname == nickname)
+            .WhereIf(!string.IsNullOrWhiteSpace(username), (u, ur, ud, r, d) => u.username.Contains(username))
+            .WhereIf(!string.IsNullOrWhiteSpace(nickname), (u, ur, ud, r, d) => u.nickname.Contains(nickname))
             .Page(currentpage, pagesize)
             .ToListAsync((u, ur, ud, r, d) => new Tuple<sys_user, sys_role, sys_dept>(u, r, d));
         var total = await this._freeSql.Select<sys_user>()
-            .WhereIf(!string.IsNullOrWhiteSpace(username), (u) => u.username == username)
-            .WhereIf(!string.IsNullOrWhiteSpace(nickname), (u) => u.nickname == nickname)
+            .WhereIf(!string.IsNullOrWhiteSpace(username), (u) => u.username.Contains(username))
+            .WhereIf(!string.IsNullOrWhiteSpace(nickname), (u) => u.nickname.Contains(nickname))
             .CountAsync();
         return (list: result, total: (int)total);
     }
@@ -53,9 +53,9 @@ public class SysUserRepository : BaseRepository<sys_user, string>
     /// <summary>
     /// 新增用户信息
     /// </summary>
-    /// <param name="user"></param>
-    /// <param name="roleid"></param>
-    /// <param name="deptid"></param>
+    /// <param name="user">用户实体</param>
+    /// <param name="roleid">角色唯一标识</param>
+    /// <param name="deptid">部门唯一标识</param>
     /// <returns></returns>
     public async Task<bool> AddUserAsync(sys_user user, string? roleid, string? deptid)
     {
@@ -90,9 +90,9 @@ public class SysUserRepository : BaseRepository<sys_user, string>
     /// <summary>
     /// 更新用户信息
     /// </summary>
-    /// <param name="user"></param>
-    /// <param name="roleid"></param>
-    /// <param name="deptid"></param>
+    /// <param name="user">用户实体</param>
+    /// <param name="roleid">角色唯一标识</param>
+    /// <param name="deptid">部门唯一标识</param>
     /// <returns></returns>
     public async Task<bool> UpdateUserAsync(sys_user user, string? roleid, string? deptid)
     {
@@ -129,7 +129,7 @@ public class SysUserRepository : BaseRepository<sys_user, string>
     /// <summary>
     /// 删除用户信息
     /// </summary>
-    /// <param name="userId"></param>
+    /// <param name="userId">用户唯一标识</param>
     /// <returns></returns>
     public async Task<bool> RemoveUserAsync(string userId)
     {
@@ -159,38 +159,57 @@ public class SysUserRepository : BaseRepository<sys_user, string>
     /// <summary>
     /// 获取用户权限标识集合
     /// </summary>
-    /// <param name="userId"></param>
+    /// <param name="userId">用户唯一标识</param>
     /// <returns></returns>
     public async Task<List<string>> GetPremCodesAsync(string userId)
     {
-        var result = await this._freeSql.Select<sys_menu, sys_role_menu, sys_user_role>()
-            .LeftJoin((m, rm, ur) => m.id == rm.menuid)
-            .LeftJoin((m, rm, ur) => rm.roleid == ur.roleid)
-            .Where((m, rm, ur) => ur.userid.Equals(userId) && !string.IsNullOrWhiteSpace(m.permission))
-            .ToListAsync((m, rm, ur) => m.permission);
+        var result = await this._freeSql.Select<sys_menu, sys_role_menu, sys_user_role, sys_role>()
+            .LeftJoin((m, rm, ur, r) => m.id == rm.menuid)
+            .LeftJoin((m, rm, ur, r) => ur.roleid == r.id)
+            .LeftJoin((m, rm, ur, r) => rm.roleid == ur.roleid)
+            .Where((m, rm, ur, r) => ur.userid.Equals(userId)
+            && !string.IsNullOrWhiteSpace(m.permission)
+            && r.status == (int)Status.Enable)
+            .ToListAsync((m, rm, ur, r) => m.permission);
         return result;
     }
 
     /// <summary>
     /// 根据用户id获取api权限认证结果集合
     /// </summary>
-    /// <param name="userid"></param>
+    /// <param name="userid">用户唯一标识</param>
     /// <returns></returns>
     public async Task<(bool checkApi, List<string> apis)> GetApiPermCode(string userid)
     {
         var checkApiResult = await this._freeSql.Select<sys_user, sys_user_role, sys_role>()
             .LeftJoin((u, ur, r) => u.id == ur.userid)
             .LeftJoin((u, ur, r) => ur.roleid == r.id)
-            .Where((u, ur, r) => u.id.Equals(userid))
+            .Where((u, ur, r) => u.id.Equals(userid) && r.status == (int)Status.Enable)
             .FirstAsync((u, ur, r) => r);
         if (checkApiResult.apicheck == 0)
             return (checkApi: false, apis: new List<string>());
         var apisResult = await this._freeSql.Select<sys_role, sys_role_api, sys_api>()
             .LeftJoin((r, ra, a) => r.id == ra.roleid)
             .LeftJoin((r, ra, a) => a.id == ra.apiid)
-            .Where((r,ra,a)=>r.id.Equals(checkApiResult.id))
+            .Where((r,ra,a)=>r.id.Equals(checkApiResult.id) && r.status == (int)Status.Enable)
             .ToListAsync((r, ra, a) => a.path);
         return (checkApi: true, apis: apisResult);
+    }
+
+    /// <summary>
+    /// 根据用户id获取角色id
+    /// </summary>
+    /// <param name="userId">用户唯一标识</param>
+    /// <returns></returns>
+    public async Task<string> GetRoleId(string userId)
+    {
+        var userRole = await this._freeSql.Select<sys_user_role, sys_role>()
+            .LeftJoin((ur, r) => ur.roleid == r.id)
+            .Where((ur, r) => ur.userid.Equals(userId) && r.status == (int)Status.Enable)
+            .FirstAsync();
+        if (null == userRole)
+            return String.Empty;
+        return userRole.roleid;
     }
 }
 

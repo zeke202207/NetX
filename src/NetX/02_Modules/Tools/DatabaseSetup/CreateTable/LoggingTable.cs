@@ -31,7 +31,7 @@ namespace NetX.Tools.DatabaseSetup.CreateTable
               .WithColumn("elapsed").AsInt64().Nullable()
               .WithColumn("message").AsCustom("mediumtext").Nullable()
               .WithColumn("exception").AsCustom("mediumtext").Nullable()
-              .WithColumn("context").AsCustom("mediumtext").Nullable()
+              //.WithColumn("context").AsCustom("mediumtext").Nullable()
               .WithColumn("state").AsCustom("mediumtext").Nullable()
               .WithColumn("createtime").AsDateTime().WithDefaultValue(DateTime.Now);
         }

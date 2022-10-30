@@ -15,7 +15,7 @@ public class SysMenuRepository : BaseRepository<sys_menu, string>
     /// <summary>
     /// 菜单仓储对象实例
     /// </summary>
-    /// <param name="fsql"></param>
+    /// <param name="fsql">ORM实例</param>
     public SysMenuRepository(IFreeSql fsql)
         : base(fsql, null, null)
     {
@@ -25,21 +25,25 @@ public class SysMenuRepository : BaseRepository<sys_menu, string>
     /// <summary>
     /// 获取当前登录用户访问菜单集合
     /// </summary>
-    /// <param name="userId"></param>
+    /// <param name="userId">用户唯一标识</param>
     /// <returns></returns>
     public async Task<IEnumerable<sys_menu>> GetCurrentUserMenuListAsync(string userId)
     {
-        return await this._freeSql.Select<sys_menu, sys_role_menu, sys_user_role>()
-            .LeftJoin((m, rm, ur) => m.id == rm.menuid)
-            .LeftJoin((m, rm, ur) => rm.roleid == ur.roleid)
-            .Where((m, rm, ur) => ur.userid == userId && m.type != 2 && m.status == (int)Status.Enable)
+        return await this._freeSql.Select<sys_menu, sys_role_menu, sys_user_role, sys_role>()
+            .LeftJoin((m, rm, ur, r) => m.id == rm.menuid)
+            .LeftJoin((m, rm, ur, r) => rm.roleid == ur.roleid)
+            .LeftJoin((m, rm, ur, r) => ur.roleid == r.id)
+            .Where((m, rm, ur, r) => ur.userid == userId
+            && m.type != 2
+            && m.status == (int)Status.Enable
+            && r.status == (int)Status.Enable)
             .ToListAsync();
     }
 
     /// <summary>
     /// 删除菜单
     /// </summary>
-    /// <param name="menuIds"></param>
+    /// <param name="menuId">菜单唯一标识</param>
     /// <returns></returns>
     public async Task<bool> RemoveMenuAsync(string menuId)
     {

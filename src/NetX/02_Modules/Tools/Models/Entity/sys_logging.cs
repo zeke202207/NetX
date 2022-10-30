@@ -32,7 +32,7 @@ public class sys_logging : BaseEntity
     /// <summary>
     /// 
     /// </summary>
-    public string context { get; set; }
+    //public string context { get; set; }
     /// <summary>
     /// 
     /// </summary>

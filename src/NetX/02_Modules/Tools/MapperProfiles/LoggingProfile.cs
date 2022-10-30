@@ -21,6 +21,7 @@ public class LoggingProfile : Profile
     {
         CreateMap<LoggingModel, sys_logging>();
         CreateMap<AuditLoggingModel, sys_audit_logging>();
+        CreateMap<LoginLoggingModel, sys_login_logging>();
     }
 
     private void ToModel()
@@ -28,5 +29,6 @@ public class LoggingProfile : Profile
         CreateMap<sys_logging, LoggingModel>()
             .ForMember(dest => dest.Message, opt => opt.MapFrom(src => src.message));
         CreateMap<sys_audit_logging, AuditLoggingModel>();
+        CreateMap<sys_login_logging, LoginLoggingModel>();
     }
 }
