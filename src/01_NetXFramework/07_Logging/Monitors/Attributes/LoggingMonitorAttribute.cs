@@ -17,6 +17,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
 using System.Reflection;
 using System.Security.Claims;
 using System.Text;
@@ -144,7 +145,7 @@ public sealed class LoggingMonitorAttribute : Attribute, IAsyncActionFilter, IAc
         var localIPv4 = httpContext.GetLocalIpAddressToIPv4();
         writer.WriteString(nameof(localIPv4), localIPv4);
         // 获取客户端 IPv4 地址
-        var remoteIPv4 = httpContext.GetRemoteIpAddressToIPv4();
+        var remoteIPv4 = GetRealRemoteIp(httpContext);
         writer.WriteString(nameof(remoteIPv4), remoteIPv4);
         // 获取请求方式
         var httpMethod = httpContext.Request.Method;
@@ -232,6 +233,21 @@ public sealed class LoggingMonitorAttribute : Attribute, IAsyncActionFilter, IAc
             logger.LogInformation(finalMessage);
         else
             logger.LogError(exception, finalMessage);
+    }
+
+    /// <summary>
+    /// 获取客户端真实ip地址
+    /// </summary>
+    /// <param name="httpContext"></param>
+    /// <returns></returns>
+    private string GetRealRemoteIp(HttpContext httpContext)
+    {
+        if(null == httpContext)
+            return string.Empty;
+        var ip = httpContext.Request.Headers["X-Forwarded-For"].FirstOrDefault();
+        if (string.IsNullOrWhiteSpace(ip))
+            return httpContext.GetRemoteIpAddressToIPv4();
+        return ip;
     }
 
     /// <summary>

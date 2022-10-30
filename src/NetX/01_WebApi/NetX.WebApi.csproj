@@ -64,7 +64,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="data\ip2region.xdb">
+    <None Update="Data\ip2region.xdb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
