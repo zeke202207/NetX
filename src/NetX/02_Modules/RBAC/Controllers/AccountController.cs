@@ -134,4 +134,17 @@ public class AccountController : RBACBaseController
     {
         return await _accoutService.RemoveDept(param.Id);
     }
+
+    /// <summary>
+    /// 修改密码
+    /// </summary>
+    /// <param name="model"></param>
+    /// <returns></returns>
+    [Audit]
+    [ApiActionDescription("修改密码")]
+    [HttpPost]
+    public async Task<ResultModel<bool>> ChangePassword(ChangePwdRequestModel model)
+    {
+        return await _accoutService.ChangePassword(TenantContext.CurrentTenant.Principal?.UserId ?? string.Empty, model);
+    }
 }

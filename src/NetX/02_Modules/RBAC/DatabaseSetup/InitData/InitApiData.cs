@@ -102,6 +102,16 @@ namespace NetX.RBAC.DatabaseSetup.InitData
                     method= "DELETE",
                     description="删除用户"
                 })
+                .Row(new
+                {
+                    id = "10000000000000000000000000000009",
+                    path = "/api/account/changepassword",
+                    group = "account",
+                    method = "POST",
+                    description = "修改登录用户密码"
+                })
+
+
             #endregion
 
             #region dept

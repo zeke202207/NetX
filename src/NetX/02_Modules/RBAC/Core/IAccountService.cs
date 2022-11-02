@@ -71,4 +71,12 @@ public interface IAccountService
     /// <param name="userid">用户唯一标识</param>
     /// <returns></returns>
     Task<ResultModel<ApiPermissionModel>> GetApiPermCode(string userid);
+
+    /// <summary>
+    /// 修改免密
+    /// </summary>
+    /// <param name="userId">登录用户唯一标识</param>
+    /// <param name="model">密码信息</param>
+    /// <returns></returns>
+    Task<ResultModel<bool>> ChangePassword(string userId, ChangePwdRequestModel model);
 }

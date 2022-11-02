@@ -53,7 +53,7 @@ public class AccountService : RBACBaseService, IAccountService
     {
         //1. 数据库查询账号
         var user = await this._userRepository.Select.Where(p => p.username.Equals(username)).FirstAsync<sys_user>();
-        if (null == user || _encryption.Encryption(password).ToLower().Equals(user.password))
+        if (null == user || !_encryption.Encryption(password).ToUpper().Equals(user.password.ToUpper()))
             return base.Error<LoginResult>("用户名或密码错误");
         var userInfo = this._mapper.Map<UserModel>(user);
         var userRoleId = await GetRoleId(userInfo.Id);
@@ -251,5 +251,25 @@ public class AccountService : RBACBaseService, IAccountService
             Apis = checkResult.apis
         };
         return base.Success<ApiPermissionModel>(result);
+    }
+
+    /// <summary>
+    /// 修改用户密码
+    /// </summary>
+    /// <param name="userId">登录用户唯一标识</param>
+    /// <param name="model">密码实体对象</param>
+    /// <returns></returns>
+    public async Task<ResultModel<bool>> ChangePassword(string userId, ChangePwdRequestModel model)
+    {
+        //1. 验证有效性
+        if (string.IsNullOrWhiteSpace(userId) || string.IsNullOrWhiteSpace(model.OldPassword) || string.IsNullOrWhiteSpace(model.NewPassword))
+            return base.Error<bool>("用户不存在或密码为空");
+        //2. 获取数据库密码
+        var userEntity = await _userRepository.Select.Where(p => p.id.Equals(userId)).FirstAsync();
+        if (null == userEntity || userEntity.password.ToUpper() != _encryption.Encryption(model.OldPassword).ToUpper())
+            return base.Error<bool>("密码不匹配");
+        userEntity.password = _encryption.Encryption(model.NewPassword);
+        await _userRepository.InsertOrUpdateAsync(userEntity);
+        return base.Success<bool>(true);
     }
 }
