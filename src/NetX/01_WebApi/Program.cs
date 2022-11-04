@@ -16,3 +16,5 @@ ServerHost.Start(
     })
     , "http://*:8220"
     );
+
+public partial class Program { }
