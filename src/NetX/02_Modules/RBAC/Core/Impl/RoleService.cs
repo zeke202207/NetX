@@ -71,7 +71,8 @@ public class RoleService : RBACBaseService, IRoleService
             createtime = base.CreateInsertTime(),
             rolename = model.RoleName,
             status = int.Parse(model.Status),
-            remark = model.Remark ?? ""
+            remark = model.Remark ?? "",
+            apicheck = int.Parse(model.ApiCheck)
         };
         var result = await ((SysRoleRepository)_roleRepository).AddRoleAsync(roleEntity, model.ToMenuList());
         return base.Success<bool>(result);
@@ -89,6 +90,7 @@ public class RoleService : RBACBaseService, IRoleService
         roleEntity.rolename = model.RoleName;
         roleEntity.status = int.Parse(model.Status);
         roleEntity.remark = model.Remark ?? string.Empty;
+        roleEntity.apicheck = int.Parse(model.ApiCheck);
         var result = await ((SysRoleRepository)_roleRepository).UpdateRoleAsync(roleEntity, model.ToMenuList());
         await RefreshPermissionApiCache(model.Id);
         return base.Success<bool>(result);

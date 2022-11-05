@@ -25,6 +25,11 @@ public class RoleRequestModel
     /// <summary>
     /// 
     /// </summary>
+    [JsonProperty("apicheck")]
+    public string ApiCheck { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
     [JsonProperty("remark")]
     public string? Remark { get; set; }
     /// <summary>
