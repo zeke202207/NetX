@@ -115,6 +115,19 @@ public class InitMenuData : InitDataMigration
                 type = (int)MenuType.Menu,
                 permission = "",
                 orderno = 5,
+            })
+            .Row(new
+            {
+                id = "00000000000000000000000000000010",
+                parentid = "00000000000000000000000000000003",
+                title = "个人设置",
+                path = "Setting",
+                component = "/systemmanager/account/setting/index",
+                meta = "{\"ignoreKeepAlive\":false,\"currentActiveMenu\":null,\"KeepAlive\":true,\"HideMenu\":true,\"Title\":\"个人设置\",\"HideBreadcrumb\":true,\"Icon\":\"ant-design:user-outlined\"}",
+                icon = "ant-design:user-outlined",
+                type = (int)MenuType.Menu,
+                permission = "",
+                orderno = 6,
             });
     }
 
