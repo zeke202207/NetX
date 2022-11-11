@@ -15,7 +15,7 @@ namespace NetX.Tools;
 /// </summary>
 internal class ToolsInitializer : ModuleInitializer
 {
-    public override Guid Key => new Guid(ToolsConstEnum.C_LOGGING_KEY);
+    public override Guid Key => new Guid(ToolsConstEnum.C_TOOLS_KEY);
 
     public override ModuleType ModuleType => ModuleType.UserModule;
 

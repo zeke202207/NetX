@@ -31,6 +31,7 @@
     <Content Include="..\..\01_NetXFramework\01_App\config\tenants.json" Link="config\tenants.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="..\02_Modules\FileServer\config\fileserver.json" Link="config\fileserver.json" />
     <Content Include="..\02_Modules\RBAC\modules\systemmanager\plugin.json" Link="modules\systemmanager\plugin.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

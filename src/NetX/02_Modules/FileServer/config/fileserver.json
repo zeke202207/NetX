@@ -1,0 +1,20 @@
+{
+  "fileserver": {
+    "limitedsize": 10, // 单位 M
+    "supportedext": ".jpg;.jpeg;.png"
+  },
+  "localstore": {
+    "rootpath": "E:\\Dev Temp\\FileStore",
+    "requestpath": "/zeke",
+    "minetype": [
+      {
+        "key": ".m3u8",
+        "value": "application/x-mpegURL"
+      },
+      {
+        "key": ".3gp",
+        "value": "video/3gpp"
+      }
+    ]
+  }
+}
