@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Net.Http.Json;
 using System.Text;
@@ -13,41 +14,38 @@ namespace NetX.WebApi.Testing
     {
         private readonly Microsoft.AspNetCore.TestHost.TestServer _server;
 
-        protected IntegrationTestsConfiguration Configuration { get; }
-        protected HttpClient Client { get; }
+        protected HttpClient _client { get; }
 
         public TestBase(IntegrationTestsFactory<Program> factory)
         {
             _server = factory.Server;
-
-            Client = factory.CreateClient();
-            Configuration = factory.IntegrationTestsConfiguration;
-            AuthorizeClientWithFakeJwt(Client, factory.IntegrationTestsConfiguration);
+            _client = factory.CreateClient();
+            GetToken().GetAwaiter().GetResult();
         }
 
-        private void AuthorizeClientWithFakeJwt(HttpClient client, IntegrationTestsConfiguration configuration)
+        private async Task GetToken()
         {
-            //dynamic bearer = new ExpandoObject();
-            //bearer.sub = configuration.UserIdentifier;
-            //bearer.oid = configuration.UserIdentifier;
-            //bearer.email = configuration.UserEmail;
-            //bearer.name = configuration.UserName;
-
-            //client.SetFakeBearerToken((object)bearer);
+            var result = await PostRequest("api/account/login", JsonContent.Create(new { username = "zeke", password = "123456" }));
+            if (result.Value<string>("code") == "0")
+                await SetToken(result.GetValue("result").Value<string>("token"));
         }
 
-        //protected async Task ArrangeDatabaseAsync(Action<DataContext> action)
-        //{
-        //    await using var context = _server.Services.GetService<DataContext>();
-
-        //    action(context);
-
-        //    context.SaveChanges();
-        //}
-
-        protected async Task<JObject> Request(string api, JsonContent jsonParam)
+        protected async Task SetToken(string token)
         {
-            var response = await Client.PostAsync(api, jsonParam);
+            _client.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
+            await Task.CompletedTask;
+        }
+
+        protected async Task<JObject> PostRequest(string api, JsonContent jsonParam)
+        {
+            var response = await _client.PostAsync(api, jsonParam);
+            var strResult = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<JObject>(strResult);
+        }
+
+        protected async Task<JObject> GetResuest(string api)
+        {
+            var response = await _client.GetAsync(api);
             var strResult = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<JObject>(strResult);
         }

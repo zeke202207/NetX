@@ -18,15 +18,22 @@ namespace NetX.WebApi.Testing.RBAC
         [Fact]
         public async Task LoginSuccessTest()
         {
-            var result = await base.Request("api/account/login", JsonContent.Create(new { username = "zeke", password = "123456" }));
+            var result = await base.PostRequest("api/account/login", JsonContent.Create(new { username = "zeke", password = "123456" }));
             Assert.True(result.Value<string>("code") == "0");
         }
 
         [Fact]
         public async Task LoginErrorTest()
         {
-            var result = await base.Request("api/account/login", JsonContent.Create(new { username = "zeke1", password = "123456" }));
+            var result = await base.PostRequest("api/account/login", JsonContent.Create(new { username = "zeke1", password = "123456" }));
             Assert.True(result.Value<string>("code") == "-1");
+        }
+
+        [Fact]
+        public async Task GetUserInfoTest()
+        {
+            var result = await base.GetResuest("api/account/getuserinfo");
+            Assert.True(result.Value<string>("code") == "0");
         }
     }
 
