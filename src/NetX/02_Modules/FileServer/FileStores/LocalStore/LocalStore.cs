@@ -65,34 +65,34 @@ public class LocalStore : IFileStore
     /// <summary>
     /// 保存文件
     /// </summary>
-    /// <param name="fileName">上传文件名</param>
+    /// <param name="uploadInfo">上传文件名</param>
     /// <param name="buffer">文件数组</param>
     /// <returns></returns>
-    public async Task<UploadResult> WriteToFile(string fileName, byte[] buffer)
+    public async Task<UploadResult> WriteToFile(UploadInfo uploadInfo, byte[] buffer)
     {
-        return await Write(fileName, buffer);
+        return await Write(uploadInfo, buffer);
     }
 
     /// <summary>
     /// 保存文件
     /// </summary>
-    /// <param name="fileName">上传文件名</param>
+    /// <param name="uploadInfo">上传文件名</param>
     /// <param name="buffer">文件数组</param>
     /// <returns></returns>
-    public async Task<UploadResult> WriteToFile(string fileName, Memory<byte> buffer)
+    public async Task<UploadResult> WriteToFile(UploadInfo uploadInfo, Memory<byte> buffer)
     {
-        return await Write(fileName, buffer.ToArray());
+        return await Write(uploadInfo, buffer.ToArray());
     }
 
     /// <summary>
     /// 保存文件到本地
     /// </summary>
-    /// <param name="fileName">文件名</param>
+    /// <param name="uploadInfo">文件名</param>
     /// <param name="buffer">文件数组</param>
     /// <returns></returns>
-    private async Task<UploadResult> Write(string fileName, byte[] buffer)
+    private async Task<UploadResult> Write(UploadInfo uploadInfo, byte[] buffer)
     {
-        var filePath = GetFileName(fileName);
+        var filePath = GetFileName(uploadInfo);
         var fullPath = Path.Combine(_storeConfig.RootPath, filePath);
         var dir = Path.GetDirectoryName(fullPath);
         if (!Directory.Exists(dir))
@@ -110,10 +110,19 @@ public class LocalStore : IFileStore
     /// 生成保存文件名
     /// </summary>
     /// <returns></returns>
-    private string GetFileName(string fileName)
+    private string GetFileName(UploadInfo uploadInfo)
     {
-        var ext = Path.GetExtension(fileName);
+        var tenantId = uploadInfo.TenantId;
+        if (string.IsNullOrWhiteSpace(tenantId))
+            tenantId = "netx";
+        var ext = Path.GetExtension(uploadInfo.OrgFileName);
         var date = DateTime.Now;
-        return Path.Combine(date.ToString("yyyy"), date.ToString("MM"), Guid.NewGuid().ToString("N")) + ext;
+        return Path.Combine(
+            uploadInfo.TenantId.ToLower(), 
+            uploadInfo.FileType.ToString().ToLower(), 
+            date.ToString("yyyy"), 
+            date.ToString("MM"), 
+            Guid.NewGuid().ToString("N").ToLower()) 
+            + ext;
     }
 }

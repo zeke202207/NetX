@@ -39,3 +39,29 @@ public enum ValidateResult
     /// </summary>
     EfficientType
 }
+
+/// <summary>
+/// 文件类型
+/// </summary>
+public enum FileType : int
+{
+    /// <summary>
+    /// 图片
+    /// </summary>
+    Image = 0,
+
+    /// <summary>
+    /// 音频
+    /// </summary>
+    Audio,
+
+    /// <summary>
+    /// 视频
+    /// </summary>
+    Video,
+
+    /// <summary>
+    /// 其他
+    /// </summary>
+    Others,
+}

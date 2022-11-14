@@ -29,6 +29,10 @@ public class TenantContextFilter : BaseFilter, IAuthorizationFilter, IAsyncAutho
         _migrationService = migrationService;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="context"></param>
     public void OnAuthorization(AuthorizationFilterContext context)
     {
         var identity = context.HttpContext.User.Identity as ClaimsIdentity;

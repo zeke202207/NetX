@@ -38,22 +38,23 @@ public interface IUploader
     /// <summary>
     /// 上传单文件
     /// </summary>
-    /// <param name="file">上传文件</param>
+    /// <param name="uploadInfo">文件类型</param>
     /// <returns></returns>
-    Task<UploadResult> Upload(IFormFile file);
+    Task<UploadResult> Upload(UploadInfo uploadInfo);
 
     /// <summary>
     /// 上传多文件
     /// </summary>
-    /// <param name="files">上传文件集合</param>
+    /// <param name="uploadInfos">文件类型</param>
     /// <returns></returns>
-    Task<IEnumerable<UploadResult>> Upload(IFormFileCollection files);
+    Task<IEnumerable<UploadResult>> Upload(IEnumerable<UploadInfo> uploadInfos);
 
     /// <summary>
     /// 上传大文件
     /// </summary>
     /// <param name="contentType">请求内容类型: 必须 multipart/ 开头</param>
     /// <param name="httpRequestBody">请求body</param>
+    /// <param name="uploadInfo">文件类型</param>
     /// <returns></returns>
-    Task<UploadResult> Upload(string contentType, Stream httpRequestBody);
+    Task<UploadResult> Upload(string contentType, Stream httpRequestBody, UploadInfo uploadInfo);
 }

@@ -67,27 +67,27 @@ public class UploadHandler : IUploader
     /// <summary>
     /// 上传单文件
     /// </summary>
-    /// <param name="file">上传文件</param>
+    /// <param name="uploadInfo">文件类型</param>
     /// <returns></returns>
-    public async Task<UploadResult> Upload(IFormFile file)
+    public async Task<UploadResult> Upload(UploadInfo uploadInfo)
     {
-        using (var stream = file.OpenReadStream())
+        using (var stream = uploadInfo.FormFile.OpenReadStream())
         {
-            Memory<byte> buffer = new Memory<byte>(new byte[file.Length]);
+            Memory<byte> buffer = new Memory<byte>(new byte[uploadInfo.FormFile.Length]);
             await stream.ReadAsync(buffer);
-            return await IFormFileUpload(buffer, file.FileName);
+            return await IFormFileUpload(buffer, uploadInfo);
         }
     }
 
     /// <summary>
     /// 上传多文件
     /// </summary>
-    /// <param name="files">上传文件集合</param>
+    /// <param name="uploadInfos">文件类型</param>
     /// <returns></returns>
-    public async Task<IEnumerable<UploadResult>> Upload(IFormFileCollection files)
+    public async Task<IEnumerable<UploadResult>> Upload(IEnumerable<UploadInfo> uploadInfos)
     {
         List<UploadResult> result = new List<UploadResult>();
-        foreach (var item in files)
+        foreach (var item in uploadInfos)
             result.Add(await Upload(item));
         return result;
     }
@@ -97,8 +97,9 @@ public class UploadHandler : IUploader
     /// </summary>
     /// <param name="contentType">请求内容类型: 必须 multipart/ 开头</param>
     /// <param name="httpRequestBody">请求body</param>
+    /// <param name="uploadInfo">文件类型</param>
     /// <returns></returns>
-    public Task<UploadResult> Upload(string contentType, Stream httpRequestBody)
+    public Task<UploadResult> Upload(string contentType, Stream httpRequestBody, UploadInfo uploadInfo)
     {
         throw new NotImplementedException();
     }
@@ -124,10 +125,10 @@ public class UploadHandler : IUploader
     /// IFormFile方式上传
     /// </summary>
     /// <param name="buffer">文件流</param>
-    /// <param name="fileName">原始文件名</param>
+    /// <param name="uploadInfo">原始文件名</param>
     /// <returns></returns>
-    private async Task<UploadResult> IFormFileUpload(Memory<byte> buffer, string fileName)
+    private async Task<UploadResult> IFormFileUpload(Memory<byte> buffer, UploadInfo uploadInfo)
     {
-        return await _fileService.WriteToFile(fileName, buffer);
+        return await _fileService.WriteToFile(uploadInfo, buffer);
     }
 }

@@ -11,10 +11,13 @@ ServerHost.Start(
     .ConfigApplication(app =>
     {
         //1.多租户
-        app.UseMultiTenancy()
-           .UserTenancyDatabase();
+        app.UseMultiTenancy();
     })
     , "http://*:8220"
     );
 
+/// <summary>
+/// 声明progrom类
+/// 主要用于接口mock测试
+/// </summary>
 public partial class Program { }

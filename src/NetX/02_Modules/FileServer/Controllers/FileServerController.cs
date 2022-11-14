@@ -2,8 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using NetX.Authentication.Core;
 using NetX.Common.Models;
+using NetX.FileServer.Model;
 using NetX.Logging.Monitors;
 using NetX.Swagger;
+using NetX.Tenants;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,18 +34,52 @@ namespace NetX.FileServer.Controllers
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="file"></param>
+        /// <param name="slug">文件类型</param>
         /// <returns></returns>
-        [ApiActionDescription("测试")]
+        [ApiActionDescription("上传文件")]
         [NoPermission]
         [SuppressMonitor]
-        [HttpPost]
-        public async Task<ResultModel<bool>> TestUpload(IFormFile file)
+        [HttpPost("/netx/upload/{slug}")]
+        public async Task<ResultModel<UploadResult>> Upload(IFormFile file, int slug)
         {
             var validateResult = this._uploader.Validate(file);
             if (validateResult != ValidateResult.Success)
-                return new ResultModel<bool>(ResultEnum.ERROR);
-            await this._uploader.Upload(file);
-            return await Task.FromResult(new ResultModel<bool>(ResultEnum.SUCCESS));
-        }        
+                return new ResultModel<UploadResult>(ResultEnum.ERROR);
+            var uploadResult = await this._uploader.Upload(new UploadInfo()
+            {
+                TenantId = TenantContext.CurrentTenant.Principal?.Tenant.TenantId ?? String.Empty,
+                FileType = (FileType)slug,
+                OrgFileName = file.FileName,
+                FormFile = file
+            });
+            return await Task.FromResult(new ResultModel<UploadResult>(ResultEnum.SUCCESS) { Result = uploadResult });
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="file"></param>
+        /// <param name="slug">文件类型</param>
+        /// <returns></returns>
+        [ApiActionDescription("批量上传文件")]
+        [NoPermission]
+        [SuppressMonitor]
+        [HttpPost("/netx/uploadbatch/{slug}")]
+        public async Task<ResultModel<List<UploadResult>>> UploadBatch(IFormFileCollection file, int slug)
+        {
+            var validateResult = this._uploader.Validate(file);
+            if (validateResult != ValidateResult.Success)
+                return new ResultModel<List<UploadResult>>(ResultEnum.ERROR);
+            var uploadInfos = file.Select(p => new UploadInfo()
+            {
+                TenantId = TenantContext.CurrentTenant.Principal?.Tenant.TenantId ?? String.Empty,
+                FileType = (FileType)slug,
+                OrgFileName = p.FileName,
+                FormFile = p
+            });
+            var uploadResult = await this._uploader.Upload(uploadInfos);
+            return await Task.FromResult(new ResultModel<List<UploadResult>>(ResultEnum.SUCCESS) { Result = uploadResult?.ToList() });
+        }
     }
 }

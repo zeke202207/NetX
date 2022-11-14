@@ -15,18 +15,18 @@ public interface IFileStore
     /// <summary>
     /// 保存文件
     /// </summary>
-    /// <param name="fileName">上传文件名</param>
+    /// <param name="uploadInfo">上传文件名</param>
     /// <param name="buffer">文件数组</param>
     /// <returns></returns>
-    Task<UploadResult> WriteToFile(string fileName ,byte[] buffer);
+    Task<UploadResult> WriteToFile(UploadInfo uploadInfo , byte[] buffer);
 
     /// <summary>
     /// 保存文件
     /// </summary>
-    /// <param name="fileName">上传文件名</param>
+    /// <param name="uploadInfo">上传文件名</param>
     /// <param name="buffer">文件数组</param>
     /// <returns></returns>
-    Task<UploadResult> WriteToFile(string fileName, Memory<byte> buffer);
+    Task<UploadResult> WriteToFile(UploadInfo uploadInfo, Memory<byte> buffer);
 
     /// <summary>
     /// 文件是否存在
