@@ -17,8 +17,8 @@
     <Folder Include="config\" />
     <Folder Include="modules\admintools\ref\" />
     <Folder Include="modules\systemmanager\ref\" />
+    <Folder Include="modules\fileserver\ref\" />
     <Folder Include="config\" />
-    <Folder Include="modules\systemmanager\ref\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -32,6 +32,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\02_Modules\FileServer\config\fileserver.json" Link="config\fileserver.json" />
+    <Content Include="..\02_Modules\FileServer\modules\fileserver\plugin.json" Link="modules\fileserver\plugin.json" />
+    <Content Include="..\02_Modules\FileServer\modules\fileserver\ref\readme.txt" Link="modules\fileserver\ref\readme.txt" />
     <Content Include="..\02_Modules\RBAC\modules\systemmanager\plugin.json" Link="modules\systemmanager\plugin.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
