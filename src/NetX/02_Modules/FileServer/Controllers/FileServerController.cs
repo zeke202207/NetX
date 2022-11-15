@@ -1,16 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Net.Http.Headers;
 using NetX.Authentication.Core;
 using NetX.Common.Models;
 using NetX.FileServer.Model;
 using NetX.Logging.Monitors;
 using NetX.Swagger;
 using NetX.Tenants;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetX.FileServer.Controllers
 {
@@ -18,7 +14,7 @@ namespace NetX.FileServer.Controllers
     /// 
     /// </summary>
     [ApiControllerDescription(FileServerConstEnum.C_FILESERVER_GROUPNAME, Description = "NetX实现的文件系统模块")]
-    public class FileServerController: BaseController
+    public class FileServerController : BaseController
     {
         private readonly IUploader _uploader;
 
@@ -32,7 +28,7 @@ namespace NetX.FileServer.Controllers
         }
 
         /// <summary>
-        /// 
+        /// 上传文件
         /// </summary>
         /// <param name="file"></param>
         /// <param name="slug">文件类型</param>
@@ -46,7 +42,7 @@ namespace NetX.FileServer.Controllers
             var validateResult = this._uploader.Validate(file);
             if (validateResult != ValidateResult.Success)
                 return new ResultModel<UploadResult>(ResultEnum.ERROR);
-            var uploadResult = await this._uploader.Upload(new UploadInfo()
+            var uploadResult = await this._uploader.Upload(new IFormUploadInfo()
             {
                 TenantId = TenantContext.CurrentTenant.Principal?.Tenant.TenantId ?? String.Empty,
                 FileType = (FileType)slug,
@@ -57,7 +53,7 @@ namespace NetX.FileServer.Controllers
         }
 
         /// <summary>
-        /// 
+        /// 批量上传文件
         /// </summary>
         /// <param name="file"></param>
         /// <param name="slug">文件类型</param>
@@ -71,7 +67,7 @@ namespace NetX.FileServer.Controllers
             var validateResult = this._uploader.Validate(file);
             if (validateResult != ValidateResult.Success)
                 return new ResultModel<List<UploadResult>>(ResultEnum.ERROR);
-            var uploadInfos = file.Select(p => new UploadInfo()
+            var uploadInfos = file.Select(p => new IFormUploadInfo()
             {
                 TenantId = TenantContext.CurrentTenant.Principal?.Tenant.TenantId ?? String.Empty,
                 FileType = (FileType)slug,

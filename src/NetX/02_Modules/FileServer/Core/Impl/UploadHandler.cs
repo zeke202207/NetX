@@ -54,22 +54,11 @@ public class UploadHandler : IUploader
     }
 
     /// <summary>
-    /// 大文件验证
-    /// </summary>
-    /// <param name="contentType">请求内容类型: 必须 multipart/ 开头</param>
-    /// <param name="httpRequestBody">请求body</param>
-    /// <returns></returns>
-    public ValidateResult Validate(string contentType, Stream httpRequestBody)
-    {
-        throw new NotImplementedException();
-    }
-
-    /// <summary>
     /// 上传单文件
     /// </summary>
     /// <param name="uploadInfo">文件类型</param>
     /// <returns></returns>
-    public async Task<UploadResult> Upload(UploadInfo uploadInfo)
+    public async Task<UploadResult> Upload(IFormUploadInfo uploadInfo)
     {
         using (var stream = uploadInfo.FormFile.OpenReadStream())
         {
@@ -84,24 +73,12 @@ public class UploadHandler : IUploader
     /// </summary>
     /// <param name="uploadInfos">文件类型</param>
     /// <returns></returns>
-    public async Task<IEnumerable<UploadResult>> Upload(IEnumerable<UploadInfo> uploadInfos)
+    public async Task<IEnumerable<UploadResult>> Upload(IEnumerable<IFormUploadInfo> uploadInfos)
     {
         List<UploadResult> result = new List<UploadResult>();
         foreach (var item in uploadInfos)
             result.Add(await Upload(item));
         return result;
-    }
-
-    /// <summary>
-    /// 上传大文件
-    /// </summary>
-    /// <param name="contentType">请求内容类型: 必须 multipart/ 开头</param>
-    /// <param name="httpRequestBody">请求body</param>
-    /// <param name="uploadInfo">文件类型</param>
-    /// <returns></returns>
-    public Task<UploadResult> Upload(string contentType, Stream httpRequestBody, UploadInfo uploadInfo)
-    {
-        throw new NotImplementedException();
     }
 
     /// <summary>

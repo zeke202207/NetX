@@ -37,7 +37,12 @@ public enum ValidateResult
     /// <summary>
     /// 文件类型无效
     /// </summary>
-    EfficientType
+    EfficientType,
+
+    /// <summary>
+    /// 不支持的上传类型
+    /// </summary>
+    UnSupportType,
 }
 
 /// <summary>

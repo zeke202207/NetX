@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\01_NetXFramework\01_App\NetX.App.csproj" />
     <ProjectReference Include="..\..\..\01_NetXFramework\02_Module\NetX.Module.csproj" />
     <ProjectReference Include="..\..\..\01_NetXFramework\06_Authentication\Authentication.Core\NetX.Authentication.Core.csproj" />
     <ProjectReference Include="..\..\..\01_NetXFramework\07_Logging\NetX.Logging.csproj" />

@@ -1,6 +1,6 @@
 {
   "fileserver": {
-    "limitedsize": 10, // 单位 M
+    "limitedsize": 20, // 单位 M
     "supportedext": ".jpg;.jpeg;.png"
   },
   "localstore": {

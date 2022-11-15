@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -78,9 +80,14 @@ public class FileServerInitializer : ModuleInitializer
     /// <param name="context"></param>
     public override void ConfigureServices(IServiceCollection services, IWebHostEnvironment env, ModuleContext context)
     {
+        //上传最大限制 单位 M
+        //最大值 20M 更大文件建议使用断点续传方式
+        var maxLimitedSize = context.Configuration.GetValue<long>("fileserver:limitedsize") * 1024 * 1024;
+        if (maxLimitedSize > 20 * 1024 * 1024)
+            maxLimitedSize = 20 * 1024 * 1024;
         services.AddFileServer(() => new FileServerConfig()
         {
-            LimitedSize = context.Configuration.GetValue<long>("fileserver:limitedsize") * 1024 * 1024,
+            LimitedSize = maxLimitedSize,
             SupportedExt = context.Configuration.GetValue<string>("fileserver:supportedext").Split(';')
         },
         s =>
@@ -97,6 +104,17 @@ public class FileServerInitializer : ModuleInitializer
             s.AddScoped<IFileStore, LocalStore>();
             s.AddScoped<LocalStoreConfig>(p => localStoreConfig);
             UseFileServer = () => localStoreConfig;
+        });
+
+        //设置服务上传文件大小限制
+        services.Configure<FormOptions>(x =>
+        {
+            x.MultipartBodyLengthLimit = maxLimitedSize;
+            x.ValueLengthLimit = int.MaxValue;
+        });
+        services.Configure<KestrelServerOptions>(options =>
+        {
+            options.Limits.MaxRequestBodySize = maxLimitedSize;
         });
     }
 }

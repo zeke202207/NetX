@@ -26,10 +26,5 @@ namespace NetX.FileServer.Model
         /// 原始文件名
         /// </summary>
         public string OrgFileName { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public IFormFile FormFile { get; set; }
     }
 }
