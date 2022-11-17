@@ -31,41 +31,29 @@ public static class ServerHost
         var builder = null == options.Options ?
             WebApplication.CreateBuilder(args) :
             WebApplication.CreateBuilder(options.Options);
-        var configPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, AppConst.C_APP_CONFIG_FILE_NAME);
-        foreach (var configFile in Directory.EnumerateFiles(configPath, AppConst.C_APP_JSON_FILE))
-            builder.Configuration.AddJsonFile(configFile);
-        InternalApp.Configuration = builder.Configuration;
-        // 添加自定义配置
-        //builder.Configuration.AddJsonFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config", "netx.json"));
-        options.ActionConfigrationManager?.Invoke(builder.Configuration);
-        options.Builder = builder;
+        builder.AddConfiguration(options);
         var startUrls = !string.IsNullOrWhiteSpace(urls) ?
             urls :
             builder.Configuration[nameof(urls)];
         if (!string.IsNullOrWhiteSpace(startUrls))
             builder.WebHost.UseUrls(startUrls);
-        //注入系统、用户模块
+        //注入系统服务
         builder.InjectFrameworkService(builder.Environment, builder.Configuration);
-        // 注册服应用务组件
+        //注入配置服务
         options.ActionServiceCollection?.Invoke(builder.Services, builder.Configuration);
+        //注入用户模块服务
         builder.InjectUserModulesService(options.Modules, builder.Environment, builder.Configuration);
-        //所有模块数据库迁移配置完毕，注入数据库迁移
-        builder.Services.BuildFluentMigrator();
-        //Cache
-        builder.Services.AddCaches();
+        builder.InjectServiceFinally();
         var app = builder.Build();
-        //路由
-        app.UseRouting();
-        options.App = app;
-        // 注册系统、应用中间件组件
+        //注册系统中间件组件
         app.InjectFrameworkApplication(builder.Environment);
+        //注册配置中间件组件
         options.ActionConfigure?.Invoke(app);
+        //注册应用中间件组件
         app.InjectUserModulesApplication(options.Modules, builder.Environment);
+        app.InjectApplicationFinally();
+        options.App = app;
         InternalApp.RootServices = app.Services;
-        app.UseAuthentication();
-        app.UseAuthorization();
-        //配置端点
-        app.UseEndpoints(endpoints => endpoints.MapControllers());
         ServiceLocator.Instance = app.Services;
         app.Run();
     }
