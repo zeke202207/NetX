@@ -61,7 +61,7 @@ public class InitRoleMenuData : InitDataMigration
             .Row(new
             {
                 roleid = "00000000000000000000000000000001",
-                menuid = "00000000000000000000000000000010"
+                menuid = "00000000000000000000000000000013"
             });
     }
 

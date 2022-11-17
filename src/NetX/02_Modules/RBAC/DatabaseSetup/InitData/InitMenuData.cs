@@ -118,7 +118,7 @@ public class InitMenuData : InitDataMigration
             })
             .Row(new
             {
-                id = "00000000000000000000000000000010",
+                id = "00000000000000000000000000000013",
                 parentid = "00000000000000000000000000000003",
                 title = "个人设置",
                 path = "Setting",
