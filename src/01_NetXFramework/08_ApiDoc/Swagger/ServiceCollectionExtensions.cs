@@ -43,10 +43,10 @@ public static class ServiceCollectionExtensions
                 Name = "Authorization",
                 In = ParameterLocation.Header,
                 Type = SecuritySchemeType.ApiKey,
-                Scheme = "Bearer"
+                Scheme = SwaggerConst.C_JWT_SCHEME
             };
             //添加设置Token的按钮
-            option.AddSecurityDefinition("Bearer", securityScheme);
+            option.AddSecurityDefinition(SwaggerConst.C_JWT_SCHEME, securityScheme);
             //添加Jwt验证设置
             option.AddSecurityRequirement(new OpenApiSecurityRequirement()
             {
@@ -56,10 +56,10 @@ public static class ServiceCollectionExtensions
                         Reference = new OpenApiReference
                         {
                             Type = ReferenceType.SecurityScheme,
-                            Id = "Bearer"
+                            Id = SwaggerConst.C_JWT_SCHEME
                         },
                         Scheme = "oauth2",
-                        Name = "Bearer",
+                        Name = SwaggerConst.C_JWT_SCHEME,
                         In = ParameterLocation.Header,
 
                     },

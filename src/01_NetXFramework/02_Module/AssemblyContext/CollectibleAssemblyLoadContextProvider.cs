@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using System.Reflection;
 using System.Runtime.Loader;
 
@@ -20,18 +21,16 @@ public sealed class CollectibleAssemblyLoadContextProvider
     /// <param name="env"></param>
     /// <param name="moduleContext"></param>
     /// <returns></returns>
-    public ModuleAssemblyLoadContext LoadCustomeModule(
+    public ModuleAssemblyLoadContext LoadCustomModule(
         ModuleOptions options,
         ApplicationPartManager apm,
         IServiceCollection services,
         IWebHostEnvironment env,
         ModuleContext moduleContext)
     {
-        var modelPath = Path.Combine(AppContext.BaseDirectory, ModuleSetupConst.C_MODULE_DIRECTORYNAME);
-        var filePath = Path.Combine(modelPath, options.Name, options.FileName);
-        var refPath = Path.Combine(modelPath, ModuleSetupConst.C_MODULE_REFDIRECTORYNAME);
-        ModuleAssemblyLoadContext context = new ModuleAssemblyLoadContext(filePath, moduleContext);
-        using (var fs = new FileStream(filePath, FileMode.Open))
+        (string modulePath, string filePath, string refPath) paths = GetPaths(options);
+        ModuleAssemblyLoadContext context = new ModuleAssemblyLoadContext(options.Name + options.Version, moduleContext);
+        using (var fs = new FileStream(paths.filePath, FileMode.Open))
         {
             //0. 将程序集装在到context中
             var assembly = context.LoadFromStream(fs);
@@ -71,18 +70,15 @@ public sealed class CollectibleAssemblyLoadContextProvider
     /// <param name="env"></param>
     /// <param name="moduleContext"></param>
     /// <returns></returns>
-    public ModuleInitializer? LoadSharedCustomeModule(
+    public ModuleInitializer? LoadSharedCustomModule(
         ModuleOptions options,
         ApplicationPartManager apm,
         IServiceCollection services,
         IWebHostEnvironment env,
         ModuleContext moduleContext)
     {
-        var modelPath = Path.Combine(AppContext.BaseDirectory, ModuleSetupConst.C_MODULE_DIRECTORYNAME);
-        var filePath = Path.Combine(modelPath, Path.GetFileNameWithoutExtension(options.Name), options.FileName);
-        var refPath = Path.Combine(modelPath, ModuleSetupConst.C_MODULE_REFDIRECTORYNAME);
-
-        using (var fs = new FileStream(filePath, FileMode.Open))
+        (string modulePath, string filePath, string refPath) paths = GetPaths(options);
+        using (var fs = new FileStream(paths.filePath, FileMode.Open))
         {
             //0. 将程序集装在到context中
             var assembly = AssemblyLoadContext.Default.LoadFromStream(fs);
@@ -122,5 +118,18 @@ public sealed class CollectibleAssemblyLoadContextProvider
             }
             return Initialize;
         }
+    }
+
+    /// <summary>
+    /// 获取模块相关目录
+    /// </summary>
+    /// <param name="options">模块配置项</param>
+    /// <returns></returns>
+    private (string modelPath,string filePath,string refPath) GetPaths(ModuleOptions options)
+    {
+        var modelPath = Path.Combine(AppContext.BaseDirectory, ModuleSetupConst.C_MODULE_DIRECTORYNAME);
+        var filePath = Path.Combine(modelPath, Path.GetFileNameWithoutExtension(options.Name), options.FileName);
+        var refPath = Path.Combine(modelPath, ModuleSetupConst.C_MODULE_REFDIRECTORYNAME);
+        return (modelPath: modelPath, filePath: filePath, refPath: refPath);
     }
 }

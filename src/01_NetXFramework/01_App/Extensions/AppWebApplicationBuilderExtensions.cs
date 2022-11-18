@@ -110,7 +110,7 @@ public static class AppWebApplicationBuilderExtensions
             InternalApp.ModuleContexts.Add(context.ModuleOptions.Id, context);
             if (option.Value.IsSharedAssemblyContext)
             {
-                var Initialize = contextProvider.LoadSharedCustomeModule(option.Value, apm, services, env, context);
+                var Initialize = contextProvider.LoadSharedCustomModule(option.Value, apm, services, env, context);
                 //统一注入 
                 if (Initialize != null)
                     services.AddServicesFromAssembly(Initialize.GetType().Assembly);
@@ -118,7 +118,7 @@ public static class AppWebApplicationBuilderExtensions
             }
             else
             {
-                var alc = contextProvider.LoadCustomeModule(option.Value, apm, services, env, context);
+                var alc = contextProvider.LoadCustomModule(option.Value, apm, services, env, context);
                 //统一注入 
                 alc.Assemblies.ToList().ForEach(asm => services.AddServicesFromAssembly(asm));
                 context.Initialize = alc.ModuleContext.Initialize;

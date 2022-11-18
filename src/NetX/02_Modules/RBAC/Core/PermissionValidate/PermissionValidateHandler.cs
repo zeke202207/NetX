@@ -44,7 +44,7 @@ public class PermissionValidateHandler : IPermissionValidateHandler
     /// </summary>
     /// <param name="context">Encapsulates all HTTP-specific information about an individual HTTP request.</param>
     /// <param name="routeValues">路由</param>
-    public async Task<bool> Validate(HttpContext context, IDictionary<string, string> routeValues)
+    public async Task<bool> Validate(HttpContext context, IDictionary<string, string?> routeValues)
     {
         var userId = TenantContext.CurrentTenant.Principal?.UserId;
         var roleId = TenantContext.CurrentTenant.Principal?.RoleId;

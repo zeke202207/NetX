@@ -3,7 +3,7 @@
 namespace NetX.Tenants;
 
 /// <summary>
-/// 扩展http上下文，使multi tenancy 使用起来更方便 
+/// 扩展http上下文
 /// </summary>
 internal static class HttpContextExtensions
 {

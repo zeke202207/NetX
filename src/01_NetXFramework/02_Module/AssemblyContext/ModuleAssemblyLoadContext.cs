@@ -18,7 +18,7 @@ public sealed class ModuleAssemblyLoadContext : AssemblyLoadContext
     /// <param name="moduleName"></param>
     /// <param name="moduleContext"></param>
     public ModuleAssemblyLoadContext(string moduleName, ModuleContext moduleContext)
-        : base(true)
+        : base(moduleName, true)
     {
         ModuleContext = moduleContext;
     }
