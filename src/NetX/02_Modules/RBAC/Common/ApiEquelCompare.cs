@@ -15,7 +15,7 @@ public class ApiEquelCompare : IEqualityComparer<string>
     /// <returns></returns>
     public bool Equals(string? x, string? y)
     {
-        if (string.IsNullOrEmpty(x) || string.IsNullOrEmpty(y))
+        if (string.IsNullOrWhiteSpace(x) || string.IsNullOrWhiteSpace(y))
             return false;
         return x.ToLower().Contains(y.ToLower());
     }

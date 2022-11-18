@@ -92,7 +92,7 @@ public class RoleService : RBACBaseService, IRoleService
         roleEntity.remark = model.Remark ?? string.Empty;
         roleEntity.apicheck = int.Parse(model.ApiCheck);
         var result = await ((SysRoleRepository)_roleRepository).UpdateRoleAsync(roleEntity, model.ToMenuList());
-        await RefreshPermissionApiCache(model.Id);
+        await RefreshPermissionApiCache(model.Id ?? string.Empty);
         return base.Success<bool>(result);
     }
 

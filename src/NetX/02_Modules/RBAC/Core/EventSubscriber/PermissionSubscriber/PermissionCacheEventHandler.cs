@@ -20,14 +20,14 @@ public class PermissionCacheEventHandler : IEventSubscriber
     /// <summary>
     /// 权限缓存
     /// </summary>
-    private readonly ICacheProvider _cache;
+    private readonly ICacheProvider? _cache;
 
     /// <summary>
     /// 权限验证缓存实例
     /// </summary>
     public PermissionCacheEventHandler()
     {
-        this._cache = ServiceLocator.Instance.GetService<ICacheProvider>();
+        this._cache = ServiceLocator.Instance?.GetService<ICacheProvider>();
     }
 
     /// <summary>
@@ -50,7 +50,7 @@ public class PermissionCacheEventHandler : IEventSubscriber
     [EventSubscribe(RBACConst.C_RBAC_EVENT_KEY)]
     public async Task Handler(EventHandlerExecutingContext context)
     {
-        if (null == context || null == context.Source.Payload)
+        if (null == context || null == context.Source.Payload || null == _cache)
             return;
         var playload = context.Source.Payload as PermissionPayload;
         if (null == playload || null == playload.CacheModel)
