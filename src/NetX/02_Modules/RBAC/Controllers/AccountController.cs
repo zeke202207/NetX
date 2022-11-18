@@ -57,6 +57,7 @@ public class AccountController : RBACBaseController
     /// <returns></returns>
     [ApiActionDescription("获取用户列表分页数据集合")]
     [HttpGet]
+    //[ResponseCache(Duration = 30, Location = ResponseCacheLocation.Client)]
     public async Task<ResultModel<PagerResultModel<List<UserListModel>>>> GetAccountList([FromQuery] UserListParam userListparam)
     {
         return await _accoutService.GetAccountLists(userListparam);
