@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NetX.Authentication.Core;
-using NetX.Common.Models;
 using NetX.DatabaseSetup;
 using NetX.Logging.Monitors;
 using NetX.Swagger;

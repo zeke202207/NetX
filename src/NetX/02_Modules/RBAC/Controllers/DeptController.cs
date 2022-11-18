@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using NetX.Common.Models;
+using NetX.Common.ModuleInfrastructure;
 using NetX.Swagger;
 using NetX.RBAC.Core;
 using NetX.RBAC.Models;
@@ -31,7 +31,7 @@ public class DeptController : RBACBaseController
     /// <returns></returns>
     [ApiActionDescription("获取部门列表")]
     [HttpGet]
-    public async Task<ResultModel<List<DeptModel>>> GetDeptList([FromQuery] DeptListParam queryParam)
+    public async Task<ResultModel> GetDeptList([FromQuery] DeptListParam queryParam)
     {
         return await _deptService.GetDeptList(queryParam);
     }
@@ -44,7 +44,7 @@ public class DeptController : RBACBaseController
     [Audit]
     [ApiActionDescription("新增部门信息")]
     [HttpPost]
-    public async Task<ResultModel<bool>> AddDept(DeptRequestModel model)
+    public async Task<ResultModel> AddDept(DeptRequestModel model)
     {
         return await _deptService.AddDept(model);
     }
@@ -57,7 +57,7 @@ public class DeptController : RBACBaseController
     [Audit]
     [ApiActionDescription("编辑部门信息")]
     [HttpPost]
-    public async Task<ResultModel<bool>> UpdateDept(DeptRequestModel model)
+    public async Task<ResultModel> UpdateDept(DeptRequestModel model)
     {
         return await _deptService.UpdateDept(model);
     }
@@ -70,7 +70,7 @@ public class DeptController : RBACBaseController
     [Audit]
     [ApiActionDescription("删除部门信息")]
     [HttpDelete]
-    public async Task<ResultModel<bool>> RemoveDept(KeyParam param)
+    public async Task<ResultModel> RemoveDept(KeyParam param)
     {
         return await _deptService.RemoveDept(param.Id);
     }

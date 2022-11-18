@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NetX.Authentication.Core;
-using NetX.Common.Models;
+using NetX.Common.ModuleInfrastructure;
 using NetX.Swagger;
 using NetX.RBAC.Core;
 using NetX.RBAC.Models;
 using NetX.Tenants;
 using NetX.Logging.Monitors;
+using NetX.Common;
 
 namespace NetX.RBAC.Controllers;
 
@@ -34,7 +35,7 @@ public class AccountController : RBACBaseController
     [ApiActionDescription("登录")]
     [NoPermission]
     [HttpPost]
-    public async Task<ResultModel<LoginResult>> Login(LoginModel model)
+    public async Task<ResultModel> Login(LoginModel model)
     {
         return await _accoutService.Login(model.UserName, model.Password);
     }
@@ -45,7 +46,7 @@ public class AccountController : RBACBaseController
     /// <returns></returns>
     [ApiActionDescription("获取登录用户信息")]
     [HttpGet]
-    public async Task<ResultModel<UserModel>> GetUserInfo()
+    public async Task<ResultModel> GetUserInfo()
     {
         return await _accoutService.GetUserInfo(TenantContext.CurrentTenant.Principal?.UserId);
     }
@@ -58,7 +59,7 @@ public class AccountController : RBACBaseController
     [ApiActionDescription("获取用户列表分页数据集合")]
     [HttpGet]
     //[ResponseCache(Duration = 30, Location = ResponseCacheLocation.Client)]
-    public async Task<ResultModel<PagerResultModel<List<UserListModel>>>> GetAccountList([FromQuery] UserListParam userListparam)
+    public async Task<ResultModel> GetAccountList([FromQuery] UserListParam userListparam)
     {
         return await _accoutService.GetAccountLists(userListparam);
     }
@@ -70,7 +71,7 @@ public class AccountController : RBACBaseController
     /// <returns></returns>
     [ApiActionDescription("用户名是否存在校验")]
     [HttpGet]
-    public async Task<ResultModel<bool>> IsAccountExist([FromQuery] string account)
+    public async Task<ResultModel> IsAccountExist([FromQuery] string account)
     {
         return await _accoutService.IsAccountExist(account);
     }
@@ -82,7 +83,7 @@ public class AccountController : RBACBaseController
     /// <returns></returns>
     [ApiActionDescription("获取用户按钮权限集合")]
     [HttpGet]
-    public async Task<ResultModel<IEnumerable<string>>> GetPermCode()
+    public async Task<ResultModel> GetPermCode()
     {
         return await _accoutService.GetPermCode(TenantContext.CurrentTenant.Principal?.UserId ?? string.Empty);
     }
@@ -93,7 +94,7 @@ public class AccountController : RBACBaseController
     /// <returns></returns>
     [ApiActionDescription("登出系统")]
     [HttpGet]
-    public async Task<ResultModel<bool>> Logout()
+    public async Task<ResultModel> Logout()
     {
         return await Task.FromResult(new ResultModel<bool>(ResultEnum.SUCCESS) { Result = true });
     }
@@ -105,7 +106,7 @@ public class AccountController : RBACBaseController
     /// <returns></returns>
     [ApiActionDescription("注册添加新用户")]
     [HttpPost]
-    public async Task<ResultModel<bool>> AddAccount(AccountRequestModel model)
+    public async Task<ResultModel> AddAccount(AccountRequestModel model)
     {
         return await _accoutService.AddAccount(model);
     }
@@ -118,7 +119,7 @@ public class AccountController : RBACBaseController
     [Audit]
     [ApiActionDescription("编辑用户信息")]
     [HttpPost]
-    public async Task<ResultModel<bool>> UpdateAccount(AccountRequestModel model)
+    public async Task<ResultModel> UpdateAccount(AccountRequestModel model)
     {
         return await _accoutService.UpdateAccount(model);
     }
@@ -131,7 +132,7 @@ public class AccountController : RBACBaseController
     [Audit]
     [ApiActionDescription("删除用户")]
     [HttpDelete]
-    public async Task<ResultModel<bool>> RemoveAccount(KeyParam param)
+    public async Task<ResultModel> RemoveAccount(KeyParam param)
     {
         return await _accoutService.RemoveDept(param.Id);
     }
@@ -144,7 +145,7 @@ public class AccountController : RBACBaseController
     [Audit]
     [ApiActionDescription("修改密码")]
     [HttpPost]
-    public async Task<ResultModel<bool>> ChangePassword(ChangePwdRequestModel model)
+    public async Task<ResultModel> ChangePassword(ChangePwdRequestModel model)
     {
         return await _accoutService.ChangePassword(TenantContext.CurrentTenant.Principal?.UserId ?? string.Empty, model);
     }

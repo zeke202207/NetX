@@ -3,7 +3,7 @@ using FreeSql;
 using NetX.Authentication.Core;
 using NetX.Common;
 using NetX.Common.Attributes;
-using NetX.Common.Models;
+using NetX.Common.ModuleInfrastructure;
 using NetX.RBAC.Data.Repositories;
 using NetX.RBAC.Models;
 

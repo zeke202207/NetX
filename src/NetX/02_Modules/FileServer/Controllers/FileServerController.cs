@@ -2,7 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
 using NetX.Authentication.Core;
-using NetX.Common.Models;
+using NetX.Common;
+using NetX.Common.ModuleInfrastructure;
 using NetX.FileServer.Model;
 using NetX.Logging.Monitors;
 using NetX.Swagger;
@@ -37,7 +38,7 @@ namespace NetX.FileServer.Controllers
         [NoPermission]
         [SuppressMonitor]
         [HttpPost("/netx/upload/{slug}")]
-        public async Task<ResultModel<UploadResult>> Upload(IFormFile file, int slug)
+        public async Task<ResultModel> Upload(IFormFile file, int slug)
         {
             var validateResult = this._uploader.Validate(file);
             if (validateResult != ValidateResult.Success)
@@ -62,7 +63,7 @@ namespace NetX.FileServer.Controllers
         [NoPermission]
         [SuppressMonitor]
         [HttpPost("/netx/uploadbatch/{slug}")]
-        public async Task<ResultModel<List<UploadResult>>> UploadBatch(IFormFileCollection file, int slug)
+        public async Task<ResultModel> UploadBatch(IFormFileCollection file, int slug)
         {
             var validateResult = this._uploader.Validate(file);
             if (validateResult != ValidateResult.Success)

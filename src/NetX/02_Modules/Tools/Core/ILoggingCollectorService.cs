@@ -1,4 +1,4 @@
-﻿using NetX.Common.Models;
+﻿using NetX.Common.ModuleInfrastructure;
 using NetX.Tools.Models;
 
 namespace NetX.Tools.Core

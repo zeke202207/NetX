@@ -2,7 +2,7 @@
 using FreeSql;
 using Microsoft.AspNetCore.Mvc;
 using NetX.Common.Attributes;
-using NetX.Common.Models;
+using NetX.Common.ModuleInfrastructure;
 using NetX.RBAC.Data.Repositories;
 using NetX.RBAC.Models;
 

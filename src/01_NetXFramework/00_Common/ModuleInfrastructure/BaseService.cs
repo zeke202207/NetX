@@ -1,11 +1,10 @@
-﻿using NetX.Common.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetX.Common;
+namespace NetX.Common.ModuleInfrastructure;
 
 /// <summary>
 /// 服务基类

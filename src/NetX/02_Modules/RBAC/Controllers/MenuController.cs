@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NetX.Authentication.Core;
-using NetX.Common.Models;
+using NetX.Common.ModuleInfrastructure;
 using NetX.Swagger;
 using NetX.RBAC.Core;
 using NetX.RBAC.Models;
@@ -33,7 +33,7 @@ public class MenuController : RBACBaseController
     [ApiActionDescription("获取登录用户授权菜单列表")]
     [NoPermission]
     [HttpGet]
-    public async Task<ResultModel<List<MenuModel>>> GetCurrentUserMenuList()
+    public async Task<ResultModel> GetCurrentUserMenuList()
     {
         return await this._menuService.GetCurrentUserMenuList(TenantContext.CurrentTenant.Principal?.UserId);
     }
@@ -46,7 +46,7 @@ public class MenuController : RBACBaseController
     [ApiActionDescription("根据条件获取菜单列表")]
     [NoPermission]
     [HttpPost]
-    public async Task<ResultModel<List<MenuModel>>> GetMenuList(MenuListParam param)
+    public async Task<ResultModel> GetMenuList(MenuListParam param)
     {
         return await this._menuService.GetMenuList(param);
     }
@@ -59,7 +59,7 @@ public class MenuController : RBACBaseController
     [Audit]
     [ApiActionDescription("添加菜单")]
     [HttpPost]
-    public async Task<ResultModel<bool>> AddMenu(MenuRequestModel model)
+    public async Task<ResultModel> AddMenu(MenuRequestModel model)
     {
         return await this._menuService.AddMenu(model);
     }
@@ -72,7 +72,7 @@ public class MenuController : RBACBaseController
     [Audit]
     [ApiActionDescription("编辑菜单")]
     [HttpPost]
-    public async Task<ResultModel<bool>> UpdateMenu(MenuRequestModel model)
+    public async Task<ResultModel> UpdateMenu(MenuRequestModel model)
     {
         return await this._menuService.UpdateMenu(model);
     }
@@ -85,7 +85,7 @@ public class MenuController : RBACBaseController
     [Audit]
     [ApiActionDescription("删除菜单")]
     [HttpDelete]
-    public async Task<ResultModel<bool>> RemoveMenu(KeyParam param)
+    public async Task<ResultModel> RemoveMenu(KeyParam param)
     {
         return await this._menuService.RemoveMenu(param.Id);
     }

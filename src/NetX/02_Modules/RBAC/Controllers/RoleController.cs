@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using NetX.Common.Models;
+using NetX.Common.ModuleInfrastructure;
 using NetX.Swagger;
 using NetX.RBAC.Core;
 using NetX.RBAC.Models;
@@ -31,7 +31,7 @@ public class RoleController : RBACBaseController
     /// <returns></returns>
     [ApiActionDescription("获取角色列表")]
     [HttpPost]
-    public async Task<ResultModel<List<RoleModel>>> GetRoleListByPage(RoleListParam roleListparam)
+    public async Task<ResultModel> GetRoleListByPage(RoleListParam roleListparam)
     {
         return await _roleService.GetRoleList(roleListparam);
     }
@@ -42,7 +42,7 @@ public class RoleController : RBACBaseController
     /// <returns></returns>
     [ApiActionDescription("获取全部角色列表")]
     [HttpGet]
-    public async Task<ResultModel<List<RoleModel>>> GetAllRoleList()
+    public async Task<ResultModel> GetAllRoleList()
     {
         return await _roleService.GetRoleList();
     }
@@ -55,7 +55,7 @@ public class RoleController : RBACBaseController
     [Audit]
     [ApiActionDescription("添加角色")]
     [HttpPost]
-    public async Task<ResultModel<bool>> AddRole(RoleRequestModel model)
+    public async Task<ResultModel> AddRole(RoleRequestModel model)
     {
         return await _roleService.AddRole(model);
     }
@@ -68,7 +68,7 @@ public class RoleController : RBACBaseController
     [Audit]
     [ApiActionDescription("更新角色信息")]
     [HttpPost]
-    public async Task<ResultModel<bool>> UpdateRole(RoleRequestModel model)
+    public async Task<ResultModel> UpdateRole(RoleRequestModel model)
     {
         return await _roleService.UpdateRole(model);
     }
@@ -81,7 +81,7 @@ public class RoleController : RBACBaseController
     [Audit]
     [ApiActionDescription("删除角色")]
     [HttpDelete]
-    public async Task<ResultModel<bool>> RemoveRole(KeyParam model)
+    public async Task<ResultModel> RemoveRole(KeyParam model)
     {
         return await _roleService.RemoveRole(model.Id);
     }
@@ -94,7 +94,7 @@ public class RoleController : RBACBaseController
     [Audit]
     [ApiActionDescription("更新角色状态")]
     [HttpPost]
-    public async Task<ResultModel<bool>> SetRoleStatus(RoleStatusModel model)
+    public async Task<ResultModel> SetRoleStatus(RoleStatusModel model)
     {
         return await _roleService.UpdateRoleStatus(model.Id, model.Status);
     }
@@ -107,7 +107,7 @@ public class RoleController : RBACBaseController
     [Audit]
     [ApiActionDescription("更新角色后台鉴权状态")]
     [HttpPost]
-    public async Task<ResultModel<bool>> SetApiAuthStatus(RoleStatusModel model)
+    public async Task<ResultModel> SetApiAuthStatus(RoleStatusModel model)
     {
         return await _roleService.UpdateRoleApiAuthStatus(model.Id, model.Status);
     }
@@ -119,7 +119,7 @@ public class RoleController : RBACBaseController
     /// <returns></returns>
     [ApiActionDescription("获取后台api授权id集合")]
     [HttpPost]
-    public async Task<ResultModel<IEnumerable<string>>> GetApiAuth(KeyParam param)
+    public async Task<ResultModel> GetApiAuth(KeyParam param)
     {
         return await _roleService.GetApiAuth(param.Id);
     }
@@ -132,7 +132,7 @@ public class RoleController : RBACBaseController
     [Audit]
     [ApiActionDescription("设置后台api授权id集合")]
     [HttpPost]
-    public async Task<ResultModel<bool>> SetApiAuth(RoleApiAuthModel model)
+    public async Task<ResultModel> SetApiAuth(RoleApiAuthModel model)
     {
         return await _roleService.UpdateRoleApiAuth(model.RoleId, model.ApiIds);
     }

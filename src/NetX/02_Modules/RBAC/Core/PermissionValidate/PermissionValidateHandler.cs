@@ -86,7 +86,7 @@ public class PermissionValidateHandler : IPermissionValidateHandler
     private async Task<bool> GetFromeDababase(string cacheKey, string userId, string router)
     {
         var result = await _accountService.GetApiPermCode(userId);
-        if (result.Code != Common.Models.ResultEnum.SUCCESS)
+        if (result.Code != Common.ResultEnum.SUCCESS)
             return false;
         await PublishCache(cacheKey, result.Result);
         return Check(result.Result, router);

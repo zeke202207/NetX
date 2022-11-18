@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using NetX.Common.Models;
+using NetX.Common.ModuleInfrastructure;
 using NetX.Swagger;
 using NetX.RBAC.Core;
 using NetX.RBAC.Models;
@@ -36,7 +36,7 @@ public class ApiController : RBACBaseController
     /// <returns></returns>
     [ApiActionDescription("获取API分页列表")]
     [HttpPost]
-    public async Task<ResultModel<PagerResultModel<List<ApiModel>>>> GetApiPageList(ApiPageParam apiPageParam)
+    public async Task<ResultModel> GetApiPageList(ApiPageParam apiPageParam)
     {
         return await _apiService.GetApiList(apiPageParam);
     }
@@ -48,7 +48,7 @@ public class ApiController : RBACBaseController
     /// <returns></returns>
     [ApiActionDescription("获取API列表")]
     [HttpPost]
-    public async Task<ResultModel<List<ApiModel>>> GetApiList(ApiParam apiParam)
+    public async Task<ResultModel> GetApiList(ApiParam apiParam)
     {
         return await _apiService.GetApiList(apiParam);
     }
@@ -61,7 +61,7 @@ public class ApiController : RBACBaseController
     [Audit]
     [ApiActionDescription("添加API")]
     [HttpPost]
-    public async Task<ResultModel<bool>> AddApi(ApiRequestModel model)
+    public async Task<ResultModel> AddApi(ApiRequestModel model)
     {
         return await this._apiService.AddApi(model);
     }
@@ -74,7 +74,7 @@ public class ApiController : RBACBaseController
     [Audit]
     [ApiActionDescription("编辑API信息")]
     [HttpPost]
-    public async Task<ResultModel<bool>> UpdateApi(ApiRequestModel model)
+    public async Task<ResultModel> UpdateApi(ApiRequestModel model)
     {
         return await this._apiService.UpdateApi(model);
     }
@@ -87,7 +87,7 @@ public class ApiController : RBACBaseController
     [Audit]
     [ApiActionDescription("删除API")]
     [HttpDelete]
-    public async Task<ResultModel<bool>> RemoveApi(KeyParam param)
+    public async Task<ResultModel> RemoveApi(KeyParam param)
     {
         return await this._apiService.RemoveApi(param.Id);
     }

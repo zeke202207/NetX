@@ -1,5 +1,5 @@
 ﻿using NetX.Common;
-using NetX.Common.Models;
+using NetX.Common.ModuleInfrastructure;
 
 namespace NetX.RBAC.Core;
 
