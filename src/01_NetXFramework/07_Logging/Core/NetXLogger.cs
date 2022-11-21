@@ -65,11 +65,7 @@ public sealed class NetXLogger : ILogger
     {
         // 设置日志上下文
         if (state is LogContext context)
-        {
-            if (Context == null) Context = new LogContext().SetRange(context.Properties);
-            else Context.SetRange(context.Properties);
-        }
-
+            Context = new LogContext().SetRange(context.Properties);
         return default;
     }
 
