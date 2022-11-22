@@ -6,7 +6,7 @@ namespace NetX.RBAC.DatabaseSetup.CreateTable;
 /// <summary>
 /// 
 /// </summary>
-[Migration(1)]
+[Migration(20091124100601)]
 public class UserTable : CreateTableMigration
 {
     /// <summary>
@@ -23,7 +23,7 @@ public class UserTable : CreateTableMigration
     public override void Up()
     {
         Create.Table(_tableName)
-                .WithColumn("id").AsString().PrimaryKey()
+                .WithColumn("id").AsString(50).PrimaryKey()
                 .WithColumn("username").AsString(50).NotNullable()
                 .WithColumn("password").AsString(50).NotNullable()
                 .WithColumn("nickname").AsString(255).Nullable()

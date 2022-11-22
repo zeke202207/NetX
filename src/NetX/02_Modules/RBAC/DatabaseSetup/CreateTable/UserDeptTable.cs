@@ -6,7 +6,7 @@ namespace NetX.RBAC.DatabaseSetup.CreateTable;
 /// <summary>
 /// 
 /// </summary>
-[Migration(6)]
+[Migration(20091124100606)]
 public class UserDeptTable : CreateTableMigration
 {
     /// <summary>

@@ -11,7 +11,7 @@ namespace NetX.RBAC.DatabaseSetup.CreateTable
     /// <summary>
     /// 
     /// </summary>
-    [Migration(9)]
+    [Migration(20091124100609)]
     public class RoleApiTable : CreateTableMigration
     {
         /// <summary>

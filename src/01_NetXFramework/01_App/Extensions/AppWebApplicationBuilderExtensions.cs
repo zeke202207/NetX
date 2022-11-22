@@ -154,8 +154,6 @@ public static class AppWebApplicationBuilderExtensions
     /// <returns></returns>
     public static WebApplicationBuilder InjectServiceFinally(this WebApplicationBuilder webApplicationBuilder)
     {
-        //所有模块数据库迁移配置完毕，注入数据库迁移
-        webApplicationBuilder.Services.BuildFluentMigrator();
         //Cache
         webApplicationBuilder.Services.AddCaches();
         return webApplicationBuilder;

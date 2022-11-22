@@ -18,13 +18,13 @@ namespace NetX.App;
 /// </summary>
 public class NetxController: ApiBaseController
 {
-    private readonly MigrationService _migrationService;
+    private readonly IMigrationService _migrationService;
 
     /// <summary>
     /// 框架服务接口
     /// </summary>
     /// <param name="migrationService"></param>
-    public NetxController(MigrationService migrationService)
+    public NetxController(IMigrationService migrationService)
     {
         this._migrationService = migrationService;
     }
@@ -32,29 +32,26 @@ public class NetxController: ApiBaseController
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="tenantId">租户唯一标识</param>
     /// <returns></returns>
     [ApiActionDescription("迁移数据库")]
     [NoPermission]
     [SuppressMonitor]
     [HttpPost]
-    [Obsolete]
-    public async Task<bool> DatabaseUp(string tenantId)
+    public async Task<bool> MigrateUp()
     {
-        return await Task.FromResult(_migrationService.SetupDatabase(tenantId));
+        return await _migrationService.MigrateUp();
     }
 
     /// <summary>
     /// 
     /// </summary>
     /// <returns></returns>
-    [ApiActionDescription("迁移数据库")]
+    [ApiActionDescription("迁移数据库-将删除表或者数据，请谨慎操作(尽量不要在生产环境中使用)")]
     [NoPermission]
     [SuppressMonitor]
     [HttpPost]
-    [Obsolete("暂不提供")]
-    public async Task<bool> DatabaseDown(string tenantId)
+    public async Task<bool> MigrateDown(long version)
     {
-        return await Task.FromResult(true);
+        return await _migrationService.MigrateDown(version);
     }
 }

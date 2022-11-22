@@ -6,7 +6,7 @@ namespace NetX.RBAC.DatabaseSetup.CreateTable;
 /// <summary>
 /// 部门表
 /// </summary>
-[Migration(2)]
+[Migration(20091124100602)]
 public class DeptTable : CreateTableMigration
 {
     /// <summary>

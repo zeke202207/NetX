@@ -1,24 +1,28 @@
-﻿using FluentMigrator.Runner;
+﻿using FluentMigrator.Infrastructure;
+using FluentMigrator.Runner;
+using FluentMigrator.Runner.Constraints;
 using FluentMigrator.Runner.Initialization;
 using FluentMigrator.Runner.Processors;
 using FluentMigrator.Runner.Processors.MySql;
+using FluentMigrator.Runner.Processors.SqlServer;
 using FluentMigrator.Runner.VersionTableInfo;
 using Microsoft.Extensions.DependencyInjection;
 using NetX.Cache.Core;
 using NetX.Tenants;
 using System.Collections.Concurrent;
+using System.Reflection;
 
 namespace NetX.DatabaseSetup;
 
 /// <summary>
 /// 数据迁移服务
 /// </summary>
-public class MigrationService
+public class MigrationService : IMigrationService
 {
     private readonly MigrationSupportDbType _supportDbType;
     private readonly ICacheProvider _cacheProvider;
-    private readonly DbFactoryBase _dbFactory;
-    private IMigrationRunner _runner;
+    private readonly DbFactoryBase? _dbFactory;
+    private readonly IMigrationRunner _runner;
 
     /// <summary>
     /// 数据迁移服务实例
@@ -40,18 +44,44 @@ public class MigrationService
     }
 
     /// <summary>
+    /// Executes all found (and unapplied) migrations
     /// 创建数据库
     /// </summary>
     /// <returns></returns>
-    public bool SetupDatabase(string tenandId)
+    public async Task<bool> MigrateUp()
     {
-        if (_cacheProvider.Exists(CacheKeys.DATABASESETUP_TENANT_ID))
+        var cacheKey = GetCacheKey();
+        if (string.IsNullOrWhiteSpace(cacheKey))
+            return false;
+        if (await _cacheProvider.ExistsAsync(cacheKey))
             return true;
-        _cacheProvider.Set(CacheKeys.DATABASESETUP_TENANT_ID, tenandId);
-        var result = CraeteDatabase() && MigrationTables();
+        await _cacheProvider.SetAsync(cacheKey, TenantContext.CurrentTenant.Principal?.Tenant.TenantId);
+        var result = await CraeteDatabase() && MigrationTables();
         if (!result)
-            _cacheProvider.Remove(tenandId);
+            await _cacheProvider.RemoveAsync(cacheKey);
         return result;
+    }
+
+    /// <summary>
+    ///  Migrate down to the given version
+    /// </summary>
+    /// <param name="version"></param>
+    /// <returns></returns>
+    public async Task<bool> MigrateDown(long version)
+    {
+        try
+        {
+            var cacheKey = GetCacheKey();
+            if(string.IsNullOrWhiteSpace(cacheKey))
+                return false;
+            this._runner.MigrateDown(version);
+            await _cacheProvider.RemoveAsync(cacheKey);
+            return await Task.FromResult(true);
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("版本回退失败", ex);
+        }
     }
 
     /// <summary>
@@ -59,10 +89,12 @@ public class MigrationService
     /// </summary>
     /// <param name="dbFactories"></param>
     /// <returns></returns>
-    private DbFactoryBase GetDbFactoryBase(IEnumerable<DbFactoryBase> dbFactories)
+    private DbFactoryBase? GetDbFactoryBase(IEnumerable<DbFactoryBase> dbFactories)
     {
         switch(this._supportDbType)
         {
+            case MigrationSupportDbType.SqlServer:
+                return dbFactories.FirstOrDefault(p => p.GetType().Equals(typeof(SqlServerDbFactory)));
             case MigrationSupportDbType.MySql5:
             default:
                 return dbFactories.FirstOrDefault(p => p.GetType().Equals(typeof(MySqlDbFactory)));
@@ -72,7 +104,7 @@ public class MigrationService
     /// <summary>
     /// 创建数据库
     /// </summary>
-    private bool CraeteDatabase()
+    private async Task<bool> CraeteDatabase()
     {
         try
         {
@@ -86,12 +118,12 @@ public class MigrationService
                     conn.Open();
                 var cmd = conn.CreateCommand();
                 cmd.CommandText = QueryDatabaseSql();
-                var result = cmd.ExecuteScalar();
+                var result = await cmd.ExecuteScalarAsync();
                 if (null != result)
                     return true;
                 //创建数据库
                 cmd.CommandText = CreateDatabaseSql();
-                cmd.ExecuteNonQuery();
+                await cmd.ExecuteNonQueryAsync();
             }
             return true;
 
@@ -124,6 +156,8 @@ public class MigrationService
     {
         switch (_supportDbType)
         {
+            case MigrationSupportDbType.SqlServer:
+                return $"CREATE DATABASE [{TenantContext.CurrentTenant.DatabaseName}]";
             case MigrationSupportDbType.MySql5:
             default:
                 return $"CREATE DATABASE `{TenantContext.CurrentTenant.DatabaseName}` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci";
@@ -145,5 +179,17 @@ public class MigrationService
         {
             throw new Exception("数据库迁移失败", ex);
         }
+    }
+
+    /// <summary>
+    /// 获取迁移缓存key
+    /// </summary>
+    /// <returns></returns>
+    private string GetCacheKey()
+    {
+        var tenantId = TenantContext.CurrentTenant.Principal?.Tenant.TenantId;
+        if (string.IsNullOrWhiteSpace(tenantId))
+            return tenantId;
+        return $"{CacheKeys.DATABASESETUP_TENANT_ID}{tenantId}";
     }
 }

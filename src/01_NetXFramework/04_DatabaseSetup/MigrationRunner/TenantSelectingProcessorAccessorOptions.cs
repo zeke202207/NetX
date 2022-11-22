@@ -11,12 +11,23 @@ namespace NetX.DatabaseSetup;
 /// </summary>
 public class TenantSelectingProcessorAccessorOptions : IOptionsSnapshot<SelectingProcessorAccessorOptions>
 {
+    private readonly MigrationSupportDbType supportDb = MigrationSupportDbType.MySql5;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="supporDbType"></param>
+    public TenantSelectingProcessorAccessorOptions( MigrationSupportDbType supporDbType)
+    {
+        supportDb = supporDbType;
+    }
+
     /// <summary>
     /// 
     /// </summary>
     public SelectingProcessorAccessorOptions Value => new SelectingProcessorAccessorOptions()
     {
-        ProcessorId = "MySql5"
+        ProcessorId = supportDb.ToDescriptionOrString()
     };
 
     /// <summary>

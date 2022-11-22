@@ -29,7 +29,7 @@ internal class ToolsInitializer : ModuleInitializer
         //注入mapper
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         //code first
-        services.AddMigratorAssembly(new Assembly[] { Assembly.GetExecutingAssembly() });
+        services.AddMigratorAssembly(new Assembly[] { Assembly.GetExecutingAssembly() }, MigrationSupportDbType.MySql5);
         //add log
         services.AddDatabaseLogging<DatabaseLoggingWriter>(context.Configuration, option =>
         {

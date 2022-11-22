@@ -54,10 +54,33 @@ public class SysMenuRepository : BaseRepository<sys_menu, string>
             {
                 var roleMenuRep = uow.GetRepository<sys_role_menu>();
                 var menuRep = uow.GetRepository<sys_menu>();
-                var menuIds = await menuRep.Select.WithSql($"select id from sys_menu where find_in_set(id,get_child_menu('{menuId}'))")
+                if (uow.Orm.Ado.DataType == DataType.MySql)
+                {
+                    var menuIds = await menuRep.Select.WithSql($"select id from sys_menu where find_in_set(id,get_child_menu('{menuId}'))")
                     .ToListAsync<string>("id");
-                await roleMenuRep.DeleteAsync(p => menuIds.Contains(p.menuid));
-                await menuRep.DeleteAsync(p => menuIds.Contains(p.id));
+                    await roleMenuRep.DeleteAsync(p => menuIds.Contains(p.menuid));
+                    await menuRep.DeleteAsync(p => menuIds.Contains(p.id));
+                }
+                else if(uow.Orm.Ado.DataType == DataType.SqlServer)
+                {
+                    var menuIds = await menuRep.Select.WithSql(@$"WITH
+CTE
+AS
+(
+    SELECT * FROM [sys_menu] WHERE Id='{menuId}'
+    UNION ALL
+    SELECT G.* FROM CTE INNER JOIN [sys_menu] as G
+    ON CTE.id=G.parentid
+)
+SELECT * FROM CTE ORDER BY id")
+                   .ToListAsync<string>("id");
+                    await roleMenuRep.DeleteAsync(p => menuIds.Contains(p.menuid));
+                    await menuRep.DeleteAsync(p => menuIds.Contains(p.id));
+                }
+                else
+                {
+                    throw new NotImplementedException("目前仅实现了mysql递归查询，替换成对应数据库的递归吧");
+                }
                 uow.Commit();
             }
             catch (Exception ex)

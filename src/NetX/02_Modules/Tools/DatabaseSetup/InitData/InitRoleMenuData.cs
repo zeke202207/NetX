@@ -11,7 +11,7 @@ namespace NetX.Tools.DatabaseSetup.InitData
     /// <summary>
     /// 
     /// </summary>
-    [Migration(2202)]
+    [Migration(20091127100602)]
     public class InitRoleMenuData : InitDataMigration
     {
         /// <summary>
@@ -55,7 +55,7 @@ namespace NetX.Tools.DatabaseSetup.InitData
         /// </summary>
         public override void Down()
         {
-            Execute.Sql($"delete * from {_tableName}");
+            Execute.Sql($"delete from {_tableName} where menuid in ('00000000000000000000000000000009','00000000000000000000000000000010','00000000000000000000000000000011','00000000000000000000000000000012')");
         }
     }
 }

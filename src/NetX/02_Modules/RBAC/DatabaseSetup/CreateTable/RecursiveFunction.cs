@@ -6,7 +6,7 @@ namespace NetX.RBAC.DatabaseSetup.CreateTable;
 /// <summary>
 /// 
 /// </summary>
-[Migration(101)]
+[Migration(20091124100800)]
 public class RecursiveFunction : BaseMigration
 {
     /// <summary>
@@ -21,7 +21,8 @@ public class RecursiveFunction : BaseMigration
     /// </summary>
     public override void Down()
     {
-
+        base.IfDatabase("mysql").Execute.Sql("drop function get_child_dept");
+        base.IfDatabase("mysql").Execute.Sql("drop function get_child_menu");
     }
 
     /// <summary>

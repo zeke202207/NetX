@@ -6,7 +6,7 @@ namespace NetX.RBAC.DatabaseSetup.InitData;
 /// <summary>
 /// 
 /// </summary>
-[Migration(1004)]
+[Migration(20091125100604)]
 public class InitUserData : InitDataMigration
 {
     /// <summary>
@@ -40,6 +40,6 @@ public class InitUserData : InitDataMigration
     /// </summary>
     public override void Down()
     {
-        Execute.Sql($"delete * from {_tableName}");
+        Execute.Sql($"delete from {_tableName}");
     }
 }

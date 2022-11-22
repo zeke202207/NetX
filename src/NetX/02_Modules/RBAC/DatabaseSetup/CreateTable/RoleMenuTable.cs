@@ -6,7 +6,7 @@ namespace NetX.RBAC.DatabaseSetup.CreateTable;
 /// <summary>
 /// 
 /// </summary>
-[Migration(5)]
+[Migration(20091124100605)]
 public class RoleMenuTable : CreateTableMigration
 {
     /// <summary>

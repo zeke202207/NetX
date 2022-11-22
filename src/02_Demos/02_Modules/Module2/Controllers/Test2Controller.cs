@@ -25,12 +25,12 @@ namespace Module2.Controllers
         private readonly ITenantAccessor<Tenant> _accessor;
         private readonly IOptions<CookiePolicyOptions> _options;
         private readonly ILoginHandler _login;
-        private readonly MigrationService _migrationService;
+        private readonly IMigrationService _migrationService;
         private readonly IFreeSql _fsql;
 
         public Test2Controller(
             ILoginHandler login,
-            MigrationService migrationService,
+            IMigrationService migrationService,
             ILogger<Test2Controller> logger, 
             ITest test,
             IEventPublisher publisher,

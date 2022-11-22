@@ -2,8 +2,10 @@
 using FluentMigrator.Runner.Initialization;
 using FluentMigrator.Runner.Processors;
 using FluentMigrator.Runner.Processors.MySql;
+using FluentMigrator.Runner.Processors.SqlServer;
 using FluentMigrator.Runner.VersionTableInfo;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using NetX.Cache.Core;
 using System;
 using System.Collections.Generic;
@@ -17,7 +19,6 @@ namespace NetX.DatabaseSetup;
 /// </summary>
 public static class FluentMigrationExtensions
 {
-    internal readonly static List<Assembly> list = new List<Assembly>() { Assembly.GetExecutingAssembly() };
     private readonly static int _commandTimeout = 300;
 
     /// <summary>
@@ -25,25 +26,15 @@ public static class FluentMigrationExtensions
     /// </summary>
     /// <param name="services"></param>
     /// <param name="assemblies"></param>
+    /// <param name="supportDatabaseType"></param>
     /// <returns></returns>
-    public static IServiceCollection AddMigratorAssembly(this IServiceCollection services, Assembly[] assemblies)
+    public static IServiceCollection AddMigratorAssembly(this IServiceCollection services, Assembly[] assemblies, MigrationSupportDbType supportDatabaseType)
     {
         if (null == assemblies)
             return services;
-        list.AddRange(assemblies);
+        if(assemblies.Length>0)
+            services.BuildFluentMigrator(assemblies, supportDatabaseType);
         return services;
-    }
-
-    /// <summary>
-    ///  数据迁移服务注入
-    /// </summary>
-    /// <param name="services"></param>
-    /// <returns></returns>
-    public static IServiceCollection BuildFluentMigrator(this IServiceCollection services)
-    {
-        if(!list.Any())
-            return services;
-        return services.BuildFluentMigrator(list.ToArray(), MigrationSupportDbType.MySql5);
     }
 
     /// <summary>
@@ -65,16 +56,23 @@ public static class FluentMigrationExtensions
             .EmbeddedResources())
             .AddLogging(lb => lb.AddFluentMigratorConsole());
         services.AddScoped(typeof(MigrationSupportDbType), (sp) => supportDbType);
-        services.AddScoped<MigrationService>();
+        services.AddScoped<IMigrationService,MigrationService>();
         services.AddScoped<DbFactoryBase, MySqlDbFactory>();
+        services.AddScoped<DbFactoryBase, SqlServerDbFactory>();
 
-        var reads = new List<IConnectionStringReader>() { new TenantConnectionStringReader() };
-        var options = new TenantProcessorOptions();
-        var selectingProcessorAccessor = new ConnectionStringAccessor(options, new TenantSelectingProcessorAccessorOptions(), reads);
-        services.AddScoped<IConnectionStringAccessor>(sp => { return selectingProcessorAccessor; });
+        services.AddScoped<IConnectionStringAccessor>(
+            sp => 
+                new ConnectionStringAccessor(
+                    new TenantProcessorOptions(), 
+                    new TenantSelectingProcessorAccessorOptions(supportDbType), 
+                    new List<IConnectionStringReader>() 
+                    { 
+                        new TenantConnectionStringReader() 
+                    }));
         services.AddScoped<IVersionTableMetaData>(sp => { return new TenantMigrationVersionTable(); });
         services.ConfigureRunner(rb => rb.WithGlobalCommandTimeout(TimeSpan.FromSeconds(_commandTimeout)));
         services.AddScoped<IMigrationRunner,MigrationRunner>();
+        services.AddScoped<IOptionsSnapshot<SelectingProcessorAccessorOptions>, TenantSelectingProcessorAccessorOptions>();
 
         return services;
     }
@@ -89,6 +87,9 @@ public static class FluentMigrationExtensions
     {
         switch(supportDbType)
         {
+            case MigrationSupportDbType.SqlServer:
+                builder.AddSqlServer2012();
+                break;
             case MigrationSupportDbType.MySql5:
             default:
                 builder.AddMySql5();

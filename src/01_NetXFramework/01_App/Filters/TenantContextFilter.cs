@@ -14,19 +14,18 @@ public class TenantContextFilter : BaseFilter, IAuthorizationFilter, IAsyncAutho
 {
     private readonly ITenantAccessor<Tenant> _accessor;
     private readonly TenantOption _tenantOption;
-    private readonly MigrationService _migrationService;
+    //private readonly IMigrationService _migrationService;
 
     /// <summary>
     /// TenantContext资源过滤器实例
     /// </summary>
     /// <param name="accessor"></param>
     /// <param name="tenantOption"></param>
-    /// <param name="migrationService"></param>
-    public TenantContextFilter(ITenantAccessor<Tenant> accessor, TenantOption tenantOption, MigrationService migrationService)
+    public TenantContextFilter(ITenantAccessor<Tenant> accessor, TenantOption tenantOption/*, IMigrationService migrationService*/)
     {
         _accessor = accessor;
         _tenantOption = tenantOption;
-        _migrationService = migrationService;
+        //_migrationService = migrationService;
     }
 
     /// <summary>
@@ -39,7 +38,7 @@ public class TenantContextFilter : BaseFilter, IAuthorizationFilter, IAsyncAutho
         if (null != _accessor.Tenant && null != identity)
         {
             TenantContext.CurrentTenant.InitPrincipal(new NetXPrincipal(identity, _accessor.Tenant), _tenantOption);
-            _migrationService.SetupDatabase(TenantContext.CurrentTenant.Principal.Tenant.TenantId);
+            //_migrationService.MigrateUp();
         }
     }
 

@@ -11,7 +11,7 @@ namespace NetX.Tools.DatabaseSetup.InitData
     /// <summary>
     /// 
     /// </summary>
-    [Migration(2204)]
+    [Migration(20091127100604)]
     public class InitRoleApiData : InitDataMigration
     {
         /// <summary>
@@ -27,7 +27,7 @@ namespace NetX.Tools.DatabaseSetup.InitData
         /// </summary>
         public override void Down()
         {
-            // Execute.Sql($"delete * from {_tableName}");
+            Execute.Sql($"delete from {_tableName} where apiid in ('60000000000000000000000000000000','60000000000000000000000000000001','60000000000000000000000000000002')");
         }
 
         public override void Up()

@@ -31,6 +31,8 @@ public static class TenantExtension
         string? schema = model.ToDatabaseName(type, tenantId);
         switch (model.DatabaseType)
         {
+            case DatabaseType.SqlServer:
+                return $"Server={model.DatabaseHost};Database={schema};user id={model.UserId};password={model.Password};MultipleActiveResultSets=true";
             case DatabaseType.MySql:
             default:
                 return $"server={model.DatabaseHost};port={model.DatabasePort};database={schema};userid={model.UserId};pwd={model.Password};Charset=utf8; SslMode=none;Min pool size=1";
@@ -60,6 +62,8 @@ public static class TenantExtension
     {
         switch (model.DatabaseType)
         {
+            case DatabaseType.SqlServer:
+                return $"Server={model.DatabaseHost};user id={model.UserId};password={model.Password};MultipleActiveResultSets=true";
             case DatabaseType.MySql:
             default:
                 return $"Data Source={model.DatabaseHost};port={model.DatabasePort};Persist Security Info=yes;UserId={model.UserId}; PWD={model.Password};Charset=utf8; SslMode=none;Min pool size=1";
@@ -75,6 +79,8 @@ public static class TenantExtension
     {
         switch (TenantContext.CurrentTenant.DatabaseInfo?.DatabaseType)
         {
+            case DatabaseType.SqlServer:
+                return DataType.SqlServer;
             case DatabaseType.MySql:
             default:
                 return DataType.MySql;

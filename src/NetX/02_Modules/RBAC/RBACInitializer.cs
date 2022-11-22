@@ -51,7 +51,7 @@ internal class RBACInitializer : ModuleInitializer
         //注入加密算法
         services.AddSingleton<IEncryption, MD5>();
         //CodeFirst
-        services.AddMigratorAssembly(new Assembly[] { Assembly.GetExecutingAssembly() });
+        services.AddMigratorAssembly(new Assembly[] { Assembly.GetExecutingAssembly() }, MigrationSupportDbType.MySql5);
         //密码生成策略
         services.AddScoped<IPasswordStrategy, DefaultPwdStrategy>();
     }

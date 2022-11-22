@@ -11,7 +11,7 @@ namespace NetX.RBAC.DatabaseSetup.CreateTable;
 /// <summary>
 /// api资源表
 /// </summary>
-[Migration(8)]
+[Migration(20091124100608)]
 public class ApiTable : CreateTableMigration
 {
     /// <summary>
@@ -26,7 +26,7 @@ public class ApiTable : CreateTableMigration
     /// 
     /// </summary>
     public override void Up()
-    {
+    {        
         Create.Table(_tableName)
                .WithColumn("id").AsString(50).PrimaryKey()
                .WithColumn("path").AsString(255).NotNullable()
