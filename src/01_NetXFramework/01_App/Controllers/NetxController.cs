@@ -16,7 +16,7 @@ namespace NetX.App;
 /// <summary>
 /// 框架服务接口
 /// </summary>
-public class NetxController: ApiBaseController
+public class NetxController : ApiBaseController
 {
     private readonly IMigrationService _migrationService;
 
@@ -33,7 +33,7 @@ public class NetxController: ApiBaseController
     /// 
     /// </summary>
     /// <returns></returns>
-    [ApiActionDescription("迁移数据库")]
+    [ApiActionDescription("创建（升级）数据库或者数据表")]
     [NoPermission]
     [SuppressMonitor]
     [HttpPost]
@@ -46,7 +46,7 @@ public class NetxController: ApiBaseController
     /// 
     /// </summary>
     /// <returns></returns>
-    [ApiActionDescription("迁移数据库-将删除表或者数据，请谨慎操作(尽量不要在生产环境中使用)")]
+    [ApiActionDescription("删除数据表或数据，请谨慎操作(生产环境中尤为慎重，避免造成数据丢失)")]
     [NoPermission]
     [SuppressMonitor]
     [HttpPost]

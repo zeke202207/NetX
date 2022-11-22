@@ -183,6 +183,6 @@ public static class AppWebApplicationBuilderExtensions
     /// <param name="env"></param>
     private static void ConfigApplication(ModuleContext context,WebApplication app, IWebHostEnvironment env)
     {
-        context.Initialize.ConfigureApplication(app, env, context);
+        context.Initialize?.ConfigureApplication(app, env, context);
     }
 }
