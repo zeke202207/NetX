@@ -13,9 +13,9 @@ namespace NetX.Tools;
 /// <summary>
 /// 管理员工具箱入口类
 /// </summary>
-internal class ToolsInitializer : ModuleInitializer
+internal class LoggingInitializer : ModuleInitializer
 {
-    public override Guid Key => new Guid(ToolsConstEnum.C_TOOLS_KEY);
+    public override Guid Key => new Guid(LoggingConstEnum.C_LOGGING_KEY);
 
     public override ModuleType ModuleType => ModuleType.UserModule;
 

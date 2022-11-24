@@ -16,6 +16,7 @@ namespace NetX.App;
 /// <summary>
 /// 框架服务接口
 /// </summary>
+[ApiControllerDescription(SwaggerConst.C_NOGROUP_NAME, Description = "NetX框架提供的服务接口->数据库迁移管理")]
 public class NetxController : ApiBaseController
 {
     private readonly IMigrationService _migrationService;

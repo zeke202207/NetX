@@ -37,7 +37,7 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="copy $(TargetDir)NetX.RBAC.dll $(SolutionDir)NetX\01_WebApi\bin\Debug\net6.0\modules\systemmanager\NetX.RBAC.dll&#xD;&#xA;copy $(TargetDir)AutoMapper.Extensions.Microsoft.DependencyInjection.dll $(SolutionDir)NetX\01_WebApi\bin\Debug\net6.0\modules\systemmanager\ref\AutoMapper.Extensions.Microsoft.DependencyInjection.dll&#xD;&#xA;copy $(TargetDir)AutoMapper.dll $(SolutionDir)NetX\01_WebApi\bin\Debug\net6.0\modules\systemmanager\ref\AutoMapper.dll" />
+    <Exec Command="copy $(TargetDir)NetX.RBAC.dll $(SolutionDir)NetX\01_WebApi\bin\Debug\net6.0\modules\rbac\NetX.RBAC.dll&#xD;&#xA;copy $(TargetDir)AutoMapper.Extensions.Microsoft.DependencyInjection.dll $(SolutionDir)NetX\01_WebApi\bin\Debug\net6.0\modules\rbac\ref\AutoMapper.Extensions.Microsoft.DependencyInjection.dll&#xD;&#xA;copy $(TargetDir)AutoMapper.dll $(SolutionDir)NetX\01_WebApi\bin\Debug\net6.0\modules\rbac\ref\AutoMapper.dll" />
   </Target>
 
   <ItemGroup>

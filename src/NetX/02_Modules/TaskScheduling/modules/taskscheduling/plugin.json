@@ -1,0 +1,9 @@
+{
+  "Id": "10000000000000000000000000000004",
+  "Name": "taskscheduling",
+  "Version": "1.0.0.0",
+  "Enabled": true,
+  "FileName": "NetX.TaskScheduling.dll",
+  "IsSharedAssemblyContext": true,
+  "Description": "netx实现的任务调度模块"
+}

@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualBasic;
+using Netx.QuartzScheduling;
+using NetX.Common;
 using NetX.DatabaseSetup;
 using NetX.Module;
 using System.Runtime.Loader;
@@ -154,8 +156,11 @@ public static class AppWebApplicationBuilderExtensions
     /// <returns></returns>
     public static WebApplicationBuilder InjectServiceFinally(this WebApplicationBuilder webApplicationBuilder)
     {
-        //Cache
+        //0. Cache
         webApplicationBuilder.Services.AddCaches();
+        //1. 任务调度统一注入job
+        webApplicationBuilder.Services.AddQuartzScheduling(
+            App.GetModuleInitializer().SelectMany(p => p.GetType().Assembly.GetTypes()).Where(p=> typeof(IJobTask).IsAssignableFrom(p)));
         return webApplicationBuilder;
     }
 

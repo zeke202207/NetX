@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="modules\taskscheduling\plugin.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="modules\taskscheduling\plugin.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\01_NetXFramework\01_App\NetX.App.csproj" />
+    <ProjectReference Include="..\..\..\01_NetXFramework\02_Module\NetX.Module.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="modules\taskscheduling\ref\readme.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="copy $(TargetDir)NetX.TaskScheduling.dll $(SolutionDir)NetX\01_WebApi\bin\Debug\net6.0\modules\taskscheduling\NetX.TaskScheduling.dll" />
+  </Target>
+
+</Project>

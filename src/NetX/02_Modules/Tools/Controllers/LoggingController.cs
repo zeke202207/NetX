@@ -9,7 +9,7 @@ namespace NetX.Tools.Controllers
     /// <summary>
     /// 
     /// </summary>
-    [ApiControllerDescription(ToolsConstEnum.C_LOGGING_GROUPNAME, Description = "NetX实现的日志采集模块->日志管理")]
+    [ApiControllerDescription(LoggingConstEnum.C_LOGGING_GROUPNAME, Description = "NetX实现的日志采集模块->日志管理")]
     public class LoggingController : BaseController
     {
         private readonly ILoggingCollectorService _loggingService;

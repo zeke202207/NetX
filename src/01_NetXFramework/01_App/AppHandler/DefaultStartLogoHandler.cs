@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using NetX.Common;
 using NetX.Common.Attributes;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 namespace NetX.App;
 
 [Singleton]
-internal class DefaultStartLogoHandler : IAppStartHandler
+internal class DefaultStartLogoHandler : IStartHandler
 {
     private readonly IConfiguration _config;
 

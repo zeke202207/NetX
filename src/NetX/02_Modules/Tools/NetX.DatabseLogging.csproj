@@ -52,7 +52,7 @@
     </None>
   </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="copy $(TargetDir)NetX.Tools.dll $(SolutionDir)NetX\01_WebApi\bin\Debug\net6.0\modules\admintools\NetX.Tools.dll&#xD;&#xA;copy $(TargetDir)AutoMapper.Extensions.Microsoft.DependencyInjection.dll $(SolutionDir)NetX\01_WebApi\bin\Debug\net6.0\modules\admintools\ref\AutoMapper.Extensions.Microsoft.DependencyInjection.dll&#xD;&#xA;copy $(TargetDir)AutoMapper.dll $(SolutionDir)NetX\01_WebApi\bin\Debug\net6.0\modules\admintools\ref\AutoMapper.dll&#xD;&#xA;copy $(TargetDir)IP2Region.Net.dll $(SolutionDir)NetX\01_WebApi\bin\Debug\net6.0\modules\admintools\ref\IP2Region.Net.dll" />
+    <Exec Command="copy $(TargetDir)NetX.DatabseLogging.dll $(SolutionDir)NetX\01_WebApi\bin\Debug\net6.0\modules\databaselogging\NetX.DatabseLogging.dll&#xD;&#xA;copy $(TargetDir)AutoMapper.Extensions.Microsoft.DependencyInjection.dll $(SolutionDir)NetX\01_WebApi\bin\Debug\net6.0\modules\databaselogging\ref\AutoMapper.Extensions.Microsoft.DependencyInjection.dll&#xD;&#xA;copy $(TargetDir)AutoMapper.dll $(SolutionDir)NetX\01_WebApi\bin\Debug\net6.0\modules\databaselogging\ref\AutoMapper.dll&#xD;&#xA;copy $(TargetDir)IP2Region.Net.dll $(SolutionDir)NetX\01_WebApi\bin\Debug\net6.0\modules\databaselogging\ref\IP2Region.Net.dll" />
   </Target>
 
 </Project>

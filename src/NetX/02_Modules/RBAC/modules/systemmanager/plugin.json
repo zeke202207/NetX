@@ -1,6 +1,6 @@
 {
   "Id": "10000000000000000000000000000001",
-  "Name": "systemmanager",
+  "Name": "rbac",
   "Version": "1.0.0.0",
   "Enabled": true,
   "FileName": "NetX.RBAC.dll",

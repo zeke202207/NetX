@@ -2,13 +2,28 @@
 using NetX.Common.Attributes;
 using System.Reflection;
 
-namespace NetX.App;
+namespace NetX.Common;
 
 /// <summary>
 /// 服务注入扩展方法
 /// </summary>
 public static class ServiceCollectionExtensions
 {
+    /// <summary>
+    /// 程序集注入服务
+    /// </summary>
+    /// <param name="services"></param>
+    /// <param name="assemblies"></param>
+    /// <returns></returns>
+    public static IServiceCollection AddServicesFromAssembly(this IServiceCollection services, Assembly[] assemblies)
+    {
+        foreach(var assembly in assemblies)
+        {
+            services.AddServicesFromAssembly(assembly);
+        }
+        return services;
+    }
+
     /// <summary>
     /// 从指定程序集中注入服务
     /// </summary>

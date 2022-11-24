@@ -3,12 +3,15 @@ using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using NetX.App.Extensions;
+using Netx.QuartzScheduling;
 using NetX.Authentication.Jwt;
+using NetX.Common;
 using NetX.EventBus;
 using NetX.Module;
 using NetX.Swagger;
+using System.Collections.Specialized;
 using System.Linq;
+using System.Reflection;
 
 namespace NetX.App;
 
@@ -29,7 +32,6 @@ public sealed class ServerModuleInitializer : ModuleInitializer
 
     /// <summary>
     /// 配置服务
-    /// Demo宏定义下的内容为使用示例，具体是否启用，根据业务自定决定
     /// </summary>
     /// <param name="services">Specifies the contract for a collection of service descriptors.</param>
     /// <param name="env"> Provides information about the web hosting environment an application is running in</param>
@@ -72,7 +74,11 @@ public sealed class ServerModuleInitializer : ModuleInitializer
         services.AddJwtAuth(context.Configuration);
 
         //8.注入attribute 标签服务
-        services.AddServicesFromAssembly(GetType().Assembly);
+        services.AddServicesFromAssembly(
+            new Assembly[] { 
+                GetType().Assembly, 
+                typeof(QuartzShutdownHandler).Assembly 
+            });
 
         //9. 配置响应压缩方案
         services
@@ -106,7 +112,6 @@ public sealed class ServerModuleInitializer : ModuleInitializer
             //响应缓存中间件的大小限制（单位：字节）。 默认值为 100 * 1024 * 1024 （100 MB）。
             options.SizeLimit = 100 * 1024 * 1024;
         });
-
     }
 
     /// <summary>
@@ -137,7 +142,11 @@ public sealed class ServerModuleInitializer : ModuleInitializer
         // 添加压缩缓存
         app.UseResponseCaching();
         app.UseResponseCompression();
-        app.UseStartupHandler();
-        app.UseShutdownHandler();
+        app.UseQuartzScheduling(p => p?.Start(() => new NameValueCollection()
+        {
+            ["quartz.scheduler.instanceName"] = AppConst.C_SCHEDULING_QUARTZ_DEFAULTINSTANCENAME,
+            ["quartz.jobStore.type"] = AppConst.C_SCHEDULING_QUARTZ_STORENAME,
+        }));
+        app.UseAppHandler();
     }
 }

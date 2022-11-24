@@ -15,7 +15,7 @@ internal class RBACConst
     /// <summary>
     /// swagger分组名称
     /// </summary>
-    public const string C_RBAC_GROUPNAME = "systemmanager";
+    public const string C_RBAC_GROUPNAME = "rbac";
 
     /// <summary>
     /// 注册账号默认密码

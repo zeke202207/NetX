@@ -27,5 +27,15 @@ namespace NetX.App
         /// json文件筛选器
         /// </summary>
         public const string C_APP_JSON_FILE = "*.json";
+
+        /// <summary>
+        /// 调度服务器名称
+        /// </summary>
+        public const string C_SCHEDULING_QUARTZ_DEFAULTINSTANCENAME = "netx";
+
+        /// <summary>
+        /// 调度服务器存储
+        /// </summary>
+        public const string C_SCHEDULING_QUARTZ_STORENAME = "Quartz.Simpl.RAMJobStore, Quartz";
     }
 }

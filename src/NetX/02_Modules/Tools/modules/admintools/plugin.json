@@ -1,9 +1,9 @@
 {
   "Id": "10000000000000000000000000000002",
-  "Name": "admintools",
+  "Name": "databaselogging",
   "Version": "1.0.0.0",
   "Enabled": true,
-  "FileName": "NetX.Tools.dll",
+  "FileName": "NetX.DatabseLogging.dll",
   "IsSharedAssemblyContext": true,
-  "Description": "netx实现的系统日志采集模块，包含系统日志等"
+  "Description": "netx实现的数据库系统日志采集模块"
 }

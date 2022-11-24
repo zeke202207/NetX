@@ -23,6 +23,7 @@
     <ProjectReference Include="..\08_ApiDoc\Swagger\NetX.Swagger.csproj" />
     <ProjectReference Include="..\09_Cache\Cache.Core\NetX.Cache.Core.csproj" />
     <ProjectReference Include="..\09_Cache\MemoryCache\NetX.InMemoryCache.csproj" />
+    <ProjectReference Include="..\10_Scheduling\QuartzScheduling\Netx.QuartzScheduling.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="config\logging.json">
