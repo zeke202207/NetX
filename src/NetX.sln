@@ -17,7 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "05_Tenant", "05_Tenant", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "06_Authentication", "06_Authentication", "{BD0D352D-B332-42D5-B551-124EE9F5DF3A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetX.Common", "01_NetXFramework\00_Common\NetX.Common.csproj", "{2E511575-86F6-4974-8EBC-4642BEE0BD05}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetX.Common", "01_NetXFramework\00_Utils\Common\NetX.Common.csproj", "{2E511575-86F6-4974-8EBC-4642BEE0BD05}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetX.App", "01_NetXFramework\01_App\NetX.App.csproj", "{8632AE87-8E95-49C1-9E90-2D05C26A5106}"
 EndProject
@@ -104,6 +104,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Netx.QuartzScheduling", "01_NetXFramework\10_Scheduling\QuartzScheduling\Netx.QuartzScheduling.csproj", "{73B851D9-B95F-41D8-973F-2CAB13036015}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetX.TaskScheduling", "NetX\02_Modules\TaskScheduling\NetX.TaskScheduling.csproj", "{9CAFF79F-D82B-48AC-9A35-C7D7DF2CCE4D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharedFramework", "SharedFramework", "{25FE97EB-8556-40D6-9D11-F64769396614}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetX.SharedFramework.ChainPipeline", "01_NetXFramework\00_Utils\SharedFramework\ChainPipeline\NetX.SharedFramework.ChainPipeline.csproj", "{B120FFC9-9E08-4AAC-A13B-7A8834EA9694}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -211,6 +215,10 @@ Global
 		{9CAFF79F-D82B-48AC-9A35-C7D7DF2CCE4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9CAFF79F-D82B-48AC-9A35-C7D7DF2CCE4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9CAFF79F-D82B-48AC-9A35-C7D7DF2CCE4D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B120FFC9-9E08-4AAC-A13B-7A8834EA9694}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B120FFC9-9E08-4AAC-A13B-7A8834EA9694}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B120FFC9-9E08-4AAC-A13B-7A8834EA9694}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B120FFC9-9E08-4AAC-A13B-7A8834EA9694}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -262,6 +270,8 @@ Global
 		{FAF01CD7-B663-4CC6-989A-E1AEFA4842F0} = {54205D67-3381-4BF0-B639-FD721793413F}
 		{73B851D9-B95F-41D8-973F-2CAB13036015} = {FAF01CD7-B663-4CC6-989A-E1AEFA4842F0}
 		{9CAFF79F-D82B-48AC-9A35-C7D7DF2CCE4D} = {0E0C7D85-52A6-4139-A6A2-A4095C8B47C6}
+		{25FE97EB-8556-40D6-9D11-F64769396614} = {CF5EC2CC-9C12-4D26-87C6-FA06E5D7F674}
+		{B120FFC9-9E08-4AAC-A13B-7A8834EA9694} = {25FE97EB-8556-40D6-9D11-F64769396614}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E8782471-74F4-48CA-9551-1D4CF94CA9CC}

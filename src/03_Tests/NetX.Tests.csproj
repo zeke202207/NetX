@@ -21,6 +21,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\01_NetXFramework\00_Common\NetX.Common.csproj" />
+    <ProjectReference Include="..\01_NetXFramework\00_Utils\Common\NetX.Common.csproj" />
+    <ProjectReference Include="..\01_NetXFramework\00_Utils\SharedFramework\ChainPipeline\NetX.SharedFramework.ChainPipeline.csproj" />
     <ProjectReference Include="..\01_NetXFramework\01_App\NetX.App.csproj" />
     <ProjectReference Include="..\01_NetXFramework\05_Tenant\NetX.Tenants.csproj" />
     <ProjectReference Include="..\01_NetXFramework\06_Authentication\Authentication.Core\NetX.Authentication.Core.csproj" />
