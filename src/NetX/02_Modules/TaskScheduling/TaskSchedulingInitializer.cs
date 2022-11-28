@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using NetX.Module;
-using System.Reflection;
 
 namespace NetX.TaskScheduling;
 

@@ -20,7 +20,7 @@ namespace DatabaseSetupTest2
 
         public override void ConfigureServices(IServiceCollection services, IWebHostEnvironment env, ModuleContext context)
         {
-            services.AddMigratorAssembly(new Assembly[] { Assembly.GetExecutingAssembly() });
+            services.AddMigratorAssembly(new Assembly[] { Assembly.GetExecutingAssembly() }, MigrationSupportDbType.MySql5);
         }
     }
 }

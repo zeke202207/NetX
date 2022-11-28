@@ -17,6 +17,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\00_Common\NetX.Common.csproj" />
+    <ProjectReference Include="..\00_Utils\Common\NetX.Common.csproj" />
     <ProjectReference Include="..\06_Authentication\Authentication.Jwt\NetX.Authentication.Jwt.csproj" />
   </ItemGroup>
   <ItemGroup>

@@ -1,9 +1,4 @@
 ﻿using Netx.QuartzScheduling;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetX.Tools.Jobs;
 
@@ -16,7 +11,7 @@ public class RestoreDatabaseJob : JobTask
     /// 数据库还原job实例
     /// </summary>
     /// <param name="logger">日志对象</param>
-    public RestoreDatabaseJob(IJobTaskLogger logger) 
+    public RestoreDatabaseJob(IJobTaskLogger logger)
         : base(logger)
     {
     }
