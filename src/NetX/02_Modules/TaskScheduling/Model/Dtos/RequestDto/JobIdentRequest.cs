@@ -7,18 +7,17 @@ using System.Threading.Tasks;
 namespace NetX.TaskScheduling.Model;
 
 /// <summary>
-/// 
+/// 任务名称与分组名称
 /// </summary>
-public abstract class ScheduleRequest
+public class JobIdentRequest
 {
     /// <summary>
-    /// 任务唯一标识
+    /// Job名称
     /// </summary>
-    public string? Id { get; set; }
+    public string JobName { get; set; }
 
     /// <summary>
-    /// 任务配置
+    /// Job分组名称
     /// </summary>
-    public JobRequest Job { get; set; }
-
+    public string GroupName { get; set; }
 }

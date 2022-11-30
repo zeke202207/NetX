@@ -29,4 +29,9 @@ public class JobRequest
     /// 任务参数
     /// </summary>
     public Dictionary<string, string> JobDataMap { get; set; }
+
+    /// <summary>
+    /// 是否允许并发执行
+    /// </summary>
+    public bool DisAllowConcurrentExecution { get; set; }
 }

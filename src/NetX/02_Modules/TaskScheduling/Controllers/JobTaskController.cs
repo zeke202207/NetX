@@ -32,7 +32,7 @@ public class JobTaskController : BaseController
     [ApiActionDescription("添加任务")]
     [NoPermission]
     [HttpPost]
-    public async Task<ResultModel> AddCronJob(ScheduleRequest requestDto)
+    public async Task<ResultModel> AddCronJob(CronScheduleRequest requestDto)
     {
 #if DEBUG
         Dictionary<string, string> test = new()
@@ -40,7 +40,7 @@ public class JobTaskController : BaseController
             {"a","1" },
             {"b","2" }
         };
-        requestDto = new Model.ScheduleRequest()
+        requestDto = new Model.CronScheduleRequest()
         {
             Id = Guid.NewGuid().ToString(),
             Job = new Model.JobRequest()
@@ -60,5 +60,83 @@ public class JobTaskController : BaseController
         };
 #endif
         return await this._scheduleServer.AddJob(requestDto);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="requestDto"></param>
+    /// <returns></returns>
+    [ApiActionDescription("暂停任务")]
+    [NoPermission]
+    [HttpPost]
+    public async Task<ResultModel> PauseJob(JobIdentRequest requestDto)
+    {
+        return await this._scheduleServer.PauseJob(requestDto.JobName, requestDto.GroupName);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="requestDto"></param>
+    /// <returns></returns>
+    [ApiActionDescription("恢复任务")]
+    [NoPermission]
+    [HttpPost]
+    public async Task<ResultModel> ResumeJob(JobIdentRequest requestDto)
+    {
+        return await this._scheduleServer.ResumeJob(requestDto.JobName, requestDto.GroupName);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="requestDto"></param>
+    /// <returns></returns>
+    [ApiActionDescription("删除任务")]
+    [NoPermission]
+    [HttpPost]
+    public async Task<ResultModel> RemoveJob(JobIdentRequest requestDto)
+    {
+        return await this._scheduleServer.DeleteJob(requestDto.JobName, requestDto.GroupName);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="requestDto"></param>
+    /// <returns></returns>
+    [ApiActionDescription("获取任务列表")]
+    [NoPermission]
+    [HttpPost]
+    public async Task<ResultModel> GetJobList(ScheduleListParam requestDto)
+    {
+        return await this._scheduleServer.GetJob(requestDto);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="requestDto"></param>
+    /// <returns></returns>
+    [ApiActionDescription("通过任务名和分组名获取任务")]
+    [NoPermission]
+    [HttpPost]
+    public async Task<ResultModel> GetJobByNameGroup(JobIdentRequest requestDto)
+    {
+        return await this._scheduleServer.GetJob(requestDto.JobName, requestDto.GroupName);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="key"></param>
+    /// <returns></returns>
+    [ApiActionDescription("通过id获取任务")]
+    [NoPermission]
+    [HttpPost]
+    public async Task<ResultModel> GetJobById(KeyParam key)
+    {
+        return await this._scheduleServer.GetJob(key.Id);
     }
 }

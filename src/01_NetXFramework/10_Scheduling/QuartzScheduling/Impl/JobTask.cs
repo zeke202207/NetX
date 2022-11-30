@@ -9,10 +9,7 @@ namespace Netx.QuartzScheduling;
 
 /// <summary>
 /// 任务抽象类
-/// 所有业务任务由此派生
-/// 所有任务禁用并发
 /// </summary>
-[DisallowConcurrentExecution]
 public abstract class JobTask : IJobTask
 {
     private readonly IJobTaskLogger _logger;

@@ -9,4 +9,24 @@ public class CronTriggerRequest : TriggerRequest
     /// cron表达式
     /// </summary>
     public string CronExpression { get; set; }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public DateTime? StartAt { get; set; }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public DateTime? EndAt { get; set; }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public bool StartNow { get; set; }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public int Priority { get; set; }
 }

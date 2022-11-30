@@ -40,6 +40,13 @@ public interface IScheduleService
     Task<ResultModel<bool>> DeleteJob(string jobName, string groupName);
 
     /// <summary>
+    /// 删除一个job
+    /// </summary>
+    /// <param name="jobId"></param>
+    /// <returns></returns>
+    Task<ResultModel<bool>> DeleteJob(string jobId);
+
+    /// <summary>
     /// 获取任务调度列表
     /// </summary>
     /// <param name="scheduleParam"></param>
