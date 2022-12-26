@@ -22,7 +22,8 @@ public static class HttpContextExtensions
     public static TAttribute GetMetadata<TAttribute>(this HttpContext httpContext)
         where TAttribute : class
     {
-        return httpContext.GetEndpoint()?.Metadata?.GetMetadata<TAttribute>();
+        //return httpContext.GetEndpoint()?.Metadata?.GetMetadata<TAttribute>();
+        return httpContext.GetMetadata<TAttribute>();
     }
 
     /// <summary>
@@ -32,7 +33,8 @@ public static class HttpContextExtensions
     /// <returns></returns>
     public static ControllerActionDescriptor GetControllerActionDescriptor(this HttpContext httpContext)
     {
-        return httpContext.GetEndpoint()?.Metadata?.FirstOrDefault(u => u is ControllerActionDescriptor) as ControllerActionDescriptor;
+        //return httpContext.GetEndpoint()?.Metadata?.FirstOrDefault(u => u is ControllerActionDescriptor) as ControllerActionDescriptor;
+        return httpContext.GetMetadata<ControllerActionDescriptor>();
     }
 
     /// <summary>

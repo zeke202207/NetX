@@ -24,6 +24,8 @@
     <ProjectReference Include="..\09_Cache\Cache.Core\NetX.Cache.Core.csproj" />
     <ProjectReference Include="..\09_Cache\MemoryCache\NetX.InMemoryCache.csproj" />
     <ProjectReference Include="..\10_Scheduling\QuartzScheduling\Netx.QuartzScheduling.csproj" />
+    <ProjectReference Include="..\11_DomainDrivenDesign\Ddd.Domain\Netx.Ddd.Domain.csproj" />
+    <ProjectReference Include="..\11_DomainDrivenDesign\Ddd.Infrastructure\Netx.Ddd.Infrastructure.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="config\logging.json">

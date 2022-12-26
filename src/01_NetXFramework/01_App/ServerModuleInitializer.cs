@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Netx.Ddd.Infrastructure;
 using Netx.QuartzScheduling;
 using NetX.Authentication.Jwt;
 using NetX.Common;
@@ -112,6 +113,9 @@ public sealed class ServerModuleInitializer : ModuleInitializer
             //响应缓存中间件的大小限制（单位：字节）。 默认值为 100 * 1024 * 1024 （100 MB）。
             options.SizeLimit = 100 * 1024 * 1024;
         });
+
+        //10. 添加ddd支持
+        services.AddDomainDrivenDesign(context.Configuration);
     }
 
     /// <summary>

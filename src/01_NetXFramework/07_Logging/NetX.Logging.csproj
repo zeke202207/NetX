@@ -8,10 +8,8 @@
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="6.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\00_Common\NetX.Common.csproj" />
     <ProjectReference Include="..\00_Utils\Common\NetX.Common.csproj" />
     <ProjectReference Include="..\05_Tenant\NetX.Tenants.csproj" />
   </ItemGroup>

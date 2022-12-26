@@ -49,6 +49,7 @@ namespace Module2.Controllers
         }
 
         [HttpGet(Name = "zeke2")]
+        [NoPermission]
         public async Task<IEnumerable<string>> Get()
         {
             _logger.LogInformation("hi,zeke,this is a log");
@@ -58,7 +59,7 @@ namespace Module2.Controllers
             var info = _accessor.Tenant;
 
 
-            _publisher.PublishAsync(new EventSource("zeke", "hi,zeke"), new CancellationToken()).GetAwaiter().GetResult();
+            await _publisher.PublishAsync(new EventSource("zeke", "hi,zeke"), new CancellationToken());
             var v = Newtonsoft.Json.JsonConvert.SerializeObject("{}");
             //return Enumerable.Range(1, 5).Select(index => index.ToString())
             //.ToArray();

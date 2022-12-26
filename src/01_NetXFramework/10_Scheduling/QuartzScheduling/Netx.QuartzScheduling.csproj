@@ -16,7 +16,6 @@
     <Folder Include="Listeners\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\00_Common\NetX.Common.csproj" />
     <ProjectReference Include="..\..\00_Utils\Common\NetX.Common.csproj" />
   </ItemGroup>
 

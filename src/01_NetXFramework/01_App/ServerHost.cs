@@ -44,6 +44,7 @@ public static class ServerHost
         //注入用户模块服务
         builder.InjectUserModulesService(options.Modules, builder.Environment, builder.Configuration);
         builder.InjectServiceFinally();
+        builder.Services.AddSingleton(App.GetModuleInitializer());
         var app = builder.Build();
         //注册系统中间件组件
         app.InjectFrameworkApplication(builder.Environment);

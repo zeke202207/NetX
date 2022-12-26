@@ -169,7 +169,7 @@ public static class AppWebApplicationBuilderExtensions
     /// </summary>
     /// <param name="app"></param>
     /// <returns></returns>
-    public static WebApplication InjectApplicationFinally(this WebApplication app)
+    public static IApplicationBuilder InjectApplicationFinally(this IApplicationBuilder app)
     {
         //路由
         app.UseRouting();
@@ -186,7 +186,7 @@ public static class AppWebApplicationBuilderExtensions
     /// <param name="context"></param>
     /// <param name="app"></param>
     /// <param name="env"></param>
-    private static void ConfigApplication(ModuleContext context,WebApplication app, IWebHostEnvironment env)
+    private static void ConfigApplication(ModuleContext context, IApplicationBuilder app, IWebHostEnvironment env)
     {
         context.Initialize?.ConfigureApplication(app, env, context);
     }

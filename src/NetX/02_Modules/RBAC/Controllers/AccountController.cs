@@ -7,6 +7,8 @@ using NetX.RBAC.Models;
 using NetX.Tenants;
 using NetX.Logging.Monitors;
 using NetX.Common;
+using Netx.Ddd.Core;
+using NetX.RBAC.Domain;
 
 namespace NetX.RBAC.Controllers;
 
@@ -17,14 +19,18 @@ namespace NetX.RBAC.Controllers;
 public class AccountController : RBACBaseController
 {
     private readonly IAccountService _accoutService;
+    private readonly IQueryBus _accountQuery;
+    private readonly ICommandBus _accountCommand;
 
     /// <summary>
     /// 账号管理api实例对象
     /// </summary>
     /// <param name="accountService">账户管理服务</param>
-    public AccountController(IAccountService accountService)
+    public AccountController(IAccountService accountService, IQueryBus accountQuery, ICommandBus accountCommand)
     {
         this._accoutService = accountService;
+        this._accountQuery = accountQuery;
+        this._accountCommand = accountCommand;
     }
 
     /// <summary>
@@ -37,6 +43,7 @@ public class AccountController : RBACBaseController
     [HttpPost]
     public async Task<ResultModel> Login(LoginModel model)
     {
+        //this._accountCommand.Send<TestCommand>(new TestCommand(Guid.NewGuid(), DateTime.Now, "zeke"));
         return await _accoutService.Login(model.UserName, model.Password);
     }
 
