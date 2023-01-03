@@ -1,5 +1,4 @@
-﻿using FreeSql;
-
+﻿
 namespace NetX.Tenants;
 
 /// <summary>
@@ -67,23 +66,6 @@ public static class TenantExtension
             case DatabaseType.MySql:
             default:
                 return $"Data Source={model.DatabaseHost};port={model.DatabasePort};Persist Security Info=yes;UserId={model.UserId}; PWD={model.Password};Charset=utf8; SslMode=none;Min pool size=1";
-        }
-    }
-
-    /// <summary>
-    /// 数据库类型转换
-    /// </summary>
-    /// <param name="dbType"></param>
-    /// <returns></returns>
-    public static DataType ToDatabaseType(this DatabaseType dbType)
-    {
-        switch (TenantContext.CurrentTenant.DatabaseInfo?.DatabaseType)
-        {
-            case DatabaseType.SqlServer:
-                return DataType.SqlServer;
-            case DatabaseType.MySql:
-            default:
-                return DataType.MySql;
         }
     }
 }

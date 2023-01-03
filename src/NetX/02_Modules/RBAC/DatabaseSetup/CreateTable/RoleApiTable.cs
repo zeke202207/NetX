@@ -1,10 +1,5 @@
 ﻿using FluentMigrator;
 using NetX.DatabaseSetup;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetX.RBAC.DatabaseSetup.CreateTable
 {
@@ -17,7 +12,7 @@ namespace NetX.RBAC.DatabaseSetup.CreateTable
         /// <summary>
         /// 
         /// </summary>
-        public RoleApiTable() 
+        public RoleApiTable()
             : base(DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYSROLEAPI)
         {
         }

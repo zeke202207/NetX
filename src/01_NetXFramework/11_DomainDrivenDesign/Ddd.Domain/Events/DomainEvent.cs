@@ -2,13 +2,13 @@
 
 namespace Netx.Ddd.Domain;
 
-public abstract class DomainEvent : EventBase
+public class DomainEvent : EventBase
 {
     public DomainEvent(Guid aggregateid)
         :base((aggregateid))
     {
-
+        Entities = new List<object>();
     }
 
-    public object Entity { get; set; }
+    public List<object> Entities { get; set; }
 }

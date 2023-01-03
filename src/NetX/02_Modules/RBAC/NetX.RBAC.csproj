@@ -18,6 +18,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Temp\**" />
+    <EmbeddedResource Remove="Temp\**" />
+    <None Remove="Temp\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="DatabaseSetup\CreateTable\get_child_dept.sql" />
     <None Remove="DatabaseSetup\CreateTable\get_child_menu.sql" />
     <None Remove="modules\systemmanager\plugin.json" />
@@ -60,10 +66,6 @@
     <None Update="modules\systemmanager\ref\readme.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Domain\Queries\" />
   </ItemGroup>
 
 </Project>

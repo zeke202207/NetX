@@ -1,8 +1,10 @@
-﻿namespace Netx.Ddd.Domain;
+﻿using Netx.Ddd.Domain.Aggregates;
 
-public interface IRepository<T, TKey> : IDisposable where T : IAggregate<TKey>
+namespace Netx.Ddd.Domain;
+
+public class BaseRepository<T, TKey> where T : BaseEntity<TKey>
 {
-    IUnitOfWork UnitOfWork { get; }
+    public DbContext Db { get; protected set; }
 
-    public DbContext Db { get; }
+    public void SetDbContext(DbContext db) => Db = db;
 }

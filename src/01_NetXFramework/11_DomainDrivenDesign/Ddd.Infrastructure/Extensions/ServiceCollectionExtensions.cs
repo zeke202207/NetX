@@ -1,10 +1,8 @@
-﻿using FreeSql;
-using MediatR;
+﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using MySqlX.XDevAPI;
 using NetX.DatabaseSetup;
 using NetX.Tenants;
 using System;
@@ -14,7 +12,6 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using static Org.BouncyCastle.Math.EC.ECCurve;
 
 namespace Netx.Ddd.Infrastructure;
 
@@ -39,7 +36,7 @@ public static class ServiceCollectionExtensions
     {
         if (info == null)
             return services;
-        var strConn = $"server={info.DatabaseHost};port={info.DatabasePort};database={info.DatabaseName};userid={info.UserId};pwd={info.Password};Charset=utf8; SslMode=none;Min pool size=1";
+        var strConn = "service=";
         switch(info.DatabaseType)
         {
             case NetX.Tenants.DatabaseType.MySql:
@@ -51,6 +48,7 @@ public static class ServiceCollectionExtensions
         }
         services.AddScoped<NetxContext>();
         services.AddScoped<EventStoreSQLContext>();
+        services.AddScoped<IUnitOfWork,UnitOfWork>();
         return services;
     }
 }

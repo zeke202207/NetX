@@ -16,6 +16,7 @@ public class StoredEvent : EventBase
         MessageType = theEvent.MessageType;
         Data = data;
         UserId = userid;
+        CreateTime = base.Timestamp;
     }
 
     protected StoredEvent()
@@ -26,4 +27,6 @@ public class StoredEvent : EventBase
     public string Data { get; private set; }
 
     public string UserId { get; private set; }
+
+    public DateTime CreateTime { get; private set; }
 }

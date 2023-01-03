@@ -1,11 +1,14 @@
 ﻿
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Netx.Ddd.Domain.Aggregates;
 using NetX.Module;
+using NetX.Tenants;
 using System.Reflection;
 
 namespace Netx.Ddd.Domain;
 
-public sealed class NetxContext : DbContext, IUnitOfWork
+public sealed class NetxContext : BaseDbContext//, IUnitOfWork
 {
     private readonly IEventBus _eventBus;
     private readonly IEnumerable<ModuleInitializer> _modules;
@@ -39,20 +42,25 @@ public sealed class NetxContext : DbContext, IUnitOfWork
         base.OnModelCreating(modelBuilder);
     }
 
-    public async Task<bool> CommitAsync()
-    {
-        // Dispatch Domain Events collection. 
-        // Choices:
-        // A) Right BEFORE committing data (EF SaveChanges) into the DB will make a single transaction including  
-        // side effects from the domain event handlers which are using the same DbContext with "InstancePerLifetimeScope" or "scoped" lifetime
-        // B) Right AFTER committing data (EF SaveChanges) into the DB will make multiple transactions. 
-        // You will need to handle eventual consistency and compensatory actions in case of failures in any of the Handlers. 
-        await _eventBus.PublishDomainEvents(this).ConfigureAwait(false);
+    //public async Task<bool> CommitAsync()
+    //{
+    //    // Dispatch Domain Events collection. 
+    //    // Choices:
+    //    // A) Right BEFORE committing data (EF SaveChanges) into the DB will make a single transaction including  
+    //    // side effects from the domain event handlers which are using the same DbContext with "InstancePerLifetimeScope" or "scoped" lifetime
+    //    // B) Right AFTER committing data (EF SaveChanges) into the DB will make multiple transactions. 
+    //    // You will need to handle eventual consistency and compensatory actions in case of failures in any of the Handlers. 
+    //    await _eventBus.PublishDomainEvents(this).ConfigureAwait(false);
 
-        // After executing this line all the changes (from the Command Handler and Domain Event Handlers) 
-        // performed through the DbContext will be committed
-        var success = await SaveChangesAsync() > 0;
+    //    // After executing this line all the changes (from the Command Handler and Domain Event Handlers) 
+    //    // performed through the DbContext will be committed
+    //    var success = await SaveChangesAsync() > 0;
 
-        return success;
-    }
+    //    return success;
+    //}
+
+    //public IRepository<T, TKey> CreateRepository<T, TKey>() where T : IAggregate<TKey>
+    //{
+        
+    //}
 }

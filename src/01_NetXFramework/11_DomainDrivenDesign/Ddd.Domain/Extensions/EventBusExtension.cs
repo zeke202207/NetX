@@ -10,40 +10,19 @@ namespace Netx.Ddd.Domain;
 
 public static class EventBusExtension
 {
+    /// <summary>
+    /// 每一次commit代表一个event store过程
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="eventBus"></param>
+    /// <param name="ctx"></param>
+    /// <returns></returns>
     public static async Task PublishDomainEvents<T>(this IEventBus eventBus, T ctx) where T : DbContext
     {
-        foreach(var entrity in ctx.ChangeTracker.Entries())
-        {
-            var entiityType = entrity.Entity.GetType();
-            if(entiityType.BaseType.IsGenericType && entiityType.BaseType.GetGenericTypeDefinition() == typeof(BaseEntity<>))
-            {
-                MethodInfo method = entiityType.GetMethod("DequeueUncommittedEvents", new Type[] {  });
-                if (null != method)
-                {
-                    var result = method.Invoke(entrity.Entity, null) as EventBase[];
-                    if(null != result)
-                    {
-                        var tasks = result.Select(async (domainEvent) =>
-                        {
-                            await eventBus.PublishAsync(domainEvent);
-                        });
-                        await Task.WhenAll(tasks);
-                    }
-                }
-            }
-        }
-
-
-        //var domainEvents = ctx.ChangeTracker
-        //    .Entries<Aggregate>()
-        //    .SelectMany(x => x.Entity.DequeueUncommittedEvents())
-        //    .ToList();
-        //var tasks = domainEvents
-        //    .Select(async (domainEvent) =>
-        //    {
-        //        await eventBus.PublishAsync(domainEvent);
-        //    });
-
-        //await Task.WhenAll(tasks);
+        var entries = ctx.ChangeTracker.Entries();
+        var aggregateid = Guid.NewGuid();
+        var domainEvent = new DomainEvent(aggregateid);
+        domainEvent.Entities.AddRange(entries.Select(p => p.Entity));
+        await eventBus.PublishAsync(domainEvent);
     }
 }

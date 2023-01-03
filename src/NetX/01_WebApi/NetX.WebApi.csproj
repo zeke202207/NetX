@@ -8,16 +8,26 @@
 
   <ItemGroup>
     <Compile Remove="log\**" />
+    <Compile Remove="modules\databaselogging\**" />
+    <Compile Remove="modules\fileserver\**" />
+    <Compile Remove="modules\taskscheduling\**" />
     <Content Remove="log\**" />
+    <Content Remove="modules\databaselogging\**" />
+    <Content Remove="modules\fileserver\**" />
+    <Content Remove="modules\taskscheduling\**" />
     <EmbeddedResource Remove="log\**" />
+    <EmbeddedResource Remove="modules\databaselogging\**" />
+    <EmbeddedResource Remove="modules\fileserver\**" />
+    <EmbeddedResource Remove="modules\taskscheduling\**" />
     <None Remove="log\**" />
+    <None Remove="modules\databaselogging\**" />
+    <None Remove="modules\fileserver\**" />
+    <None Remove="modules\taskscheduling\**" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="config\" />
-    <Folder Include="modules\fileserver\ref\" />
     <Folder Include="config\" />
-    <Folder Include="modules\taskscheduling\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,28 +41,10 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\02_Modules\FileServer\config\fileserver.json" Link="config\fileserver.json" />
-    <Content Include="..\02_Modules\FileServer\modules\fileserver\plugin.json" Link="modules\fileserver\plugin.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\02_Modules\FileServer\modules\fileserver\ref\readme.txt" Link="modules\fileserver\ref\readme.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="..\02_Modules\RBAC\modules\systemmanager\plugin.json" Link="modules\rbac\plugin.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\02_Modules\RBAC\modules\systemmanager\ref\readme.txt" Link="modules\rbac\ref\readme.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\02_Modules\TaskScheduling\modules\taskscheduling\plugin.json" Link="modules\taskscheduling\plugin.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\02_Modules\TaskScheduling\modules\taskscheduling\ref\readme.txt" Link="modules\taskscheduling\ref\readme.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\02_Modules\Tools\modules\admintools\plugin.json" Link="modules\databaselogging\plugin.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\02_Modules\Tools\modules\admintools\ref\readme.txt" Link="modules\databaselogging\ref\readme.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -67,12 +59,6 @@
 
   <ItemGroup>
     <EditorConfigFiles Remove="D:\Persion\fw\netx\src\.editorconfig" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="..\..\01_NetXFramework\05_Tenant\main.db" Link="main.db">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
   <ItemGroup>

@@ -1,6 +1,10 @@
-﻿namespace Netx.Ddd.Domain;
+﻿using Netx.Ddd.Domain.Aggregates;
 
-public interface IUnitOfWork
+namespace Netx.Ddd.Domain;
+
+public interface IUnitOfWork : IDisposable
 {
-    Task<bool> CommitAsync();
+    DbSet<T> GetRepository<T,TKey>() where T : BaseEntity<TKey>;
+
+   Task<bool> CommitAsync();
 }

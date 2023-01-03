@@ -4,7 +4,6 @@ using Microsoft.Extensions.DependencyInjection;
 using NetX.Common;
 using NetX.DatabaseSetup;
 using NetX.Module;
-using NetX.RBAC.Core;
 using System.Reflection;
 
 namespace NetX.RBAC;
@@ -53,6 +52,6 @@ internal class RBACInitializer : ModuleInitializer
         //CodeFirst
         services.AddMigratorAssembly(new Assembly[] { Assembly.GetExecutingAssembly() }, MigrationSupportDbType.MySql5);
         //密码生成策略
-        services.AddScoped<IPasswordStrategy, DefaultPwdStrategy>();
+        //services.AddScoped<IPasswordStrategy, DefaultPwdStrategy>();
     }
 }

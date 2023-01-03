@@ -1,5 +1,4 @@
-﻿using FreeSql;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using System.Security.Claims;
 

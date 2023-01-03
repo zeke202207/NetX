@@ -1,10 +1,5 @@
 ﻿using FluentMigrator;
 using NetX.DatabaseSetup;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetX.RBAC.DatabaseSetup.CreateTable;
 
@@ -26,7 +21,7 @@ public class ApiTable : CreateTableMigration
     /// 
     /// </summary>
     public override void Up()
-    {        
+    {
         Create.Table(_tableName)
                .WithColumn("id").AsString(50).PrimaryKey()
                .WithColumn("path").AsString(255).NotNullable()

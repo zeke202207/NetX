@@ -27,7 +27,7 @@ public class TenantSelectingProcessorAccessorOptions : IOptionsSnapshot<Selectin
     /// </summary>
     public SelectingProcessorAccessorOptions Value => new SelectingProcessorAccessorOptions()
     {
-        ProcessorId = supportDb.ToDescriptionOrString()
+        ProcessorId = supportDb.ToString()
     };
 
     /// <summary>

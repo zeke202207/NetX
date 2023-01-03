@@ -15,12 +15,10 @@ namespace NetX.TaskScheduling.Model.Entity
         /// <summary>
         /// 
         /// </summary>
-        [Column(IsPrimary = true)]
         public string jobtaskid { get; set; }
         /// <summary>
         /// 
         /// </summary>
-        [Column(IsPrimary = true)]
         public string triggerid { get; set; }
     }
 }

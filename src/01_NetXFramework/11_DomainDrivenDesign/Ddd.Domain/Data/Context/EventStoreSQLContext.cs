@@ -1,10 +1,11 @@
 ﻿namespace Netx.Ddd.Domain;
 
-public sealed class EventStoreSQLContext : DbContext
+public sealed class EventStoreSQLContext : BaseDbContext
 {
     public EventStoreSQLContext(DbContextOptions<EventStoreSQLContext> options) 
         : base(options) 
-    { }
+    { 
+    }
 
     public DbSet<StoredEvent> StoredEvent { get; set; }
 
