@@ -29,6 +29,7 @@ public static class ServiceCollectionExtensions
         services.ConfigDatabase(database);
         //CodeFirst
         services.AddMigratorAssembly(new Assembly[] { Assembly.GetExecutingAssembly() }, MigrationSupportDbType.MySql5);
+        services.AddScoped<IDatabaseContext, DapperContext>();
         return services;
     }
 
