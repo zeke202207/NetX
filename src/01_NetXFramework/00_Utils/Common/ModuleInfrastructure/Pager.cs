@@ -14,7 +14,7 @@ public class Pager
     /// <summary>
     /// 
     /// </summary>
-    public int Page { get; set; }
+    public int CurrentPage { get; set; }
 
     /// <summary>
     /// 

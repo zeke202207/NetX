@@ -8,7 +8,7 @@ using System.Reflection;
 
 namespace Netx.Ddd.Domain;
 
-public sealed class NetxContext : BaseDbContext//, IUnitOfWork
+public sealed class NetxContext : BaseDbContext
 {
     private readonly IEventBus _eventBus;
     private readonly IEnumerable<ModuleInitializer> _modules;
@@ -35,32 +35,15 @@ public sealed class NetxContext : BaseDbContext//, IUnitOfWork
             && type.BaseType.GetGenericTypeDefinition() == typeof(BaseEntity<>));
             foreach (var type in entities)
             {
-                modelBuilder.Model.AddEntityType(type);
+                //modelBuilder.Model.AddEntityType(type);
+                var upkey = type.GetCustomAttribute<UPKeyAttribute>();
+                if (null != upkey)
+                    modelBuilder.Entity(type).HasKey(upkey.KeyNames);
+                else
+                    modelBuilder.Entity(type);
             }
         });
 
         base.OnModelCreating(modelBuilder);
     }
-
-    //public async Task<bool> CommitAsync()
-    //{
-    //    // Dispatch Domain Events collection. 
-    //    // Choices:
-    //    // A) Right BEFORE committing data (EF SaveChanges) into the DB will make a single transaction including  
-    //    // side effects from the domain event handlers which are using the same DbContext with "InstancePerLifetimeScope" or "scoped" lifetime
-    //    // B) Right AFTER committing data (EF SaveChanges) into the DB will make multiple transactions. 
-    //    // You will need to handle eventual consistency and compensatory actions in case of failures in any of the Handlers. 
-    //    await _eventBus.PublishDomainEvents(this).ConfigureAwait(false);
-
-    //    // After executing this line all the changes (from the Command Handler and Domain Event Handlers) 
-    //    // performed through the DbContext will be committed
-    //    var success = await SaveChangesAsync() > 0;
-
-    //    return success;
-    //}
-
-    //public IRepository<T, TKey> CreateRepository<T, TKey>() where T : IAggregate<TKey>
-    //{
-        
-    //}
 }

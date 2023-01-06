@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 
 namespace NetX.Common;
 
@@ -114,12 +113,13 @@ public class ExceptionFilter : BaseFilter, IExceptionFilter, IAsyncExceptionFilt
         if (context.ExceptionHandled)
             return;
         context.ExceptionHandled = true;
-        Exception ex = context.Exception;
-        context.Result = new JsonResult(ex.ToString())
+        int Code = 500;
+        if (context.Exception.GetType().BaseType == typeof(ExceptionBase))
+            Code = ((ExceptionBase)context.Exception).StatusCode;
+        context.Result = new JsonResult(context.Exception.ToString())
         {
-            StatusCode = 500,
+            StatusCode = Code
         };
-        //logger.LogError(ex, "系统内部错误");
     }
 
     /// <summary>
@@ -161,7 +161,7 @@ public class ResultFilter : BaseFilter, IResultFilter, IAsyncResultFilter
             NullValueHandling = NullValueHandling.Ignore,
             //ContractResolver = new CamelCasePropertyNamesContractResolver(),
             //缩进设置
-            Formatting = Formatting.Indented,            
+            Formatting = Formatting.Indented,
         });
     }
 

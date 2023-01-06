@@ -95,3 +95,8 @@ public enum CacheOperationType
     /// </summary>
     Remove
 }
+
+public enum ErrorStatusCode
+{
+    UserExist = 1000,
+}
