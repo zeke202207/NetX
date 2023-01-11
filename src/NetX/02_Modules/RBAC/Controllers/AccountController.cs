@@ -55,18 +55,18 @@ public class AccountController : RBACBaseController
         return await this._accountQuery.Send<LoginUserInfoQuery, ResultModel>(new LoginUserInfoQuery(TenantContext.CurrentTenant.Principal?.UserId??string.Empty));
     }
 
-    ///// <summary>
-    ///// 获取用户列表分页数据集合
-    ///// </summary>
-    ///// <param name="userListparam">筛选条件</param>
-    ///// <returns></returns>
-    //[ApiActionDescription("获取用户列表分页数据集合")]
-    //[HttpGet]
-    ////[ResponseCache(Duration = 30, Location = ResponseCacheLocation.Client)]
-    //public async Task<ResultModel> GetAccountList([FromQuery] UserListParam userListparam)
-    //{
-    //    return await _accoutService.GetAccountLists(userListparam);
-    //}
+    /// <summary>
+    /// 获取用户列表分页数据集合
+    /// </summary>
+    /// <param name="userListparam">筛选条件</param>
+    /// <returns></returns>
+    [ApiActionDescription("获取用户列表分页数据集合")]
+    [HttpGet]
+    //[ResponseCache(Duration = 30, Location = ResponseCacheLocation.Client)]
+    public async Task<ResultModel> GetAccountList([FromQuery] UserListParam userListparam)
+    {
+        return await _accountQuery.Send<AccountListQuery,ResultModel>(new AccountListQuery(userListparam.DeptId,userListparam.Account,userListparam.Nickname,userListparam.CurrentPage, userListparam.PageSize)); ;
+    }
 
     ///// <summary>
     ///// 判断用户是否存在
@@ -80,28 +80,28 @@ public class AccountController : RBACBaseController
     //    return await _accoutService.IsAccountExist(account);
     //}
 
-    ///// <summary>
-    ///// 获取登录用户访问权限code集合
-    ///// v-auth="'menu:zeke'"
-    ///// </summary>
-    ///// <returns></returns>
-    //[ApiActionDescription("获取用户按钮权限集合")]
-    //[HttpGet]
-    //public async Task<ResultModel> GetPermCode()
-    //{
-    //    return await _accoutService.GetPermCode(TenantContext.CurrentTenant.Principal?.UserId ?? string.Empty);
-    //}
+    /// <summary>
+    /// 获取登录用户访问权限code集合
+    /// v-auth="'menu:zeke'"
+    /// </summary>
+    /// <returns></returns>
+    [ApiActionDescription("获取用户按钮权限集合")]
+    [HttpGet]
+    public async Task<ResultModel> GetPermCode()
+    {
+        return await _accountQuery.Send<AccountPermCodeQuery, ResultModel>(new AccountPermCodeQuery(TenantContext.CurrentTenant.Principal?.UserId ?? string.Empty));
+    }
 
-    ///// <summary>
-    ///// 登出系统
-    ///// </summary>
-    ///// <returns></returns>
-    //[ApiActionDescription("登出系统")]
-    //[HttpGet]
-    //public async Task<ResultModel> Logout()
-    //{
-    //    return await Task.FromResult(new ResultModel<bool>(ResultEnum.SUCCESS) { Result = true });
-    //}
+    /// <summary>
+    /// 登出系统
+    /// </summary>
+    /// <returns></returns>
+    [ApiActionDescription("登出系统")]
+    [HttpGet]
+    public async Task<ResultModel> Logout()
+    {
+        return await Task.FromResult(new ResultModel<bool>(ResultEnum.SUCCESS) { Result = true });
+    }
 
     /// <summary>
     /// 注册添加新用户
@@ -116,42 +116,45 @@ public class AccountController : RBACBaseController
         return true.ToSuccessResultModel();
     }
 
-    ///// <summary>
-    ///// 编辑用户信息
-    ///// </summary>
-    ///// <param name="model">用户信息实体对象</param>
-    ///// <returns></returns>
-    //[Audit]
-    //[ApiActionDescription("编辑用户信息")]
-    //[HttpPost]
-    //public async Task<ResultModel> UpdateAccount(AccountRequestModel model)
-    //{
-    //    return await _accoutService.UpdateAccount(model);
-    //}
+    /// <summary>
+    /// 编辑用户信息
+    /// </summary>
+    /// <param name="model">用户信息实体对象</param>
+    /// <returns></returns>
+    [Audit]
+    [ApiActionDescription("编辑用户信息")]
+    [HttpPost]
+    public async Task<ResultModel> UpdateAccount(AccountRequestModel model)
+    {
+        await _accountCommand.Send<AccountEditCommand>(new AccountEditCommand(model.Id, model.UserName, model.NickName, model.RoleId, model.DeptId, model.Email, model.Remark));
+        return true.ToSuccessResultModel();
+    }
 
-    ///// <summary>
-    ///// 删除用户
-    ///// </summary>
-    ///// <param name="param">删除参数</param>
-    ///// <returns></returns>
-    //[Audit]
-    //[ApiActionDescription("删除用户")]
-    //[HttpDelete]
-    //public async Task<ResultModel> RemoveAccount(KeyParam param)
-    //{
-    //    return await _accoutService.RemoveDept(param.Id);
-    //}
+    /// <summary>
+    /// 删除用户
+    /// </summary>
+    /// <param name="param">删除参数</param>
+    /// <returns></returns>
+    [Audit]
+    [ApiActionDescription("删除用户")]
+    [HttpDelete]
+    public async Task<ResultModel> RemoveAccount(KeyParam param)
+    {
+        await _accountCommand.Send<AccountRemoveCommand>(new AccountRemoveCommand(param.Id));
+        return true.ToSuccessResultModel();
+    }
 
-    ///// <summary>
-    ///// 修改密码
-    ///// </summary>
-    ///// <param name="model"></param>
-    ///// <returns></returns>
-    //[Audit]
-    //[ApiActionDescription("修改密码")]
-    //[HttpPost]
-    //public async Task<ResultModel> ChangePassword(ChangePwdRequestModel model)
-    //{
-    //    return await _accoutService.ChangePassword(TenantContext.CurrentTenant.Principal?.UserId ?? string.Empty, model);
-    //}
+    /// <summary>
+    /// 修改密码
+    /// </summary>
+    /// <param name="model"></param>
+    /// <returns></returns>
+    [Audit]
+    [ApiActionDescription("修改密码")]
+    [HttpPost]
+    public async Task<ResultModel> ChangePassword(ChangePwdRequestModel model)
+    {
+        await _accountCommand.Send<AccountModifyPwdCommand>(new AccountModifyPwdCommand(TenantContext.CurrentTenant.Principal?.UserId ?? string.Empty, model.NewPassword, model.NewPassword));
+        return true.ToSuccessResultModel();
+    }
 }

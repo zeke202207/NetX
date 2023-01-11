@@ -21,7 +21,7 @@ public class DapperContext : IDatabaseContext
     /// <param name="commandType"></param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public T ExecuteScalar<T>(string sql, object param = null, int? commandTimeout = null, CommandType? commandType = null) where T : class
+    public T ExecuteScalar<T>(string sql, object param = null, int? commandTimeout = null, CommandType? commandType = null)
     {
         using(var db = DbConnectionFactory.CreateDbConnection())
         {
@@ -75,7 +75,7 @@ public class DapperContext : IDatabaseContext
     /// <param name="commandType"></param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public async Task<T> ExecuteScalarAsync<T>(string sql, object param = null, int? commandTimeout = null, CommandType? commandType = null) where T : class
+    public async Task<T> ExecuteScalarAsync<T>(string sql, object param = null, int? commandTimeout = null, CommandType? commandType = null)
     {
         using (var db = DbConnectionFactory.CreateDbConnection())
         {

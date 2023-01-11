@@ -99,4 +99,11 @@ public enum CacheOperationType
 public enum ErrorStatusCode
 {
     UserExist = 1000,
+    UserNotFound = 1001,
+    PasswordInvalid = 1002,
+    PasswordIsNull = 1003,
+    ApiNotFound = 1004,
+    DeptNotFound = 1005,
+    RoleNotFound = 1006,
+    MenuNotFound = 1007
 }

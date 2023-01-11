@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Dapper;
+using MediatR;
 using Netx.Ddd.Domain;
 using NetX.Authentication.Core;
 using NetX.Common;
@@ -103,5 +105,94 @@ public class LoginUserInfoQueryHandler : DomainQueryHandler<LoginUserInfoQuery, 
         if(null == user)
             return $"用户不存在：{request.UserId}".ToErrorResultModel<ResultModel>();
         return this._mapper.Map<UserModel>(user).ToSuccessResultModel();
+    }
+}
+
+[Scoped]
+public class AccountListQueryHandler : DomainQueryHandler<AccountListQuery, ResultModel>
+{
+    private readonly IMapper _mapper;
+
+    public AccountListQueryHandler(IDatabaseContext dbContext,
+        IMapper mapper) : base(dbContext)
+    {
+        _mapper = mapper;
+    }
+
+    public override async Task<ResultModel> Handle(AccountListQuery request, CancellationToken cancellationToken)
+    {
+        var list = await GetList(request);
+        var total = await GetCount(request);
+        return list.ToSuccessPagerResultModel<IEnumerable<UserListModel>>(total);
+    }
+
+    private async Task<IEnumerable<UserListModel>> GetList(AccountListQuery request)
+    {
+        string sql = @"SELECT u.* ,r.id,r.rolename,d.id,d.deptname FROM sys_user u
+                        left join sys_user_role ur on ur.userid = u.id
+                        left join sys_user_dept ud on ud.userid = u.id
+                        left join sys_role r on r.id = ur.roleid
+                        left join sys_dept d on d.id = ud.deptid
+                        where d.id = @deptid";
+        var param = new DynamicParameters();
+        param.Add("deptid", request.DeptId);
+        if (!string.IsNullOrWhiteSpace(request.NickName))
+        {
+            sql += @" and u.nickname=@nickname";
+            param.Add("nickname", request.NickName);
+        }
+        if (!string.IsNullOrWhiteSpace(request.Account))
+        {
+            sql += @" and u.username =@acoount";
+            param.Add("acoount", request.Account);
+        }
+        sql += $" limit {request.CurrentPage - 1},{request.PageSize}";
+        return await _dbContext.QueryListAsync<UserListModel>(sql, param);
+    }
+
+    private async Task<int> GetCount(AccountListQuery request)
+    {
+        string sql = @"SELECT COUNT(0) FROM sys_user u
+                        left join sys_user_role ur on ur.userid = u.id
+                        left join sys_user_dept ud on ud.userid = u.id
+                        left join sys_role r on r.id = ur.roleid
+                        left join sys_dept d on d.id = ud.deptid
+                        where d.id = @deptid";
+        var param = new DynamicParameters();
+        param.Add("deptid", request.DeptId);
+        if (!string.IsNullOrWhiteSpace(request.NickName))
+        {
+            sql += @" and u.nickname=@nickname";
+            param.Add("nickname", request.NickName);
+        }
+        if (!string.IsNullOrWhiteSpace(request.Account))
+        {
+            sql += @" and u.username =@acoount";
+            param.Add("acoount", request.Account);
+        }
+        return await _dbContext.ExecuteScalarAsync<int>(sql, param);
+    }
+}
+
+[Scoped]
+public class AccountPermCodeQueryHandler : DomainQueryHandler<AccountPermCodeQuery, ResultModel>
+{
+    private readonly IMapper _mapper;
+
+    public AccountPermCodeQueryHandler(IDatabaseContext dbContext,
+        IMapper mapper) : base(dbContext)
+    {
+        _mapper = mapper;
+    }
+
+    public override async Task<ResultModel> Handle(AccountPermCodeQuery request, CancellationToken cancellationToken)
+    {
+        var permissions = await base._dbContext.QueryListAsync<string>(
+            @$"SELECT m.permission FROM sys_menu m
+                left join sys_role_menu rm on rm.menuid = m.id
+                left join sys_user_role ur on ur.roleid = rm.roleid
+                where ur.userid = @userid",
+            new { userid = request.UserId });
+        return permissions.ToSuccessResultModel<IEnumerable<string>>();
     }
 }

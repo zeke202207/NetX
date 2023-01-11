@@ -18,8 +18,7 @@ public interface IDatabaseContext
     /// <param name="commandTimeout"></param>
     /// <param name="commandType"></param>
     /// <returns></returns>
-    T ExecuteScalar<T>(string sql, object param = null, int? commandTimeout = default(int?), CommandType? commandType = default(CommandType?))
-        where T :class;
+    T ExecuteScalar<T>(string sql, object param = null, int? commandTimeout = default(int?), CommandType? commandType = default(CommandType?));
 
     /// <summary>
     /// 
@@ -54,8 +53,7 @@ public interface IDatabaseContext
     /// <param name="commandTimeout"></param>
     /// <param name="commandType"></param>
     /// <returns></returns>
-    Task<T> ExecuteScalarAsync<T>(string sql, object param = null, int? commandTimeout = default(int?), CommandType? commandType = default(CommandType?))
-       where T : class;
+    Task<T> ExecuteScalarAsync<T>(string sql, object param = null, int? commandTimeout = default(int?), CommandType? commandType = default(CommandType?));
 
     /// <summary>
     /// 
