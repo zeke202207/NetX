@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,10 +15,12 @@ public class Pager
     /// <summary>
     /// 
     /// </summary>
+    [JsonProperty("page")]
     public int CurrentPage { get; set; }
 
     /// <summary>
     /// 
     /// </summary>
+    [JsonProperty("pageSize")]
     public int PageSize { get; set; }
 }

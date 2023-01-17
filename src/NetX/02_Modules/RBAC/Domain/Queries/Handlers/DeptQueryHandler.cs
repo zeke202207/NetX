@@ -33,9 +33,8 @@ public class DeptPagerListQueryHandler : DomainQueryHandler<DeptPagerListQuery, 
 
     private async Task<List<DeptModel>> GetList(DeptPagerListQuery request)
     {
-        string sql = "SELECT * FROM sys_dept where 1=@a";
+        string sql = "SELECT * FROM sys_dept where 1=1";
         var param = new DynamicParameters();
-        param.Add("a", 1);
         if (!request.ContainDisabled)
         {
             sql += " AND status =@status";
@@ -43,7 +42,7 @@ public class DeptPagerListQueryHandler : DomainQueryHandler<DeptPagerListQuery, 
         }
         if (!string.IsNullOrWhiteSpace(request.DeptName))
         {
-            sql += " AND deptname =@deptname";
+            sql += " AND deptname LIKE CONCAT('%',@deptname,'%')";
             param.Add("deptname", request.DeptName);
         }
         if (!string.IsNullOrWhiteSpace(request.Status))
@@ -78,9 +77,8 @@ public class DeptPagerListQueryHandler : DomainQueryHandler<DeptPagerListQuery, 
 
     private async Task<int> GetCount(DeptPagerListQuery request)
     {
-        string sql = "SELECT COUNT(0) FROM sys_dept where 1=@a";
+        string sql = "SELECT COUNT(0) FROM sys_dept where 1=1";
         var param = new DynamicParameters();
-        param.Add("a", 1);
         if (!request.ContainDisabled)
         {
             sql += " AND status =@status";
@@ -88,7 +86,7 @@ public class DeptPagerListQueryHandler : DomainQueryHandler<DeptPagerListQuery, 
         }
         if (!string.IsNullOrWhiteSpace(request.DeptName))
         {
-            sql += " AND deptname =@deptname";
+            sql += " AND deptname LIKE CONCAT('%',@deptname,'%')";
             param.Add("deptname", request.DeptName);
         }
         if (!string.IsNullOrWhiteSpace(request.Status))

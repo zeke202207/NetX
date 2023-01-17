@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data;
+using Netx.Ddd.Domain.Extensions;
 
 namespace NetX.RBAC.Domain;
 
@@ -27,22 +28,26 @@ public class RolePagerListQueryHandler : DomainQueryHandler<RolePagerListQuery, 
 
     public override async Task<ResultModel> Handle(RolePagerListQuery request, CancellationToken cancellationToken)
     {
-        //var result = await GetList(request);
-        //var count = await GetCount(request);
-        //return result.ToSuccessPagerResultModel(count);
-        string sql = @"SELECT apiid FROM sys_role_api where 1 =@a";
+        var result = await GetList(request);
+        var count = await GetCount(request);
+        return result.ToSuccessPagerResultModel(count);
+    }
+
+    private async Task<List<RoleModel>> GetList(RolePagerListQuery request)
+    {
+        string sql = @"SELECT * FROM sys_role where 1 =1";
         var param = new DynamicParameters();
-        param.Add("a", 1);
         if (!string.IsNullOrWhiteSpace(request.Status))
         {
             sql += " AND status =@status";
             param.Add("status", request.Status);
         }
-        if(!string.IsNullOrWhiteSpace(request.RoleName))
+        if (!string.IsNullOrWhiteSpace(request.RoleName))
         {
-            sql += " AND rolename =@rolename";
+            sql += " AND rolename LIKE CONCAT('%',@rolename,'%')";
             param.Add("rolename", request.RoleName);
         }
+        sql += sql.AppendMysqlPagerSql(request.CurrentPage, request.PageSize);
         var roleEntities = await base._dbContext.QueryListAsync<sys_role>(sql, param);
         List<(sys_role role, List<string> menuids)> result = new List<(sys_role role, List<string> menuids)>();
         foreach (var roleEntity in roleEntities)
@@ -55,17 +60,24 @@ public class RolePagerListQueryHandler : DomainQueryHandler<RolePagerListQuery, 
 
             result.Add((role: roleEntity, menuids: menuIds.ToList()));
         }
-        return this._mapper.Map<List<RoleModel>>(result).ToSuccessResultModel();
-    }
-
-    private async Task<List<DeptModel>> GetList(RolePagerListQuery request)
-    {
-        throw new NotImplementedException();
+        return this._mapper.Map<List<RoleModel>>(result);
     }
 
     private async Task<int> GetCount(RolePagerListQuery request)
     {
-        throw new NotImplementedException();
+        string sql = @"SELECT count(0) FROM sys_role where 1 =1";
+        var param = new DynamicParameters();
+        if (!string.IsNullOrWhiteSpace(request.Status))
+        {
+            sql += " AND status =@status";
+            param.Add("status", request.Status);
+        }
+        if (!string.IsNullOrWhiteSpace(request.RoleName))
+        {
+            sql += " AND rolename LIKE CONCAT('%',@rolename,'%')";
+            param.Add("rolename", request.RoleName);
+        }
+        return await _dbContext.ExecuteScalarAsync<int>(sql, param);
     }
 }
 

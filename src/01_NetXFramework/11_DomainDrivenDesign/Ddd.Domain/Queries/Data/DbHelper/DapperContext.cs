@@ -9,10 +9,13 @@ using System.Threading.Tasks;
 
 namespace Netx.Ddd.Domain;
 
+/// <summary>
+/// Dapper数据库上下文
+/// </summary>
 public class DapperContext : IDatabaseContext
 {
     /// <summary>
-    /// 
+    /// Execute parameterized SQL that selects a single value.
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="sql"></param>
@@ -20,7 +23,6 @@ public class DapperContext : IDatabaseContext
     /// <param name="commandTimeout"></param>
     /// <param name="commandType"></param>
     /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
     public T ExecuteScalar<T>(string sql, object param = null, int? commandTimeout = null, CommandType? commandType = null)
     {
         using(var db = DbConnectionFactory.CreateDbConnection())
@@ -30,7 +32,7 @@ public class DapperContext : IDatabaseContext
     }
 
     /// <summary>
-    /// 
+    /// Executes a single-row query, returning the data typed as T.
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="sql"></param>
@@ -38,7 +40,6 @@ public class DapperContext : IDatabaseContext
     /// <param name="commandTimeout"></param>
     /// <param name="commandType"></param>
     /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
     public T QuerySingle<T>(string sql, object param = null, int? commandTimeout = null, CommandType? commandType = null) where T : class
     {
         using(var db = DbConnectionFactory.CreateDbConnection())
@@ -56,7 +57,6 @@ public class DapperContext : IDatabaseContext
     /// <param name="commandTimeout"></param>
     /// <param name="commandType"></param>
     /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
     public IEnumerable<T> QueryList<T>(string sql, object param = null, int? commandTimeout = null, CommandType? commandType = null) where T : class
     {
         using (var db = DbConnectionFactory.CreateDbConnection())
@@ -74,7 +74,6 @@ public class DapperContext : IDatabaseContext
     /// <param name="commandTimeout"></param>
     /// <param name="commandType"></param>
     /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
     public async Task<T> ExecuteScalarAsync<T>(string sql, object param = null, int? commandTimeout = null, CommandType? commandType = null)
     {
         using (var db = DbConnectionFactory.CreateDbConnection())
@@ -92,7 +91,6 @@ public class DapperContext : IDatabaseContext
     /// <param name="commandTimeout"></param>
     /// <param name="commandType"></param>
     /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
     public async Task<T> QuerySingleAsync<T>(string sql, object param = null, int? commandTimeout = null, CommandType? commandType = null) where T : class
     {
         using (var db = DbConnectionFactory.CreateDbConnection())
@@ -110,7 +108,6 @@ public class DapperContext : IDatabaseContext
     /// <param name="commandTimeout"></param>
     /// <param name="commandType"></param>
     /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
     public async Task<IEnumerable<T>> QueryListAsync<T>(string sql, object param = null, int? commandTimeout = null, CommandType? commandType = null) where T : class
     {
         using (var db = DbConnectionFactory.CreateDbConnection())

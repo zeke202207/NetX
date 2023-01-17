@@ -28,12 +28,11 @@ public class MenuPagerListQueryHandler : DomainQueryHandler<MenuPagerListQuery, 
 
     public override async Task<ResultModel> Handle(MenuPagerListQuery request, CancellationToken cancellationToken)
     {
-        string sql = @"SELECT * FROM sys_menu where 1 =@a";
+        string sql = @"SELECT * FROM sys_menu where 1 =1";
         var param = new DynamicParameters();
-        param.Add("a", 1);
         if (!string.IsNullOrWhiteSpace(request.Title))
         {
-            sql += " AND title=@title";
+            sql += " AND title LIKE CONCAT('%',@title,'%')";
             param.Add("title", request.Title);
         }
         if (!string.IsNullOrWhiteSpace(request.Status))
@@ -72,7 +71,7 @@ public class MenuCurrentUserQueryHandler : DomainQueryHandler<MenuCurrentUserQue
 
     public override async Task<ResultModel> Handle(MenuCurrentUserQuery request, CancellationToken cancellationToken)
     {
-        string sql = $@"SELECT * FROM sys_menu m
+        string sql = $@"SELECT m.* FROM sys_menu m
                     left join sys_role_menu rm on rm.menuid = m.id
                     left join sys_user_role ur on ur.roleid = rm.roleid
                     left join sys_role r on r.id = ur.roleid

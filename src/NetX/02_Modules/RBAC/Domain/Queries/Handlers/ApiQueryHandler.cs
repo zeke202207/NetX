@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Dapper;
 using Netx.Ddd.Domain;
+using Netx.Ddd.Domain.Extensions;
 using NetX.Common.Attributes;
 using NetX.Common.ModuleInfrastructure;
 using NetX.RBAC.Models;
@@ -29,27 +30,25 @@ public class ApiPagerListQueryHandler : DomainQueryHandler<ApiPagerListQuery, Re
 
     private async Task<IEnumerable<ApiModel>> GetList(ApiPagerListQuery request)
     {
-        string sql = "SELECT * FROM sys_api WHERE 1=@a";
+        string sql = "SELECT * FROM sys_api WHERE 1=1";
         var param = new DynamicParameters();
-        param.Add("a", 1);
         if (!string.IsNullOrWhiteSpace(request.Group))
         {
-            sql += " AND group =@group";
+            sql += " AND `group` LIKE CONCAT('%',@group,'%')";
             param.Add("group", request.Group);
         }
-        sql += $" limit {request.CurrentPage - 1},{request.PageSize}";
+        sql += sql.AppendMysqlPagerSql(request.CurrentPage, request.PageSize);
         var result = await _dbContext.QueryListAsync<sys_api>(sql, param);
         return _mapper.Map<List<ApiModel>>(result);
     }
 
     private async Task<int> GetCount(ApiPagerListQuery request)
     {
-        string sql = "SELECT COUNT(0) FROM sys_api WHERE 1=@a";
+        string sql = "SELECT COUNT(0) FROM sys_api WHERE 1=1";
         var param = new DynamicParameters();
-        param.Add("a", 1);
         if (!string.IsNullOrWhiteSpace(request.Group))
         {
-            sql += " AND group =@group";
+            sql += " AND `group` LIKE CONCAT('%',@group,'%')";
             param.Add("group", request.Group);
         }
         return await _dbContext.ExecuteScalarAsync<int>(sql, param);

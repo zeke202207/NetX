@@ -11,25 +11,27 @@ using System.Threading.Tasks;
 
 namespace Netx.Ddd.Domain;
 
-public class DbConnectionFactory : IDisposable
+/// <summary>
+/// 数据库链接工厂
+/// </summary>
+public class DbConnectionFactory
 {
-    private static IDbConnection _connection;
-
-    public static IDbConnection CreateDbConnection()
+    /// <summary>
+    /// 创建数据库链接实例
+    /// </summary>
+    /// <returns></returns>
+    public static IDbConnection? CreateDbConnection()
     {
         if (null != TenantContext.CurrentTenant)
         {
             if (TenantContext.CurrentTenant.TenantOption?.DatabaseInfo?.DatabaseType == DatabaseType.MySql)
-                _connection = new MySqlConnection($"{TenantContext.CurrentTenant.TenantOption.DatabaseInfo.ToConnStr()}");
+            {
+                var _connection = new MySqlConnection($"{TenantContext.CurrentTenant.TenantOption.DatabaseInfo.ToConnStr()}");
+                if (null != _connection && _connection.State != ConnectionState.Open)
+                    _connection.Open();
+                return _connection;
+            }
         }
-        if(null!= _connection && _connection.State != ConnectionState.Open)
-            _connection.Open();
-        return _connection;
-    }
-
-    public void Dispose()
-    {
-        _connection?.Close();
-        _connection?.Dispose();
+        return null;
     }
 }

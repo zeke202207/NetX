@@ -2,6 +2,7 @@
 using Dapper;
 using MediatR;
 using Netx.Ddd.Domain;
+using Netx.Ddd.Domain.Extensions;
 using NetX.Authentication.Core;
 using NetX.Common;
 using NetX.Common.Attributes;
@@ -133,20 +134,24 @@ public class AccountListQueryHandler : DomainQueryHandler<AccountListQuery, Resu
                         left join sys_user_dept ud on ud.userid = u.id
                         left join sys_role r on r.id = ur.roleid
                         left join sys_dept d on d.id = ud.deptid
-                        where d.id = @deptid";
+                        where 1=1";
         var param = new DynamicParameters();
-        param.Add("deptid", request.DeptId);
+        if (!string.IsNullOrWhiteSpace(request.DeptId))
+        {
+            sql += @" and d.id = @deptid";
+            param.Add("deptid", request.DeptId);
+        }
         if (!string.IsNullOrWhiteSpace(request.NickName))
         {
-            sql += @" and u.nickname=@nickname";
+            sql += @" AND u.nickname LIKE CONCAT('%',@nickname,'%')";
             param.Add("nickname", request.NickName);
         }
         if (!string.IsNullOrWhiteSpace(request.Account))
         {
-            sql += @" and u.username =@acoount";
+            sql += @" AND u.username LIKE CONCAT('%',@acoount,'%')";
             param.Add("acoount", request.Account);
         }
-        sql += $" limit {request.CurrentPage - 1},{request.PageSize}";
+        sql += sql.AppendMysqlPagerSql(request.CurrentPage, request.PageSize);
         return await _dbContext.QueryListAsync<UserListModel>(sql, param);
     }
 
@@ -157,17 +162,21 @@ public class AccountListQueryHandler : DomainQueryHandler<AccountListQuery, Resu
                         left join sys_user_dept ud on ud.userid = u.id
                         left join sys_role r on r.id = ur.roleid
                         left join sys_dept d on d.id = ud.deptid
-                        where d.id = @deptid";
+                        where 1=1 ";
         var param = new DynamicParameters();
-        param.Add("deptid", request.DeptId);
+        if(!string.IsNullOrWhiteSpace(request.DeptId))
+        {
+            sql += @" and d.id = @deptid";
+            param.Add("deptid", request.DeptId);
+        }
         if (!string.IsNullOrWhiteSpace(request.NickName))
         {
-            sql += @" and u.nickname=@nickname";
+            sql += @" AND u.nickname LIKE CONCAT('%',@nickname,'%')";
             param.Add("nickname", request.NickName);
         }
         if (!string.IsNullOrWhiteSpace(request.Account))
         {
-            sql += @" and u.username =@acoount";
+            sql += @" AND u.username LIKE CONCAT('%',@acoount,'%')";
             param.Add("acoount", request.Account);
         }
         return await _dbContext.ExecuteScalarAsync<int>(sql, param);
