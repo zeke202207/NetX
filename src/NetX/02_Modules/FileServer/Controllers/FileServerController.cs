@@ -1,11 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Net.Http.Headers;
 using NetX.Authentication.Core;
 using NetX.Common;
 using NetX.Common.ModuleInfrastructure;
 using NetX.FileServer.Model;
-using NetX.Logging.Monitors;
 using NetX.Swagger;
 using NetX.Tenants;
 
@@ -36,7 +34,6 @@ namespace NetX.FileServer.Controllers
         /// <returns></returns>
         [ApiActionDescription("上传文件")]
         [NoPermission]
-        [SuppressMonitor]
         [HttpPost("/netx/upload/{slug}")]
         public async Task<ResultModel> Upload(IFormFile file, int slug)
         {
@@ -61,7 +58,6 @@ namespace NetX.FileServer.Controllers
         /// <returns></returns>
         [ApiActionDescription("批量上传文件")]
         [NoPermission]
-        [SuppressMonitor]
         [HttpPost("/netx/uploadbatch/{slug}")]
         public async Task<ResultModel> UploadBatch(IFormFileCollection file, int slug)
         {
