@@ -1,13 +1,7 @@
-﻿using NetX.Common.Attributes;
+﻿using Microsoft.EntityFrameworkCore;
 using Netx.Ddd.Domain;
+using NetX.Common.Attributes;
 using NetX.RBAC.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static NetX.RBAC.Domain.MenuModifyCommand;
-using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
 namespace NetX.RBAC.Domain;
@@ -79,7 +73,7 @@ public class MenuModifyCommandHandler : DomainCommandHandler<MenuModifyCommand>
 
     public override async Task<bool> Handle(MenuModifyCommand request, CancellationToken cancellationToken)
     {
-        var entity = await _uow.GetRepository<sys_menu, string>().FirstOrDefaultAsync(p=>p.Id== request.Id);
+        var entity = await _uow.GetRepository<sys_menu, string>().FirstOrDefaultAsync(p => p.Id == request.Id);
         if (null == entity)
             throw new RbacException($"没有找到菜单信息：{request.Id}", (int)ErrorStatusCode.MenuNotFound);
         MenuMetaData metaData = new MenuMetaData()
@@ -97,7 +91,7 @@ public class MenuModifyCommandHandler : DomainCommandHandler<MenuModifyCommand>
         var menuEntity = new sys_menu()
         {
             Id = entity.Id,
-            createtime=entity.createtime,
+            createtime = entity.createtime,
             status = int.Parse(request.Status),
             icon = request.Icon,
             isext = request.IsExt,
@@ -136,7 +130,7 @@ public class MenuRemoveCommandHandler : DomainCommandHandler<MenuRemoveCommand>
 
     public override async Task<bool> Handle(MenuRemoveCommand request, CancellationToken cancellationToken)
     {
-        var menuIds = await _uow.GetRepository<sys_menu, string>().FromSqlRaw($"select * from sys_menu where find_in_set(id,get_child_menu('{request.Id}'))").AsQueryable().Select(p=>p.Id).ToListAsync();
+        var menuIds = await _uow.GetRepository<sys_menu, string>().FromSqlRaw($"select * from sys_menu where find_in_set(id,get_child_menu('{request.Id}'))").AsQueryable().Select(p => p.Id).ToListAsync();
         foreach (var menuId in menuIds)
         {
             await _uow.GetRepository<sys_role_menu, string>().FromSqlRaw($"SELECT * FROM sys_role_menu WHERE menuid = '{menuId}'").ExecuteDeleteAsync();

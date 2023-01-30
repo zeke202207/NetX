@@ -4,8 +4,8 @@ using Microsoft.Extensions.DependencyInjection;
 using NetX.Cache.Core;
 using NetX.Common;
 using NetX.DatabaseSetup;
+using NetX.FriendlyLogging;
 using NetX.InMemoryCache;
-using NetX.Logging;
 using NetX.Module;
 using System.ComponentModel;
 using System.Reflection;
@@ -31,6 +31,7 @@ public static class ServerHost
         var builder = null == options.Options ?
             WebApplication.CreateBuilder(args) :
             WebApplication.CreateBuilder(options.Options);
+        builder.Host.UseLogging();
         builder.AddConfiguration(options);
         var startUrls = !string.IsNullOrWhiteSpace(urls) ?
             urls :

@@ -1,12 +1,5 @@
-﻿using NetX.Common.ModuleInfrastructure;
-using Netx.Ddd.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NetX.RBAC.Models;
-using Newtonsoft.Json;
+﻿using Netx.Ddd.Domain;
+using NetX.Common.ModuleInfrastructure;
 
 namespace NetX.RBAC.Domain;
 
@@ -32,6 +25,6 @@ public class MenuCurrentUserQuery : DomainQuery<ResultModel>
 
     public MenuCurrentUserQuery(string userId)
     {
-        UserId= userId;
+        UserId = userId;
     }
 }

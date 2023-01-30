@@ -1,11 +1,4 @@
 ﻿using Netx.Ddd.Domain;
-using NetX.RBAC.Models;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetX.RBAC.Domain;
 
@@ -20,11 +13,11 @@ public record RoleAddCommand : DomainCommand
     public RoleAddCommand(string roleName, string status, string apiCheck, string remark, IEnumerable<string> menus)
         : base(Guid.NewGuid(), DateTime.Now)
     {
-        RoleName= roleName;
-        Status= status;
-        ApiCheck= apiCheck;
-        Remark= remark;
-        Menus= menus;
+        RoleName = roleName;
+        Status = status;
+        ApiCheck = apiCheck;
+        Remark = remark;
+        Menus = menus;
     }
 }
 
@@ -66,7 +59,7 @@ public record RoleStatusModifyCommand : DomainCommand
     public string Id { get; set; }
     public string Status { get; set; }
 
-    public RoleStatusModifyCommand(string id,string status)
+    public RoleStatusModifyCommand(string id, string status)
         : base(Guid.NewGuid(), DateTime.Now)
     {
         Id = id;

@@ -2,12 +2,10 @@
 using Netx.Ddd.Core;
 using NetX.Authentication.Core;
 using NetX.Common.ModuleInfrastructure;
-using NetX.Logging.Monitors;
 using NetX.RBAC.Domain;
 using NetX.RBAC.Models;
 using NetX.Swagger;
 using NetX.Tenants;
-using static NetX.RBAC.Domain.MenuModifyCommand;
 
 namespace NetX.RBAC.Controllers;
 
@@ -38,7 +36,7 @@ public class MenuController : RBACBaseController
     [HttpGet]
     public async Task<ResultModel> GetCurrentUserMenuList()
     {
-        return await this._menuQuery.Send<MenuCurrentUserQuery, ResultModel>(new MenuCurrentUserQuery(TenantContext.CurrentTenant.Principal?.UserId??string.Empty));
+        return await this._menuQuery.Send<MenuCurrentUserQuery, ResultModel>(new MenuCurrentUserQuery(TenantContext.CurrentTenant.Principal?.UserId ?? string.Empty));
     }
 
     /// <summary>
@@ -59,7 +57,7 @@ public class MenuController : RBACBaseController
     /// </summary>
     /// <param name="model">菜单实体对象</param>
     /// <returns></returns>
-    [Audit]
+    //[Audit]
     [ApiActionDescription("添加菜单")]
     [HttpPost]
     public async Task<ResultModel> AddMenu(MenuRequestModel model)
@@ -73,12 +71,12 @@ public class MenuController : RBACBaseController
     /// </summary>
     /// <param name="model">菜单实体对象</param>
     /// <returns></returns>
-    [Audit]
+    //[Audit]
     [ApiActionDescription("编辑菜单")]
     [HttpPost]
     public async Task<ResultModel> UpdateMenu(MenuRequestModel model)
     {
-        await _menuCommand.Send<MenuModifyCommand>(new MenuModifyCommand(model.Id,model.ParentId, model.Path, model.Title, model.Component, model.Redirect, model.Meta, model.Icon, model.Type, model.Permission, model.OrderNo, model.Status, model.IsExt, model.Show, model.ExtPath));
+        await _menuCommand.Send<MenuModifyCommand>(new MenuModifyCommand(model.Id, model.ParentId, model.Path, model.Title, model.Component, model.Redirect, model.Meta, model.Icon, model.Type, model.Permission, model.OrderNo, model.Status, model.IsExt, model.Show, model.ExtPath));
         return true.ToSuccessResultModel();
     }
 
@@ -87,7 +85,7 @@ public class MenuController : RBACBaseController
     /// </summary>
     /// <param name="param">删除实体对象</param>
     /// <returns></returns>
-    [Audit]
+    //[Audit]
     [ApiActionDescription("删除菜单")]
     [HttpDelete]
     public async Task<ResultModel> RemoveMenu(KeyParam param)

@@ -1,12 +1,7 @@
-﻿using NetX.Common.Attributes;
+﻿using Microsoft.EntityFrameworkCore;
 using Netx.Ddd.Domain;
+using NetX.Common.Attributes;
 using NetX.RBAC.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 
 namespace NetX.RBAC.Domain;
 
@@ -29,7 +24,7 @@ public class DeptAddCommandHandler : DomainCommandHandler<DeptAddCommand>
             createtime = DateTime.Now,
             deptname = request.DeptName,
             orderno = request.OrderNo,
-            parentid = string.IsNullOrWhiteSpace(request.ParentId) ? RBACConst.C_ROOT_ID : request.ParentId,            
+            parentid = string.IsNullOrWhiteSpace(request.ParentId) ? RBACConst.C_ROOT_DEPT_ID : request.ParentId,
             remark = request.Remark,
             status = int.Parse(request.Status)
         };
@@ -56,7 +51,7 @@ public class DeptModifyCommandHandler : DomainCommandHandler<DeptModifyCommand>
             throw new RbacException($"没有找到部门信息：{request.Id}", (int)ErrorStatusCode.DeptNotFound);
         deptEntity.deptname = request.DeptName;
         deptEntity.orderno = request.OrderNo;
-        deptEntity.parentid = string.IsNullOrWhiteSpace(request.ParentId) ? RBACConst.C_ROOT_ID : request.ParentId;
+        deptEntity.parentid = string.IsNullOrWhiteSpace(request.ParentId) ? RBACConst.C_ROOT_DEPT_ID : request.ParentId;
         deptEntity.remark = request.Remark;
         deptEntity.status = int.Parse(request.Status);
         _uow.GetRepository<sys_dept, string>().Update(deptEntity);

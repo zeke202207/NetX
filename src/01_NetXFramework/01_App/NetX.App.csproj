@@ -19,7 +19,7 @@
     <ProjectReference Include="..\05_Tenant\NetX.Tenants.csproj" />
     <ProjectReference Include="..\06_Authentication\Authentication.Core\NetX.Authentication.Core.csproj" />
     <ProjectReference Include="..\06_Authentication\Authentication.Jwt\NetX.Authentication.Jwt.csproj" />
-    <ProjectReference Include="..\07_Logging\NetX.Logging.csproj" />
+    <ProjectReference Include="..\07_Logging\FriendlyLogging\NetX.FriendlyLogging.csproj" />
     <ProjectReference Include="..\08_ApiDoc\Swagger\NetX.Swagger.csproj" />
     <ProjectReference Include="..\09_Cache\Cache.Core\NetX.Cache.Core.csproj" />
     <ProjectReference Include="..\09_Cache\MemoryCache\NetX.InMemoryCache.csproj" />

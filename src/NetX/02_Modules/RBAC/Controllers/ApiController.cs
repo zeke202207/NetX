@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Netx.Ddd.Core;
 using NetX.Common.ModuleInfrastructure;
-using NetX.Logging.Monitors;
 using NetX.RBAC.Domain;
 using NetX.RBAC.Models;
 using NetX.Swagger;
@@ -55,12 +54,12 @@ public class ApiController : RBACBaseController
     /// </summary>
     /// <param name="model">API实体对象</param>
     /// <returns></returns>
-    [Audit]
+    //[Audit]
     [ApiActionDescription("添加API")]
     [HttpPost]
     public async Task<ResultModel> AddApi(ApiRequestModel model)
     {
-        await _apiCommand.Send<ApiAddCommand>(new ApiAddCommand(model.Path,model.Group,model.Method,model.Description)); ;
+        await _apiCommand.Send<ApiAddCommand>(new ApiAddCommand(model.Path, model.Group, model.Method, model.Description)); ;
         return true.ToSuccessResultModel();
     }
 
@@ -69,7 +68,7 @@ public class ApiController : RBACBaseController
     /// </summary>
     /// <param name="model">API实体对象</param>
     /// <returns></returns>
-    [Audit]
+    //[Audit]
     [ApiActionDescription("编辑API信息")]
     [HttpPost]
     public async Task<ResultModel> UpdateApi(ApiRequestModel model)
@@ -83,7 +82,7 @@ public class ApiController : RBACBaseController
     /// </summary>
     /// <param name="param">删除主键信息</param>
     /// <returns></returns>
-    [Audit]
+    //[Audit]
     [ApiActionDescription("删除API")]
     [HttpDelete]
     public async Task<ResultModel> RemoveApi(KeyParam param)

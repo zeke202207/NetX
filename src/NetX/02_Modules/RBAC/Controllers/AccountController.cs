@@ -3,7 +3,6 @@ using Netx.Ddd.Core;
 using NetX.Authentication.Core;
 using NetX.Common;
 using NetX.Common.ModuleInfrastructure;
-using NetX.Logging.Monitors;
 using NetX.RBAC.Domain;
 using NetX.RBAC.Domain.Queries;
 using NetX.RBAC.Models;
@@ -52,7 +51,7 @@ public class AccountController : RBACBaseController
     [HttpGet]
     public async Task<ResultModel> GetUserInfo()
     {
-        return await this._accountQuery.Send<LoginUserInfoQuery, ResultModel>(new LoginUserInfoQuery(TenantContext.CurrentTenant.Principal?.UserId??string.Empty));
+        return await this._accountQuery.Send<LoginUserInfoQuery, ResultModel>(new LoginUserInfoQuery(TenantContext.CurrentTenant.Principal?.UserId ?? string.Empty));
     }
 
     /// <summary>
@@ -65,7 +64,7 @@ public class AccountController : RBACBaseController
     //[ResponseCache(Duration = 30, Location = ResponseCacheLocation.Client)]
     public async Task<ResultModel> GetAccountList([FromQuery] UserListParam userListparam)
     {
-        return await _accountQuery.Send<AccountListQuery,ResultModel>(new AccountListQuery(userListparam.DeptId,userListparam.Account,userListparam.Nickname,userListparam.CurrentPage, userListparam.PageSize)); ;
+        return await _accountQuery.Send<AccountListQuery, ResultModel>(new AccountListQuery(userListparam.DeptId, userListparam.Account, userListparam.Nickname, userListparam.CurrentPage, userListparam.PageSize)); ;
     }
 
     ///// <summary>
@@ -112,7 +111,7 @@ public class AccountController : RBACBaseController
     [HttpPost]
     public async Task<ResultModel> AddAccount(AccountRequestModel model)
     {
-        await _accountCommand.Send<AccountAddCommand>(new AccountAddCommand(model.UserName,model.NickName,model.RoleId,model.DeptId,model.Email,model.Remark));
+        await _accountCommand.Send<AccountAddCommand>(new AccountAddCommand(model.UserName, model.NickName, model.RoleId, model.DeptId, model.Email, model.Remark));
         return true.ToSuccessResultModel();
     }
 
@@ -121,7 +120,7 @@ public class AccountController : RBACBaseController
     /// </summary>
     /// <param name="model">用户信息实体对象</param>
     /// <returns></returns>
-    [Audit]
+    //[Audit]
     [ApiActionDescription("编辑用户信息")]
     [HttpPost]
     public async Task<ResultModel> UpdateAccount(AccountRequestModel model)
@@ -135,7 +134,7 @@ public class AccountController : RBACBaseController
     /// </summary>
     /// <param name="param">删除参数</param>
     /// <returns></returns>
-    [Audit]
+    //[Audit]
     [ApiActionDescription("删除用户")]
     [HttpDelete]
     public async Task<ResultModel> RemoveAccount(KeyParam param)
@@ -149,12 +148,12 @@ public class AccountController : RBACBaseController
     /// </summary>
     /// <param name="model"></param>
     /// <returns></returns>
-    [Audit]
+    //[Audit]
     [ApiActionDescription("修改密码")]
     [HttpPost]
     public async Task<ResultModel> ChangePassword(ChangePwdRequestModel model)
     {
-        await _accountCommand.Send<AccountModifyPwdCommand>(new AccountModifyPwdCommand(TenantContext.CurrentTenant.Principal?.UserId ?? string.Empty, model.NewPassword, model.NewPassword));
+        await _accountCommand.Send<AccountModifyPwdCommand>(new AccountModifyPwdCommand(TenantContext.CurrentTenant.Principal?.UserId ?? string.Empty, model.OldPassword, model.NewPassword));
         return true.ToSuccessResultModel();
     }
 }

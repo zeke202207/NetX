@@ -1,10 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Netx.Ddd.Domain;
+using NetX.Common;
 using NetX.Common.Attributes;
-using NetX.Common.ModuleInfrastructure;
 using NetX.RBAC.Models;
-using System.Linq;
 
 namespace NetX.RBAC.Domain;
 
@@ -36,27 +35,24 @@ public class AccountAddCommandHandler : DomainCommandHandler<AccountAddCommand>
             remark = request.Remark,
             email = request.Email
         };
-
-        var userroelEntity = new sys_user_role()
-        {
-            userid = userEntity.Id,
-            roleid = request.RoleId
-        };
-
-        var userdeptEntity = new sys_user_dept()
-        {
-            userid = userEntity.Id,
-            deptid = request.DeptId
-        };
-
         var user = await _uow.GetRepository<sys_user, string>().AsQueryable()
             .Where(p => p.username.ToLower().Equals(userEntity.username.ToLower()))
             .FirstOrDefaultAsync();
         if (null != user)
             throw new RbacException("用户已经存在", (int)ErrorStatusCode.UserExist);
         await _uow.GetRepository<sys_user, string>().AddAsync(userEntity);
-        await _uow.GetRepository<sys_user_role, string>().AddAsync(userroelEntity);
-        await _uow.GetRepository<sys_user_dept, string>().AddAsync(userdeptEntity);
+        if (!string.IsNullOrWhiteSpace(request.RoleId))
+            await _uow.GetRepository<sys_user_role, string>().AddAsync(new sys_user_role()
+            {
+                userid = userEntity.Id,
+                roleid = request.RoleId
+            });
+        if (!string.IsNullOrWhiteSpace(request.DeptId))
+            await _uow.GetRepository<sys_user_dept, string>().AddAsync(new sys_user_dept()
+            {
+                userid = userEntity.Id,
+                deptid = request.DeptId
+            });
         return await _uow.CommitAsync();
     }
 }
@@ -81,12 +77,18 @@ public class AccountEditCommandHandler : DomainCommandHandler<AccountEditCommand
             throw new RbacException($"未找到用户：{request.Id}", (int)ErrorStatusCode.UserNotFound);
         user.nickname = request.NickName;
         user.email = request.Email;
-        user.remark= request.Remark;
+        user.remark = request.Remark;
         _uow.GetRepository<sys_user, string>().Update(user);
-        if(!string.IsNullOrEmpty(request.DeptId))
-            _uow.GetRepository<sys_user_dept, string>().Update(new sys_user_dept() { userid = user.Id, deptid = request.DeptId });
+        var ud = await _uow.GetRepository<sys_user_dept, string>().FirstOrDefaultAsync(p => p.userid == user.Id);
+        if (null != ud)
+            _uow.GetRepository<sys_user_dept, string>().Remove(ud);
+        if (!string.IsNullOrEmpty(request.DeptId))
+            await _uow.GetRepository<sys_user_dept, string>().AddAsync(new sys_user_dept() { userid = user.Id, deptid = request.DeptId });
+        var ur = await _uow.GetRepository<sys_user_role, string>().FirstOrDefaultAsync(p => p.userid == user.Id);
+        if (null != ur)
+            _uow.GetRepository<sys_user_role, string>().Remove(ur);
         if (!string.IsNullOrWhiteSpace(request.RoleId))
-            _uow.GetRepository<sys_user_role, string>().Update(new sys_user_role() { userid = user.Id, roleid = request.RoleId });
+            await _uow.GetRepository<sys_user_role, string>().AddAsync(new sys_user_role() { userid = user.Id, roleid = request.RoleId });
         return await _uow.CommitAsync();
     }
 }
@@ -105,7 +107,7 @@ public class AccountRemoveCommandHandler : DomainCommandHandler<AccountRemoveCom
     public override async Task<bool> Handle(AccountRemoveCommand request, CancellationToken cancellationToken)
     {
         var user = await _uow.GetRepository<sys_user, string>().FirstOrDefaultAsync(p => p.Id == request.Id);
-        if(null ==user)
+        if (null == user)
             throw new RbacException($"未找到用户：{request.Id}", (int)ErrorStatusCode.UserNotFound);
         var roles = _uow.GetRepository<sys_user_role, string>().AsQueryable().Where(p => p.userid == request.Id);
         if (null != roles && roles.Any())
@@ -122,25 +124,28 @@ public class AccountRemoveCommandHandler : DomainCommandHandler<AccountRemoveCom
 public class AccountModifyPwdCommandHandler : DomainCommandHandler<AccountModifyPwdCommand>
 {
     private readonly IUnitOfWork _uow;
+    private readonly IEncryption _encryption;
 
     public AccountModifyPwdCommandHandler(
+        IEncryption encryption,
         IUnitOfWork uow)
     {
         _uow = uow;
+        _encryption = encryption;
     }
 
     public override async Task<bool> Handle(AccountModifyPwdCommand request, CancellationToken cancellationToken)
     {
-        if(string.IsNullOrWhiteSpace(request.OldPwd) || string.IsNullOrWhiteSpace(request.NewPwd))
+        if (string.IsNullOrWhiteSpace(request.OldPwd) || string.IsNullOrWhiteSpace(request.NewPwd))
             throw new RbacException($"密码不能为空：{request.Id}", (int)ErrorStatusCode.PasswordIsNull);
         var user = await _uow.GetRepository<sys_user, string>().AsQueryable()
           .Where(p => p.Id.Equals(request.Id))
           .FirstOrDefaultAsync();
         if (null == user)
             throw new RbacException($"未找到用户：{request.Id}", (int)ErrorStatusCode.UserNotFound);
-        if(!request.OldPwd.Equals(user.password))
+        if (!_encryption.Encryption(request.OldPwd).Equals(user.password))
             throw new RbacException($"密码验证失败：{request.Id}", (int)ErrorStatusCode.PasswordInvalid);
-        user.password = request.NewPwd;
+        user.password = _encryption.Encryption(request.NewPwd);
         _uow.GetRepository<sys_user, string>().Update(user);
         return await _uow.CommitAsync();
     }

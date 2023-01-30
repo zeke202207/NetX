@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Netx.Ddd.Core;
 using NetX.Common.ModuleInfrastructure;
-using NetX.Logging.Monitors;
 using NetX.RBAC.Domain;
 using NetX.RBAC.Models;
 using NetX.Swagger;
@@ -43,7 +42,7 @@ public class DeptController : RBACBaseController
     /// </summary>
     /// <param name="model">部门实体对象</param>
     /// <returns></returns>
-    [Audit]
+    //[Audit]
     [ApiActionDescription("新增部门信息")]
     [HttpPost]
     public async Task<ResultModel> AddDept(DeptRequestModel model)
@@ -57,12 +56,12 @@ public class DeptController : RBACBaseController
     /// </summary>
     /// <param name="model">部门实体对象</param>
     /// <returns></returns>
-    [Audit]
+    //[Audit]
     [ApiActionDescription("编辑部门信息")]
     [HttpPost]
     public async Task<ResultModel> UpdateDept(DeptRequestModel model)
     {
-        await _deptCommand.Send<DeptModifyCommand>(new DeptModifyCommand(model.Id,model.ParentId, model.DeptName, model.Status, model.OrderNo, model.Remark));
+        await _deptCommand.Send<DeptModifyCommand>(new DeptModifyCommand(model.Id, model.ParentId, model.DeptName, model.Status, model.OrderNo, model.Remark));
         return true.ToSuccessResultModel();
     }
 
@@ -71,7 +70,7 @@ public class DeptController : RBACBaseController
     /// </summary>
     /// <param name="param">删除实体</param>
     /// <returns></returns>
-    [Audit]
+    //[Audit]
     [ApiActionDescription("删除部门信息")]
     [HttpDelete]
     public async Task<ResultModel> RemoveDept(KeyParam param)

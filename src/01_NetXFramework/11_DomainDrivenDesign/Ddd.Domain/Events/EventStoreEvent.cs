@@ -2,6 +2,7 @@
 using NetX.Common.Attributes;
 using NetX.Tenants;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,7 +39,7 @@ public class EventStoreEvent : IEventBus
             if (null == domainEvent)
                 continue;
             var userId = TenantContext.CurrentTenant.Principal?.UserId ?? "netx-zeke";
-            var storedEvent = new StoredEvent(@event, JsonConvert.SerializeObject(domainEvent.Entities), userId);
+            var storedEvent = new StoredEvent(@event, JsonConvert.SerializeObject(domainEvent.Entities, new StringEnumConverter()), userId);
             this._eventStoreRep.Store(storedEvent);
             await mediator.Publish(@event);
         }

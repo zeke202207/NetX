@@ -1,11 +1,5 @@
 ﻿using Netx.Ddd.Domain;
 using NetX.RBAC.Models;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetX.RBAC.Domain;
 
@@ -28,12 +22,12 @@ public record MenuAddCommand : DomainCommand
     public string? ExtPath { get; set; }
 
     public MenuAddCommand(
-        string parentId, 
-        string path, 
-        string title, 
-        string component, 
+        string parentId,
+        string path,
+        string title,
+        string component,
         string redirect,
-        MenuMetaData meta, 
+        MenuMetaData meta,
         string icon,
         string type,
         string permission,
@@ -43,9 +37,9 @@ public record MenuAddCommand : DomainCommand
         int show,
         string extPath)
     {
-        ParentId= parentId;
-        Path= path;
-        Title= title;
+        ParentId = parentId;
+        Path = path;
+        Title = title;
         Component = component;
         Redirect = redirect;
         Meta = meta;

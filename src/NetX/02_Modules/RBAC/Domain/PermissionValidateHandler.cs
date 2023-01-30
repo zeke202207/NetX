@@ -4,7 +4,6 @@ using NetX.Cache.Core;
 using NetX.Common.Attributes;
 using NetX.EventBus;
 using NetX.RBAC.Models;
-using NetX.Tenants;
 
 namespace NetX.RBAC;
 

@@ -1,15 +1,9 @@
 ﻿using AutoMapper;
 using Dapper;
+using Netx.Ddd.Domain;
 using NetX.Common.Attributes;
 using NetX.Common.ModuleInfrastructure;
-using Netx.Ddd.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NetX.RBAC.Models;
-using NetX.RBAC.Extensions;
 
 namespace NetX.RBAC.Domain;
 
@@ -47,7 +41,7 @@ public class MenuPagerListQueryHandler : DomainQueryHandler<MenuPagerListQuery, 
 
     private async Task<List<DeptModel>> GetList(MenuPagerListQuery request)
     {
-       throw new NotImplementedException();
+        throw new NotImplementedException();
     }
 
     private async Task<int> GetCount(MenuPagerListQuery request)

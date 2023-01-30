@@ -1,13 +1,7 @@
-﻿using NetX.Common.Attributes;
+﻿using Microsoft.EntityFrameworkCore;
 using Netx.Ddd.Domain;
+using NetX.Common.Attributes;
 using NetX.RBAC.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using System.Net.NetworkInformation;
 
 namespace NetX.RBAC.Domain;
 
@@ -112,8 +106,8 @@ public class RoleStatusModifyCommandHandler : DomainCommandHandler<RoleStatusMod
         var roleEntity = await _uow.GetRepository<sys_role, string>().FirstOrDefaultAsync(p => p.Id == request.Id);
         if (null == roleEntity)
             throw new RbacException($"没有找到角色信息：{request.Id}", (int)ErrorStatusCode.RoleNotFound);
-        roleEntity.status =  int.Parse(request.Status);
-        _uow.GetRepository<sys_role,string>().Update(roleEntity);
+        roleEntity.status = int.Parse(request.Status);
+        _uow.GetRepository<sys_role, string>().Update(roleEntity);
         //TODO:更新缓存
         return await _uow.CommitAsync();
     }
@@ -157,7 +151,7 @@ public class RoleApiAuthSettingCommandHandler : DomainCommandHandler<RoleApiAuth
     public override async Task<bool> Handle(RoleApiAuthSettingCommand request, CancellationToken cancellationToken)
     {
         var roleapis = request.ApiIds.Select(p => new sys_role_api() { roleid = request.RoleId, apiid = p });
-        var all = await _uow.GetRepository<sys_role_api,string>().AsQueryable().Where(p=>p.roleid == request.RoleId).ToListAsync();
+        var all = await _uow.GetRepository<sys_role_api, string>().AsQueryable().Where(p => p.roleid == request.RoleId).ToListAsync();
         if (all.Any())
             _uow.GetRepository<sys_role_api, string>().RemoveRange(all);
         await _uow.GetRepository<sys_role_api, string>().AddRangeAsync(roleapis);

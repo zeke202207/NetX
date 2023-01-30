@@ -24,9 +24,10 @@ namespace NetX.RBAC.DatabaseSetup.CreateTable
         {
             Create.Table(_tableName)
                    .WithColumn("roleid").AsString(50).PrimaryKey()
-                   .ForeignKey($"fk_{DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYSROLEAPI}_{DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYSROLE}", DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYSROLE, "id")
+                   //.ForeignKey($"fk_{DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYSROLEAPI}_{DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYSROLE}", DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYSROLE, "id")
                    .WithColumn("apiid").AsString(50).PrimaryKey()
-                   .ForeignKey($"fk_{DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYSROLEAPI}_{DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYSAPI}", DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYSAPI, "id");
+                   //.ForeignKey($"fk_{DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYSROLEAPI}_{DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYSAPI}", DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYSAPI, "id")
+                   ;
         }
     }
 }

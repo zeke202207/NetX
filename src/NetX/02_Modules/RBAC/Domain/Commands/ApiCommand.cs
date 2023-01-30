@@ -1,10 +1,4 @@
 ﻿using Netx.Ddd.Domain;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetX.RBAC.Domain;
 
@@ -33,7 +27,7 @@ public record ApiModifyCommand : DomainCommand
     public string Method { get; set; }
     public string? Description { get; set; }
 
-    public ApiModifyCommand(string id,string path, string group, string method, string description)
+    public ApiModifyCommand(string id, string path, string group, string method, string description)
         : base(Guid.NewGuid(), DateTime.Now)
     {
         Id = id;

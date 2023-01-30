@@ -2,11 +2,6 @@
 using Netx.Ddd.Domain;
 using NetX.Common.Attributes;
 using NetX.RBAC.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetX.RBAC.Domain;
 
@@ -51,11 +46,11 @@ public class ApiModifyCommandHandler : DomainCommandHandler<ApiModifyCommand>
 
     public override async Task<bool> Handle(ApiModifyCommand request, CancellationToken cancellationToken)
     {
-        var apiEntity = await _uow.GetRepository<sys_api,string>().FirstOrDefaultAsync(p=>p.Id== request.Id);
+        var apiEntity = await _uow.GetRepository<sys_api, string>().FirstOrDefaultAsync(p => p.Id == request.Id);
         if (null == apiEntity)
             throw new RbacException($"没有找到api实体：{request.Id}", (int)ErrorStatusCode.ApiNotFound);
         apiEntity.method = request.Method;
-        apiEntity.path= request.Path;
+        apiEntity.path = request.Path;
         apiEntity.group = request.Group;
         apiEntity.description = request.Description;
         _uow.GetRepository<sys_api, string>().Update(apiEntity);
@@ -83,7 +78,7 @@ public class ApiRemoveCommandHandler : DomainCommandHandler<ApiRemoveCommand>
         var roleapi = await _uow.GetRepository<sys_role_api, string>().FirstOrDefaultAsync(p => p.apiid == request.Id);
         if (null != roleapi)
             _uow.GetRepository<sys_role_api, string>().Remove(roleapi);
-        _uow.GetRepository<sys_api,string>().Remove(apiEntity);
+        _uow.GetRepository<sys_api, string>().Remove(apiEntity);
         return await _uow.CommitAsync();
 
     }

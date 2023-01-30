@@ -1,11 +1,5 @@
-﻿using NetX.Common.ModuleInfrastructure;
-using Netx.Ddd.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
+﻿using Netx.Ddd.Domain;
+using NetX.Common.ModuleInfrastructure;
 
 namespace NetX.RBAC.Domain;
 
@@ -18,7 +12,7 @@ public class RolePagerListQuery : DomainQuery<ResultModel>
 
     public RolePagerListQuery(string roleName, string status, int currentPage, int pageSize)
     {
-        RoleName= roleName;
+        RoleName = roleName;
         Status = status;
         CurrentPage = currentPage;
         PageSize = pageSize;

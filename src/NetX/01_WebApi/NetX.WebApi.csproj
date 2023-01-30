@@ -7,18 +7,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="logs\**" />
     <Compile Remove="log\**" />
     <Compile Remove="modules\databaselogging\**" />
     <Compile Remove="modules\fileserver\**" />
     <Compile Remove="modules\taskscheduling\**" />
+    <Content Remove="logs\**" />
     <Content Remove="log\**" />
     <Content Remove="modules\databaselogging\**" />
     <Content Remove="modules\fileserver\**" />
     <Content Remove="modules\taskscheduling\**" />
+    <EmbeddedResource Remove="logs\**" />
     <EmbeddedResource Remove="log\**" />
     <EmbeddedResource Remove="modules\databaselogging\**" />
     <EmbeddedResource Remove="modules\fileserver\**" />
     <EmbeddedResource Remove="modules\taskscheduling\**" />
+    <None Remove="logs\**" />
     <None Remove="log\**" />
     <None Remove="modules\databaselogging\**" />
     <None Remove="modules\fileserver\**" />

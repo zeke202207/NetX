@@ -1,10 +1,4 @@
 ﻿using Netx.Ddd.Domain;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetX.RBAC.Domain;
 
@@ -16,13 +10,13 @@ public record DeptAddCommand : DomainCommand
     public int OrderNo { get; set; }
     public string? Remark { get; set; }
 
-    public DeptAddCommand(string parentId,string deptName,string status, int orderNo,string remark)
+    public DeptAddCommand(string parentId, string deptName, string status, int orderNo, string remark)
     {
-        ParentId= parentId;
-        DeptName= deptName;
-        Status= status;
-        OrderNo= orderNo;
-        Remark= remark;
+        ParentId = parentId;
+        DeptName = deptName;
+        Status = status;
+        OrderNo = orderNo;
+        Remark = remark;
     }
 }
 
@@ -35,9 +29,9 @@ public record DeptModifyCommand : DomainCommand
     public int OrderNo { get; set; }
     public string? Remark { get; set; }
 
-    public DeptModifyCommand(string id,string parentId, string deptName, string status, int orderNo, string remark)
+    public DeptModifyCommand(string id, string parentId, string deptName, string status, int orderNo, string remark)
     {
-        Id= id;
+        Id = id;
         ParentId = parentId;
         DeptName = deptName;
         Status = status;

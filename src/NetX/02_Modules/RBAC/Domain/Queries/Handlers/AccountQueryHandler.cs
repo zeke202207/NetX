@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Dapper;
-using MediatR;
 using Netx.Ddd.Domain;
 using Netx.Ddd.Domain.Extensions;
 using NetX.Authentication.Core;
@@ -8,11 +7,6 @@ using NetX.Common;
 using NetX.Common.Attributes;
 using NetX.Common.ModuleInfrastructure;
 using NetX.RBAC.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetX.RBAC.Domain.Queries;
 
@@ -26,7 +20,7 @@ public class LoginQueryHandler : DomainQueryHandler<LoginQuery, ResultModel>
     public LoginQueryHandler(IDatabaseContext dbContext,
         IEncryption encryption,
         ILoginHandler loginHandler,
-        IMapper mapper) 
+        IMapper mapper)
         : base(dbContext)
     {
         _encryption = encryption;
@@ -94,16 +88,16 @@ public class LoginUserInfoQueryHandler : DomainQueryHandler<LoginUserInfoQuery, 
     private readonly IMapper _mapper;
 
     public LoginUserInfoQueryHandler(IDatabaseContext dbContext,
-        IMapper mapper) 
+        IMapper mapper)
         : base(dbContext)
     {
-        _mapper= mapper;
+        _mapper = mapper;
     }
 
     public override async Task<ResultModel> Handle(LoginUserInfoQuery request, CancellationToken cancellationToken)
     {
         var user = await base._dbContext.QuerySingleAsync<sys_user>($"SELECT * FROM sys_user where id =@id and status = 1", new { id = request.UserId });
-        if(null == user)
+        if (null == user)
             return $"用户不存在：{request.UserId}".ToErrorResultModel<ResultModel>();
         return this._mapper.Map<UserModel>(user).ToSuccessResultModel();
     }
@@ -129,7 +123,7 @@ public class AccountListQueryHandler : DomainQueryHandler<AccountListQuery, Resu
 
     private async Task<IEnumerable<UserListModel>> GetList(AccountListQuery request)
     {
-        string sql = @"SELECT u.* ,r.id,r.rolename,d.id,d.deptname FROM sys_user u
+        string sql = @"SELECT u.* ,r.id as roleid,r.rolename,d.id as deptid,d.deptname FROM sys_user u
                         left join sys_user_role ur on ur.userid = u.id
                         left join sys_user_dept ud on ud.userid = u.id
                         left join sys_role r on r.id = ur.roleid
@@ -141,6 +135,8 @@ public class AccountListQueryHandler : DomainQueryHandler<AccountListQuery, Resu
             sql += @" and d.id = @deptid";
             param.Add("deptid", request.DeptId);
         }
+        else
+            sql += @" and d.id is null or d.id =''";
         if (!string.IsNullOrWhiteSpace(request.NickName))
         {
             sql += @" AND u.nickname LIKE CONCAT('%',@nickname,'%')";
@@ -164,7 +160,7 @@ public class AccountListQueryHandler : DomainQueryHandler<AccountListQuery, Resu
                         left join sys_dept d on d.id = ud.deptid
                         where 1=1 ";
         var param = new DynamicParameters();
-        if(!string.IsNullOrWhiteSpace(request.DeptId))
+        if (!string.IsNullOrWhiteSpace(request.DeptId))
         {
             sql += @" and d.id = @deptid";
             param.Add("deptid", request.DeptId);

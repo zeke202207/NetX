@@ -22,7 +22,7 @@ public static class EventBusExtension
         var entries = ctx.ChangeTracker.Entries();
         var aggregateid = Guid.NewGuid();
         var domainEvent = new DomainEvent(aggregateid);
-        domainEvent.Entities.AddRange(entries.Select(p => p.Entity));
+        domainEvent.Entities.AddRange(entries.Select(p => new { p.CurrentValues.EntityType.Name, p.Entity, p.State }));
         await eventBus.PublishAsync(domainEvent);
     }
 }

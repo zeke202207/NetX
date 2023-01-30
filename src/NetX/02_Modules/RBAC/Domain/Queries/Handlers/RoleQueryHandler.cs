@@ -1,16 +1,10 @@
 ﻿using AutoMapper;
 using Dapper;
+using Netx.Ddd.Domain;
+using Netx.Ddd.Domain.Extensions;
 using NetX.Common.Attributes;
 using NetX.Common.ModuleInfrastructure;
-using Netx.Ddd.Domain;
 using NetX.RBAC.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data;
-using Netx.Ddd.Domain.Extensions;
 
 namespace NetX.RBAC.Domain;
 

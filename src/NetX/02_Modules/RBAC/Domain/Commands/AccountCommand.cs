@@ -1,5 +1,4 @@
 ﻿using Netx.Ddd.Domain;
-using Newtonsoft.Json;
 
 namespace NetX.RBAC.Domain;
 
@@ -15,12 +14,12 @@ public record AccountAddCommand : DomainCommand
     public AccountAddCommand(string userName, string nickName, string roleId, string deptId, string email, string remark)
         : base(Guid.NewGuid(), DateTime.Now)
     {
-        UserName= userName;
-        NickName= nickName;
-        RoleId= roleId;
-        DeptId= deptId;
-        Email= email;
-        Remark= remark;
+        UserName = userName;
+        NickName = nickName;
+        RoleId = roleId;
+        DeptId = deptId;
+        Email = email;
+        Remark = remark;
     }
 }
 
@@ -35,7 +34,7 @@ public record AccountEditCommand : AccountAddCommand
     }
 }
 
-public record AccountModifyPwdCommand: DomainCommand
+public record AccountModifyPwdCommand : DomainCommand
 {
     public string Id { get; set; }
     public string OldPwd { get; set; }

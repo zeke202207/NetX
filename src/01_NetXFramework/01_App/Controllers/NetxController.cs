@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NetX.Authentication.Core;
 using NetX.DatabaseSetup;
-using NetX.Logging.Monitors;
 using NetX.Swagger;
 using NetX.Tenants;
 using System;
@@ -36,7 +35,6 @@ public class NetxController : ApiBaseController
     /// <returns></returns>
     [ApiActionDescription("创建（升级）数据库或者数据表")]
     [NoPermission]
-    [SuppressMonitor]
     [HttpPost]
     public async Task<bool> MigrateUp()
     {
@@ -49,7 +47,6 @@ public class NetxController : ApiBaseController
     /// <returns></returns>
     [ApiActionDescription("删除数据表或数据，请谨慎操作(生产环境中尤为慎重，避免造成数据丢失)")]
     [NoPermission]
-    [SuppressMonitor]
     [HttpPost]
     public async Task<bool> MigrateDown(long version)
     {
