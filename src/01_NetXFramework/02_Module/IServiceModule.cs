@@ -11,8 +11,8 @@ public interface IServiceModule : IModule
     /// <summary>
     /// 注入服务
     /// </summary>
-    /// <param name="services"></param>
-    /// <param name="env">环境变量</param>
-    /// <param name="context"></param>
+    /// <param name="services">Specifies the contract for a collection of service descriptors.</param>
+    /// <param name="env">Provides information about the web hosting environment an application is running in</param>
+    /// <param name="context">模块上下文</param>
     void ConfigureServices(IServiceCollection services, IWebHostEnvironment env, ModuleContext context);
 }

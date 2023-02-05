@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using NetX.Common.Models;
+using NetX.Common.ModuleInfrastructure;
 using NetX.Swagger;
 using NetX.Tools.Core;
 using NetX.Tools.Models;
@@ -9,7 +9,7 @@ namespace NetX.Tools.Controllers
     /// <summary>
     /// 
     /// </summary>
-    [ApiControllerDescription(ToolsConstEnum.C_LOGGING_GROUPNAME, Description = "NetX实现的日志采集模块->日志管理")]
+    [ApiControllerDescription(LoggingConstEnum.C_LOGGING_GROUPNAME, Description = "NetX实现的日志采集模块->日志管理")]
     public class LoggingController : BaseController
     {
         private readonly ILoggingCollectorService _loggingService;
@@ -38,7 +38,7 @@ namespace NetX.Tools.Controllers
         /// <returns></returns>
         [ApiActionDescription("获取系统日志列表")]
         [HttpPost]
-        public async Task<ResultModel<PagerResultModel<List<LoggingModel>>>> GetLogList(LoggingParam queryParam)
+        public async Task<ResultModel> GetLogList(LoggingParam queryParam)
         {
             return await _loggingService.GetLoggingList(queryParam);
         }
@@ -51,7 +51,7 @@ namespace NetX.Tools.Controllers
         /// <returns></returns>
         [ApiActionDescription("获取审计日志列表")]
         [HttpPost]
-        public async Task<ResultModel<PagerResultModel<List<AuditLoggingModel>>>> GetAuditLogList(AuditLoggingParam queryParam)
+        public async Task<ResultModel> GetAuditLogList(AuditLoggingParam queryParam)
         {
             return await _auditLoggingService.GetAuditLoggingList(queryParam);
         }
@@ -63,7 +63,7 @@ namespace NetX.Tools.Controllers
         /// <returns></returns>
         [ApiActionDescription("获取登录日志列表")]
         [HttpPost]
-        public async Task<ResultModel<PagerResultModel<List<LoginLoggingModel>>>> GetLoginLogList(LoginLoggingParam queryParam)
+        public async Task<ResultModel> GetLoginLogList(LoginLoggingParam queryParam)
         {
             return await _loginLoggingService.GetLogininLoggingList(queryParam);
         }

@@ -14,4 +14,9 @@ public static class SwaggerConst
     /// 
     /// </summary>
     public const string C_NOGROUP_TITLE = "无分组";
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public const string C_JWT_SCHEME = "Bearer";
 }

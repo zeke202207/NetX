@@ -5,23 +5,18 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+
   <ItemGroup>
-    <PackageReference Include="FreeSql.Cloud" Version="1.6.3" />
-    <PackageReference Include="FreeSql.Provider.MySql" Version="3.2.669" />
-    <PackageReference Include="FreeSql.Provider.Sqlite" Version="3.2.669" />
+    <None Remove="NetX.Tenants.xml" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\00_Common\NetX.Common.csproj" />
+    <ProjectReference Include="..\00_Utils\Common\NetX.Common.csproj" />
     <ProjectReference Include="..\06_Authentication\Authentication.Jwt\NetX.Authentication.Jwt.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="main.db">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 </Project>

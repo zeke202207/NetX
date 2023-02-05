@@ -8,11 +8,15 @@
       //秘钥
       "Key": "twZJ$j5##pVc5*y&",
       //发行商
-      "Issuer": "http://www.liuping.org.cn/",
+      "Issuer": "http://www.netx.net.cn/",
       //订阅者
-      "Audience": "http://www.liuping.org.cn/",
+      "Audience": "http://www.netx.net.cn/",
       //有效期(分钟)
       "Expires": 120
     }
-  }
+  },
+  "netxinfo": {
+    "version": "1.0.0.1",
+    "github": "https://github.com/zeke202207/NetX"
+  }  
 }

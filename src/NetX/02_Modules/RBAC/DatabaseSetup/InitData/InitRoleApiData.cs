@@ -1,17 +1,12 @@
 ﻿using FluentMigrator;
 using NetX.DatabaseSetup;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetX.RBAC.DatabaseSetup.InitData
 {
     /// <summary>
     /// 
     /// </summary>
-    [Migration(1009)]
+    [Migration(20091125100609)]
     public class InitRoleApiData : InitDataMigration
     {
         /// <summary>
@@ -76,6 +71,11 @@ namespace NetX.RBAC.DatabaseSetup.InitData
            {
                roleid = "00000000000000000000000000000001",
                apiid = "10000000000000000000000000000008",
+           })
+           .Row(new
+           {
+               roleid = "00000000000000000000000000000001",
+               apiid = "10000000000000000000000000000009",
            })
 
             #endregion
@@ -222,7 +222,7 @@ namespace NetX.RBAC.DatabaseSetup.InitData
         /// </summary>
         public override void Down()
         {
-            Execute.Sql($"delete * from {_tableName}");
+            Execute.Sql($"delete from {_tableName}");
         }
     }
 }

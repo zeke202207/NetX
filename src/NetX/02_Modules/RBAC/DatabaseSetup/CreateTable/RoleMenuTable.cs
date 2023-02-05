@@ -6,7 +6,7 @@ namespace NetX.RBAC.DatabaseSetup.CreateTable;
 /// <summary>
 /// 
 /// </summary>
-[Migration(5)]
+[Migration(20091124100605)]
 public class RoleMenuTable : CreateTableMigration
 {
     /// <summary>
@@ -24,8 +24,9 @@ public class RoleMenuTable : CreateTableMigration
     {
         Create.Table(_tableName)
                .WithColumn("roleid").AsString(50).PrimaryKey()
-               .ForeignKey($"fk_{DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYSROLEMENU}_{DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYSROLE}", DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYSROLE, "id")
+               //.ForeignKey($"fk_{DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYSROLEMENU}_{DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYSROLE}", DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYSROLE, "id")
                .WithColumn("menuid").AsString(50).PrimaryKey()
-               .ForeignKey($"fk_{DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYSROLEMENU}_{DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYSMENU}", DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYSMENU, "id");
+               //.ForeignKey($"fk_{DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYSROLEMENU}_{DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYSMENU}", DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYSMENU, "id")
+               ;
     }
 }

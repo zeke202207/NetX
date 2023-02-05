@@ -9,14 +9,20 @@ public class TenantMiddleware<T>
     where T : Tenant
 {
     private readonly RequestDelegate _next;
+    private readonly ITenantAccessor<Tenant> _tenantAccessor;
+    private readonly TenantOption _tenantOption;
 
     /// <summary>
     /// 租户中间件实例
     /// </summary>
     /// <param name="next"></param>
-    public TenantMiddleware(RequestDelegate next)
+    /// <param name="tenantAccessor"></param>
+    /// <param name="tenantOption"></param>
+    public TenantMiddleware(RequestDelegate next, ITenantAccessor<Tenant> tenantAccessor, TenantOption tenantOption)
     {
         _next = next;
+        _tenantAccessor = tenantAccessor;
+        _tenantOption = tenantOption;
     }
 
     /// <summary>
@@ -32,7 +38,8 @@ public class TenantMiddleware<T>
             if (null != tenantService)
                 context.Items.Add(TenantConst.C_TENANT_HTTPCONTEXTTENANTKEY, await tenantService.GetTenatnAsync());
         }
-        if (null != _next)
-            await _next(context);
+        if (null != _tenantAccessor && null != _tenantOption)
+            TenantContext.CurrentTenant.InitPrincipal(new NetXPrincipal(_tenantAccessor.Tenant), _tenantOption);
+        await _next(context);
     }
 }

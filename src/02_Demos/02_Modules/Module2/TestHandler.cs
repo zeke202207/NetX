@@ -11,9 +11,9 @@ namespace Module2
 {
     public class TestHandler : IPermissionValidateHandler
     {
-        public bool Validate(HttpContext context, IDictionary<string, string> routeValues)
+        public Task<bool> Validate(HttpContext context, IDictionary<string, string?> routeValues)
         {
-            return true;
+            throw new NotImplementedException();
         }
     }
 }

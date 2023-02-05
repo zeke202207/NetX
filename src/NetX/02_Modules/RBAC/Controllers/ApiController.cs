@@ -1,14 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using NetX.Common.Models;
-using NetX.Swagger;
-using NetX.RBAC.Core;
+using Netx.Ddd.Core;
+using NetX.Common.ModuleInfrastructure;
+using NetX.RBAC.Domain;
 using NetX.RBAC.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NetX.Logging.Monitors;
+using NetX.Swagger;
 
 namespace NetX.RBAC.Controllers;
 
@@ -18,15 +13,16 @@ namespace NetX.RBAC.Controllers;
 [ApiControllerDescription(RBACConst.C_RBAC_GROUPNAME, Description = "NetX实现的系统管理模块->接口管理")]
 public class ApiController : RBACBaseController
 {
-    private IApiService _apiService;
+    private readonly IQueryBus _apiQuery;
+    private readonly ICommandBus _apiCommand;
 
     /// <summary>
     /// 角色管理api实例对象
     /// </summary>
-    /// <param name="apiService">api服务</param>
-    public ApiController(IApiService apiService)
+    public ApiController(IQueryBus apiQuery, ICommandBus apiCommand)
     {
-        this._apiService = apiService;
+        this._apiQuery = apiQuery;
+        this._apiCommand = apiCommand;
     }
 
     /// <summary>
@@ -36,9 +32,9 @@ public class ApiController : RBACBaseController
     /// <returns></returns>
     [ApiActionDescription("获取API分页列表")]
     [HttpPost]
-    public async Task<ResultModel<PagerResultModel<List<ApiModel>>>> GetApiPageList(ApiPageParam apiPageParam)
+    public async Task<ResultModel> GetApiPageList(ApiPageParam apiPageParam)
     {
-        return await _apiService.GetApiList(apiPageParam);
+        return await _apiQuery.Send<ApiPagerListQuery, ResultModel>(new ApiPagerListQuery(apiPageParam.Ggroup, apiPageParam.CurrentPage, apiPageParam.PageSize));
     }
 
     /// <summary>
@@ -48,9 +44,9 @@ public class ApiController : RBACBaseController
     /// <returns></returns>
     [ApiActionDescription("获取API列表")]
     [HttpPost]
-    public async Task<ResultModel<List<ApiModel>>> GetApiList(ApiParam apiParam)
+    public async Task<ResultModel> GetApiList(ApiParam apiParam)
     {
-        return await _apiService.GetApiList(apiParam);
+        return await _apiQuery.Send<ApiListQuery, ResultModel>(new ApiListQuery());
     }
 
     /// <summary>
@@ -58,12 +54,13 @@ public class ApiController : RBACBaseController
     /// </summary>
     /// <param name="model">API实体对象</param>
     /// <returns></returns>
-    [Audit]
+    //[Audit]
     [ApiActionDescription("添加API")]
     [HttpPost]
-    public async Task<ResultModel<bool>> AddApi(ApiRequestModel model)
+    public async Task<ResultModel> AddApi(ApiRequestModel model)
     {
-        return await this._apiService.AddApi(model);
+        await _apiCommand.Send<ApiAddCommand>(new ApiAddCommand(model.Path, model.Group, model.Method, model.Description)); ;
+        return true.ToSuccessResultModel();
     }
 
     /// <summary>
@@ -71,12 +68,13 @@ public class ApiController : RBACBaseController
     /// </summary>
     /// <param name="model">API实体对象</param>
     /// <returns></returns>
-    [Audit]
+    //[Audit]
     [ApiActionDescription("编辑API信息")]
     [HttpPost]
-    public async Task<ResultModel<bool>> UpdateApi(ApiRequestModel model)
+    public async Task<ResultModel> UpdateApi(ApiRequestModel model)
     {
-        return await this._apiService.UpdateApi(model);
+        await _apiCommand.Send<ApiModifyCommand>(new ApiModifyCommand(model.Id, model.Path, model.Group, model.Method, model.Description));
+        return true.ToSuccessResultModel();
     }
 
     /// <summary>
@@ -84,11 +82,12 @@ public class ApiController : RBACBaseController
     /// </summary>
     /// <param name="param">删除主键信息</param>
     /// <returns></returns>
-    [Audit]
+    //[Audit]
     [ApiActionDescription("删除API")]
     [HttpDelete]
-    public async Task<ResultModel<bool>> RemoveApi(KeyParam param)
+    public async Task<ResultModel> RemoveApi(KeyParam param)
     {
-        return await this._apiService.RemoveApi(param.Id);
+        await _apiCommand.Send<ApiRemoveCommand>(new ApiRemoveCommand(param.Id));
+        return true.ToSuccessResultModel();
     }
 }

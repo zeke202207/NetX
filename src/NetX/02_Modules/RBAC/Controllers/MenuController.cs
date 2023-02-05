@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Netx.Ddd.Core;
 using NetX.Authentication.Core;
-using NetX.Common.Models;
-using NetX.Swagger;
-using NetX.RBAC.Core;
+using NetX.Common.ModuleInfrastructure;
+using NetX.RBAC.Domain;
 using NetX.RBAC.Models;
+using NetX.Swagger;
 using NetX.Tenants;
-using NetX.Logging.Monitors;
 
 namespace NetX.RBAC.Controllers;
 
@@ -15,15 +15,16 @@ namespace NetX.RBAC.Controllers;
 [ApiControllerDescription(RBACConst.C_RBAC_GROUPNAME, Description = "NetX实现的系统管理模块->菜单管理")]
 public class MenuController : RBACBaseController
 {
-    private IMenuService _menuService;
+    private readonly IQueryBus _menuQuery;
+    private readonly ICommandBus _menuCommand;
 
     /// <summary>
     /// 菜单管理api接口实例对象
     /// </summary>
-    /// <param name="menuService">菜单服务</param>
-    public MenuController(IMenuService menuService)
+    public MenuController(IQueryBus menuQuery, ICommandBus menuCommand)
     {
-        this._menuService = menuService;
+        this._menuQuery = menuQuery;
+        this._menuCommand = menuCommand;
     }
 
     /// <summary>
@@ -33,9 +34,9 @@ public class MenuController : RBACBaseController
     [ApiActionDescription("获取登录用户授权菜单列表")]
     [NoPermission]
     [HttpGet]
-    public async Task<ResultModel<List<MenuModel>>> GetCurrentUserMenuList()
+    public async Task<ResultModel> GetCurrentUserMenuList()
     {
-        return await this._menuService.GetCurrentUserMenuList(TenantContext.CurrentTenant.Principal?.UserId);
+        return await this._menuQuery.Send<MenuCurrentUserQuery, ResultModel>(new MenuCurrentUserQuery(TenantContext.CurrentTenant.Principal?.UserId ?? string.Empty));
     }
 
     /// <summary>
@@ -46,9 +47,9 @@ public class MenuController : RBACBaseController
     [ApiActionDescription("根据条件获取菜单列表")]
     [NoPermission]
     [HttpPost]
-    public async Task<ResultModel<List<MenuModel>>> GetMenuList(MenuListParam param)
+    public async Task<ResultModel> GetMenuList(MenuListParam param)
     {
-        return await this._menuService.GetMenuList(param);
+        return await this._menuQuery.Send<MenuPagerListQuery, ResultModel>(new MenuPagerListQuery(param.Title, param.Status, param.CurrentPage, param.PageSize));
     }
 
     /// <summary>
@@ -56,12 +57,13 @@ public class MenuController : RBACBaseController
     /// </summary>
     /// <param name="model">菜单实体对象</param>
     /// <returns></returns>
-    [Audit]
+    //[Audit]
     [ApiActionDescription("添加菜单")]
     [HttpPost]
-    public async Task<ResultModel<bool>> AddMenu(MenuRequestModel model)
+    public async Task<ResultModel> AddMenu(MenuRequestModel model)
     {
-        return await this._menuService.AddMenu(model);
+        await _menuCommand.Send<MenuAddCommand>(new MenuAddCommand(model.ParentId, model.Path, model.Title, model.Component, model.Redirect, model.Meta, model.Icon, model.Type, model.Permission, model.OrderNo, model.Status, model.IsExt, model.Show, model.ExtPath));
+        return true.ToSuccessResultModel();
     }
 
     /// <summary>
@@ -69,12 +71,13 @@ public class MenuController : RBACBaseController
     /// </summary>
     /// <param name="model">菜单实体对象</param>
     /// <returns></returns>
-    [Audit]
+    //[Audit]
     [ApiActionDescription("编辑菜单")]
     [HttpPost]
-    public async Task<ResultModel<bool>> UpdateMenu(MenuRequestModel model)
+    public async Task<ResultModel> UpdateMenu(MenuRequestModel model)
     {
-        return await this._menuService.UpdateMenu(model);
+        await _menuCommand.Send<MenuModifyCommand>(new MenuModifyCommand(model.Id, model.ParentId, model.Path, model.Title, model.Component, model.Redirect, model.Meta, model.Icon, model.Type, model.Permission, model.OrderNo, model.Status, model.IsExt, model.Show, model.ExtPath));
+        return true.ToSuccessResultModel();
     }
 
     /// <summary>
@@ -82,11 +85,12 @@ public class MenuController : RBACBaseController
     /// </summary>
     /// <param name="param">删除实体对象</param>
     /// <returns></returns>
-    [Audit]
+    //[Audit]
     [ApiActionDescription("删除菜单")]
     [HttpDelete]
-    public async Task<ResultModel<bool>> RemoveMenu(KeyParam param)
+    public async Task<ResultModel> RemoveMenu(KeyParam param)
     {
-        return await this._menuService.RemoveMenu(param.Id);
+        await _menuCommand.Send<MenuRemoveCommand>(new MenuRemoveCommand(param.Id));
+        return true.ToSuccessResultModel();
     }
 }

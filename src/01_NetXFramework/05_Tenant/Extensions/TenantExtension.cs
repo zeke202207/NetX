@@ -1,5 +1,4 @@
-﻿using FreeSql;
-
+﻿
 namespace NetX.Tenants;
 
 /// <summary>
@@ -31,6 +30,8 @@ public static class TenantExtension
         string? schema = model.ToDatabaseName(type, tenantId);
         switch (model.DatabaseType)
         {
+            case DatabaseType.SqlServer:
+                return $"Server={model.DatabaseHost};Database={schema};user id={model.UserId};password={model.Password};MultipleActiveResultSets=true";
             case DatabaseType.MySql:
             default:
                 return $"server={model.DatabaseHost};port={model.DatabasePort};database={schema};userid={model.UserId};pwd={model.Password};Charset=utf8; SslMode=none;Min pool size=1";
@@ -60,24 +61,11 @@ public static class TenantExtension
     {
         switch (model.DatabaseType)
         {
+            case DatabaseType.SqlServer:
+                return $"Server={model.DatabaseHost};user id={model.UserId};password={model.Password};MultipleActiveResultSets=true";
             case DatabaseType.MySql:
             default:
                 return $"Data Source={model.DatabaseHost};port={model.DatabasePort};Persist Security Info=yes;UserId={model.UserId}; PWD={model.Password};Charset=utf8; SslMode=none;Min pool size=1";
-        }
-    }
-
-    /// <summary>
-    /// 数据库类型转换
-    /// </summary>
-    /// <param name="dbType"></param>
-    /// <returns></returns>
-    public static DataType ToDatabaseType(this DatabaseType dbType)
-    {
-        switch (TenantContext.CurrentTenant.DatabaseInfo?.DatabaseType)
-        {
-            case DatabaseType.MySql:
-            default:
-                return DataType.MySql;
         }
     }
 }

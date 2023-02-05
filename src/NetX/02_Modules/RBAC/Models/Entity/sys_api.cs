@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Netx.Ddd.Domain.Aggregates;
 
 namespace NetX.RBAC.Models;
 
 /// <summary>
 /// 
 /// </summary>
-public class sys_api : BaseEntity
+public class sys_api : BaseEntity<string>
 {
     /// <summary>
     /// 

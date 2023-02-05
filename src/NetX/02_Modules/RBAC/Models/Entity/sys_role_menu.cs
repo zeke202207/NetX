@@ -1,20 +1,23 @@
-﻿using FreeSql.DataAnnotations;
+﻿using Netx.Ddd.Domain;
+using Netx.Ddd.Domain.Aggregates;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NetX.RBAC.Models;
 
 /// <summary>
 /// 
 /// </summary>
-public class sys_role_menu
+[UPKey("roleid", "menuid")]
+public class sys_role_menu : BaseEntity<string>
 {
+    [NotMapped]
+    public new string Id { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    [Column(IsPrimary = true)]
     public string roleid { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    [Column(IsPrimary = true)]
     public string menuid { get; set; }
 }

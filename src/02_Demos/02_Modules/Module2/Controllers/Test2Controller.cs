@@ -25,18 +25,16 @@ namespace Module2.Controllers
         private readonly ITenantAccessor<Tenant> _accessor;
         private readonly IOptions<CookiePolicyOptions> _options;
         private readonly ILoginHandler _login;
-        private readonly MigrationService _migrationService;
-        private readonly IFreeSql _fsql;
+        private readonly IMigrationService _migrationService;
 
         public Test2Controller(
             ILoginHandler login,
-            MigrationService migrationService,
+            IMigrationService migrationService,
             ILogger<Test2Controller> logger, 
             ITest test,
             IEventPublisher publisher,
             ITenantAccessor<Tenant> accessor,
-            IOptions<CookiePolicyOptions> c,
-            IFreeSql fsql)
+            IOptions<CookiePolicyOptions> c)
         {
             _logger = logger;
             _test = test;
@@ -45,10 +43,10 @@ namespace Module2.Controllers
             _options = c;
             _login = login;
             _migrationService = migrationService;
-            this._fsql = fsql;
         }
 
         [HttpGet(Name = "zeke2")]
+        [NoPermission]
         public async Task<IEnumerable<string>> Get()
         {
             _logger.LogInformation("hi,zeke,this is a log");
@@ -58,7 +56,7 @@ namespace Module2.Controllers
             var info = _accessor.Tenant;
 
 
-            _publisher.PublishAsync(new EventSource("zeke", "hi,zeke"), new CancellationToken()).GetAwaiter().GetResult();
+            await _publisher.PublishAsync(new EventSource("zeke", "hi,zeke"), new CancellationToken());
             var v = Newtonsoft.Json.JsonConvert.SerializeObject("{}");
             //return Enumerable.Range(1, 5).Select(index => index.ToString())
             //.ToArray();
@@ -74,7 +72,6 @@ namespace Module2.Controllers
         [HttpPost]
         public ActionResult GetToken(LoginModel model)
         {
-            var result = _fsql.Queryable<Log1>().ToList();
             return new JsonResult(_login.Handle(new ClaimModel()
             {
                 UserId = "12345",

@@ -46,7 +46,7 @@ public class MenuProfile : Profile
     private void ToModel()
     {
         CreateMap<sys_menu, MenuModel>()
-             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.id))
+             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
              .ForMember(dest => dest.ParentId, opt => opt.MapFrom(src => src.parentid))
              .ForMember(dest => dest.Path, opt => opt.MapFrom(src => src.path))
              .ForMember(dest => dest.Component, opt => opt.MapFrom(src => src.component))

@@ -43,7 +43,7 @@ namespace NetX.Tests._00_Utils.Encryption
         [Fact]
         public void DESTest()
         {
-            string content = "zeke";
+            string content = "111111";
             IEncryption encryption = new DES();
             var enc = encryption.Encryption(content);
             var dec = encryption.Decryption(enc);

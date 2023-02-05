@@ -6,7 +6,7 @@ namespace NetX.RBAC.DatabaseSetup.CreateTable;
 /// <summary>
 /// 
 /// </summary>
-[Migration(3)]
+[Migration(20091124100603)]
 public class MenuTable : CreateTableMigration
 {
     /// <summary>
@@ -23,7 +23,7 @@ public class MenuTable : CreateTableMigration
     public override void Up()
     {
         Create.Table(_tableName)
-               .WithColumn("id").AsString().PrimaryKey()
+               .WithColumn("id").AsString(50).PrimaryKey()
                .WithColumn("parentid").AsString(50).NotNullable()
                .WithColumn("icon").AsString(50).Nullable()
                .WithColumn("type").AsInt16().WithDefaultValue(0)

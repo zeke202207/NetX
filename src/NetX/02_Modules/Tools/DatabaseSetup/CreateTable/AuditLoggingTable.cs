@@ -11,7 +11,7 @@ namespace NetX.Tools.DatabaseSetup.CreateTable
     /// <summary>
     /// 系统审计日志表
     /// </summary>
-    [Migration(2002)]
+    [Migration(20091126100602)]
     public class AuditLoggingTable : CreateTableMigration
     {
         /// <summary>
@@ -27,7 +27,7 @@ namespace NetX.Tools.DatabaseSetup.CreateTable
         /// </summary>
         public override void Up()
         {
-            Create.Table(_tableName)
+            base.IfDatabase("mysql").Create.Table(_tableName)
               .WithColumn("id").AsString(50).PrimaryKey()
               .WithColumn("userid").AsString(50).Nullable()
               .WithColumn("username").AsString(255).Nullable()
@@ -37,6 +37,19 @@ namespace NetX.Tools.DatabaseSetup.CreateTable
               .WithColumn("httpmethod").AsString(10).Nullable()
               .WithColumn("detail").AsCustom("mediumtext").Nullable()
               .WithColumn("createtime").AsDateTime().WithDefaultValue(DateTime.Now);
+
+            base.IfDatabase("sqlserver").Create.Table(_tableName)
+              .WithColumn("id").AsString(50).PrimaryKey()
+              .WithColumn("userid").AsString(50).Nullable()
+              .WithColumn("username").AsString(255).Nullable()
+              .WithColumn("controller").AsString(50).Nullable()
+              .WithColumn("action").AsString(50).Nullable()
+              .WithColumn("remoteipv4").AsString(50).Nullable()
+              .WithColumn("httpmethod").AsString(10).Nullable()
+              .WithColumn("detail").AsCustom("text").Nullable()
+              .WithColumn("createtime").AsDateTime().WithDefaultValue(DateTime.Now);
+
+
         }
     }
 }

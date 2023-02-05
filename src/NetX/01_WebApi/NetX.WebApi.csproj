@@ -7,40 +7,49 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="logs\**" />
     <Compile Remove="log\**" />
+    <Compile Remove="modules\databaselogging\**" />
+    <Compile Remove="modules\taskscheduling\**" />
+    <Content Remove="logs\**" />
     <Content Remove="log\**" />
+    <Content Remove="modules\databaselogging\**" />
+    <Content Remove="modules\taskscheduling\**" />
+    <EmbeddedResource Remove="logs\**" />
     <EmbeddedResource Remove="log\**" />
+    <EmbeddedResource Remove="modules\databaselogging\**" />
+    <EmbeddedResource Remove="modules\taskscheduling\**" />
+    <None Remove="logs\**" />
     <None Remove="log\**" />
+    <None Remove="modules\databaselogging\**" />
+    <None Remove="modules\taskscheduling\**" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="config\" />
-    <Folder Include="modules\admintools\ref\" />
-    <Folder Include="modules\systemmanager\ref\" />
     <Folder Include="config\" />
-    <Folder Include="modules\systemmanager\ref\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="..\..\01_NetXFramework\01_App\config\logging.json" Link="config\logging.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="..\..\01_NetXFramework\01_App\config\netx.json" Link="config\netx.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\..\01_NetXFramework\01_App\config\tenants.json" Link="config\tenants.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\02_Modules\RBAC\modules\systemmanager\plugin.json" Link="modules\systemmanager\plugin.json">
+    <Content Include="..\02_Modules\FileServer\config\fileserver.json" Link="config\fileserver.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\02_Modules\RBAC\modules\systemmanager\ref\readme.txt" Link="modules\systemmanager\ref\readme.txt">
+    <Content Include="..\02_Modules\FileServer\modules\fileserver\plugin.json" Link="modules\fileserver\plugin.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\02_Modules\Tools\modules\admintools\plugin.json" Link="modules\admintools\plugin.json">
+    <Content Include="..\02_Modules\FileServer\modules\fileserver\ref\readme.txt" Link="modules\fileserver\ref\readme.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\02_Modules\Tools\modules\admintools\ref\readme.txt" Link="modules\admintools\ref\readme.txt">
+    <Content Include="..\02_Modules\RBAC\modules\systemmanager\plugin.json" Link="modules\rbac\plugin.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\02_Modules\RBAC\modules\systemmanager\ref\readme.txt" Link="modules\rbac\ref\readme.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -55,18 +64,6 @@
 
   <ItemGroup>
     <EditorConfigFiles Remove="D:\Persion\fw\netx\src\.editorconfig" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="..\..\01_NetXFramework\05_Tenant\main.db" Link="main.db">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Data\ip2region.xdb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   
 </Project>

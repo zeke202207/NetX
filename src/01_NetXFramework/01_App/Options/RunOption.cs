@@ -25,7 +25,10 @@ public sealed class RunOption
     internal Action<ConfigurationManager>? ActionConfigrationManager;
 
     /// <summary>
-    /// <see cref="IServiceCollection"/>
+    /// 启动参数
+    /// 配置服务注入与中间件注册
+    /// 注入顺序
+    /// 系统组件注入 -> 启动参数组件注入 -> 用户自定义模块组件注入
     /// </summary>
     internal Action<IServiceCollection, IConfiguration>? ActionServiceCollection { get; set; }
 

@@ -1,17 +1,12 @@
 ﻿using FluentMigrator;
 using NetX.DatabaseSetup;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetX.RBAC.DatabaseSetup.CreateTable;
 
 /// <summary>
 /// api资源表
 /// </summary>
-[Migration(8)]
+[Migration(20091124100608)]
 public class ApiTable : CreateTableMigration
 {
     /// <summary>

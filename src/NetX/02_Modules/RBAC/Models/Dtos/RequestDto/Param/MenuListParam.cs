@@ -1,4 +1,4 @@
-﻿using NetX.Common.Models;
+﻿using NetX.Common.ModuleInfrastructure;
 using Newtonsoft.Json;
 
 namespace NetX.RBAC.Models;

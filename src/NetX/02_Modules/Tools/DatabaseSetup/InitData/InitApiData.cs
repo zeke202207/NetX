@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace NetX.Tools.DatabaseSetup.InitData
 {
-    [Migration(2203)]
+    [Migration(20091127100603)]
     public class InitApiData : InitDataMigration
     {
         /// <summary>
@@ -53,7 +53,7 @@ namespace NetX.Tools.DatabaseSetup.InitData
         /// </summary>
         public override void Down()
         {
-            //  Execute.Sql($"delete * from {_tableName}");
+            Execute.Sql($"delete from {_tableName} where id in ('60000000000000000000000000000000','60000000000000000000000000000001','60000000000000000000000000000002')");
         }
     }
 }

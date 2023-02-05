@@ -63,7 +63,12 @@ public enum DatabaseType
     /// <summary>
     /// 
     /// </summary>
-    MySql
+    MySql,
+
+    /// <summary>
+    /// 
+    /// </summary>
+    SqlServer,
 }
 
 /// <summary>

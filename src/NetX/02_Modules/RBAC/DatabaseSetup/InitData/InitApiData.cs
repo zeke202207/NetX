@@ -1,18 +1,13 @@
 ﻿using FluentMigrator;
 using NetX.DatabaseSetup;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetX.RBAC.DatabaseSetup.InitData
 {
     /// <summary>
     /// 
     /// </summary>
-    [Migration(1008)]
-    public class InitApiData: InitDataMigration
+    [Migration(20091125100608)]
+    public class InitApiData : InitDataMigration
     {
         /// <summary>
         /// 
@@ -97,11 +92,21 @@ namespace NetX.RBAC.DatabaseSetup.InitData
                 .Row(new
                 {
                     id = "10000000000000000000000000000008",
-                    path= "/api/account/removeaccount",
-                    group= "account",
-                    method= "DELETE",
-                    description="删除用户"
+                    path = "/api/account/removeaccount",
+                    group = "account",
+                    method = "DELETE",
+                    description = "删除用户"
                 })
+                .Row(new
+                {
+                    id = "10000000000000000000000000000009",
+                    path = "/api/account/changepassword",
+                    group = "account",
+                    method = "POST",
+                    description = "修改登录用户密码"
+                })
+
+
             #endregion
 
             #region dept
@@ -310,7 +315,7 @@ namespace NetX.RBAC.DatabaseSetup.InitData
         /// </summary>
         public override void Down()
         {
-            Execute.Sql($"delete * from {_tableName}");
+            Execute.Sql($"delete from {_tableName}");
         }
     }
 }

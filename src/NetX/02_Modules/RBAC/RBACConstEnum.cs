@@ -13,9 +13,14 @@ internal class RBACConst
     public const string C_ROOT_ID = "00000000000000000000000000000000";
 
     /// <summary>
+    /// 部门树根节点编号
+    /// </summary>
+    public const string C_ROOT_DEPT_ID = "root";
+
+    /// <summary>
     /// swagger分组名称
     /// </summary>
-    public const string C_RBAC_GROUPNAME = "systemmanager";
+    public const string C_RBAC_GROUPNAME = "rbac";
 
     /// <summary>
     /// 注册账号默认密码
@@ -94,4 +99,16 @@ public enum CacheOperationType
     /// 缓存移除
     /// </summary>
     Remove
+}
+
+public enum ErrorStatusCode
+{
+    UserExist = 1000,
+    UserNotFound = 1001,
+    PasswordInvalid = 1002,
+    PasswordIsNull = 1003,
+    ApiNotFound = 1004,
+    DeptNotFound = 1005,
+    RoleNotFound = 1006,
+    MenuNotFound = 1007
 }

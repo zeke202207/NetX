@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,7 +16,11 @@ namespace NetX.DatabaseSetup
         /// <summary>
         /// 
         /// </summary>
-        MySql5
+        MySql5,
+        /// <summary>
+        /// 
+        /// </summary>
+        SqlServer,
     }
 
     /// <summary>
@@ -28,5 +33,4 @@ namespace NetX.DatabaseSetup
         /// </summary>
         MySql
     }
-
 }

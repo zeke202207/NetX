@@ -13,14 +13,9 @@ internal class InternalApp
     internal static IConfiguration? Configuration { get; set; }
 
     /// <summary>
-    /// 用户程序集集合
+    /// 系统模块、自定义模块上下文缓存集合
     /// </summary>
-    internal static Dictionary<Guid, ModuleAssemblyLoadContext> ModuleCotextKeyValuePairs = new Dictionary<Guid, ModuleAssemblyLoadContext>();
-
-    /// <summary>
-    /// 系统程序集集合
-    /// </summary>
-    internal static Dictionary<Guid, (ModuleInitializer initializer, ModuleContext context)> FrameworkContextKeyValuePairs = new();
+    internal static Dictionary<Guid, ModuleContext> ModuleContexts = new();
 
     /// <summary>
     /// 用户组件模块设置项

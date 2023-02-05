@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 
 namespace NetX.Module;
 
@@ -21,4 +23,9 @@ public sealed class ModuleContext
     /// 模块初始化器 <see cref="ModuleInitializer"/>
     /// </summary>
     public ModuleInitializer? Initialize { get; set; }
+
+    /// <summary>
+    /// 配置应用程序
+    /// </summary>
+    public Action<ModuleContext ,IApplicationBuilder, IWebHostEnvironment> ConfigApplication;
 }

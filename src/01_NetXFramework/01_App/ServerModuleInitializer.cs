@@ -1,12 +1,18 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using NetX.App.Extensions;
+using Netx.Ddd.Infrastructure;
+using Netx.QuartzScheduling;
 using NetX.Authentication.Jwt;
+using NetX.Common;
 using NetX.EventBus;
 using NetX.Module;
 using NetX.Swagger;
+using System.Collections.Specialized;
+using System.Linq;
+using System.Reflection;
 
 namespace NetX.App;
 
@@ -27,11 +33,10 @@ public sealed class ServerModuleInitializer : ModuleInitializer
 
     /// <summary>
     /// 配置服务
-    /// Demo宏定义下的内容为使用示例，具体是否启用，根据业务自定决定
     /// </summary>
-    /// <param name="services"></param>
-    /// <param name="env"></param>
-    /// <param name="context"></param>
+    /// <param name="services">Specifies the contract for a collection of service descriptors.</param>
+    /// <param name="env"> Provides information about the web hosting environment an application is running in</param>
+    /// <param name="context">模块上下文</param>
     public override void ConfigureServices(IServiceCollection services, IWebHostEnvironment env, ModuleContext context)
     {
         //1.跨域处理
@@ -56,14 +61,12 @@ public sealed class ServerModuleInitializer : ModuleInitializer
 
         //3.添加HttpContext访问上下文
         services.AddHttpContextAccessor();
-        //4.启动log 
 
         //5.控制器和规范化结果
         services.AddControllers(o =>
         {
             o.Filters.Add<TenantContextFilter>();
-        })
-            .AddNewtonsoftJson();
+        }).AddNewtonsoftJson();
 
         //6.添加事件总线
         services.AddEventBus();
@@ -71,8 +74,48 @@ public sealed class ServerModuleInitializer : ModuleInitializer
         //7.授权 
         services.AddJwtAuth(context.Configuration);
 
-        //注入系统logo
-        services.AddSingleton<IAppStartHandler, DefaultStartLogoHandler>();
+        //8.注入attribute 标签服务
+        services.AddServicesFromAssembly(
+            new Assembly[] { 
+                GetType().Assembly, 
+                typeof(QuartzShutdownHandler).Assembly 
+            });
+
+        //9. 配置响应压缩方案
+        services
+            .Configure<BrotliCompressionProviderOptions>(options =>
+            {
+                options.Level = System.IO.Compression.CompressionLevel.Optimal;
+            })
+            .Configure<GzipCompressionProviderOptions>(options =>
+            {
+                options.Level = System.IO.Compression.CompressionLevel.Optimal;
+            })
+            .AddResponseCompression(options =>
+            {
+                options.EnableForHttps = true;
+                options.Providers.Add<BrotliCompressionProvider>();
+                options.Providers.Add<GzipCompressionProvider>();
+                options.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(new[]
+                {
+                    "text/html; charset=utf-8",
+                    "application/xhtml+xml",
+                    "application/atom+xml",
+                    "image/svg+xml"
+                });
+            });
+        services.AddResponseCaching(options =>
+        {
+            //响应缓存是否区分大小写
+            options.UseCaseSensitivePaths = false;
+            //响应正文的最大可缓存大小（单位：字节）。默认64 * 1024 * 1024 （64 MB）
+            options.MaximumBodySize = 64 * 1024 * 1024;
+            //响应缓存中间件的大小限制（单位：字节）。 默认值为 100 * 1024 * 1024 （100 MB）。
+            options.SizeLimit = 100 * 1024 * 1024;
+        });
+
+        //10. 添加ddd支持
+        services.AddDomainDrivenDesign(context.Configuration);
     }
 
     /// <summary>
@@ -80,9 +123,9 @@ public sealed class ServerModuleInitializer : ModuleInitializer
     /// 注释需要
     /// 非连续与<see cref="ConfigureServices(IServiceCollection, IWebHostEnvironment, ModuleContext)"/> 对应，方便阅读
     /// </summary>
-    /// <param name="app"></param>
-    /// <param name="env"></param>
-    /// <param name="context"></param>
+    /// <param name="app"> Defines a class that provides the mechanisms to configure an application's request pipeline</param>
+    /// <param name="env"> Provides information about the web hosting environment an application is running in</param>
+    /// <param name="context">模块上下文</param>
     public override void ConfigureApplication(IApplicationBuilder app, IWebHostEnvironment env, ModuleContext context)
     {
         //配置转发
@@ -97,13 +140,17 @@ public sealed class ServerModuleInitializer : ModuleInitializer
         var policyName = context.Configuration != null ? context.Configuration.GetSection("cors:policyname").Value : "zeke";
         app.UseCors(policyName);
 
-        //2. swagger
-        // Configure the HTTP request pipeline.
+        //2. 开发环境下开启 swagger
         if (((WebApplication)app).Environment.IsDevelopment())
             app.UseCustomSwagger(App.GetUserModuleOptions.Select(p => p.Name));
         // 添加压缩缓存
         app.UseResponseCaching();
-        app.UseStartupHandler();
-        app.UseShutdownHandler();
+        app.UseResponseCompression();
+        app.UseQuartzScheduling(p => p?.Start(() => new NameValueCollection()
+        {
+            ["quartz.scheduler.instanceName"] = AppConst.C_SCHEDULING_QUARTZ_DEFAULTINSTANCENAME,
+            ["quartz.jobStore.type"] = AppConst.C_SCHEDULING_QUARTZ_STORENAME,
+        }));
+        app.UseAppHandler();
     }
 }

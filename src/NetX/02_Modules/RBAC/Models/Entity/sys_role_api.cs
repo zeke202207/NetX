@@ -1,25 +1,23 @@
-﻿using FreeSql.DataAnnotations;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Netx.Ddd.Domain;
+using Netx.Ddd.Domain.Aggregates;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NetX.RBAC.Models;
 
 /// <summary>
 /// 
 /// </summary>
-public class sys_role_api
+[UPKey("roleid", "apiid")]
+public class sys_role_api : BaseEntity<string>
 {
+    [NotMapped]
+    public new string Id { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    [Column(IsPrimary = true)]
     public string roleid { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    [Column(IsPrimary = true)]
     public string apiid { get; set; }
 }

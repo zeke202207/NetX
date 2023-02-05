@@ -1,4 +1,5 @@
 ﻿using NetX.Common;
+using NetX.Common.ModuleInfrastructure;
 
 namespace NetX.Tools.Core
 {

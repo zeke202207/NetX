@@ -6,7 +6,7 @@ namespace NetX.RBAC.DatabaseSetup.InitData;
 /// <summary>
 /// 
 /// </summary>
-[Migration(1004)]
+[Migration(20091125100604)]
 public class InitUserData : InitDataMigration
 {
     /// <summary>
@@ -27,7 +27,7 @@ public class InitUserData : InitDataMigration
             {
                 id = "00000000000000000000000000000001",
                 username = "zeke",
-                password = "123456",
+                password = "E10ADC3949BA59ABBE56E057F20F883E",
                 nickname = "zeke",
                 avatar = "http://www.liuping.org.cn:8888/images/2020/03/07/1H3A4471-7-150x150.jpg",
                 status = 1,
@@ -40,6 +40,6 @@ public class InitUserData : InitDataMigration
     /// </summary>
     public override void Down()
     {
-        Execute.Sql($"delete * from {_tableName}");
+        Execute.Sql($"delete from {_tableName}");
     }
 }

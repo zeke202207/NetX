@@ -4,7 +4,6 @@ using Microsoft.Extensions.DependencyInjection;
 using NetX.Common;
 using NetX.DatabaseSetup;
 using NetX.Module;
-using NetX.RBAC.Core;
 using System.Reflection;
 
 namespace NetX.RBAC;
@@ -51,8 +50,8 @@ internal class RBACInitializer : ModuleInitializer
         //注入加密算法
         services.AddSingleton<IEncryption, MD5>();
         //CodeFirst
-        services.AddMigratorAssembly(new Assembly[] { Assembly.GetExecutingAssembly() });
+        services.AddMigratorAssembly(new Assembly[] { Assembly.GetExecutingAssembly() }, MigrationSupportDbType.MySql5);
         //密码生成策略
-        services.AddScoped<IPasswordStrategy, DefaultPwdStrategy>();
+        //services.AddScoped<IPasswordStrategy, DefaultPwdStrategy>();
     }
 }

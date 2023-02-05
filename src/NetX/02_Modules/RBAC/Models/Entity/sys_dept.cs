@@ -1,9 +1,11 @@
-﻿namespace NetX.RBAC.Models;
+﻿using Netx.Ddd.Domain.Aggregates;
+
+namespace NetX.RBAC.Models;
 
 /// <summary>
 /// 
 /// </summary>
-public class sys_dept : BaseEntity
+public class sys_dept : BaseEntity<string>
 {
     /// <summary>
     /// 

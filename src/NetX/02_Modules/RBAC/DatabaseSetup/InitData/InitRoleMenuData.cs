@@ -6,7 +6,7 @@ namespace NetX.RBAC.DatabaseSetup.InitData;
 /// <summary>
 /// 
 /// </summary>
-[Migration(1005)]
+[Migration(20091125100605)]
 public class InitRoleMenuData : InitDataMigration
 {
     /// <summary>
@@ -57,6 +57,11 @@ public class InitRoleMenuData : InitDataMigration
             {
                 roleid = "00000000000000000000000000000001",
                 menuid = "00000000000000000000000000000008"
+            })
+            .Row(new
+            {
+                roleid = "00000000000000000000000000000001",
+                menuid = "00000000000000000000000000000013"
             });
     }
 
@@ -65,6 +70,6 @@ public class InitRoleMenuData : InitDataMigration
     /// </summary>
     public override void Down()
     {
-        Execute.Sql($"delete * from {_tableName}");
+        Execute.Sql($"delete from {_tableName}");
     }
 }

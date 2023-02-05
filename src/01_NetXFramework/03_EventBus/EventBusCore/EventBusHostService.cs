@@ -27,14 +27,11 @@ internal sealed class EventBusHostService : BackgroundService
         ILogger<EventBusHostService> logger,
         IServiceProvider service,
         IEventSourceStorer eventSourceStorer
-        //,
-        //IEnumerable<IEventSubscriber> eventSubscribers
         )
     {
         _logger = logger;
         _service = service;
         _eventSourceStorer = eventSourceStorer;
-        //_eventSubscribers = eventSubscribers;
         _eventSubscribers = BindingAllEventSubscribers();
         var bindingAttr = BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly;
         //逐条获取事件处理程序并进行包装

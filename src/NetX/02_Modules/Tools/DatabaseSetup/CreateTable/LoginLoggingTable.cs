@@ -11,7 +11,7 @@ namespace NetX.Tools.DatabaseSetup.CreateTable
     /// <summary>
     /// 登录日志
     /// </summary>
-    [Migration(2003)]
+    [Migration(20091126100603)]
     public class LoginLoggingTable : CreateTableMigration
     {
         /// <summary>

@@ -27,15 +27,10 @@ public static class ServiceCollectionExtensions
             //判断接口属于哪个分组
             option.DocInclusionPredicate((docName, apiDes) =>
             {
-                if (docName.ToLower().Equals(SwaggerConst.C_NOGROUP_NAME.ToLower()))
-                    return string.IsNullOrEmpty(apiDes.GroupName);
+                if (docName.ToLower().Equals(SwaggerConst.C_NOGROUP_NAME.ToLower()) && string.IsNullOrEmpty(apiDes.GroupName))
+                    return true;
                 else
-                {
-                    if (!string.IsNullOrWhiteSpace(apiDes.GroupName))
-                        return apiDes.GroupName.ToLower() == docName.ToLower();
-                    else
-                        return string.IsNullOrEmpty(apiDes.GroupName);
-                }
+                    return apiDes?.GroupName?.ToLower() == docName.ToLower();
             });
             var securityScheme = new OpenApiSecurityScheme
             {
@@ -43,10 +38,10 @@ public static class ServiceCollectionExtensions
                 Name = "Authorization",
                 In = ParameterLocation.Header,
                 Type = SecuritySchemeType.ApiKey,
-                Scheme = "Bearer"
+                Scheme = SwaggerConst.C_JWT_SCHEME
             };
             //添加设置Token的按钮
-            option.AddSecurityDefinition("Bearer", securityScheme);
+            option.AddSecurityDefinition(SwaggerConst.C_JWT_SCHEME, securityScheme);
             //添加Jwt验证设置
             option.AddSecurityRequirement(new OpenApiSecurityRequirement()
             {
@@ -56,10 +51,10 @@ public static class ServiceCollectionExtensions
                         Reference = new OpenApiReference
                         {
                             Type = ReferenceType.SecurityScheme,
-                            Id = "Bearer"
+                            Id = SwaggerConst.C_JWT_SCHEME
                         },
                         Scheme = "oauth2",
-                        Name = "Bearer",
+                        Name = SwaggerConst.C_JWT_SCHEME,
                         In = ParameterLocation.Header,
 
                     },

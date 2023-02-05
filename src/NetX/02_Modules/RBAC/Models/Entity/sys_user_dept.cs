@@ -1,20 +1,23 @@
-﻿using FreeSql.DataAnnotations;
+﻿using Netx.Ddd.Domain;
+using Netx.Ddd.Domain.Aggregates;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NetX.RBAC.Models;
 
 /// <summary>
 /// 
 /// </summary>
-public class sys_user_dept
+[UPKey("userid", "deptid")]
+public class sys_user_dept : BaseEntity<string>
 {
+    [NotMapped]
+    public new string Id { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    [Column(IsPrimary = true)]
     public string userid { get; set; }
     /// <summary>
     /// 
     /// </summary>
-    [Column(IsPrimary = true)]
     public string deptid { get; set; }
 }

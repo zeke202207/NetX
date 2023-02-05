@@ -31,8 +31,8 @@ public static class ClaimExtension
             .Where(p => p.GetCustomAttributes(typeof(ClaimModelAttribute), false).Length > 0)
             .Select(p =>
                 new Claim(
-                    ((ClaimModelAttribute)p.GetCustomAttributes(typeof(ClaimModelAttribute), false).FirstOrDefault()).ClaimKey,
-                    p.GetValue(model).ToString())
+                    p.GetCustomAttributes<ClaimModelAttribute>(false).FirstOrDefault()?.ClaimKey ?? string.Empty,
+                    p.GetValue(model)?.ToString() ?? string.Empty)
                 )
             .ToArray();
     }
@@ -42,20 +42,20 @@ public static class ClaimExtension
     /// </summary>
     /// <param name="claims"></param>
     /// <returns></returns>
-    public static ClaimModel ToClaimModel(this IEnumerable<Claim> claims)
+    public static ClaimModel? ToClaimModel(this IEnumerable<Claim> claims)
     {
         if (null == claims || claims.Count() == 0)
             return null;
         ClaimModel model = new ClaimModel();
         var properties = typeof(ClaimModel)
-            .GetProperties(_flags).ToList()
+            .GetProperties(_flags)
             .Where(p => p.GetCustomAttributes(typeof(ClaimModelAttribute), false).Length > 0);
         foreach (var p in properties)
         {
-            var cusAttribute = (ClaimModelAttribute)p.GetCustomAttributes(typeof(ClaimModelAttribute), false).FirstOrDefault();
+            var cusAttribute = p.GetCustomAttributes<ClaimModelAttribute>(false).FirstOrDefault();
             if (null == cusAttribute)
                 continue;
-            string value = claims.FirstOrDefault(p => p.Type.ToLower().Equals(cusAttribute.ClaimKey.ToLower()))?.Value;
+            string? value = claims.FirstOrDefault(p => p.Type.ToLower().Equals(cusAttribute.ClaimKey.ToLower()))?.Value;
             if (null != value)
                 p.SetValue(model, value);
         }
