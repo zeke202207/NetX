@@ -165,6 +165,8 @@ public class AccountListQueryHandler : DomainQueryHandler<AccountListQuery, Resu
             sql += @" and d.id = @deptid";
             param.Add("deptid", request.DeptId);
         }
+        else
+            sql += @" and d.id is null or d.id =''";
         if (!string.IsNullOrWhiteSpace(request.NickName))
         {
             sql += @" AND u.nickname LIKE CONCAT('%',@nickname,'%')";
