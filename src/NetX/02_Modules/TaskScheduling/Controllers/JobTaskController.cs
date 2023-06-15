@@ -1,11 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Netx.QuartzScheduling;
 using NetX.Authentication.Core;
 using NetX.Common.ModuleInfrastructure;
 using NetX.Swagger;
 using NetX.TaskScheduling.Core;
 using NetX.TaskScheduling.Model;
-using Quartz;
 
 namespace NetX.TaskScheduling.Controllers;
 

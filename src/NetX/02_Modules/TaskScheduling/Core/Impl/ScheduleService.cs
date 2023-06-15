@@ -1,13 +1,9 @@
-﻿using FreeSql;
-using Netx.QuartzScheduling;
-using NetX.Common.Attributes;
+﻿using NetX.Common.Attributes;
 using NetX.Common.ModuleInfrastructure;
-using NetX.TaskScheduling.Core.Impl;
 using NetX.TaskScheduling.Data.Repositories;
 using NetX.TaskScheduling.Model;
 using NetX.TaskScheduling.Model.Dtos.RequestDto;
 using Newtonsoft.Json;
-using Quartz;
 
 namespace NetX.TaskScheduling.Core;
 
@@ -92,8 +88,8 @@ public class ScheduleService : BaseService, IScheduleService
     /// <exception cref="NotImplementedException"></exception>
     public async Task<ResultModel<bool>> DeleteJob(string jobId)
     {
-        var job = await _jobTaskRepository.Select.Where(p=>p.id == jobId).FirstAsync();
-        if(null == job)
+        var job = await _jobTaskRepository.Select.Where(p => p.id == jobId).FirstAsync();
+        if (null == job)
             return base.Success<bool>(false);
         return await DeleteJob(job.name, job.group);
     }

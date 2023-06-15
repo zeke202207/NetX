@@ -9,14 +9,16 @@ namespace NetX.Tenants;
 public class InMemoryTenantStore : ITenantStore<Tenant>
 {
     private readonly TenantOption _tenantOption;
+    private readonly ITenantResolutionStrategy _strategy;
 
     /// <summary>
     /// 内存租户信息存储实例
     /// </summary>
     /// <param name="tenantOption"></param>
-    public InMemoryTenantStore(TenantOption tenantOption)
+    public InMemoryTenantStore(TenantOption tenantOption, ITenantResolutionStrategy strategy)
     {
         _tenantOption = tenantOption;
+        _strategy = strategy;
     }
 
     /// <summary>
@@ -24,12 +26,14 @@ public class InMemoryTenantStore : ITenantStore<Tenant>
     /// </summary>
     /// <param name="Identifier">租户身份</param>
     /// <returns></returns>
-    public async Task<Tenant?> GetTenantAsync(string Identifier)
+    public async Task<Tenant?> GetTenantAsync()
     {
         Tenant? tenant;
         if (_tenantOption.TenantType == TenantType.Multi)
+        {
             tenant = InMemoryStoreProvider.Instance.Tenants
-            .SingleOrDefault(p => p.Identifier.Trim().ToLower().Equals(Identifier.Substring(0, Identifier.IndexOf(".")).Trim().ToLower()));
+            .SingleOrDefault(p => _strategy.GetTenantIdentifierAsync().GetAwaiter().GetResult().Equals(p.Identifier));
+        }
         else
             tenant = InMemoryStoreProvider.Instance.Tenants.FirstOrDefault();
         return await Task.FromResult(tenant);

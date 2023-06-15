@@ -1,11 +1,8 @@
-﻿using FreeSql;
-using Netx.QuartzScheduling;
+﻿using Netx.QuartzScheduling;
 using NetX.Common.Attributes;
-using NetX.Common.ModuleInfrastructure;
 using NetX.TaskScheduling.Model;
 using NetX.TaskScheduling.Model.Dtos.RequestDto;
 using Quartz;
-using static Quartz.MisfireInstruction;
 
 namespace NetX.TaskScheduling.Core.Impl
 {
@@ -85,7 +82,7 @@ namespace NetX.TaskScheduling.Core.Impl
         {
             CronScheduleRequest cron => CronTriggerBuilder(cron),
             SimpleScheduleRequest simple => SimpleTriggerBuilder(simple),
-            _  => TriggerBuilder.Create()
+            _ => TriggerBuilder.Create()
         };
 
         /// <summary>
@@ -100,9 +97,9 @@ namespace NetX.TaskScheduling.Core.Impl
                                         .WithIdentity(cron.Trigger.Name)
                                         .WithCronSchedule(cron.Trigger.CronExpression)
                                         .WithDescription(cron.Trigger.Description);
-            if(cron.Trigger.StartAt.HasValue)
+            if (cron.Trigger.StartAt.HasValue)
                 trigger = trigger.StartAt(cron.Trigger.StartAt.Value);
-            if(cron.Trigger.EndAt.HasValue)
+            if (cron.Trigger.EndAt.HasValue)
                 trigger = trigger.EndAt(cron.Trigger.EndAt.Value);
             if (cron.Trigger.StartNow)
                 trigger = trigger.StartNow();

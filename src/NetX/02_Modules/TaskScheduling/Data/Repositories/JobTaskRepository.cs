@@ -1,15 +1,6 @@
-﻿using FreeSql;
-using Google.Protobuf.WellKnownTypes;
-using NetX.Common.Attributes;
-using NetX.TaskScheduling.DatabaseSetup.CreateTable;
+﻿using NetX.Common.Attributes;
 using NetX.TaskScheduling.Model;
 using NetX.TaskScheduling.Model.Entity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static Quartz.Logging.OperationName;
 
 namespace NetX.TaskScheduling.Data.Repositories
 {
@@ -81,7 +72,7 @@ namespace NetX.TaskScheduling.Data.Repositories
                     var triggerRep = uow.GetRepository<sys_trigger>();
                     var jobEntity = await jobtaskRep.Select.Where(p => p.name.ToLower() == jobName.ToLower() && p.group.ToLower() == jobGroup.ToLower()).FirstAsync();
                     var jobtasktriggerEntity = await jobtasktriggerRep.Select.Where(p => p.jobtaskid == jobEntity.id).FirstAsync();
-                    var triggerEntity = await triggerRep.Select.Where(p=>p.id == jobtasktriggerEntity.triggerid).FirstAsync();
+                    var triggerEntity = await triggerRep.Select.Where(p => p.id == jobtasktriggerEntity.triggerid).FirstAsync();
                     await jobtasktriggerRep.DeleteAsync(jobtasktriggerEntity);
                     await jobtaskRep.DeleteAsync(jobEntity);
                     await triggerRep.DeleteAsync(triggerEntity);
