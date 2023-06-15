@@ -5,7 +5,7 @@ namespace NetX.Tenants;
 /// <summary>
 /// 根据主机解析租户身份
 /// </summary>
-public class HostResolutionStrategy : ITenantResolutionStrategy
+public class SubdomainsParse : ITenantParseStrategy
 {
     private readonly IHttpContextAccessor _httpContextAccessor;
 
@@ -13,7 +13,7 @@ public class HostResolutionStrategy : ITenantResolutionStrategy
     /// 主机解析策略
     /// </summary>
     /// <param name="httpContextAccessor"></param>
-    public HostResolutionStrategy(IHttpContextAccessor httpContextAccessor)
+    public SubdomainsParse(IHttpContextAccessor httpContextAccessor)
     {
         _httpContextAccessor = httpContextAccessor;
     }

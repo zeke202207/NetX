@@ -83,7 +83,7 @@ public class TenantBuilder<T>
     /// <param name="lifetime"></param>
     /// <returns></returns>
     public TenantBuilder<T> WithResolutionStrategy<V>(ServiceLifetime lifetime = ServiceLifetime.Transient)
-        where V : class, ITenantResolutionStrategy
+        where V : class, ITenantParseStrategy
     {
         if (_tenantType == TenantType.Single)
             return this;
@@ -132,7 +132,7 @@ public class TenantBuilder<T>
     public TenantBuilder<T> DefaultSingleTenant()
     {
         _services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-        _services.Add(ServiceDescriptor.Describe(typeof(ITenantResolutionStrategy), typeof(HostResolutionStrategy), ServiceLifetime.Transient));
+        _services.Add(ServiceDescriptor.Describe(typeof(ITenantParseStrategy), typeof(SubdomainsParse), ServiceLifetime.Transient));
         _services.Add(ServiceDescriptor.Describe(typeof(ITenantStore<T>), typeof(InMemoryTenantStore), ServiceLifetime.Transient));
         return this;
     }
@@ -148,7 +148,7 @@ public class TenantBuilder<T>
         if (_tenantType == TenantType.Single)
             return this;
         _services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-        _services.Add(ServiceDescriptor.Describe(typeof(ITenantResolutionStrategy), type, lifetime));
+        _services.Add(ServiceDescriptor.Describe(typeof(ITenantParseStrategy), type, lifetime));
         return this;
     }
 

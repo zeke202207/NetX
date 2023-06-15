@@ -3,7 +3,7 @@
 /// <summary>
 /// 组合解析策略
 /// </summary>
-public interface ITenantResolutionStrategy
+public interface ITenantParseStrategy
 {
     /// <summary>
     /// 解析获取租户身份

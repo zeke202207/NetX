@@ -5,7 +5,7 @@ namespace NetX.Tenants;
 /// <summary>
 /// 请求头解析策略
 /// </summary>
-public class HeaderResolutionStrategy : ITenantResolutionStrategy
+public class HeadersParse : ITenantParseStrategy
 {
     private readonly IHttpContextAccessor _httpContextAccessor;
 
@@ -13,7 +13,7 @@ public class HeaderResolutionStrategy : ITenantResolutionStrategy
     /// 请求头解析策略实例
     /// </summary>
     /// <param name="httpContextAccessor"></param>
-    public HeaderResolutionStrategy(IHttpContextAccessor httpContextAccessor)
+    public HeadersParse(IHttpContextAccessor httpContextAccessor)
     {
         _httpContextAccessor = httpContextAccessor;
     }

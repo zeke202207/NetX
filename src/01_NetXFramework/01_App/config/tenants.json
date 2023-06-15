@@ -9,7 +9,7 @@
   },
   "tenantconfig": {
     "tenanttype": 0, //0:single,1:multi,
-    "resolutionstrategy": "NetX.Tenants.HostResolutionStrategy",
+    "resolutionstrategy": "NetX.Tenants.SubdomainsParse",
     "storestrategy": "NetX.Tenants.InMemoryTenantStore",
     "tenants": [
       {

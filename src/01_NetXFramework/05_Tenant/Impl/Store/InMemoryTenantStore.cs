@@ -9,13 +9,13 @@ namespace NetX.Tenants;
 public class InMemoryTenantStore : ITenantStore<Tenant>
 {
     private readonly TenantOption _tenantOption;
-    private readonly ITenantResolutionStrategy _strategy;
+    private readonly ITenantParseStrategy _strategy;
 
     /// <summary>
     /// 内存租户信息存储实例
     /// </summary>
     /// <param name="tenantOption"></param>
-    public InMemoryTenantStore(TenantOption tenantOption, ITenantResolutionStrategy strategy)
+    public InMemoryTenantStore(TenantOption tenantOption, ITenantParseStrategy strategy)
     {
         _tenantOption = tenantOption;
         _strategy = strategy;
