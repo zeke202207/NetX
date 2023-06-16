@@ -1,9 +1,11 @@
-﻿namespace NetX.TaskScheduling.Model;
+﻿using Netx.Ddd.Domain.Aggregates;
+
+namespace NetX.TaskScheduling.Model;
 
 /// <summary>
 /// 
 /// </summary>
-public class sys_jobtask : BaseEntity
+public class sys_jobtask : BaseEntity<string>
 {
     /// <summary>
     /// 

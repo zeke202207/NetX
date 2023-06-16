@@ -53,7 +53,7 @@ public class AccountAddCommandHandler : DomainCommandHandler<AccountAddCommand>
                 userid = userEntity.Id,
                 deptid = request.DeptId
             });
-        return await _uow.CommitAsync();
+        return await _uow.SaveChangesAsync();
     }
 }
 
@@ -89,7 +89,7 @@ public class AccountEditCommandHandler : DomainCommandHandler<AccountEditCommand
             _uow.GetRepository<sys_user_role, string>().Remove(ur);
         if (!string.IsNullOrWhiteSpace(request.RoleId))
             await _uow.GetRepository<sys_user_role, string>().AddAsync(new sys_user_role() { userid = user.Id, roleid = request.RoleId });
-        return await _uow.CommitAsync();
+        return await _uow.SaveChangesAsync();
     }
 }
 
@@ -116,7 +116,7 @@ public class AccountRemoveCommandHandler : DomainCommandHandler<AccountRemoveCom
         if (null != depts && depts.Any())
             _uow.GetRepository<sys_user_dept, string>().RemoveRange(depts);
         _uow.GetRepository<sys_user, string>().Remove(user);
-        return await _uow.CommitAsync();
+        return await _uow.SaveChangesAsync();
     }
 }
 
@@ -147,6 +147,6 @@ public class AccountModifyPwdCommandHandler : DomainCommandHandler<AccountModify
             throw new RbacException($"密码验证失败：{request.Id}", (int)ErrorStatusCode.PasswordInvalid);
         user.password = _encryption.Encryption(request.NewPwd);
         _uow.GetRepository<sys_user, string>().Update(user);
-        return await _uow.CommitAsync();
+        return await _uow.SaveChangesAsync();
     }
 }

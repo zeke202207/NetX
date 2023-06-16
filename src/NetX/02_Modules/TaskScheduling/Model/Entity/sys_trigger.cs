@@ -1,6 +1,8 @@
-﻿namespace NetX.TaskScheduling.Model;
+﻿using Netx.Ddd.Domain.Aggregates;
 
-public class sys_trigger : BaseEntity
+namespace NetX.TaskScheduling.Model;
+
+public class sys_trigger : BaseEntity<string>
 {
     /// <summary>
     /// 

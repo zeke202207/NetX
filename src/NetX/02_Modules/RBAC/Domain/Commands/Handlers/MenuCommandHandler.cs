@@ -56,7 +56,7 @@ public class MenuAddCommandHandler : DomainCommandHandler<MenuAddCommand>
             meta = JsonConvert.SerializeObject(metaData),
         };
         await _uow.GetRepository<sys_menu, string>().AddAsync(menuEntity);
-        return await _uow.CommitAsync();
+        return await _uow.SaveChangesAsync();
     }
 }
 
@@ -113,7 +113,7 @@ public class MenuModifyCommandHandler : DomainCommandHandler<MenuModifyCommand>
             meta = JsonConvert.SerializeObject(metaData),
         };
         _uow.GetRepository<sys_menu, string>().Update(menuEntity);
-        return await _uow.CommitAsync();
+        return await _uow.SaveChangesAsync();
     }
 }
 
@@ -136,6 +136,6 @@ public class MenuRemoveCommandHandler : DomainCommandHandler<MenuRemoveCommand>
             await _uow.GetRepository<sys_role_menu, string>().FromSqlRaw($"SELECT * FROM sys_role_menu WHERE menuid = '{menuId}'").ExecuteDeleteAsync();
             await _uow.GetRepository<sys_menu, string>().FromSqlRaw($"SELECT * FROM sys_menu where id ='{menuId}'").ExecuteDeleteAsync();
         }
-        return await _uow.CommitAsync();
+        return await _uow.SaveChangesAsync();
     }
 }
