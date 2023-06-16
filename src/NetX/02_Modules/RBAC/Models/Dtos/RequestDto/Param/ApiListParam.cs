@@ -9,7 +9,7 @@ namespace NetX.RBAC.Models;
 public class ApiPageParam : Pager
 {
     [JsonProperty("group")]
-    public string? Ggroup { get; set; }
+    public string? Group { get; set; }
 }
 
 /// <summary>

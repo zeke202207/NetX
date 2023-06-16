@@ -22,8 +22,9 @@ public class DeptPagerListQueryHandler : DomainQueryHandler<DeptPagerListQuery, 
     public override async Task<ResultModel> Handle(DeptPagerListQuery request, CancellationToken cancellationToken)
     {
         var result = await GetList(request);
-        var count = await GetCount(request);
-        return result.ToSuccessPagerResultModel(count);
+        return result.ToSuccessResultModel();
+        //var count = await GetCount(request);
+        //return result.ToSuccessPagerResultModel(count);
     }
 
     private async Task<List<DeptModel>> GetList(DeptPagerListQuery request)

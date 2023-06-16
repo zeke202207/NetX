@@ -31,7 +31,7 @@ public class RoleAddCommandHandler : DomainCommandHandler<RoleAddCommand>
         await _uow.GetRepository<sys_role, string>().AddAsync(roleEntity);
         var rolemenus = request.Menus.Select(p => new sys_role_menu() { menuid = p, roleid = roleEntity.Id });
         await _uow.GetRepository<sys_role_menu, string>().AddRangeAsync(rolemenus);
-        return await _uow.CommitAsync();
+        return await _uow.SaveChangesAsync();
     }
 }
 
@@ -61,7 +61,7 @@ public class RoleModifyCommandHandler : DomainCommandHandler<RoleModifyCommand>
             _uow.GetRepository<sys_role_menu, string>().RemoveRange(rms);
         var rolemenus = request.Menus.Select(p => new sys_role_menu() { menuid = p, roleid = roleEntity.Id });
         await _uow.GetRepository<sys_role_menu, string>().AddRangeAsync(rolemenus);
-        return await _uow.CommitAsync();
+        return await _uow.SaveChangesAsync();
     }
 }
 
@@ -85,7 +85,7 @@ public class RoleRemoveCommandHandler : DomainCommandHandler<RoleRemoveCommand>
         if (null != rolemenu)
             _uow.GetRepository<sys_role_menu, string>().Remove(rolemenu);
         _uow.GetRepository<sys_role, string>().Remove(roleEntity);
-        return await _uow.CommitAsync();
+        return await _uow.SaveChangesAsync();
 
     }
 }
@@ -109,7 +109,7 @@ public class RoleStatusModifyCommandHandler : DomainCommandHandler<RoleStatusMod
         roleEntity.status = int.Parse(request.Status);
         _uow.GetRepository<sys_role, string>().Update(roleEntity);
         //TODO:更新缓存
-        return await _uow.CommitAsync();
+        return await _uow.SaveChangesAsync();
     }
 }
 
@@ -133,7 +133,7 @@ public class RoleApiAuthModifyCommandHandler : DomainCommandHandler<RoleApiAuthM
         roleEntity.apicheck = int.Parse(request.Status);
         _uow.GetRepository<sys_role, string>().Update(roleEntity);
         //TODO:更新缓存
-        return await _uow.CommitAsync();
+        return await _uow.SaveChangesAsync();
     }
 }
 
@@ -156,6 +156,6 @@ public class RoleApiAuthSettingCommandHandler : DomainCommandHandler<RoleApiAuth
             _uow.GetRepository<sys_role_api, string>().RemoveRange(all);
         await _uow.GetRepository<sys_role_api, string>().AddRangeAsync(roleapis);
         //TODO:更新缓存
-        return await _uow.CommitAsync();
+        return await _uow.SaveChangesAsync();
     }
 }

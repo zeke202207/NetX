@@ -34,7 +34,7 @@ public class ApiController : RBACBaseController
     [HttpPost]
     public async Task<ResultModel> GetApiPageList(ApiPageParam apiPageParam)
     {
-        return await _apiQuery.Send<ApiPagerListQuery, ResultModel>(new ApiPagerListQuery(apiPageParam.Ggroup, apiPageParam.CurrentPage, apiPageParam.PageSize));
+        return await _apiQuery.Send<ApiPagerListQuery, ResultModel>(new ApiPagerListQuery(apiPageParam.Group, apiPageParam.CurrentPage, apiPageParam.PageSize));
     }
 
     /// <summary>

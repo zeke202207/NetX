@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Netx.Ddd.Domain.Aggregates;
 
 namespace NetX.TaskScheduling.Model;
 
 /// <summary>
 /// 
 /// </summary>
-public class sys_jobtask : BaseEntity
+public class sys_jobtask : BaseEntity<string>
 {
     /// <summary>
     /// 

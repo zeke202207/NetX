@@ -23,8 +23,9 @@ public class RolePagerListQueryHandler : DomainQueryHandler<RolePagerListQuery, 
     public override async Task<ResultModel> Handle(RolePagerListQuery request, CancellationToken cancellationToken)
     {
         var result = await GetList(request);
-        var count = await GetCount(request);
-        return result.ToSuccessPagerResultModel(count);
+        return result.ToSuccessResultModel();
+        //var count = await GetCount(request);
+        //return result.ToSuccessPagerResultModel(count);
     }
 
     private async Task<List<RoleModel>> GetList(RolePagerListQuery request)

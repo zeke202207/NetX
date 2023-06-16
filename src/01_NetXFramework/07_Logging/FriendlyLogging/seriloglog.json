@@ -1,0 +1,33 @@
+﻿{
+  "Serilog": {
+    "MinimumLevel": {
+      "Default": "Information", //Verbose -> Debug -> Information -> Warning -> Error -> Fatal
+      "Override": {
+        "Microsoft": "Information",
+        "Microsoft.AspNetCore": "Information"
+      }
+    },
+    "WriteTo": [
+      {
+        "Name": "File",
+        "Args": {
+          "Path": "logs/netx-.log",
+          "RollingInterval": "Day",
+          "OutputTemplate": "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{RequestId}][{Level:u3}][{SourceContext}] {Message:lj}{NewLine}{Exception}",
+          "Shared": true,
+          "RollOnFileSizeLimit": true,
+          "FileSizeLimitBytes": 1048576,
+          "RetainedFileCountLimit": 1000
+        }
+      },
+      {
+        "Name": "Console",
+        "Args": {}
+      },
+      {
+        "Name": "Debug",
+        "Args": {}
+      }
+    ]
+  }
+}

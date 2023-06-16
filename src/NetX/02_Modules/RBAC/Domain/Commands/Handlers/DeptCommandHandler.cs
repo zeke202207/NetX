@@ -29,7 +29,7 @@ public class DeptAddCommandHandler : DomainCommandHandler<DeptAddCommand>
             status = int.Parse(request.Status)
         };
         await _uow.GetRepository<sys_dept, string>().AddAsync(deptEntity);
-        return await _uow.CommitAsync();
+        return await _uow.SaveChangesAsync();
     }
 }
 
@@ -55,7 +55,7 @@ public class DeptModifyCommandHandler : DomainCommandHandler<DeptModifyCommand>
         deptEntity.remark = request.Remark;
         deptEntity.status = int.Parse(request.Status);
         _uow.GetRepository<sys_dept, string>().Update(deptEntity);
-        return await _uow.CommitAsync();
+        return await _uow.SaveChangesAsync();
     }
 }
 
@@ -79,7 +79,7 @@ public class DeptRemoveCommandHandler : DomainCommandHandler<DeptRemoveCommand>
         if (null != userdept)
             _uow.GetRepository<sys_user_dept, string>().Remove(userdept);
         _uow.GetRepository<sys_dept, string>().Remove(deptEntity);
-        return await _uow.CommitAsync();
+        return await _uow.SaveChangesAsync();
 
     }
 }

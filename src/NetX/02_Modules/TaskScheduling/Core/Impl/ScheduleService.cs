@@ -1,13 +1,10 @@
-﻿using FreeSql;
-using Netx.QuartzScheduling;
+﻿using Netx.Ddd.Core;
 using NetX.Common.Attributes;
 using NetX.Common.ModuleInfrastructure;
-using NetX.TaskScheduling.Core.Impl;
-using NetX.TaskScheduling.Data.Repositories;
+using NetX.TaskScheduling.Domain;
 using NetX.TaskScheduling.Model;
 using NetX.TaskScheduling.Model.Dtos.RequestDto;
 using Newtonsoft.Json;
-using Quartz;
 
 namespace NetX.TaskScheduling.Core;
 
@@ -17,17 +14,19 @@ namespace NetX.TaskScheduling.Core;
 [Scoped]
 public class ScheduleService : BaseService, IScheduleService
 {
-    private readonly IBaseRepository<sys_jobtask> _jobTaskRepository;
+    private readonly ICommandBus _jobtaskCommand;
+    private readonly IQueryBus _jobtaskQuery;
     private readonly ISchedule _schedule;
 
     /// <summary>
     /// 任务调度服务管理实例
     /// </summary>
-    public ScheduleService(IBaseRepository<sys_jobtask> jobTaskRepository, ISchedule schedule)
+    public ScheduleService(ICommandBus jobtaskCommand, IQueryBus queryBus,  ISchedule schedule)
         : base()
     {
-        this._jobTaskRepository = jobTaskRepository;
         this._schedule = schedule;
+        this._jobtaskCommand = jobtaskCommand;
+        _jobtaskQuery = queryBus;
     }
 
     /// <summary>
@@ -41,21 +40,18 @@ public class ScheduleService : BaseService, IScheduleService
         //1. quartz add job
         await this._schedule.AddJob(scheduleModel);
         //2. database handle
-        var result = await ((JobTaskRepository)this._jobTaskRepository).AddJob(
-            new sys_jobtask()
-            {
-                id = base.CreateId(),
-                createtime = base.CreateInsertTime(),
-                name = scheduleModel.Job.Name,
-                group = scheduleModel.Job.Group,
-                jobtype = scheduleModel.Job.JobType,
-                description = scheduleModel.Job.Description,
-                disallowconcurrentexecution = scheduleModel.Job.DisAllowConcurrentExecution,
-                datamap = JsonConvert.SerializeObject(scheduleModel.Job.JobDataMap),
-            },
-           GetTriggerEntity(scheduleModel));
-        //TODO:数据库处理
-        return base.Success<bool>(result);
+        await _jobtaskCommand.Send<AddJobTaskCommand>(new AddJobTaskCommand(
+             Guid.NewGuid().ToString("N"),
+             scheduleModel.Job.Name,
+             scheduleModel.Job.Group,
+             scheduleModel.Job.JobType,
+             JsonConvert.SerializeObject(scheduleModel.Job.JobDataMap),
+             scheduleModel.Job.DisAllowConcurrentExecution,
+             DateTime.UtcNow,
+             scheduleModel.Job.Description,
+             scheduleModel
+            ));
+        return base.Success<bool>(true);
     }
 
     /// <summary>
@@ -92,10 +88,11 @@ public class ScheduleService : BaseService, IScheduleService
     /// <exception cref="NotImplementedException"></exception>
     public async Task<ResultModel<bool>> DeleteJob(string jobId)
     {
-        var job = await _jobTaskRepository.Select.Where(p=>p.id == jobId).FirstAsync();
-        if(null == job)
-            return base.Success<bool>(false);
-        return await DeleteJob(job.name, job.group);
+        var jobtask = await _jobtaskQuery.Send<JobTaskQueryById, sys_jobtask>(new JobTaskQueryById(jobId));
+        if(null == jobtask)
+            return base.Success<bool>(true);
+        await _jobtaskCommand.Send<RemoveJobTaskCommand>(new RemoveJobTaskCommand(jobId));
+        return await DeleteJob(jobtask.name, jobtask.group);
     }
 
     /// <summary>
@@ -106,11 +103,12 @@ public class ScheduleService : BaseService, IScheduleService
     /// <returns></returns>
     public async Task<ResultModel<bool>> DeleteJob(string jobName, string groupName)
     {
-        //1.Quartz删除job
-        await this._schedule.DeleteJob(jobName, groupName);
-        //2.数据库删除job
-        var result = await ((JobTaskRepository)this._jobTaskRepository).DeleteJob(jobName, groupName);
-        return base.Success<bool>(result);
+        ////1.Quartz删除job
+        //await this._schedule.DeleteJob(jobName, groupName);
+        ////2.数据库删除job
+        //var result = await ((JobTaskRepository)this._jobTaskRepository).DeleteJob(jobName, groupName);
+        //return base.Success<bool>(result);
+        throw new NotImplementedException();
     }
 
     /// <summary>
@@ -176,7 +174,7 @@ public class ScheduleService : BaseService, IScheduleService
     {
         return new sys_trigger()
         {
-            id = base.CreateId(),
+            Id = base.CreateId(),
             createtime = base.CreateInsertTime(),
             description = cron.Trigger.Description,
             endat = cron.Trigger.EndAt,

@@ -10,8 +10,7 @@
         /// <summary>
         /// 根据租户身份，获取租户信息
         /// </summary>
-        /// <param name="Identifier">租户身份</param>
         /// <returns></returns>
-        Task<T?> GetTenantAsync(string Identifier);
+        Task<T?> GetTenantAsync();
     }
 }

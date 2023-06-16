@@ -28,7 +28,7 @@ public class ApiAddCommandHandler : DomainCommandHandler<ApiAddCommand>
             description = request.Description
         };
         await _uow.GetRepository<sys_api, string>().AddAsync(apiEntity);
-        return await _uow.CommitAsync();
+        return await _uow.SaveChangesAsync();
     }
 }
 
@@ -54,7 +54,7 @@ public class ApiModifyCommandHandler : DomainCommandHandler<ApiModifyCommand>
         apiEntity.group = request.Group;
         apiEntity.description = request.Description;
         _uow.GetRepository<sys_api, string>().Update(apiEntity);
-        return await _uow.CommitAsync();
+        return await _uow.SaveChangesAsync();
     }
 }
 
@@ -79,7 +79,7 @@ public class ApiRemoveCommandHandler : DomainCommandHandler<ApiRemoveCommand>
         if (null != roleapi)
             _uow.GetRepository<sys_role_api, string>().Remove(roleapi);
         _uow.GetRepository<sys_api, string>().Remove(apiEntity);
-        return await _uow.CommitAsync();
+        return await _uow.SaveChangesAsync();
 
     }
 }

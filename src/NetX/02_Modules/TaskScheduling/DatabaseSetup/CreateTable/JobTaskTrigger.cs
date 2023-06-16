@@ -1,10 +1,5 @@
 ﻿using FluentMigrator;
 using NetX.DatabaseSetup;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetX.TaskScheduling.DatabaseSetup;
 
@@ -30,7 +25,7 @@ public class JobTaskTrigger : CreateTableMigration
         Create.Table(_tableName)
                .WithColumn("jobtaskid").AsString(50).PrimaryKey()
                .ForeignKey($"fk_{DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYSJOBTASK_TRIGGER}_{DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYSJOBTASK}", DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYSJOBTASK, "id")
-               .WithColumn("triggerid").AsString(255).NotNullable()
+               .WithColumn("triggerid").AsString(255).PrimaryKey()
                .ForeignKey($"fk_{DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYSJOBTASK_TRIGGER}_{DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYS_TRIGGER}", DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYS_TRIGGER, "id");
     }
 }

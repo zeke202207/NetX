@@ -68,7 +68,7 @@ public class ApiListQueryHandler : DomainQueryHandler<ApiListQuery, ResultModel>
 
     public override async Task<ResultModel> Handle(ApiListQuery request, CancellationToken cancellationToken)
     {
-        var result = await base._dbContext.QueryListAsync<sys_api>("SELECT * FROM sys_api order by group");
+        var result = await base._dbContext.QueryListAsync<sys_api>("SELECT * FROM sys_api order by `group`");
         if (result?.Count() == 0)
             return new List<ApiModel>().ToSuccessResultModel();
         return this._mapper.Map<List<ApiModel>>(result).ToSuccessResultModel();

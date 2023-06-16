@@ -6,18 +6,14 @@
 internal class TenantAccessService<T>
     where T : Tenant
 {
-
-    private readonly ITenantResolutionStrategy _strategy;
     private readonly ITenantStore<T> _tenantStore;
 
     /// <summary>
     /// 租户访问访问实例
     /// </summary>
-    /// <param name="tenantResolutionStrategy"></param>
     /// <param name="tenantStore"></param>
-    public TenantAccessService(ITenantResolutionStrategy tenantResolutionStrategy, ITenantStore<T> tenantStore)
+    public TenantAccessService( ITenantStore<T> tenantStore)
     {
-        _strategy = tenantResolutionStrategy;
         _tenantStore = tenantStore;
     }
 
@@ -27,7 +23,6 @@ internal class TenantAccessService<T>
     /// <returns></returns>
     public async Task<T?> GetTenatnAsync()
     {
-        var tenantIdentifier = await _strategy.GetTenantIdentifierAsync();
-        return await _tenantStore.GetTenantAsync(tenantIdentifier);
+        return await _tenantStore.GetTenantAsync();
     }
 }
