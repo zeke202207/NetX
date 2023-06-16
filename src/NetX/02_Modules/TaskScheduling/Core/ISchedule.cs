@@ -12,27 +12,27 @@ namespace NetX.TaskScheduling.Core
         /// </summary>
         /// <param name="scheduleModel"></param>
         /// <returns></returns>
-        Task AddJob(ScheduleRequest scheduleModel);
+        Task AddJobAsync(JobTaskModel scheduleModel);
         /// <summary>
         /// 
         /// </summary>
         /// <param name="jobName"></param>
         /// <param name="groupName"></param>
         /// <returns></returns>
-        Task PauseJob(string jobName, string groupName);
+        Task PauseJobAsync(string jobName, string groupName);
         /// <summary>
         /// 
         /// </summary>
         /// <param name="jobName"></param>
         /// <param name="groupName"></param>
         /// <returns></returns>
-        Task ResumeJob(string jobName, string groupName);
+        Task ResumeJobAsync(string jobName, string groupName);
         /// <summary>
         /// 
         /// </summary>
         /// <param name="jobName"></param>
         /// <param name="groupName"></param>
         /// <returns></returns>
-        Task DeleteJob(string jobName, string groupName);
+        Task DeleteJobAsync(string jobName, string groupName);
     }
 }

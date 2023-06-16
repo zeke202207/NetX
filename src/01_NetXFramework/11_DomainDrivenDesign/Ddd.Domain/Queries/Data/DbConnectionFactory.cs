@@ -26,7 +26,7 @@ public class DbConnectionFactory
         {
             if (TenantContext.CurrentTenant.TenantOption?.DatabaseInfo?.DatabaseType == DatabaseType.MySql)
             {
-                var _connection = new MySqlConnection($"{TenantContext.CurrentTenant.TenantOption.DatabaseInfo.ToConnStr()}");
+                var _connection = new MySqlConnection($"{TenantContext.CurrentTenant.TenantOption.DatabaseInfo.ToConnStr(TenantContext.CurrentTenant.TenantType,TenantContext.CurrentTenant.Principal.Tenant.TenantId)}");
                 if (null != _connection && _connection.State != ConnectionState.Open)
                     _connection.Open();
                 return _connection;

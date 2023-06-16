@@ -13,7 +13,7 @@ public interface IScheduleService
     /// </summary>
     /// <param name="scheduleModel">计划任务配置实体</param>
     /// <returns></returns>
-    Task<ResultModel<bool>> AddJob(ScheduleRequest scheduleModel);
+    Task<ResultModel<bool>> AddJob(CronScheduleRequest scheduleModel);
 
     /// <summary>
     /// 暂停一个job任务
@@ -21,7 +21,7 @@ public interface IScheduleService
     /// <param name="jobName"></param>
     /// <param name="groupName"></param>
     /// <returns></returns>
-    Task<ResultModel<bool>> PauseJob(string jobName, string groupName);
+    Task<ResultModel<bool>> PauseJob(string jobId);
 
     /// <summary>
     /// 恢复一个已暂停的job任务
@@ -29,15 +29,7 @@ public interface IScheduleService
     /// <param name="jobName"></param>
     /// <param name="groupName"></param>
     /// <returns></returns>
-    Task<ResultModel<bool>> ResumeJob(string jobName, string groupName);
-
-    /// <summary>
-    /// 删除一个job任务
-    /// </summary>
-    /// <param name="jobName"></param>
-    /// <param name="groupName"></param>
-    /// <returns></returns>
-    Task<ResultModel<bool>> DeleteJob(string jobName, string groupName);
+    Task<ResultModel<bool>> ResumeJob(string jobId);
 
     /// <summary>
     /// 删除一个job
@@ -51,7 +43,7 @@ public interface IScheduleService
     /// </summary>
     /// <param name="scheduleParam"></param>
     /// <returns></returns>
-    Task<ResultModel<PagerResultModel<List<ScheduleModel>>>> GetJob(ScheduleListParam scheduleParam);
+    Task<ResultModel<List<ScheduleModel>>> GetJob(ScheduleListParam scheduleParam);
 
     /// <summary>
     /// 根据任务id获取任务详情
@@ -59,12 +51,4 @@ public interface IScheduleService
     /// <param name="jobId"></param>
     /// <returns></returns>
     Task<ResultModel<ScheduleModel>> GetJob(string jobId);
-
-    /// <summary>
-    /// 根据任务名称和分组获取任务详情
-    /// </summary>
-    /// <param name="jobName"></param>
-    /// <param name="groupName"></param>
-    /// <returns></returns>
-    Task<ResultModel<ScheduleModel>> GetJob(string jobName, string groupName);
 }

@@ -21,6 +21,14 @@ public class InMemoryTenantStore : ITenantStore<Tenant>
         _strategy = strategy;
     }
 
+    public Task<IEnumerable<Tenant>> GetAllTenantAsync()
+    {
+        if (_tenantOption.TenantType == TenantType.Multi)
+            return Task.FromResult(InMemoryStoreProvider.Instance.Tenants.AsEnumerable());
+        else
+            return Task.FromResult(InMemoryStoreProvider.Instance.Tenants.Take(1).AsEnumerable());
+    }
+
     /// <summary>
     /// 根据租户身份获取租户信息
     /// </summary>

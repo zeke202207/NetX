@@ -2,8 +2,6 @@
 using Netx.Ddd.Domain;
 using NetX.Common.Attributes;
 using NetX.TaskScheduling.Model;
-using NetX.TaskScheduling.Model.Dtos.RequestDto;
-using NetX.TaskScheduling.Model.Entity;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -35,23 +33,17 @@ namespace NetX.TaskScheduling.Domain
                 jobtype = request.JobType,
                 description = request.Description,
                 disallowconcurrentexecution = request.DisAllowConcurrentExecution,
-                datamap = JsonConvert.SerializeObject(request.DataMap),
+                datamap = request.DataMap,
             };
             var trigger = GetTriggerEntity(request.Request);
-            var jobtasktrigger = new sys_jobtask_trigger()
-            {
-                jobtaskid = jobTask.Id,
-                triggerid = trigger.Id,
-            };
+            trigger.jobtaskid = jobTask.Id;
             bool result = true;
             using var transaction = await _uow.BeginTransactionAsync();
             try
             {
                 await _uow.GetRepository<sys_jobtask, string>().AddAsync(jobTask);
                 await _uow.SaveChangesAsync(false);
-                await _uow.GetRepository<sys_trigger, string>().AddAsync(trigger);
-                await _uow.SaveChangesAsync(false);
-                await _uow.GetRepository<sys_jobtask_trigger, string>().AddAsync(jobtasktrigger);
+                await _uow.GetRepository<sys_jobtasktrigger, string>().AddAsync(trigger);
                 await _uow.SaveChangesAsync(true);
                 await _uow.CommitTransactionAsync(transaction);
             }
@@ -74,22 +66,9 @@ namespace NetX.TaskScheduling.Domain
         /// </summary>
         /// <param name="scheduleModel"></param>
         /// <returns></returns>
-        private sys_trigger GetTriggerEntity(ScheduleRequest scheduleModel) => scheduleModel switch
+        private sys_jobtasktrigger GetTriggerEntity(CronScheduleRequest cron)
         {
-            CronScheduleRequest cron => CronTrigger(cron),
-            SimpleScheduleRequest simple => SimpleTrigger(simple),
-            _ => throw new ArgumentNullException(nameof(scheduleModel)),
-        };
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="cron"></param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        private sys_trigger CronTrigger(CronScheduleRequest cron)
-        {
-            return new sys_trigger()
+            return new sys_jobtasktrigger()
             {
                 Id = Guid.NewGuid().ToString("N"),
                 createtime = DateTime.UtcNow,
@@ -99,18 +78,9 @@ namespace NetX.TaskScheduling.Domain
                 name = cron.Trigger.Name,
                 priority = cron.Trigger.Priority,
                 startnow = cron.Trigger.StartNow,
+                cron = cron.Trigger.CronExpression,
+                triggertype = 0
             };
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="simple"></param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        private sys_trigger SimpleTrigger(SimpleScheduleRequest simple)
-        {
-            throw new NotImplementedException();
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Netx.Ddd.Domain;
 using NetX.TaskScheduling.Model;
-using NetX.TaskScheduling.Model.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,14 +24,9 @@ namespace NetX.TaskScheduling.Domain.Commands.Handlers
             var jobtask = await _uow.GetRepository<sys_jobtask, string>().FirstOrDefaultAsync(p => p.Id == request.Id);
             if (null == jobtask)
                 return false;
-            var jobtrigger = await _uow.GetRepository<sys_jobtask_trigger, string>().FirstOrDefaultAsync(p => p.jobtaskid == request.Id);
+            var jobtrigger = await _uow.GetRepository<sys_jobtasktrigger, string>().FirstOrDefaultAsync(p => p.jobtaskid == request.Id);
             if (null != jobtrigger)
-            {
-                var trigger = await _uow.GetRepository<sys_trigger, string>().FirstOrDefaultAsync(p => p.Id == jobtrigger.Id);
-                if (null != trigger)
-                    _uow.GetRepository<sys_trigger, string>().Remove(trigger);
-                _uow.GetRepository<sys_jobtask_trigger, string>().Remove(jobtrigger);
-            }
+                _uow.GetRepository<sys_jobtasktrigger, string>().Remove(jobtrigger);
             _uow.GetRepository<sys_jobtask, string>().Remove(jobtask);
             return await _uow.SaveChangesAsync();
         }

@@ -40,7 +40,7 @@ namespace NetX.TaskScheduling.Domain
         /// </summary>
         public string Description { get; set; }
 
-        public ScheduleRequest Request { get; set; }
+        public CronScheduleRequest Request { get; set; }
 
         public AddJobTaskCommand(
             string id,
@@ -51,7 +51,7 @@ namespace NetX.TaskScheduling.Domain
             bool disallowconcurrentexecution,
             DateTime createtime,
             string description,
-            ScheduleRequest request)
+            CronScheduleRequest request)
        : base(Guid.NewGuid(), DateTime.Now)
         {
             Id = id;

@@ -2,8 +2,9 @@
 
 namespace NetX.TaskScheduling.Model;
 
-public class sys_trigger : BaseEntity<string>
+public class sys_jobtasktrigger : BaseEntity<string>
 {
+    public string jobtaskid { get; set; }
     /// <summary>
     /// 
     /// </summary>
@@ -24,6 +25,9 @@ public class sys_trigger : BaseEntity<string>
     /// 
     /// </summary>
     public int priority { get; set; }
+
+    public string cron { get; set; }
+
     /// <summary>
     /// 
     /// </summary>
@@ -32,4 +36,12 @@ public class sys_trigger : BaseEntity<string>
     /// 
     /// </summary>
     public string description { get; set; }
+
+    /// <summary>
+    /// 触发器类型
+    /// 0：cron
+    /// 1：simple
+    /// 2：。。。
+    /// </summary>
+    public int triggertype { get; set; }
 }

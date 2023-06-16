@@ -12,5 +12,11 @@
         /// </summary>
         /// <returns></returns>
         Task<T?> GetTenantAsync();
+
+        /// <summary>
+        /// 获取全部组合信息
+        /// </summary>
+        /// <returns></returns>
+        Task<IEnumerable<T>> GetAllTenantAsync();
     }
 }

@@ -13,6 +13,7 @@
     "storestrategy": "NetX.Tenants.InMemoryTenantStore",
     "tenants": [
       {
+        // tenantid:要求唯一，多租户下生效，数据库命名格式： tenantid-databasename
         "tenantid": "1",
         "identifier": "zeke"
       },

@@ -3,7 +3,6 @@ using NetX.Common.Attributes;
 using NetX.Common.ModuleInfrastructure;
 using NetX.TaskScheduling.Domain;
 using NetX.TaskScheduling.Model;
-using NetX.TaskScheduling.Model.Dtos.RequestDto;
 using Newtonsoft.Json;
 
 namespace NetX.TaskScheduling.Core;
@@ -35,10 +34,19 @@ public class ScheduleService : BaseService, IScheduleService
     /// <param name="scheduleModel"></param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public async Task<ResultModel<bool>> AddJob(ScheduleRequest scheduleModel)
+    public async Task<ResultModel<bool>> AddJob(CronScheduleRequest scheduleModel)
     {
         //1. quartz add job
-        await this._schedule.AddJob(scheduleModel);
+        await this._schedule.AddJobAsync(new JobTaskModel()
+        {
+             Name = scheduleModel.Job.Name,
+             Group = scheduleModel.Job.Group,
+             JobType = scheduleModel.Job.JobType,
+             JobDataMap = scheduleModel.Job.JobDataMap,
+             DisAllowConcurrentExecution = scheduleModel.Job.DisAllowConcurrentExecution,
+             Description = scheduleModel.Job.Description,
+             Trigger = CreateTriggerBuilder(scheduleModel)
+        });
         //2. database handle
         await _jobtaskCommand.Send<AddJobTaskCommand>(new AddJobTaskCommand(
              Guid.NewGuid().ToString("N"),
@@ -61,9 +69,12 @@ public class ScheduleService : BaseService, IScheduleService
     /// <param name="groupName"></param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public async Task<ResultModel<bool>> PauseJob(string jobName, string groupName)
+    public async Task<ResultModel<bool>> PauseJob(string jobId)
     {
-        await this._schedule.PauseJob(jobName, groupName);
+        var jobtask = await _jobtaskQuery.Send<JobTaskQueryById, sys_jobtask>(new JobTaskQueryById(jobId));
+        if (null == jobtask)
+            return base.Success<bool>(true);
+        await this._schedule.PauseJobAsync(jobtask.name, jobtask.group);
         return base.Success<bool>(true);
     }
 
@@ -74,9 +85,12 @@ public class ScheduleService : BaseService, IScheduleService
     /// <param name="groupName"></param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public async Task<ResultModel<bool>> ResumeJob(string jobName, string groupName)
+    public async Task<ResultModel<bool>> ResumeJob(string jobId)
     {
-        await this._schedule.ResumeJob(jobName, groupName);
+        var jobtask = await _jobtaskQuery.Send<JobTaskQueryById, sys_jobtask>(new JobTaskQueryById(jobId));
+        if (null == jobtask)
+            return base.Success<bool>(true);
+        await this._schedule.ResumeJobAsync(jobtask.name, jobtask.group);
         return base.Success<bool>(true);
     }
 
@@ -91,24 +105,9 @@ public class ScheduleService : BaseService, IScheduleService
         var jobtask = await _jobtaskQuery.Send<JobTaskQueryById, sys_jobtask>(new JobTaskQueryById(jobId));
         if(null == jobtask)
             return base.Success<bool>(true);
+        await this._schedule.DeleteJobAsync(jobtask.name, jobtask.group);
         await _jobtaskCommand.Send<RemoveJobTaskCommand>(new RemoveJobTaskCommand(jobId));
-        return await DeleteJob(jobtask.name, jobtask.group);
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="jobName"></param>
-    /// <param name="groupName"></param>
-    /// <returns></returns>
-    public async Task<ResultModel<bool>> DeleteJob(string jobName, string groupName)
-    {
-        ////1.Quartz删除job
-        //await this._schedule.DeleteJob(jobName, groupName);
-        ////2.数据库删除job
-        //var result = await ((JobTaskRepository)this._jobTaskRepository).DeleteJob(jobName, groupName);
-        //return base.Success<bool>(result);
-        throw new NotImplementedException();
+        return base.Success<bool>(true);
     }
 
     /// <summary>
@@ -117,9 +116,13 @@ public class ScheduleService : BaseService, IScheduleService
     /// <param name="scheduleParam"></param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public Task<ResultModel<PagerResultModel<List<ScheduleModel>>>> GetJob(ScheduleListParam scheduleParam)
+    public async Task<ResultModel<List<ScheduleModel>>> GetJob(ScheduleListParam scheduleParam)
     {
-        throw new NotImplementedException();
+        var jobtasks = await _jobtaskQuery.Send<JobTaskQueryAll, IEnumerable<JobTaskModel>>(new JobTaskQueryAll());
+        if (null == jobtasks)
+            return base.Success<List<ScheduleModel>>(new List<ScheduleModel>());
+        var result = jobtasks.Select(p => ToScheduleModel(p));
+        return base.Success<List<ScheduleModel>>(result.ToList());
     }
 
     /// <summary>
@@ -128,71 +131,61 @@ public class ScheduleService : BaseService, IScheduleService
     /// <param name="jobId">数据库jobid</param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public Task<ResultModel<ScheduleModel>> GetJob(string jobId)
+    public async Task<ResultModel<ScheduleModel>> GetJob(string jobId)
     {
-        throw new NotImplementedException();
+        var jobtasks = await _jobtaskQuery.Send<JobTaskQueryAll, IEnumerable<JobTaskModel>>(new JobTaskQueryAll());
+        var jobtask = jobtasks.FirstOrDefault(p => p.Id == jobId);
+        if (null == jobtask)
+            return base.Error<ScheduleModel>($"未找到{jobId}的任务");
+        ScheduleModel model = ToScheduleModel(jobtask);
+        return base.Success<ScheduleModel>(model);
     }
 
     /// <summary>
-    /// 根据任务名获取任务
-    /// </summary>
-    /// <param name="jobName"></param>
-    /// <param name="groupName"></param>
-    /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
-    public async Task<ResultModel<ScheduleModel>> GetJob(string jobName, string groupName)
-    {
-        //var entity = await this._jobTaskRepository.Where(p=>p.name.ToLower() == jobName.ToLower() && p.group.ToLower() == groupName.ToLower()).FirstAsync();
-        //if (null == entity)
-        //    return base.Error<ScheduleModel>("没有找到该任务");
-        //return base.Success<ScheduleModel>(new ScheduleModel()
-        //{
-
-        //});
-        throw new NotImplementedException();
-    }
-
-    /// <summary>
-    /// 构建触发器
+    /// 创建触发器
     /// </summary>
     /// <param name="scheduleModel"></param>
     /// <returns></returns>
-    private sys_trigger GetTriggerEntity(ScheduleRequest scheduleModel) => scheduleModel switch
+    private CronJobTaskTriggerModel? CreateTriggerBuilder(CronScheduleRequest cron)
     {
-        CronScheduleRequest cron => CronTrigger(cron),
-        SimpleScheduleRequest simple => SimpleTrigger(simple),
-        _ => throw new ArgumentNullException(nameof(scheduleModel)),
-    };
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="cron"></param>
-    /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
-    private sys_trigger CronTrigger(CronScheduleRequest cron)
-    {
-        return new sys_trigger()
+        return new CronJobTaskTriggerModel()
         {
-            Id = base.CreateId(),
-            createtime = base.CreateInsertTime(),
-            description = cron.Trigger.Description,
-            endat = cron.Trigger.EndAt,
-            startat = cron.Trigger.StartAt,
-            name = cron.Trigger.Name,
-            priority = cron.Trigger.Priority,
-            startnow = cron.Trigger.StartNow,
+            Name = cron.Trigger.Name,
+            CronExpression = cron.Trigger.CronExpression,
+            Description = cron.Trigger.Description,
+            EndAt = cron.Trigger.EndAt,
+            Priority = cron.Trigger.Priority,
+            StartAt = cron.Trigger.StartAt,
+            StartNow = cron.Trigger.StartNow
         };
     }
 
     /// <summary>
-    /// 
+    /// 实体对象转换
     /// </summary>
-    /// <param name="simple"></param>
+    /// <param name="jobtask"></param>
     /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
-    private sys_trigger SimpleTrigger(SimpleScheduleRequest simple)
+    private ScheduleModel ToScheduleModel(JobTaskModel jobtask)
     {
-        throw new NotImplementedException();
+        return new ScheduleModel()
+        {
+            Id = jobtask.Id,
+            Description = jobtask.Description,
+            DisAllowConcurrentExecution = jobtask.DisAllowConcurrentExecution,
+            Group = jobtask.Group,
+            JobDataMap = jobtask.JobDataMap,
+            JobType = jobtask.JobType,
+            Name = jobtask.Name,
+            Trigger = new ScheduleTriggerModel()
+            {
+                Name = jobtask.Trigger.Name,
+                CronExpression = jobtask.Trigger.CronExpression,
+                Description = jobtask.Trigger.Description,
+                EndAt = jobtask.Trigger.EndAt,
+                Priority = jobtask.Trigger.Priority,
+                StartAt = jobtask.Trigger.StartAt,
+                StartNow = jobtask.Trigger.StartNow
+            }
+        };
     }
 }

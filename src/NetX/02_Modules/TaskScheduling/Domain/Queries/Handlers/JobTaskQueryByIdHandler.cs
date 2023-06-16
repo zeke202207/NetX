@@ -10,7 +10,7 @@ using NetX.TaskScheduling.Model;
 using NetX.Authentication.Core;
 using NetX.Common;
 
-namespace NetX.TaskScheduling.Domain.Queries.Handlers
+namespace NetX.TaskScheduling.Domain
 {
     [Scoped]
     public class JobTaskQueryByIdHandler : DomainQueryHandler<JobTaskQueryById, sys_jobtask>

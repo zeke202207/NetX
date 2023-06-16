@@ -3,7 +3,7 @@
 /// <summary>
 /// 任务实体
 /// </summary>
-public class JobRequest
+public class JobTaskInfo
 {
     /// <summary>
     /// 任务名称

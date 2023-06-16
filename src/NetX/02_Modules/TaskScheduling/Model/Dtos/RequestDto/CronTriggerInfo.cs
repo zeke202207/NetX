@@ -3,8 +3,19 @@
 /// <summary>
 /// Cron表达式触发器
 /// </summary>
-public class CronTriggerRequest : TriggerRequest
+public class CronTriggerInfo
 {
+
+    /// <summary>
+    /// 触发器名称
+    /// </summary>
+    public string Name { get; set; }
+
+    /// <summary>
+    /// 触发器描述
+    /// </summary>
+    public string Description { get; set; }
+
     /// <summary>
     /// cron表达式
     /// </summary>
