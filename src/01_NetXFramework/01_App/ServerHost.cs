@@ -7,6 +7,7 @@ using NetX.DatabaseSetup;
 using NetX.FriendlyLogging;
 using NetX.InMemoryCache;
 using NetX.Module;
+using Serilog;
 using System.ComponentModel;
 using System.Reflection;
 
@@ -38,6 +39,8 @@ public static class ServerHost
             builder.Configuration[nameof(urls)];
         if (!string.IsNullOrWhiteSpace(startUrls))
             builder.WebHost.UseUrls(startUrls);
+        //系统logo
+        NetxLogoInfo(builder.Configuration);
         //注入系统服务
         builder.InjectFrameworkService(builder.Environment, builder.Configuration);
         //注入配置服务
@@ -58,6 +61,43 @@ public static class ServerHost
         InternalApp.RootServices = app.Services;
         ServiceLocator.Instance = app.Services;
         app.Run();
+    }
+
+    /// <summary>
+    /// 在线生成logo图标
+    /// http://patorjk.com/software/taag/#p=display&f=Blocks&t=netx%20
+    /// </summary>
+    /// <returns></returns>
+    private static void NetxLogoInfo(ConfigurationManager config)
+    {
+        var fontcolor = Console.ForegroundColor;
+        Console.ForegroundColor = ConsoleColor.DarkGreen;
+        Console.WriteLine
+        (@$"
+                    .-----------------. .----------------.  .----------------.  .----------------.   
+                    | .--------------. || .--------------. || .--------------. || .--------------. |  
+                    | | ____  _____  | || |  _________   | || |  _________   | || |  ____  ____  | |    
+                    | ||_   \|_   _| | || | |_   ___  |  | || | |  _   _  |  | || | |_  _||_  _| | |    
+                    | |  |   \ | |   | || |   | |_  \_|  | || | |_/ | | \_|  | || |   \ \  / /   | |
+                    | |  | |\ \| |   | || |   |  _|  _   | || |     | |      | || |    > `' <    | |    
+                    | | _| |_\   |_  | || |  _| |___/ |  | || |    _| |_     | || |  _/ /'`\ \_  | |
+                    | ||_____|\____| | || | |_________|  | || |   |_____|    | || | |____||____| | |    
+                    | |              | || |              | || |              | || |              | |    
+                    | '--------------' || '--------------' || '--------------' || '--------------' |  
+                    '----------------'  '----------------'  '----------------'  '----------------'   
+        ");
+        var c = Console.GetCursorPosition();
+        string output = $"版本：{config.GetValue<string>("netxinfo:version")}";
+        Console.SetCursorPosition((Console.WindowWidth - output.Length) / 2, c.Top);
+        Console.WriteLine(output);
+        c = Console.GetCursorPosition();
+        output = $"{config.GetValue<string>("netxinfo:github")}";
+        Console.SetCursorPosition((Console.WindowWidth - output.Length) / 2, c.Top);
+        Console.WriteLine(output);
+        c = Console.GetCursorPosition();
+        Console.SetCursorPosition(0, c.Top);
+        Console.WriteLine();
+        Console.ForegroundColor = fontcolor;
     }
 }
 
