@@ -1,19 +1,20 @@
 ﻿using FluentMigrator;
 using NetX.DatabaseSetup;
 
-namespace NetX.TaskScheduling.DatabaseSetup;
+namespace NetX.TaskScheduling.DatabaseSetup.CreateTable;
+
 
 /// <summary>
 /// 
 /// </summary>
-[Migration(20091224100603)]
+[Migration(20091224100602)]
 public class JobTaskTrigger : CreateTableMigration
 {
     /// <summary>
     /// 
     /// </summary>
     public JobTaskTrigger()
-        : base(DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYSJOBTASK_TRIGGER)
+        : base(DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYS_TRIGGER)
     {
     }
 
@@ -23,9 +24,16 @@ public class JobTaskTrigger : CreateTableMigration
     public override void Up()
     {
         Create.Table(_tableName)
+               .WithColumn("id").AsString(50).PrimaryKey()
                .WithColumn("jobtaskid").AsString(50).PrimaryKey()
-               .ForeignKey($"fk_{DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYSJOBTASK_TRIGGER}_{DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYSJOBTASK}", DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYSJOBTASK, "id")
-               .WithColumn("triggerid").AsString(255).PrimaryKey()
-               .ForeignKey($"fk_{DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYSJOBTASK_TRIGGER}_{DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYS_TRIGGER}", DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYS_TRIGGER, "id");
+               .WithColumn("name").AsString(255).NotNullable()
+               .WithColumn("cron").AsString(255).NotNullable()
+               .WithColumn("triggertype").AsInt32().WithDefaultValue(0)
+               .WithColumn("startat").AsDateTime().Nullable()
+               .WithColumn("endat").AsDateTime().Nullable()
+               .WithColumn("startnow").AsBoolean().WithDefaultValue(false)
+               .WithColumn("priority").AsInt32().Nullable()
+               .WithColumn("createtime").AsDateTime().WithDefaultValue(DateTime.Now)
+               .WithColumn("description").AsString(500).Nullable();
     }
 }

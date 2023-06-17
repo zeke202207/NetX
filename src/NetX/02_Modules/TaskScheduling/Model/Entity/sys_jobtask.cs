@@ -27,6 +27,8 @@ public class sys_jobtask : BaseEntity<string>
     /// 
     /// </summary>
     public bool disallowconcurrentexecution { get; set; }
+    
+    public int enabled { get; set; }
     /// <summary>
     /// 
     /// </summary>
