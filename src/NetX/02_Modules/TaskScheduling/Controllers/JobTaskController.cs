@@ -32,31 +32,31 @@ public class JobTaskController : BaseController
     [HttpPost]
     public async Task<ResultModel> AddCronJob(CronScheduleRequest requestDto)
     {
-#if DEBUG
-        Dictionary<string, string> test = new()
-        {
-            {"a","1" },
-            {"b","2" }
-        };
-        requestDto = new Model.CronScheduleRequest()
-        {
-            Id = Guid.NewGuid().ToString(),
-            Job = new Model.JobTaskInfo()
-            {
-                Name = "zeke" + Random.Shared.Next(100),
-                Group = "zekegroup",
-                Description = "xxx",
-                JobDataMap = test,
-                JobType = "NetX.Tools.Jobs.RestoreDatabaseJob"
-            },
-            Trigger = new Model.CronTriggerInfo()
-            {
-                Name = "zeke trigger" + Random.Shared.Next(100),
-                Description = "yyy",
-                CronExpression = "0/5 * * * * ?"
-            }
-        };
-#endif
+//#if DEBUG
+//        Dictionary<string, string> test = new()
+//        {
+//            {"a","1" },
+//            {"b","2" }
+//        };
+//        requestDto = new Model.CronScheduleRequest()
+//        {
+//            Id = Guid.NewGuid().ToString(),
+//            Job = new Model.JobTaskInfo()
+//            {
+//                Name = "zeke" + Random.Shared.Next(100),
+//                Group = "zekegroup",
+//                Description = "xxx",
+//                JobDataMap = test,
+//                JobType = "NetX.Tools.Jobs.RestoreDatabaseJob"
+//            },
+//            Trigger = new Model.CronTriggerInfo()
+//            {
+//                Name = "zeke trigger" + Random.Shared.Next(100),
+//                Description = "yyy",
+//                CronExpression = "0/5 * * * * ?"
+//            }
+//        };
+//#endif
         return await this._scheduleServer.AddJob(requestDto);
     }
 

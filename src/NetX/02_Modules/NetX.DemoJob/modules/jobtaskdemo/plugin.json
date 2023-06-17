@@ -1,0 +1,9 @@
+{
+  "Id": "90000000000000000000000000000000",
+  "Name": "jobtaskdemo",
+  "Version": "1.0.0.0",
+  "Enabled": true,
+  "FileName": "NetX.DemoJob.dll",
+  "IsSharedAssemblyContext": true,
+  "Description": "job demo"
+}

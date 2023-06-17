@@ -27,8 +27,9 @@ namespace NetX.TaskScheduling.Core.Impl
         /// <param name="scheduleModel"></param>
         public async Task AddJobAsync(JobTaskModel scheduleModel)
         {
+            var type = JobTaskTypeManager.Instance.Get(scheduleModel.JobType);
             await this._quartzServer.AddJob(
-                 JobBuilder.Create(Type.GetType(scheduleModel.JobType))
+                 JobBuilder.Create(type)
                      .WithIdentity(scheduleModel.Name, scheduleModel.Group)
                      .SetJobData(new JobDataMap(scheduleModel.JobDataMap))
                      .WithDescription(scheduleModel.Description)
