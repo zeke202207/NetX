@@ -29,10 +29,6 @@
     </None>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="DatabaseSetup\InitData\" />
-  </ItemGroup>
-
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="copy $(TargetDir)NetX.TaskScheduling.dll $(SolutionDir)NetX\01_WebApi\bin\Debug\net6.0\modules\taskscheduling\NetX.TaskScheduling.dll" />
   </Target>

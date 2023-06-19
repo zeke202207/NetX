@@ -28,7 +28,7 @@ public class JobTaskInfo
     /// <summary>
     /// 任务参数
     /// </summary>
-    public Dictionary<string, string> JobDataMap { get; set; }
+    public string JobDataMap { get; set; }
 
     /// <summary>
     /// 是否允许并发执行
