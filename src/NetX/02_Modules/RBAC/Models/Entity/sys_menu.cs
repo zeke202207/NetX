@@ -42,7 +42,7 @@ public class sys_menu : BaseEntity<string>
     /// <summary>
     /// 
     /// </summary>
-    public string redirect { get; set; }
+    public string? redirect { get; set; }
     /// <summary>
     /// 
     /// </summary>

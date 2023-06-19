@@ -37,12 +37,15 @@ public class ScheduleService : BaseService, IScheduleService
     public async Task<ResultModel<bool>> AddJob(CronScheduleRequest scheduleModel)
     {
         //1. quartz add job
+        var dataMap = new Dictionary<string, string>();
+        if (!string.IsNullOrWhiteSpace(scheduleModel.Job.JobDataMap))
+            dataMap = JsonConvert.DeserializeObject<Dictionary<string, string>>(scheduleModel.Job.JobDataMap);
         await this._schedule.AddJobAsync(new JobTaskModel()
         {
              Name = scheduleModel.Job.Name,
              Group = scheduleModel.Job.Group,
              JobType = scheduleModel.Job.JobType,
-             JobDataMap = scheduleModel.Job.JobDataMap,
+             JobDataMap = dataMap,
              DisAllowConcurrentExecution = scheduleModel.Job.DisAllowConcurrentExecution,
              Description = scheduleModel.Job.Description,
              Trigger = CreateTriggerBuilder(scheduleModel)
@@ -53,7 +56,7 @@ public class ScheduleService : BaseService, IScheduleService
              scheduleModel.Job.Name,
              scheduleModel.Job.Group,
              scheduleModel.Job.JobType,
-             JsonConvert.SerializeObject(scheduleModel.Job.JobDataMap),
+             scheduleModel.Job.JobDataMap,
              scheduleModel.Job.DisAllowConcurrentExecution,
              DateTime.UtcNow,
              scheduleModel.Job.Description,

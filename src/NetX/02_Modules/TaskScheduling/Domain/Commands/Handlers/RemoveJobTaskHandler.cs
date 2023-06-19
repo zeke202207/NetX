@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Netx.Ddd.Domain;
+using NetX.Common.Attributes;
 using NetX.TaskScheduling.Model;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace NetX.TaskScheduling.Domain.Commands.Handlers
 {
+    [Scoped]
     public class RemoveJobTaskHandler : DomainCommandHandler<RemoveJobTaskCommand>
     {
         private readonly IUnitOfWork _uow;
