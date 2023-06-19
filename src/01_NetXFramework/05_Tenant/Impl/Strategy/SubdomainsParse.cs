@@ -3,7 +3,7 @@
 namespace NetX.Tenants;
 
 /// <summary>
-/// 根据主机解析租户身份
+/// 二级域名解析器
 /// </summary>
 public class SubdomainsParse : ITenantParseStrategy
 {
