@@ -9,13 +9,14 @@
   },
   "tenantconfig": {
     "tenanttype": 0, //0:single,1:multi,
-    "resolutionstrategy": "NetX.Tenants.SubdomainsParse",
+    "resolutionstrategy": "NetX.Tenants.DomainsParse",
     "storestrategy": "NetX.Tenants.InMemoryTenantStore",
     "tenants": [
       {
         // tenantid:要求唯一，多租户下生效，数据库命名格式： tenantid-databasename
         "tenantid": "1",
-        "identifier": "zeke"
+        //用于解析判定属于哪一个租户
+        "identifier": "localhost"
       },
       {
         "tenantid": "2",
