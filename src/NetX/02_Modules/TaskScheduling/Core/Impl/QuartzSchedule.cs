@@ -2,6 +2,7 @@
 using NetX.Common.Attributes;
 using NetX.TaskScheduling.Model;
 using Quartz;
+using Quartz.Util;
 
 namespace NetX.TaskScheduling.Core.Impl
 {
@@ -27,13 +28,18 @@ namespace NetX.TaskScheduling.Core.Impl
         /// <param name="scheduleModel"></param>
         public async Task AddJobAsync(JobTaskModel scheduleModel)
         {
+            if (!scheduleModel.Enabled)
+                return;
             var type = JobTaskTypeManager.Instance.Get(scheduleModel.JobType);
-            await this._quartzServer.AddJob(
-                 JobBuilder.Create(type)
+            var jobBuilder = JobBuilder.Create(type)
                      .WithIdentity(scheduleModel.Name, scheduleModel.Group)
-                     .SetJobData(new JobDataMap(scheduleModel.JobDataMap))
-                     .WithDescription(scheduleModel.Description)
-                     .Build()
+                     .WithDescription(scheduleModel.Description);
+            if (null != scheduleModel.JobDataMap)
+                jobBuilder.SetJobData(new JobDataMap(scheduleModel.JobDataMap));
+            var jobDetail = jobBuilder
+                     .Build();
+            await this._quartzServer.AddJob(
+               jobDetail
                  ,
                  CronTriggerBuilder(scheduleModel.Trigger)
                     .Build()

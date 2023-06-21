@@ -28,5 +28,12 @@ namespace Netx.QuartzScheduling
                 return value;
             return null;
         }
+
+        public IEnumerable<string> GetAll()
+        {
+            foreach (var item in _jobTypeDic.Keys)
+                yield return item;
+        }
+
     }
 }

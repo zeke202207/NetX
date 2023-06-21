@@ -124,4 +124,16 @@ public class JobTaskController : BaseController
     {
         return await this._scheduleServer.GetJob(key.Id);
     }
+
+    /// <summary>
+    /// 获取全部jobtype
+    /// </summary>
+    /// <returns></returns>
+    [ApiActionDescription("获取系统支持的jobtype")]
+    [NoPermission]
+    [HttpPost]
+    public async Task<ResultModel> GetJobTaskType()
+    {
+        return await _scheduleServer.GetAllSupportJobType();
+    }
 }

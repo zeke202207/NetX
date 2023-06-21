@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using NetX.DatabaseSetup;
 using NetX.Module;
 using NetX.TaskScheduling.Core;
+using Quartz;
 using System.Reflection;
 
 namespace NetX.TaskScheduling;

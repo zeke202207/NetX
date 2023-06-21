@@ -1,4 +1,6 @@
-﻿using Netx.Ddd.Core;
+﻿using Microsoft.EntityFrameworkCore.Migrations.Operations;
+using Netx.Ddd.Core;
+using Netx.QuartzScheduling;
 using NetX.Common.Attributes;
 using NetX.Common.ModuleInfrastructure;
 using NetX.TaskScheduling.Domain;
@@ -36,6 +38,21 @@ public class ScheduleService : BaseService, IScheduleService
     /// <exception cref="NotImplementedException"></exception>
     public async Task<ResultModel<bool>> AddJob(CronScheduleRequest scheduleModel)
     {
+        //先执行数据库操作，以便于更新数据库任务执行状态
+        //2. database handle
+        await _jobtaskCommand.Send<AddJobTaskCommand>(new AddJobTaskCommand(
+             Guid.NewGuid().ToString("N"),
+             scheduleModel.Job.Name,
+             scheduleModel.Job.Group,
+             scheduleModel.Job.JobType,
+             scheduleModel.Job.JobDataMap,
+             scheduleModel.Job.DisAllowConcurrentExecution,
+             DateTime.UtcNow,
+             scheduleModel.Job.Description,
+             scheduleModel.Job.Enabled,
+             scheduleModel.Job.State,
+             scheduleModel
+            ));
         //1. quartz add job
         var dataMap = new Dictionary<string, string>();
         if (!string.IsNullOrWhiteSpace(scheduleModel.Job.JobDataMap))
@@ -48,20 +65,10 @@ public class ScheduleService : BaseService, IScheduleService
              JobDataMap = dataMap,
              DisAllowConcurrentExecution = scheduleModel.Job.DisAllowConcurrentExecution,
              Description = scheduleModel.Job.Description,
+             Enabled = scheduleModel.Job.Enabled,
+             State = JobTaskState.None,
              Trigger = CreateTriggerBuilder(scheduleModel)
         });
-        //2. database handle
-        await _jobtaskCommand.Send<AddJobTaskCommand>(new AddJobTaskCommand(
-             Guid.NewGuid().ToString("N"),
-             scheduleModel.Job.Name,
-             scheduleModel.Job.Group,
-             scheduleModel.Job.JobType,
-             scheduleModel.Job.JobDataMap,
-             scheduleModel.Job.DisAllowConcurrentExecution,
-             DateTime.UtcNow,
-             scheduleModel.Job.Description,
-             scheduleModel
-            ));
         return base.Success<bool>(true);
     }
 
@@ -179,6 +186,8 @@ public class ScheduleService : BaseService, IScheduleService
             JobDataMap = jobtask.JobDataMap,
             JobType = jobtask.JobType,
             Name = jobtask.Name,
+            Enabled = jobtask.Enabled,
+            State = jobtask.State,
             Trigger = new ScheduleTriggerModel()
             {
                 Name = jobtask.Trigger.Name,
@@ -190,5 +199,17 @@ public class ScheduleService : BaseService, IScheduleService
                 StartNow = jobtask.Trigger.StartNow
             }
         };
+    }
+
+    /// <summary>
+    /// 获取全部支持的任务
+    /// </summary>
+    /// <returns></returns>
+    public async Task<ResultModel<List<SupportJobTypeModel>>> GetAllSupportJobType()
+    {
+        var result = JobTaskTypeManager.Instance.GetAll().ToList();
+        List<SupportJobTypeModel> list = new List<SupportJobTypeModel>();
+        result.ForEach(p => list.Add(new SupportJobTypeModel() { TypeName = p }));
+        return base.Success<List<SupportJobTypeModel>>(list);
     }
 }

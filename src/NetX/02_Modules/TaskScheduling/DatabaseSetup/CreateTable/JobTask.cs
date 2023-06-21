@@ -29,7 +29,8 @@ public class JobTask : CreateTableMigration
                .WithColumn("jobtype").AsString(255).NotNullable().WithColumnDescription("执行job的类型，用于反射")
                .WithColumn("datamap").AsString(500).Nullable()
                .WithColumn("disallowconcurrentexecution").AsBoolean().WithDefaultValue(false)
-               .WithColumn("enabled").AsInt32().WithDefaultValue(0).WithColumnDescription("是否启用")
+               .WithColumn("enabled").AsInt32().WithDefaultValue(0).WithColumnDescription("是否启用 0->启用")
+               .WithColumn("state").AsInt32().WithDefaultValue(0).WithColumnDescription("任务运行状态： 0->None 1->Started 2->Paused 3->Resumed 4->Deleted 5->Interrupted")
                .WithColumn("createtime").AsDateTime().WithDefaultValue(DateTime.Now)
                .WithColumn("description").AsString(500).Nullable();
     }

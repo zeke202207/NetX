@@ -51,4 +51,10 @@ public interface IScheduleService
     /// <param name="jobId"></param>
     /// <returns></returns>
     Task<ResultModel<ScheduleModel>> GetJob(string jobId);
+
+    /// <summary>
+    /// 获取全部支持的jobtype
+    /// </summary>
+    /// <returns></returns>
+    Task<ResultModel<List<SupportJobTypeModel>>> GetAllSupportJobType();
 }

@@ -12,3 +12,14 @@ internal class TaskSchedulingConstEnum
     /// </summary>
     public const string C_TASKSCHEDULING_GROUPNAME = "taskscheduling";
 }
+
+public enum JobTaskState : int
+{
+    None =0,
+    //1->Started 2->Paused 3->Resumed 4->Deleted 5->Interrupted
+    Started = 1,
+    Paused = 2,
+    Resumed = 3,
+    Deleted = 4,
+    Interrupted = 5
+}
