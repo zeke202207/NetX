@@ -16,6 +16,7 @@ public class QuartzServer : IQuartzServer
     private IScheduler _scheduler;
     private readonly ILogger _logger;
     private readonly IServiceProvider _serviceProvider;
+    private readonly IServiceProvider _scopeServiceProvider;
 
     /// <summary>
     /// Quartz调度服务
@@ -26,6 +27,7 @@ public class QuartzServer : IQuartzServer
     {
         _logger = logger;
         _serviceProvider = serviceProvider;
+        _scopeServiceProvider = serviceProvider.CreateScope().ServiceProvider;
     }
 
     /// <summary>
@@ -109,7 +111,7 @@ public class QuartzServer : IQuartzServer
     /// </summary>
     private void AddSchedulerListener()
     {
-        var schedulerListeners = _serviceProvider.GetServices<ISchedulerListener>();
+        var schedulerListeners = _scopeServiceProvider.GetServices<ISchedulerListener>();
         if (!schedulerListeners.Any())
             return;
         foreach (var listener in schedulerListeners)
@@ -123,7 +125,7 @@ public class QuartzServer : IQuartzServer
     /// </summary>
     private void AddJobListener()
     {
-        var jobListeners = _serviceProvider.GetServices<IJobListener>();
+        var jobListeners = _scopeServiceProvider.GetServices<IJobListener>();
         if (!jobListeners.Any())
             return;
         foreach (var listener in jobListeners)
@@ -137,7 +139,7 @@ public class QuartzServer : IQuartzServer
     /// </summary>
     private void AddTriggerListener()
     {
-        var triggerListener = _serviceProvider.GetServices<ITriggerListener>();
+        var triggerListener = _scopeServiceProvider.GetServices<ITriggerListener>();
         if (!triggerListener.Any())
             return;
         foreach (var listener in triggerListener)

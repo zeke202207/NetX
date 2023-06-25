@@ -31,7 +31,19 @@ public class JobTaskInfo
     public string JobDataMap { get; set; }
 
     /// <summary>
+    /// 任务是否启用
+    /// </summary>
+    public bool Enabled { get; set; }
+
+    /// <summary>
+    /// 任务运行状态
+    /// </summary>
+    public int State { get; set; }
+
+    /// <summary>
     /// 是否允许并发执行
     /// </summary>
     public bool DisAllowConcurrentExecution { get; set; }
+
+
 }

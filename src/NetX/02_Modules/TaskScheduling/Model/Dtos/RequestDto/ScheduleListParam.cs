@@ -7,4 +7,5 @@ namespace NetX.TaskScheduling.Model;
 /// </summary>
 public class ScheduleListParam : Pager
 {
+    public string JobName { get; set; }
 }

@@ -39,6 +39,16 @@ namespace NetX.TaskScheduling.Model
         /// </summary>
         public bool DisAllowConcurrentExecution { get; set; }
 
+        /// <summary>
+        /// 任务是否启用
+        /// </summary>
+        public bool Enabled { get; set; }
+
+        /// <summary>
+        /// 任务运行状态
+        /// </summary>
+        public JobTaskState State { get; set; }
+
         public CronJobTaskTriggerModel Trigger { get; set; }
     }
 }

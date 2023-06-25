@@ -5,6 +5,7 @@ using NetX.Common;
 using NetX.TaskScheduling.Domain;
 using NetX.TaskScheduling.Model;
 using NetX.Tenants;
+using System.Xml.Linq;
 
 namespace NetX.TaskScheduling.Core;
 
@@ -31,6 +32,7 @@ internal class LoadScheduleOnStart : IHostedService
         {
             using (IServiceScope scope = _serviceProvider.CreateScope())
             {
+                var jobtaskCommand = scope.ServiceProvider.GetService<ICommandBus>();
                 var tenantStore = scope.ServiceProvider.GetService<ITenantStore<Tenant>>();
                 foreach (var tenant in await tenantStore.GetAllTenantAsync())
                 {
@@ -39,12 +41,15 @@ internal class LoadScheduleOnStart : IHostedService
                         TenantContext.CurrentTenant.InitPrincipal(new NetXPrincipal(tenant), tenantOption);
                     //1. 从数据库获取所有任务
                     IQueryBus jobtaskQuery = scope.ServiceProvider.GetRequiredService<IQueryBus>();
-                    var jobs = await jobtaskQuery.Send<JobTaskQueryAll, IEnumerable<JobTaskModel>>(new JobTaskQueryAll());
+                    var jobs = await jobtaskQuery.Send<JobTaskQueryAll, IEnumerable<JobTaskModel>>(new JobTaskQueryAll(string.Empty));
                     //2. 添加到调度器
                     ISchedule schedule = scope.ServiceProvider.GetRequiredService<ISchedule>();
-                    foreach (var item in jobs)
+                    foreach (var job in jobs)
                     {
-                        await schedule.AddJobAsync(item);
+                        //1.重组数据库任务状态：none
+                        await jobtaskCommand.Send<SchedulerListenerCommand>(new SchedulerListenerCommand(job.Name, job.Group, JobTaskState.None));
+                        //2.启动job
+                        await schedule.AddJobAsync(job);
                     }
                 }
             }

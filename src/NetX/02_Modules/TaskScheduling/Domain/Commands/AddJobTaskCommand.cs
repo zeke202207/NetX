@@ -32,6 +32,15 @@ namespace NetX.TaskScheduling.Domain
         /// </summary>
         public bool DisAllowConcurrentExecution { get; set; }
         /// <summary>
+        /// 任务是否启用
+        /// </summary>
+        public bool Enabled { get; set; }
+
+        /// <summary>
+        /// 任务运行状态
+        /// </summary>
+        public int State { get; set; }
+        /// <summary>
         /// 
         /// </summary>
         public DateTime CreateTime { get; set; }
@@ -51,6 +60,8 @@ namespace NetX.TaskScheduling.Domain
             bool disallowconcurrentexecution,
             DateTime createtime,
             string description,
+            bool enabled,
+            int state,
             CronScheduleRequest request)
        : base(Guid.NewGuid(), DateTime.Now)
         {
@@ -62,6 +73,8 @@ namespace NetX.TaskScheduling.Domain
             DisAllowConcurrentExecution = disallowconcurrentexecution;
             CreateTime = createtime;
             Description = description;
+            Enabled = enabled;
+            State = state;
             Request = request;
         }
     }

@@ -21,7 +21,11 @@ namespace NetX.TaskScheduling.Domain
 
         public override async Task<IEnumerable<JobTaskModel>> Handle(JobTaskQueryAll request, CancellationToken cancellationToken)
         {
-            var jobtask = await base._dbContext.QueryListAsync<sys_jobtask>(@$"SELECT * FROM sys_jobtask WHERE enabled=0", null);
+            IEnumerable<sys_jobtask> jobtask = null;
+            if (string.IsNullOrWhiteSpace(request.JobName))
+                jobtask = await base._dbContext.QueryListAsync<sys_jobtask>(@$"SELECT * FROM sys_jobtask", null);
+            else
+                jobtask = await base._dbContext.QueryListAsync<sys_jobtask>(@$"SELECT * FROM sys_jobtask WHERE name LIKE CONCAT('%',@name,'%')", new { name = request.JobName });
             List<JobTaskModel> results = new List<JobTaskModel>();
             foreach (var item in jobtask)
             {
@@ -32,9 +36,12 @@ namespace NetX.TaskScheduling.Domain
                     Description = item.description,
                     DisAllowConcurrentExecution = item.disallowconcurrentexecution,
                     Group = item.group,
-                    JobDataMap = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string,string>>(item.datamap.Replace(@"\","")),
-                    JobType = item.jobtype
+                    JobType = item.jobtype,
+                    Enabled = Convert.ToBoolean(item.enabled),
+                    State = (JobTaskState)item.state,
                 };
+                if (!string.IsNullOrWhiteSpace(item.datamap))
+                    jobtaskModel.JobDataMap = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, string>>(item.datamap.Replace(@"\", ""));
                 var trigger = await base._dbContext.QuerySingleAsync<sys_jobtasktrigger>(@"SELECT * FROM sys_jobtasktrigger WHERE jobtaskid =@jobtaskid", new { jobtaskid = item.Id });
                 if (null != trigger)
                     jobtaskModel.Trigger = GetTriggerModel(trigger);
