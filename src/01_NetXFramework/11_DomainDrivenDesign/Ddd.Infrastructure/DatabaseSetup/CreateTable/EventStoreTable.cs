@@ -26,7 +26,7 @@ public class EventStoreTable : CreateTableMigration
                .WithColumn("id").AsString(50).PrimaryKey()
                .WithColumn("aggregateid").AsString(255).NotNullable()
                .WithColumn("messagetype").AsString(255).NotNullable()
-               .WithColumn("data").AsString(5000).NotNullable()
+               .WithColumn("data").AsString().NotNullable()
                .WithColumn("userid").AsString(50).NotNullable()
                .WithColumn("createtime").AsDateTime().WithDefaultValue(DateTime.Now);
     }

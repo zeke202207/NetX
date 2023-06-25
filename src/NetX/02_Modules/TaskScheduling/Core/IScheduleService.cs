@@ -57,4 +57,11 @@ public interface IScheduleService
     /// </summary>
     /// <returns></returns>
     Task<ResultModel<List<SupportJobTypeModel>>> GetAllSupportJobType();
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
+    Task<ResultModel<bool>> EnabledJob(EnabledJobRequest request);
 }

@@ -7,9 +7,9 @@ using Quartz;
 namespace NetX.TaskScheduling.Core
 {
     /// <summary>
-    /// 调度任务监听器
+    /// 调度任务监听器[停用]
     /// </summary>
-    [Scoped]
+    //[Scoped]
     public class SchedulerListener : ISchedulerListener
     {
         private readonly ICommandBus _jobtaskCommand;
@@ -26,7 +26,8 @@ namespace NetX.TaskScheduling.Core
 
         public async Task JobAdded(IJobDetail jobDetail, CancellationToken cancellationToken = default(CancellationToken))
         {
-            await SendCommand(jobDetail.Key.Name, jobDetail.Key.Group, JobTaskState.Started);
+            // await SendCommand(jobDetail.Key.Name, jobDetail.Key.Group, JobTaskState.Started);
+            await Task.CompletedTask;
         }
 
         public async Task JobDeleted(JobKey jobKey, CancellationToken cancellationToken = default(CancellationToken))

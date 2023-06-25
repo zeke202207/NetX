@@ -10,9 +10,10 @@ namespace NetX.TaskScheduling.Domain
 {
     public class JobTaskQueryAll : DomainQuery<IEnumerable<JobTaskModel>>
     {
-        public JobTaskQueryAll()
+        public string JobName { get; set; }
+        public JobTaskQueryAll(string jobName)
         {
-
+            JobName = jobName;
         }
     }
 }

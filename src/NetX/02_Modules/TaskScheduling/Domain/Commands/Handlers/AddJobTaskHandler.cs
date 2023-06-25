@@ -35,7 +35,7 @@ namespace NetX.TaskScheduling.Domain
                 disallowconcurrentexecution = request.DisAllowConcurrentExecution,
                 datamap = request.DataMap,
                 state = request.State,
-                enabled = request.Enabled ? 0 : 1
+                enabled = Convert.ToInt32(request.Enabled)
             };
             var trigger = GetTriggerEntity(request.Request);
             trigger.jobtaskid = jobTask.Id;

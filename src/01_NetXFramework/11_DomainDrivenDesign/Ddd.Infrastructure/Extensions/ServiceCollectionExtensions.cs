@@ -47,8 +47,8 @@ public static class ServiceCollectionExtensions
             default:
                 throw new NotSupportedException("this database is not support!");
         }
-        services.AddScoped<NetxContext>();
-        services.AddScoped<EventStoreSQLContext>();
+        services.AddTransient<NetxContext>();
+        services.AddTransient<EventStoreSQLContext>();
         services.AddScoped<IUnitOfWork,UnitOfWork>();
         return services;
     }

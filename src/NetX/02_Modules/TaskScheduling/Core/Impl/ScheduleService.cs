@@ -1,9 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations.Operations;
+﻿using MediatR;
+using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using Netx.Ddd.Core;
 using Netx.QuartzScheduling;
 using NetX.Common.Attributes;
 using NetX.Common.ModuleInfrastructure;
+using NetX.TaskScheduling.DatabaseSetup;
 using NetX.TaskScheduling.Domain;
+using NetX.TaskScheduling.Domain.Commands;
 using NetX.TaskScheduling.Model;
 using Newtonsoft.Json;
 
@@ -85,6 +88,7 @@ public class ScheduleService : BaseService, IScheduleService
         if (null == jobtask)
             return base.Success<bool>(true);
         await this._schedule.PauseJobAsync(jobtask.name, jobtask.group);
+        await this._jobtaskCommand.Send<StateJobCommand>(new StateJobCommand(jobId, 2));
         return base.Success<bool>(true);
     }
 
@@ -101,6 +105,7 @@ public class ScheduleService : BaseService, IScheduleService
         if (null == jobtask)
             return base.Success<bool>(true);
         await this._schedule.ResumeJobAsync(jobtask.name, jobtask.group);
+        await this._jobtaskCommand.Send<StateJobCommand>(new StateJobCommand(jobId, 1));
         return base.Success<bool>(true);
     }
 
@@ -128,7 +133,7 @@ public class ScheduleService : BaseService, IScheduleService
     /// <exception cref="NotImplementedException"></exception>
     public async Task<ResultModel<List<ScheduleModel>>> GetJob(ScheduleListParam scheduleParam)
     {
-        var jobtasks = await _jobtaskQuery.Send<JobTaskQueryAll, IEnumerable<JobTaskModel>>(new JobTaskQueryAll());
+        var jobtasks = await _jobtaskQuery.Send<JobTaskQueryAll, IEnumerable<JobTaskModel>>(new JobTaskQueryAll(scheduleParam.JobName));
         if (null == jobtasks)
             return base.Success<List<ScheduleModel>>(new List<ScheduleModel>());
         var result = jobtasks.Select(p => ToScheduleModel(p));
@@ -143,12 +148,42 @@ public class ScheduleService : BaseService, IScheduleService
     /// <exception cref="NotImplementedException"></exception>
     public async Task<ResultModel<ScheduleModel>> GetJob(string jobId)
     {
-        var jobtasks = await _jobtaskQuery.Send<JobTaskQueryAll, IEnumerable<JobTaskModel>>(new JobTaskQueryAll());
+        var jobtasks = await _jobtaskQuery.Send<JobTaskQueryAll, IEnumerable<JobTaskModel>>(new JobTaskQueryAll(string.Empty));
         var jobtask = jobtasks.FirstOrDefault(p => p.Id == jobId);
         if (null == jobtask)
             return base.Error<ScheduleModel>($"未找到{jobId}的任务");
         ScheduleModel model = ToScheduleModel(jobtask);
         return base.Success<ScheduleModel>(model);
+    }
+
+    /// <summary>
+    /// 获取全部支持的任务
+    /// </summary>
+    /// <returns></returns>
+    public async Task<ResultModel<List<SupportJobTypeModel>>> GetAllSupportJobType()
+    {
+        var result = JobTaskTypeManager.Instance.GetAll().ToList();
+        List<SupportJobTypeModel> list = new List<SupportJobTypeModel>();
+        result.ForEach(p => list.Add(new SupportJobTypeModel() { TypeName = p }));
+        return base.Success<List<SupportJobTypeModel>>(list);
+    }
+
+    /// <summary>
+    /// 启用/禁用job
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    public async Task<ResultModel<bool>> EnabledJob(EnabledJobRequest request)
+    {
+        if (!request.Enabled)
+        {
+            var jobtask = await _jobtaskQuery.Send<JobTaskQueryById, sys_jobtask>(new JobTaskQueryById(request.Id));
+            if (null != jobtask)
+                await this._schedule.PauseJobAsync(jobtask.name, jobtask.group);
+        }
+        await this._jobtaskCommand.Send<EnabledJobCommand>(new EnabledJobCommand(request.Id, request.Enabled));
+        return base.Success<bool>(true);
     }
 
     /// <summary>
@@ -201,15 +236,4 @@ public class ScheduleService : BaseService, IScheduleService
         };
     }
 
-    /// <summary>
-    /// 获取全部支持的任务
-    /// </summary>
-    /// <returns></returns>
-    public async Task<ResultModel<List<SupportJobTypeModel>>> GetAllSupportJobType()
-    {
-        var result = JobTaskTypeManager.Instance.GetAll().ToList();
-        List<SupportJobTypeModel> list = new List<SupportJobTypeModel>();
-        result.ForEach(p => list.Add(new SupportJobTypeModel() { TypeName = p }));
-        return base.Success<List<SupportJobTypeModel>>(list);
-    }
 }

@@ -24,7 +24,7 @@ namespace NetX.TaskScheduling.Domain.Commands.Handlers
         public override async Task<bool> Handle(SchedulerListenerCommand request, CancellationToken cancellationToken)
         {
             var entity = await _uow.GetRepository<sys_jobtask, string>().FirstOrDefaultAsync(p => p.name.Equals(request.Name) && p.group.Equals(request.Group));
-            if (null == entity)
+            if (null == entity || entity.state == (int)request.State)
                 return true;
             entity.state = (int)request.State;
             _uow.GetRepository<sys_jobtask, string>().Update(entity);

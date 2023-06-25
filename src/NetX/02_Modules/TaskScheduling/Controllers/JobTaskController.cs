@@ -136,4 +136,16 @@ public class JobTaskController : BaseController
     {
         return await _scheduleServer.GetAllSupportJobType();
     }
+
+    /// <summary>
+    /// 获取全部jobtype
+    /// </summary>
+    /// <returns></returns>
+    [ApiActionDescription("设置job启用禁用状态")]
+    [NoPermission]
+    [HttpPost]
+    public async Task<ResultModel> EnabledJob(EnabledJobRequest request)
+    {
+        return await _scheduleServer.EnabledJob(request);
+    }
 }

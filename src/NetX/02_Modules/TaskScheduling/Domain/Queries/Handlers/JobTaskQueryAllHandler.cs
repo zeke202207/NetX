@@ -21,7 +21,11 @@ namespace NetX.TaskScheduling.Domain
 
         public override async Task<IEnumerable<JobTaskModel>> Handle(JobTaskQueryAll request, CancellationToken cancellationToken)
         {
-            var jobtask = await base._dbContext.QueryListAsync<sys_jobtask>(@$"SELECT * FROM sys_jobtask", null);
+            IEnumerable<sys_jobtask> jobtask = null;
+            if (string.IsNullOrWhiteSpace(request.JobName))
+                jobtask = await base._dbContext.QueryListAsync<sys_jobtask>(@$"SELECT * FROM sys_jobtask", null);
+            else
+                jobtask = await base._dbContext.QueryListAsync<sys_jobtask>(@$"SELECT * FROM sys_jobtask WHERE name LIKE CONCAT('%',@name,'%')", new { name = request.JobName });
             List<JobTaskModel> results = new List<JobTaskModel>();
             foreach (var item in jobtask)
             {
@@ -33,7 +37,7 @@ namespace NetX.TaskScheduling.Domain
                     DisAllowConcurrentExecution = item.disallowconcurrentexecution,
                     Group = item.group,
                     JobType = item.jobtype,
-                    Enabled = item.enabled ==0,
+                    Enabled = Convert.ToBoolean(item.enabled),
                     State = (JobTaskState)item.state,
                 };
                 if (!string.IsNullOrWhiteSpace(item.datamap))

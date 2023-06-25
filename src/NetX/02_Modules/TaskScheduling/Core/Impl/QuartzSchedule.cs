@@ -28,8 +28,6 @@ namespace NetX.TaskScheduling.Core.Impl
         /// <param name="scheduleModel"></param>
         public async Task AddJobAsync(JobTaskModel scheduleModel)
         {
-            if (!scheduleModel.Enabled)
-                return;
             var type = JobTaskTypeManager.Instance.Get(scheduleModel.JobType);
             var jobBuilder = JobBuilder.Create(type)
                      .WithIdentity(scheduleModel.Name, scheduleModel.Group)
@@ -44,6 +42,8 @@ namespace NetX.TaskScheduling.Core.Impl
                  CronTriggerBuilder(scheduleModel.Trigger)
                     .Build()
                  );
+            if (!scheduleModel.Enabled)
+                await this._quartzServer.PauseJob(jobKey: JobKey.Create(scheduleModel.Name, scheduleModel.Group));
         }
 
         /// <summary>

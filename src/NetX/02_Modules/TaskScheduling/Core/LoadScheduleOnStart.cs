@@ -41,15 +41,13 @@ internal class LoadScheduleOnStart : IHostedService
                         TenantContext.CurrentTenant.InitPrincipal(new NetXPrincipal(tenant), tenantOption);
                     //1. 从数据库获取所有任务
                     IQueryBus jobtaskQuery = scope.ServiceProvider.GetRequiredService<IQueryBus>();
-                    var jobs = await jobtaskQuery.Send<JobTaskQueryAll, IEnumerable<JobTaskModel>>(new JobTaskQueryAll());
+                    var jobs = await jobtaskQuery.Send<JobTaskQueryAll, IEnumerable<JobTaskModel>>(new JobTaskQueryAll(string.Empty));
                     //2. 添加到调度器
                     ISchedule schedule = scope.ServiceProvider.GetRequiredService<ISchedule>();
                     foreach (var job in jobs)
                     {
                         //1.重组数据库任务状态：none
                         await jobtaskCommand.Send<SchedulerListenerCommand>(new SchedulerListenerCommand(job.Name, job.Group, JobTaskState.None));
-                        if (!job.Enabled)
-                            continue;
                         //2.启动job
                         await schedule.AddJobAsync(job);
                     }
