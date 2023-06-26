@@ -159,8 +159,12 @@ public static class AppWebApplicationBuilderExtensions
         //0. Cache
         webApplicationBuilder.Services.AddCaches();
         //1. 任务调度统一注入job
+        //webApplicationBuilder.Services.AddQuartzScheduling(
+        //    App.GetModuleInitializer().SelectMany(p => p.GetType().Assembly.GetTypes()).Where(p => typeof(IJobTask).IsAssignableFrom(p)),
+        //    App.GetUserModuleOptions.ToDictionary(x => x.Id, y => y.Enabled));
         webApplicationBuilder.Services.AddQuartzScheduling(
-            App.GetModuleInitializer().SelectMany(p => p.GetType().Assembly.GetTypes()).Where(p=> typeof(IJobTask).IsAssignableFrom(p)));
+            App.GetModuleInitializer().ToDictionary(x => x.Key, y=> y.GetType().Assembly.GetTypes().Where(p => typeof(IJobTask).IsAssignableFrom(p))),
+            App.GetUserModuleOptions.ToDictionary(x => x.Id, y => y.Enabled));
         return webApplicationBuilder;
     }
 

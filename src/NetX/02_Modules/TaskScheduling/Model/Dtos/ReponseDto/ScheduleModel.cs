@@ -47,4 +47,6 @@ public class ScheduleModel
     public JobTaskState State { get; set; }
 
     public ScheduleTriggerModel Trigger { get; set; }
+
+    public bool Operable { get; set; }
 }

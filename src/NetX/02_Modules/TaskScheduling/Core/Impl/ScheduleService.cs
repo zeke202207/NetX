@@ -172,7 +172,7 @@ public class ScheduleService : BaseService, IScheduleService
     /// <returns></returns>
     public async Task<ResultModel<List<SupportJobTypeModel>>> GetAllSupportJobType()
     {
-        var result = JobTaskTypeManager.Instance.GetAll().ToList();
+        var result = JobTaskTypeManager.Instance.GetAll().ToList().Where(p=>p.Enabled).ToList();
         List<SupportJobTypeModel> list = new List<SupportJobTypeModel>();
         result.ForEach(p => list.Add(new SupportJobTypeModel() { TypeName = p.DisplayName, Id = p.Id }));
         return base.Success<List<SupportJobTypeModel>>(list);
@@ -242,7 +242,8 @@ public class ScheduleService : BaseService, IScheduleService
                 Priority = jobtask.Trigger.Priority,
                 StartAt = jobtask.Trigger.StartAt,
                 StartNow = jobtask.Trigger.StartNow
-            }
+            },
+            Operable = JobTaskTypeManager.Instance.GetAll().ToList().Exists(p => p.Enabled && p.Id == jobtask.JobType)
         };
     }
 

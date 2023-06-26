@@ -2,9 +2,11 @@
 using Microsoft.Extensions.Hosting;
 using Netx.Ddd.Core;
 using NetX.Common;
+using NetX.DatabaseSetup;
 using NetX.TaskScheduling.Domain;
 using NetX.TaskScheduling.Model;
 using NetX.Tenants;
+using NetX.Tenants.Extensions;
 using System.Xml.Linq;
 
 namespace NetX.TaskScheduling.Core;
@@ -30,29 +32,22 @@ internal class LoadScheduleOnStart : IHostedService
     {
         try
         {
-            using (IServiceScope scope = _serviceProvider.CreateScope())
+            _serviceProvider.MockTenantScope((scope, tenant) =>
             {
                 var jobtaskCommand = scope.ServiceProvider.GetService<ICommandBus>();
-                var tenantStore = scope.ServiceProvider.GetService<ITenantStore<Tenant>>();
-                foreach (var tenant in await tenantStore.GetAllTenantAsync())
+                //1. 从数据库获取所有任务
+                IQueryBus jobtaskQuery = scope.ServiceProvider.GetRequiredService<IQueryBus>();
+                var jobs = jobtaskQuery.Send<JobTaskQueryAll, IEnumerable<JobTaskModel>>(new JobTaskQueryAll(string.Empty)).GetAwaiter().GetResult();
+                //2. 添加到调度器
+                ISchedule schedule = scope.ServiceProvider.GetRequiredService<ISchedule>();
+                foreach (var job in jobs)
                 {
-                    var tenantOption = scope.ServiceProvider.GetRequiredService<TenantOption>();
-                    if (null != tenantOption)
-                        TenantContext.CurrentTenant.InitPrincipal(new NetXPrincipal(tenant), tenantOption);
-                    //1. 从数据库获取所有任务
-                    IQueryBus jobtaskQuery = scope.ServiceProvider.GetRequiredService<IQueryBus>();
-                    var jobs = await jobtaskQuery.Send<JobTaskQueryAll, IEnumerable<JobTaskModel>>(new JobTaskQueryAll(string.Empty));
-                    //2. 添加到调度器
-                    ISchedule schedule = scope.ServiceProvider.GetRequiredService<ISchedule>();
-                    foreach (var job in jobs)
-                    {
-                        //1.重组数据库任务状态：none
-                        await jobtaskCommand.Send<SchedulerListenerCommand>(new SchedulerListenerCommand(job.Name, job.Group, JobTaskState.None));
-                        //2.启动job
-                        await schedule.AddJobAsync(job);
-                    }
+                    //1.重组数据库任务状态：none
+                    jobtaskCommand.Send<SchedulerListenerCommand>(new SchedulerListenerCommand(job.Name, job.Group, JobTaskState.None)).GetAwaiter().GetResult();
+                    //2.启动job
+                    schedule.AddJobAsync(job).GetAwaiter().GetResult();
                 }
-            }
+            });
         }
         catch (Exception ex)
         {

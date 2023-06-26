@@ -29,6 +29,8 @@ namespace NetX.TaskScheduling.Core.Impl
         public async Task AddJobAsync(JobTaskModel scheduleModel)
         {
             var type = JobTaskTypeManager.Instance.Get(scheduleModel.JobType);
+            if (null == type || !type.Enabled)
+                return;
             var jobBuilder = JobBuilder.Create(type.JobTaskType)
                      .WithIdentity(scheduleModel.Name, scheduleModel.Group)
                      .WithDescription(scheduleModel.Description);

@@ -44,6 +44,8 @@ namespace Netx.QuartzScheduling
         public string DisplayName { get; set; }
 
         public Type JobTaskType { get; set; }
+
+        public bool Enabled { get; set; }
     }
 
     [AttributeUsage(AttributeTargets.Class)]
