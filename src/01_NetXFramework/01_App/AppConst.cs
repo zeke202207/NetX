@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NetX.App
 {
-    internal class AppConst
+    public class AppConst
     {
         /// <summary>
         /// 缓存模块程序集名称

@@ -22,12 +22,18 @@ public class InitUserRoleData : InitDataMigration
     /// </summary>
     public override void Up()
     {
-        Insert.IntoTable(_tableName)
-            .Row(new
-            {
-                userid = "00000000000000000000000000000001",
-                roleid = "00000000000000000000000000000001"
-            });
+        try
+        {
+            Insert.IntoTable(_tableName)
+                .Row(new
+                {
+                    userid = "00000000000000000000000000000001",
+                    roleid = "00000000000000000000000000000001"
+                });
+        }
+        catch (Exception ex)
+        {
+        }
     }
 
     /// <summary>
@@ -35,6 +41,12 @@ public class InitUserRoleData : InitDataMigration
     /// </summary>
     public override void Down()
     {
-        Execute.Sql($"delete from {_tableName}");
+        try
+        {
+            Execute.Sql($"delete from {_tableName}");
+        }
+        catch (Exception ex)
+        {
+        }
     }
 }

@@ -22,12 +22,18 @@ public class RoleTable : CreateTableMigration
     /// </summary>
     public override void Up()
     {
-        Create.Table(_tableName)
-               .WithColumn("id").AsString(50).PrimaryKey()
-               .WithColumn("rolename").AsString(50).NotNullable()
-               .WithColumn("status").AsInt16().Nullable().WithDefaultValue(1)
-               .WithColumn("apicheck").AsInt16().Nullable().WithDefaultValue(0)
-               .WithColumn("createtime").AsDateTime().WithDefaultValue(DateTime.Now)
-               .WithColumn("remark").AsString(500).Nullable();
+        try
+        {
+            Create.Table(_tableName)
+                   .WithColumn("id").AsString(50).PrimaryKey()
+                   .WithColumn("rolename").AsString(50).NotNullable()
+                   .WithColumn("status").AsInt16().Nullable().WithDefaultValue(1)
+                   .WithColumn("apicheck").AsInt16().Nullable().WithDefaultValue(0)
+                   .WithColumn("createtime").AsDateTime().WithDefaultValue(DateTime.Now)
+                   .WithColumn("remark").AsString(500).Nullable();
+        }
+        catch (Exception ex)
+        {
+        }
     }
 }

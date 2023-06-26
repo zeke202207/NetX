@@ -29,11 +29,12 @@ namespace NetX.TaskScheduling.Core.Impl
         public async Task AddJobAsync(JobTaskModel scheduleModel)
         {
             var type = JobTaskTypeManager.Instance.Get(scheduleModel.JobType);
-            var jobBuilder = JobBuilder.Create(type)
+            var jobBuilder = JobBuilder.Create(type.JobTaskType)
                      .WithIdentity(scheduleModel.Name, scheduleModel.Group)
                      .WithDescription(scheduleModel.Description);
             if (null != scheduleModel.JobDataMap)
                 jobBuilder.SetJobData(new JobDataMap(scheduleModel.JobDataMap));
+            jobBuilder.DisallowConcurrentExecution(scheduleModel.DisAllowConcurrentExecution);
             var jobDetail = jobBuilder
                      .Build();
             await this._quartzServer.AddJob(
@@ -99,6 +100,17 @@ namespace NetX.TaskScheduling.Core.Impl
             if (cron.StartNow)
                 trigger = trigger.StartNow();
             return trigger;
+        }
+
+        /// <summary>
+        /// 立即执行
+        /// </summary>
+        /// <param name="jobName"></param>
+        /// <param name="groupName"></param>
+        /// <returns></returns>
+        public Task TriggerJobAsync(string jobName, string groupName)
+        {
+            throw new NotImplementedException("暂时不做扩展");
         }
     }
 }

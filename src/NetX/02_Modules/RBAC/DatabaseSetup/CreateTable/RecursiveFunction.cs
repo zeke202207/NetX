@@ -21,8 +21,14 @@ public class RecursiveFunction : BaseMigration
     /// </summary>
     public override void Down()
     {
-        base.IfDatabase("mysql").Execute.Sql("drop function get_child_dept");
-        base.IfDatabase("mysql").Execute.Sql("drop function get_child_menu");
+        try
+        {
+            base.IfDatabase("mysql").Execute.Sql("drop function get_child_dept");
+            base.IfDatabase("mysql").Execute.Sql("drop function get_child_menu");
+        }
+        catch (Exception ex)
+        {
+        }
     }
 
     /// <summary>
@@ -30,7 +36,13 @@ public class RecursiveFunction : BaseMigration
     /// </summary>
     public override void Up()
     {
-        base.IfDatabase("mysql").Execute.EmbeddedScript("NetX.RBAC.DatabaseSetup.CreateTable.get_child_dept.sql");
-        base.IfDatabase("mysql").Execute.EmbeddedScript("NetX.RBAC.DatabaseSetup.CreateTable.get_child_menu.sql");
+        try
+        {
+            base.IfDatabase("mysql").Execute.EmbeddedScript("NetX.RBAC.DatabaseSetup.CreateTable.get_child_dept.sql");
+            base.IfDatabase("mysql").Execute.EmbeddedScript("NetX.RBAC.DatabaseSetup.CreateTable.get_child_menu.sql");
+        }
+        catch (Exception ex)
+        {
+        }
     }
 }

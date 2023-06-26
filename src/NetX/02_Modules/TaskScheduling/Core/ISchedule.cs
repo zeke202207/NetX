@@ -34,5 +34,13 @@ namespace NetX.TaskScheduling.Core
         /// <param name="groupName"></param>
         /// <returns></returns>
         Task DeleteJobAsync(string jobName, string groupName);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="jobName"></param>
+        /// <param name="groupName"></param>
+        /// <returns></returns>
+        Task TriggerJobAsync(string jobName, string groupName);
     }
 }

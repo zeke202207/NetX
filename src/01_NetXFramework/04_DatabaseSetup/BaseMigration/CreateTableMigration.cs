@@ -30,6 +30,10 @@ public abstract class CreateTableMigration : BaseMigration
     /// </summary>
     public override void Down()
     {
-        Delete.Table(_tableName);
+        try
+        {
+            Delete.Table(_tableName);
+        }
+        catch { }
     }
 }

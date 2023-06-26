@@ -91,6 +91,16 @@ public class QuartzServer : IQuartzServer
     }
 
     /// <summary>
+    /// 暫停全部任務
+    /// </summary>
+    /// <param name="cancellation"></param>
+    /// <returns></returns>
+    public Task Clear(CancellationToken cancellation = default(CancellationToken))
+    {
+        return _scheduler.Clear(cancellation);
+    }
+
+    /// <summary>
     /// 恢复任务
     /// </summary>
     public Task ResumeJob(JobKey jobKey, CancellationToken cancellation = default)

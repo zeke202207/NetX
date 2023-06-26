@@ -22,13 +22,19 @@ public class DeptTable : CreateTableMigration
     /// </summary>
     public override void Up()
     {
-        Create.Table(_tableName)
-               .WithColumn("id").AsString(50).PrimaryKey()
-               .WithColumn("parentid").AsString(50).NotNullable()
-               .WithColumn("deptname").AsString(255)
-               .WithColumn("orderno").AsInt32()
-               .WithColumn("createtime").AsDate().WithDefaultValue(DateTime.Now)
-               .WithColumn("status").AsInt16().Nullable().WithDefaultValue(1)
-               .WithColumn("remark").AsString(500).Nullable();
+        try
+        {
+            Create.Table(_tableName)
+                   .WithColumn("id").AsString(50).PrimaryKey()
+                   .WithColumn("parentid").AsString(50).NotNullable()
+                   .WithColumn("deptname").AsString(255)
+                   .WithColumn("orderno").AsInt32()
+                   .WithColumn("createtime").AsDate().WithDefaultValue(DateTime.Now)
+                   .WithColumn("status").AsInt16().Nullable().WithDefaultValue(1)
+                   .WithColumn("remark").AsString(500).Nullable();
+        }
+        catch (Exception ex)
+        {
+        }
     }
 }

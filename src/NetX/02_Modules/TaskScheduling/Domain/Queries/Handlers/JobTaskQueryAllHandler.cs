@@ -23,9 +23,9 @@ namespace NetX.TaskScheduling.Domain
         {
             IEnumerable<sys_jobtask> jobtask = null;
             if (string.IsNullOrWhiteSpace(request.JobName))
-                jobtask = await base._dbContext.QueryListAsync<sys_jobtask>(@$"SELECT * FROM sys_jobtask", null);
+                jobtask = await base._dbContext.QueryListAsync<sys_jobtask>(@$"SELECT * FROM sys_jobtask ORDER BY createtime DESC", null);
             else
-                jobtask = await base._dbContext.QueryListAsync<sys_jobtask>(@$"SELECT * FROM sys_jobtask WHERE name LIKE CONCAT('%',@name,'%')", new { name = request.JobName });
+                jobtask = await base._dbContext.QueryListAsync<sys_jobtask>(@$"SELECT * FROM sys_jobtask WHERE name LIKE CONCAT('%',@name,'%') ORDER BY createtime DESC", new { name = request.JobName });
             List<JobTaskModel> results = new List<JobTaskModel>();
             foreach (var item in jobtask)
             {

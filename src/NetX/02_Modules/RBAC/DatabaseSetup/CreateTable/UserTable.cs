@@ -22,14 +22,20 @@ public class UserTable : CreateTableMigration
     /// </summary>
     public override void Up()
     {
-        Create.Table(_tableName)
-                .WithColumn("id").AsString(50).PrimaryKey()
-                .WithColumn("username").AsString(50).NotNullable()
-                .WithColumn("password").AsString(50).NotNullable()
-                .WithColumn("nickname").AsString(255).Nullable()
-                .WithColumn("avatar").AsString(500).Nullable()
-                .WithColumn("status").AsInt16().Nullable().WithDefaultValue(1)
-                .WithColumn("email").AsString(255).Nullable()
-                .WithColumn("remark").AsString(500).Nullable();
+        try
+        {
+            Create.Table(_tableName)
+                    .WithColumn("id").AsString(50).PrimaryKey()
+                    .WithColumn("username").AsString(50).NotNullable()
+                    .WithColumn("password").AsString(50).NotNullable()
+                    .WithColumn("nickname").AsString(255).Nullable()
+                    .WithColumn("avatar").AsString(500).Nullable()
+                    .WithColumn("status").AsInt16().Nullable().WithDefaultValue(1)
+                    .WithColumn("email").AsString(255).Nullable()
+                    .WithColumn("remark").AsString(500).Nullable();
+        }
+        catch (Exception ex)
+        {
+        }
     }
 }

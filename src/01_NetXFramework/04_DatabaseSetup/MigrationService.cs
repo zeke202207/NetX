@@ -50,14 +50,23 @@ public class MigrationService : IMigrationService
     /// <returns></returns>
     public async Task<bool> MigrateUp()
     {
-        var cacheKey = GetCacheKey();
-        if (string.IsNullOrWhiteSpace(cacheKey))
-            return false;
-        if (await _cacheProvider.ExistsAsync(cacheKey))
-            return true;
-        await _cacheProvider.SetAsync(cacheKey, TenantContext.CurrentTenant.Principal?.Tenant.TenantId);
+        return await MigrateUp(true);
+    }
+
+    public async Task<bool> MigrateUp(bool checkCache)
+    {
+        string cacheKey = string.Empty;
+        if (checkCache)
+        {
+            cacheKey = GetCacheKey();
+            if (string.IsNullOrWhiteSpace(cacheKey))
+                return false;
+            if (await _cacheProvider.ExistsAsync(cacheKey))
+                return true;
+            await _cacheProvider.SetAsync(cacheKey, TenantContext.CurrentTenant.Principal?.Tenant.TenantId);
+        }
         var result = await CraeteDatabase() && MigrationTables();
-        if (!result)
+        if (!result && checkCache)
             await _cacheProvider.RemoveAsync(cacheKey);
         return result;
     }

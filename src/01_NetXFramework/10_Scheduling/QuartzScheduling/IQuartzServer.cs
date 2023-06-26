@@ -55,6 +55,13 @@ public interface IQuartzServer
     Task PauseJob(JobKey jobKey, CancellationToken cancellation = default);
 
     /// <summary>
+    /// Clear全部任務
+    /// </summary>
+    /// <param name="cancellation"></param>
+    /// <returns></returns>
+    Task Clear(CancellationToken cancellation = default);
+
+    /// <summary>
     /// 恢复任务
     /// </summary>
     /// <param name="jobKey">Uniquely identifies a Quartz.IJobDetail.</param>
