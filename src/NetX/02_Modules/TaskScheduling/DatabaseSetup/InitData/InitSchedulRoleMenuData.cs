@@ -17,17 +17,29 @@ namespace NetX.TaskScheduling.DatabaseSetup.InitData
 
         public override void Up()
         {
-            Insert.IntoTable(_tableName)          
-           .Row(new
-           {
-               roleid = "00000000000000000000000000000001",
-               menuid = "00000000000000000000000000000015"
-           });
+            try
+            {
+                Insert.IntoTable(_tableName)
+               .Row(new
+               {
+                   roleid = "00000000000000000000000000000001",
+                   menuid = "00000000000000000000000000000015"
+               });
+            }
+            catch (Exception ex)
+            {
+            }
         }
 
         public override void Down()
         {
-            Execute.Sql($"delete from {_tableName} WHERE menuid ='00000000000000000000000000000015'");
+            try
+            {
+                Execute.Sql($"delete from {_tableName} WHERE menuid ='00000000000000000000000000000015'");
+            }
+            catch (Exception ex)
+            {
+            }
         }
     }
 }

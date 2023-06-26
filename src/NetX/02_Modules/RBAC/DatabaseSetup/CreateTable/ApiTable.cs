@@ -22,12 +22,19 @@ public class ApiTable : CreateTableMigration
     /// </summary>
     public override void Up()
     {
-        Create.Table(_tableName)
-               .WithColumn("id").AsString(50).PrimaryKey()
-               .WithColumn("path").AsString(255).NotNullable()
-               .WithColumn("group").AsString(255).NotNullable()
-               .WithColumn("method").AsString(50).NotNullable()
-               .WithColumn("createtime").AsDateTime().WithDefaultValue(DateTime.Now)
-               .WithColumn("description").AsString(500).Nullable();
+
+        try
+        {
+            Create.Table(_tableName)
+                   .WithColumn("id").AsString(50).PrimaryKey()
+                   .WithColumn("path").AsString(255).NotNullable()
+                   .WithColumn("group").AsString(255).NotNullable()
+                   .WithColumn("method").AsString(50).NotNullable()
+                   .WithColumn("createtime").AsDateTime().WithDefaultValue(DateTime.Now)
+                   .WithColumn("description").AsString(500).Nullable();
+        }
+        catch (Exception ex)
+        {
+        }
     }
 }

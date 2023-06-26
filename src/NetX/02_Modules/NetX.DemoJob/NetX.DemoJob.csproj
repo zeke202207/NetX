@@ -8,7 +8,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\01_NetXFramework\02_Module\NetX.Module.csproj" />
+    <ProjectReference Include="..\..\..\01_NetXFramework\04_DatabaseSetup\NetX.DatabaseSetup.csproj" />
     <ProjectReference Include="..\..\..\01_NetXFramework\10_Scheduling\QuartzScheduling\Netx.QuartzScheduling.csproj" />
+    <ProjectReference Include="..\TaskScheduling\NetX.TaskScheduling.csproj" />
   </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="copy $(TargetDir)NetX.DemoJob.dll $(SolutionDir)NetX\01_WebApi\bin\Debug\net6.0\modules\jobtaskdemo\NetX.DemoJob.dll" />
+  </Target>
 
 </Project>

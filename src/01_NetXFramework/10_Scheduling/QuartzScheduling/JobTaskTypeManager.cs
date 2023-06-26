@@ -11,29 +11,52 @@ namespace Netx.QuartzScheduling
     {
         private static Lazy<JobTaskTypeManager> instance = new Lazy<JobTaskTypeManager>(()=> new JobTaskTypeManager());
 
-        private ConcurrentDictionary<string,Type> _jobTypeDic = new ConcurrentDictionary<string,Type>();
+        private ConcurrentDictionary<string, JobTaskTypeModel> _jobTypeDic = new ConcurrentDictionary<string, JobTaskTypeModel>();
 
         public static JobTaskTypeManager Instance => instance.Value;
 
         private JobTaskTypeManager() { }
 
-        public void Add(string key, Type value)
+        public void Add(string key, JobTaskTypeModel value)
         {
             _jobTypeDic.AddOrUpdate(key, value, (k, v) => value);
         }
 
-        public Type Get(string key)
+        public JobTaskTypeModel Get(string key)
         {
             if (_jobTypeDic.TryGetValue(key, out var value))
                 return value;
             return null;
         }
 
-        public IEnumerable<string> GetAll()
+        public IEnumerable<JobTaskTypeModel> GetAll()
         {
-            foreach (var item in _jobTypeDic.Keys)
+            foreach (var item in _jobTypeDic.Values)
                 yield return item;
         }
 
+    }
+
+    public class JobTaskTypeModel
+    {
+        public string Id { get; set; }
+
+        public string DisplayName { get; set; }
+
+        public Type JobTaskType { get; set; }
+    }
+
+    [AttributeUsage(AttributeTargets.Class)]
+    public class JobTaskAttribute : Attribute
+    {
+        public string Id { get; private set; }
+
+        public string Name { get; private set; }
+
+        public JobTaskAttribute(string id, string name )
+        {
+            Id=id;
+            Name=name;
+        }
     }
 }

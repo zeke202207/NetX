@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using NetX.Common;
+using NetX.Common.Attributes;
 using System.Reflection;
 
 namespace Netx.QuartzScheduling;
@@ -40,7 +41,15 @@ public static class ServiceCollectionExtensions
             return service;
         injectJobs.ToList().ForEach(job =>
         {
-            JobTaskTypeManager.Instance.Add(job.FullName, job);
+            var jobAttribute = job.GetCustomAttribute<JobTaskAttribute>();
+            if (null == jobAttribute)
+                return;
+            JobTaskTypeManager.Instance.Add(jobAttribute.Id, new JobTaskTypeModel()
+            {
+                Id = jobAttribute.Id,
+                DisplayName = jobAttribute.Name,
+                JobTaskType = job
+            });
             if (!typeof(IJobTask).IsAssignableFrom(job))
                 return;
             service.AddTransient(job);

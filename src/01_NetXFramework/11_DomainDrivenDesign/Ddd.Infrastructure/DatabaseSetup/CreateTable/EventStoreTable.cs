@@ -22,12 +22,18 @@ public class EventStoreTable : CreateTableMigration
     /// </summary>
     public override void Up()
     {
-        Create.Table(_tableName)
-               .WithColumn("id").AsString(50).PrimaryKey()
-               .WithColumn("aggregateid").AsString(255).NotNullable()
-               .WithColumn("messagetype").AsString(255).NotNullable()
-               .WithColumn("data").AsString().NotNullable()
-               .WithColumn("userid").AsString(50).NotNullable()
-               .WithColumn("createtime").AsDateTime().WithDefaultValue(DateTime.Now);
+        try
+        {
+            Create.Table(_tableName)
+                   .WithColumn("id").AsString(50).PrimaryKey()
+                   .WithColumn("aggregateid").AsString(255).NotNullable()
+                   .WithColumn("messagetype").AsString(255).NotNullable()
+                   .WithColumn("data").AsCustom("TEXT").NotNullable()
+                   .WithColumn("userid").AsString(50).NotNullable()
+                   .WithColumn("createtime").AsDateTime().WithDefaultValue(DateTime.Now);
+        }
+        catch (Exception ex)
+        {
+        }
     }
 }

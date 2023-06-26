@@ -16,6 +16,8 @@ public interface IMigrationService
     /// </summary>
     Task<bool> MigrateUp();
 
+    Task<bool> MigrateUp(bool checkCache);
+
     /// <summary>
     ///   Migrate down to the given version
     /// </summary>

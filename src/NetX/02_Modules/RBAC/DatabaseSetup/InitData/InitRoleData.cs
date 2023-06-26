@@ -22,7 +22,13 @@ public class InitRoleData : InitDataMigration
     /// </summary>
     public override void Down()
     {
-        Execute.Sql($"delete from {_tableName}");
+        try
+        {
+            Execute.Sql($"delete from {_tableName}");
+        }
+        catch (Exception ex)
+        {
+        }
     }
 
     /// <summary>
@@ -30,14 +36,20 @@ public class InitRoleData : InitDataMigration
     /// </summary>
     public override void Up()
     {
-        Insert.IntoTable(_tableName)
-                .Row(new
-                {
-                    id = "00000000000000000000000000000001",
-                    rolename = "super admin",
-                    status = (int)Status.Enable,
-                    createtime = DateTime.Now,
-                    remark = ""
-                });
+        try
+        {
+            Insert.IntoTable(_tableName)
+                    .Row(new
+                    {
+                        id = "00000000000000000000000000000001",
+                        rolename = "super admin",
+                        status = (int)Status.Enable,
+                        createtime = DateTime.Now,
+                        remark = ""
+                    });
+        }
+        catch (Exception ex)
+        {
+        }
     }
 }

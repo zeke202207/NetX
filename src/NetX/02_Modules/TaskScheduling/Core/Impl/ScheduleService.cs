@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
+using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using Netx.Ddd.Core;
 using Netx.QuartzScheduling;
 using NetX.Common.Attributes;
@@ -8,6 +9,7 @@ using NetX.TaskScheduling.DatabaseSetup;
 using NetX.TaskScheduling.Domain;
 using NetX.TaskScheduling.Domain.Commands;
 using NetX.TaskScheduling.Model;
+using NetX.Tenants;
 using Newtonsoft.Json;
 
 namespace NetX.TaskScheduling.Core;
@@ -41,6 +43,17 @@ public class ScheduleService : BaseService, IScheduleService
     /// <exception cref="NotImplementedException"></exception>
     public async Task<ResultModel<bool>> AddJob(CronScheduleRequest scheduleModel)
     {
+        //0.判断name+group是否存在{严格要求，名称不能重复} 
+        //监狱数据量不是很大，内存匹配
+        var jobtasks = await _jobtaskQuery.Send<JobTaskQueryAll, IEnumerable<JobTaskModel>>(new JobTaskQueryAll(string.Empty));
+        if (jobtasks.ToList().Any(p => p.Name.Equals(scheduleModel.Job.Name)))
+            throw new ArgumentException("任务名重复");
+        // 处理 JobDataMap ，将租户信息保存到JobDataMap中
+        var dataMap = new Dictionary<string, string>();
+        if (!string.IsNullOrWhiteSpace(scheduleModel.Job.JobDataMap))
+            dataMap = JsonConvert.DeserializeObject<Dictionary<string, string>>(scheduleModel.Job.JobDataMap);
+        dataMap.Add("tenantid",TenantContext.CurrentTenant.Principal.Tenant.TenantId);
+
         //先执行数据库操作，以便于更新数据库任务执行状态
         //2. database handle
         await _jobtaskCommand.Send<AddJobTaskCommand>(new AddJobTaskCommand(
@@ -48,18 +61,15 @@ public class ScheduleService : BaseService, IScheduleService
              scheduleModel.Job.Name,
              scheduleModel.Job.Group,
              scheduleModel.Job.JobType,
-             scheduleModel.Job.JobDataMap,
+             JsonConvert.SerializeObject(dataMap),
              scheduleModel.Job.DisAllowConcurrentExecution,
              DateTime.UtcNow,
              scheduleModel.Job.Description,
              scheduleModel.Job.Enabled,
-             scheduleModel.Job.State,
+             scheduleModel.Job.Enabled ? 1 : 0,
              scheduleModel
             ));
         //1. quartz add job
-        var dataMap = new Dictionary<string, string>();
-        if (!string.IsNullOrWhiteSpace(scheduleModel.Job.JobDataMap))
-            dataMap = JsonConvert.DeserializeObject<Dictionary<string, string>>(scheduleModel.Job.JobDataMap);
         await this._schedule.AddJobAsync(new JobTaskModel()
         {
              Name = scheduleModel.Job.Name,
@@ -164,7 +174,7 @@ public class ScheduleService : BaseService, IScheduleService
     {
         var result = JobTaskTypeManager.Instance.GetAll().ToList();
         List<SupportJobTypeModel> list = new List<SupportJobTypeModel>();
-        result.ForEach(p => list.Add(new SupportJobTypeModel() { TypeName = p }));
+        result.ForEach(p => list.Add(new SupportJobTypeModel() { TypeName = p.DisplayName, Id = p.Id }));
         return base.Success<List<SupportJobTypeModel>>(list);
     }
 

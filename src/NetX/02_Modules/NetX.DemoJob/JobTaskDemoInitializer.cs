@@ -1,4 +1,6 @@
-﻿using NetX.Module;
+﻿using NetX.DatabaseSetup;
+using NetX.Module;
+using System.Reflection;
 
 namespace NetX.DemoJob
 {
@@ -15,7 +17,8 @@ namespace NetX.DemoJob
 
         public override void ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection services, Microsoft.AspNetCore.Hosting.IWebHostEnvironment env, ModuleContext context)
         {
-            
+            //CodeFirst
+            services.AddMigratorAssembly(new Assembly[] { Assembly.GetExecutingAssembly() }, MigrationSupportDbType.MySql5);
         }
     }
 }
