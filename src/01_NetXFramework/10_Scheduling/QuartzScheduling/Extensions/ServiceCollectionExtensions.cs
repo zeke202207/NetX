@@ -2,6 +2,7 @@
 using NetX.Common;
 using NetX.Common.Attributes;
 using System.Reflection;
+using static Quartz.Logging.OperationName;
 
 namespace Netx.QuartzScheduling;
 
@@ -34,26 +35,46 @@ public static class ServiceCollectionExtensions
     /// <param name="service"></param>           
     /// <param name="injectJobs"></param>
     /// <returns></returns>
-    public static IServiceCollection AddQuartzScheduling(this IServiceCollection service, IEnumerable<Type> injectJobs)
+    public static IServiceCollection AddQuartzScheduling(this IServiceCollection service, Dictionary<Guid,IEnumerable<Type>> injectJobs, Dictionary<Guid,bool> userModuleOptions)
     {
         AddQuartzScheduling(service);
         if (!injectJobs.Any())
             return service;
-        injectJobs.ToList().ForEach(job =>
+        foreach (var injectJob in injectJobs)
         {
-            var jobAttribute = job.GetCustomAttribute<JobTaskAttribute>();
-            if (null == jobAttribute)
-                return;
-            JobTaskTypeManager.Instance.Add(jobAttribute.Id, new JobTaskTypeModel()
+            injectJob.Value.ToList().ForEach(job =>
             {
-                Id = jobAttribute.Id,
-                DisplayName = jobAttribute.Name,
-                JobTaskType = job
+                var jobAttribute = job.GetCustomAttribute<JobTaskAttribute>();
+                if (null == jobAttribute)
+                    return;
+                JobTaskTypeManager.Instance.Add(jobAttribute.Id, new JobTaskTypeModel()
+                {
+                    Id = jobAttribute.Id,
+                    DisplayName = jobAttribute.Name,
+                    JobTaskType = job,
+                    Enabled = userModuleOptions.FirstOrDefault(a => a.Key.Equals(injectJob.Key)).Value
+                });
+                if (!typeof(IJobTask).IsAssignableFrom(job))
+                    return;
+                service.AddTransient(job);
             });
-            if (!typeof(IJobTask).IsAssignableFrom(job))
-                return;
-            service.AddTransient(job);
-        });
+        }
+
+        //injectJobs.ToList().ForEach(job =>
+        //{
+        //    var jobAttribute = job.GetCustomAttribute<JobTaskAttribute>();
+        //    if (null == jobAttribute)
+        //        return;
+        //    JobTaskTypeManager.Instance.Add(jobAttribute.Id, new JobTaskTypeModel()
+        //    {
+        //        Id = jobAttribute.Id,
+        //        DisplayName = jobAttribute.Name,
+        //        JobTaskType = job,
+        //    });
+        //    if (!typeof(IJobTask).IsAssignableFrom(job))
+        //        return;
+        //    service.AddTransient(job);
+        //});
         return service;
     }
 }
