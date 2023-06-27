@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using NetX.Cache.Core;
 using NetX.Common;
 using NetX.DatabaseSetup;
-using NetX.FriendlyLogging;
+using NetX.DiagnosticLog;
 using NetX.InMemoryCache;
 using NetX.Module;
 using Serilog;

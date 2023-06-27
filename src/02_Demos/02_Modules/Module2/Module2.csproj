@@ -12,7 +12,6 @@
     <ProjectReference Include="..\..\..\01_NetXFramework\03_EventBus\NetX.EventBus.csproj" />
     <ProjectReference Include="..\..\..\01_NetXFramework\05_Tenant\NetX.Tenants.csproj" />
     <ProjectReference Include="..\..\..\01_NetXFramework\06_Authentication\Authentication.Core\NetX.Authentication.Core.csproj" />
-    <ProjectReference Include="..\..\..\01_NetXFramework\07_Logging\NetX.Logging.csproj" />
     <ProjectReference Include="..\..\..\01_NetXFramework\08_ApiDoc\Swagger\NetX.Swagger.csproj" />
   </ItemGroup>
 

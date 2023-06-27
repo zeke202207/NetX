@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetX.FriendlyLogging
+namespace NetX.DiagnosticLog
 {
     /// <summary>
     /// 日志类型

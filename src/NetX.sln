@@ -115,11 +115,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Netx.Ddd.Infrastructure", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetX.Logging", "01_NetXFramework\07_Logging\InterceptorLogging\NetX.Logging.csproj", "{F0E4431A-6AD1-42C6-9AAB-53A616F4E235}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetX.FriendlyLogging", "01_NetXFramework\07_Logging\FriendlyLogging\NetX.FriendlyLogging.csproj", "{E76FD5AA-8D26-4FA1-BCF7-25B4ADFC825F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetX.DiagnosticLog", "01_NetXFramework\07_Logging\FriendlyLogging\NetX.DiagnosticLog.csproj", "{E76FD5AA-8D26-4FA1-BCF7-25B4ADFC825F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Jobs", "Jobs", "{C33DA808-E66F-4A71-A08D-0E5B2AB55F07}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetX.DemoJob", "NetX\02_Modules\NetX.DemoJob\NetX.DemoJob.csproj", "{91A42003-F764-4894-9EEA-7591F4AF3B40}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetX.DemoJob", "NetX\02_Modules\NetX.DemoJob\NetX.DemoJob.csproj", "{91A42003-F764-4894-9EEA-7591F4AF3B40}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
