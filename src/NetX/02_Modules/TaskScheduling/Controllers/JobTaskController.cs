@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using NetX.AuditLog;
 using NetX.Authentication.Core;
 using NetX.Common.ModuleInfrastructure;
 using NetX.Swagger;
@@ -28,8 +29,8 @@ public class JobTaskController : BaseController
     /// </summary>
     /// <returns></returns>
     [ApiActionDescription("添加任务")]
-    [NoPermission]
     [HttpPost]
+    [Audited]
     public async Task<ResultModel> AddCronJob(CronScheduleRequest requestDto)
     {
 //#if DEBUG
@@ -66,8 +67,8 @@ public class JobTaskController : BaseController
     /// <param name="requestDto"></param>
     /// <returns></returns>
     [ApiActionDescription("暂停任务")]
-    [NoPermission]
     [HttpPost]
+    [Audited]
     public async Task<ResultModel> PauseJob(KeyParam key)
     {
         return await this._scheduleServer.PauseJob(key.Id);
@@ -79,8 +80,8 @@ public class JobTaskController : BaseController
     /// <param name="requestDto"></param>
     /// <returns></returns>
     [ApiActionDescription("恢复任务")]
-    [NoPermission]
     [HttpPost]
+    [Audited]
     public async Task<ResultModel> ResumeJob(KeyParam key)
     {
         return await this._scheduleServer.ResumeJob(key.Id);
@@ -92,8 +93,8 @@ public class JobTaskController : BaseController
     /// <param name="requestDto"></param>
     /// <returns></returns>
     [ApiActionDescription("删除任务")]
-    [NoPermission]
     [HttpPost]
+    [Audited]
     public async Task<ResultModel> RemoveJob(KeyParam key)
     {
         return await this._scheduleServer.DeleteJob(key.Id);
@@ -105,7 +106,6 @@ public class JobTaskController : BaseController
     /// <param name="requestDto"></param>
     /// <returns></returns>
     [ApiActionDescription("获取任务列表")]
-    [NoPermission]
     [HttpPost]
     public async Task<ResultModel> GetJobList(ScheduleListParam requestDto)
     {
@@ -118,7 +118,6 @@ public class JobTaskController : BaseController
     /// <param name="key"></param>
     /// <returns></returns>
     [ApiActionDescription("通过id获取任务")]
-    [NoPermission]
     [HttpPost]
     public async Task<ResultModel> GetJobById(KeyParam key)
     {
@@ -130,7 +129,6 @@ public class JobTaskController : BaseController
     /// </summary>
     /// <returns></returns>
     [ApiActionDescription("获取系统支持的jobtype")]
-    [NoPermission]
     [HttpPost]
     public async Task<ResultModel> GetJobTaskType()
     {
@@ -142,8 +140,8 @@ public class JobTaskController : BaseController
     /// </summary>
     /// <returns></returns>
     [ApiActionDescription("设置job启用禁用状态")]
-    [NoPermission]
     [HttpPost]
+    [Audited]
     public async Task<ResultModel> EnabledJob(EnabledJobRequest request)
     {
         return await _scheduleServer.EnabledJob(request);

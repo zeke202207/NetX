@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Netx.Ddd.Core;
+using NetX.AuditLog;
 using NetX.Authentication.Core;
 using NetX.Common.ModuleInfrastructure;
 using NetX.RBAC.Domain;
@@ -57,7 +58,7 @@ public class MenuController : RBACBaseController
     /// </summary>
     /// <param name="model">菜单实体对象</param>
     /// <returns></returns>
-    //[Audit]
+    [Audited]
     [ApiActionDescription("添加菜单")]
     [HttpPost]
     public async Task<ResultModel> AddMenu(MenuRequestModel model)
@@ -71,7 +72,7 @@ public class MenuController : RBACBaseController
     /// </summary>
     /// <param name="model">菜单实体对象</param>
     /// <returns></returns>
-    //[Audit]
+    [Audited]
     [ApiActionDescription("编辑菜单")]
     [HttpPost]
     public async Task<ResultModel> UpdateMenu(MenuRequestModel model)
@@ -85,7 +86,7 @@ public class MenuController : RBACBaseController
     /// </summary>
     /// <param name="param">删除实体对象</param>
     /// <returns></returns>
-    //[Audit]
+    [Audited]
     [ApiActionDescription("删除菜单")]
     [HttpDelete]
     public async Task<ResultModel> RemoveMenu(KeyParam param)

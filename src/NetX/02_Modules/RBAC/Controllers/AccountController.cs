@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Netx.Ddd.Core;
+using NetX.AuditLog;
 using NetX.Authentication.Core;
 using NetX.Common;
 using NetX.Common.ModuleInfrastructure;
@@ -64,7 +65,7 @@ public class AccountController : RBACBaseController
     //[ResponseCache(Duration = 30, Location = ResponseCacheLocation.Client)]
     public async Task<ResultModel> GetAccountList([FromQuery] UserListParam userListparam)
     {
-        return await _accountQuery.Send<AccountListQuery, ResultModel>(new AccountListQuery(userListparam.DeptId, userListparam.Account, userListparam.Nickname, userListparam.CurrentPage, userListparam.PageSize)); ;
+        return await _accountQuery.Send<AccountListQuery, ResultModel>(new AccountListQuery(userListparam.DeptId, userListparam.Account, userListparam.Nickname, userListparam.CurrentPage, userListparam.PageSize));
     }
 
     ///// <summary>
@@ -107,6 +108,7 @@ public class AccountController : RBACBaseController
     /// </summary>
     /// <param name="model">用户信息对象</param>
     /// <returns></returns>
+    [Audited]
     [ApiActionDescription("注册添加新用户")]
     [HttpPost]
     public async Task<ResultModel> AddAccount(AccountRequestModel model)
@@ -120,7 +122,7 @@ public class AccountController : RBACBaseController
     /// </summary>
     /// <param name="model">用户信息实体对象</param>
     /// <returns></returns>
-    //[Audit]
+    [Audited]
     [ApiActionDescription("编辑用户信息")]
     [HttpPost]
     public async Task<ResultModel> UpdateAccount(AccountRequestModel model)
@@ -134,7 +136,7 @@ public class AccountController : RBACBaseController
     /// </summary>
     /// <param name="param">删除参数</param>
     /// <returns></returns>
-    //[Audit]
+    [Audited]
     [ApiActionDescription("删除用户")]
     [HttpDelete]
     public async Task<ResultModel> RemoveAccount(KeyParam param)
@@ -148,7 +150,7 @@ public class AccountController : RBACBaseController
     /// </summary>
     /// <param name="model"></param>
     /// <returns></returns>
-    //[Audit]
+    [Audited]
     [ApiActionDescription("修改密码")]
     [HttpPost]
     public async Task<ResultModel> ChangePassword(ChangePwdRequestModel model)

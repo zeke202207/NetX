@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Netx.Ddd.Core;
+using NetX.AuditLog;
 using NetX.Common.ModuleInfrastructure;
 using NetX.RBAC.Domain;
 using NetX.RBAC.Models;
@@ -42,7 +43,7 @@ public class DeptController : RBACBaseController
     /// </summary>
     /// <param name="model">部门实体对象</param>
     /// <returns></returns>
-    //[Audit]
+    [Audited]
     [ApiActionDescription("新增部门信息")]
     [HttpPost]
     public async Task<ResultModel> AddDept(DeptRequestModel model)
@@ -56,7 +57,7 @@ public class DeptController : RBACBaseController
     /// </summary>
     /// <param name="model">部门实体对象</param>
     /// <returns></returns>
-    //[Audit]
+    [Audited]
     [ApiActionDescription("编辑部门信息")]
     [HttpPost]
     public async Task<ResultModel> UpdateDept(DeptRequestModel model)
@@ -70,7 +71,7 @@ public class DeptController : RBACBaseController
     /// </summary>
     /// <param name="param">删除实体</param>
     /// <returns></returns>
-    //[Audit]
+    [Audited]
     [ApiActionDescription("删除部门信息")]
     [HttpDelete]
     public async Task<ResultModel> RemoveDept(KeyParam param)

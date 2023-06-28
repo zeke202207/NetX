@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using System.Diagnostics;
 
 namespace NetX.Common;
 
@@ -79,8 +80,15 @@ public class ActionsFilter : BaseFilter, IActionFilter, IAsyncActionFilter
     /// <returns></returns>
     public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
     {
+        Stopwatch sw = new Stopwatch();
+        sw.Start();
+
         OnActionExecuting(context);
         OnActionExecuted(await next());
+
+        sw.Stop();
+        //增加计时器
+        context.HttpContext.Response.Headers.Add("duration", sw.Elapsed.TotalMilliseconds.ToString());
     }
 }
 

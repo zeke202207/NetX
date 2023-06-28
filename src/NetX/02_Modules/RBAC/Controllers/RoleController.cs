@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Netx.Ddd.Core;
+using NetX.AuditLog;
 using NetX.Common.ModuleInfrastructure;
 using NetX.RBAC.Domain;
 using NetX.RBAC.Models;
@@ -65,7 +66,7 @@ public class RoleController : RBACBaseController
     /// </summary>
     /// <param name="model">角色实体对象</param>
     /// <returns></returns>
-    //[Audit]
+    [Audited]
     [ApiActionDescription("添加角色")]
     [HttpPost]
     public async Task<ResultModel> AddRole(RoleRequestModel model)
@@ -79,7 +80,7 @@ public class RoleController : RBACBaseController
     /// </summary>
     /// <param name="model">角色实体对象</param>
     /// <returns></returns>
-    //[Audit]
+    [Audited]
     [ApiActionDescription("更新角色信息")]
     [HttpPost]
     public async Task<ResultModel> UpdateRole(RoleRequestModel model)
@@ -93,7 +94,7 @@ public class RoleController : RBACBaseController
     /// </summary>
     /// <param name="model">删除实体</param>
     /// <returns></returns>
-    //[Audit]
+    [Audited]
     [ApiActionDescription("删除角色")]
     [HttpDelete]
     public async Task<ResultModel> RemoveRole(KeyParam model)
@@ -107,7 +108,7 @@ public class RoleController : RBACBaseController
     /// </summary>
     /// <param name="model">角色状态实体对象</param>
     /// <returns></returns>
-    //[Audit]
+    [Audited]
     [ApiActionDescription("更新角色状态")]
     [HttpPost]
     public async Task<ResultModel> SetRoleStatus(RoleStatusModel model)
@@ -121,7 +122,7 @@ public class RoleController : RBACBaseController
     /// </summary>
     /// <param name="model">橘色状态实体对象</param>
     /// <returns></returns>
-    //[Audit]
+    [Audited]
     [ApiActionDescription("更新角色后台鉴权状态")]
     [HttpPost]
     public async Task<ResultModel> SetApiAuthStatus(RoleStatusModel model)
@@ -135,7 +136,7 @@ public class RoleController : RBACBaseController
     /// </summary>
     /// <param name="model">角色api鉴权集合</param>
     /// <returns></returns>
-    //[Audit]
+    [Audited]
     [ApiActionDescription("设置后台api授权id集合")]
     [HttpPost]
     public async Task<ResultModel> SetApiAuth(RoleApiAuthModel model)
