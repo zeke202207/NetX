@@ -1,0 +1,9 @@
+{
+  "Id": "10000000000000000000000000000006",
+  "Name": "audit",
+  "Version": "1.0.0.0",
+  "Enabled": true,
+  "FileName": "NetX.Audit.dll",
+  "IsSharedAssemblyContext": true,
+  "Description": "netx实现的审计日志模块"
+}

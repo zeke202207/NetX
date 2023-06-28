@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Serilog;
 
-namespace NetX.FriendlyLogging;
+namespace NetX.DiagnosticLog;
 
 /// <summary>
 /// 添加日志

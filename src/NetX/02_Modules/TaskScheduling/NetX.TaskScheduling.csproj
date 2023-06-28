@@ -20,7 +20,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\01_NetXFramework\01_App\NetX.App.csproj" />
-    <ProjectReference Include="..\..\..\01_NetXFramework\02_Module\NetX.Module.csproj" />
   </ItemGroup>
 
   <ItemGroup>

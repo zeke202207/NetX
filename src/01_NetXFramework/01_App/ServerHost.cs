@@ -1,15 +1,8 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using NetX.Cache.Core;
 using NetX.Common;
-using NetX.DatabaseSetup;
-using NetX.FriendlyLogging;
-using NetX.InMemoryCache;
-using NetX.Module;
-using Serilog;
-using System.ComponentModel;
-using System.Reflection;
+using NetX.DiagnosticLog;
 
 namespace NetX.App;
 

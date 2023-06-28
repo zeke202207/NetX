@@ -34,7 +34,7 @@
     <Content Include="..\..\01_NetXFramework\01_App\config\tenants.json" Link="config\tenants.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\..\01_NetXFramework\07_Logging\FriendlyLogging\seriloglog.json" Link="config\seriloglog.json">
+    <Content Include="..\..\01_NetXFramework\07_Logging\DiagnosticLog\seriloglog.json" Link="config\seriloglog.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\02_Modules\FileServer\config\fileserver.json" Link="config\fileserver.json">
@@ -48,10 +48,10 @@
     </Content>
     <Content Include="..\02_Modules\NetX.DemoJob\modules\jobtaskdemo\plugin.json" Link="modules\jobtaskdemo\plugin.json" />
     <Content Include="..\02_Modules\NetX.DemoJob\modules\jobtaskdemo\ref\readme.txt" Link="modules\jobtaskdemo\ref\readme.txt" />
-    <Content Include="..\02_Modules\RBAC\modules\systemmanager\plugin.json" Link="modules\rbac\plugin.json">
+    <Content Include="..\02_Modules\RBAC\modules\rbac\plugin.json" Link="modules\rbac\plugin.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\02_Modules\RBAC\modules\systemmanager\ref\readme.txt" Link="modules\rbac\ref\readme.txt">
+    <Content Include="..\02_Modules\RBAC\modules\rbac\ref\readme.txt" Link="modules\rbac\ref\readme.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\02_Modules\TaskScheduling\modules\taskscheduling\plugin.json" Link="modules\taskscheduling\plugin.json" />
