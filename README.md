@@ -1,3 +1,6 @@
+##
+![dev branch checked](https://github.com/zeke202207/NetX/workflows/netx/badge.svg?branch=dev)
+
 ##  1. <a name=':snowflake:'></a>注意 :snowflake:
 1. ~~一定要阅读wiki文档~~ [参考文档](http://doc.netx.net.cn) 🤣
 2. ~~一定要阅读wiki文档~~ [预览地址](http://www.netx.net.cn) :fire:
