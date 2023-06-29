@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NetX.Common;
 using NetX.DiagnosticLog;
+using Quartz.Util;
 
 namespace NetX.App;
 
@@ -27,9 +28,9 @@ public static class ServerHost
             WebApplication.CreateBuilder(options.Options);
         builder.Host.UseLogging();
         builder.AddConfiguration(options);
-        var startUrls = !string.IsNullOrWhiteSpace(urls) ?
-            urls :
-            builder.Configuration[nameof(urls)];
+        var startUrls = urls.IsNullOrWhiteSpace() ?
+            builder.Configuration[nameof(urls)] :
+            urls;
         if (!string.IsNullOrWhiteSpace(startUrls))
             builder.WebHost.UseUrls(startUrls);
         //系统logo
@@ -63,6 +64,8 @@ public static class ServerHost
     /// <returns></returns>
     private static void NetxLogoInfo(ConfigurationManager config)
     {
+        if (Console.WindowWidth <= 0 || Console.WindowHeight <= 0)
+            return;
         var fontcolor = Console.ForegroundColor;
         Console.ForegroundColor = ConsoleColor.DarkGreen;
         Console.WriteLine
