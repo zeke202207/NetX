@@ -64,6 +64,8 @@ public static class ServerHost
     /// <returns></returns>
     private static void NetxLogoInfo(ConfigurationManager config)
     {
+        if (Console.WindowWidth <= 0 || Console.WindowHeight <= 0)
+            return;
         var fontcolor = Console.ForegroundColor;
         Console.ForegroundColor = ConsoleColor.DarkGreen;
         Console.WriteLine
