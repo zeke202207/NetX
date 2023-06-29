@@ -40,8 +40,6 @@ name: netx
 
 on:
   push:
-    branches: [ "dev-qi" ]
-  pull_request:
     branches: [ "dev" ]
 
 jobs:
