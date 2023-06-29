@@ -63,13 +63,18 @@ NetX 前身是 ``` sagittarius ``` ,一个我业余时间开发的模块化组�
      * 博文
           - [Creating a multi-tenant .NET Core Application](https://michael-mckenna.com/multi-tenant-asp-dot-net-core-application-tenant-resolution)
 
-2. 本框架使用了一些开源项目
+2. 本框架使用到的开源项目
 
      <!-- 图标生成工具 :https://shields.io/category/version -->
      
      | 依赖项  |  版本|
      |  ----  | ---- |     
      | swagger | <img src="https://img.shields.io/badge/swagger-6.4.0-blue"/>  |
-     | freesql cloud | <img src="https://img.shields.io/badge/freesql cloud-1.5.2-blue"/>  |
+     | dapper | <img src="https://img.shields.io/badge/dapper-2.0.123-blue"/>  |
+     |Pomelo.EntityFrameworkCore.MySql|<img src="https://img.shields.io/badge/Pomelo.EntityFrameworkCore.MySql-7.0-blue"/>|
+     |Quartz|<img src="https://img.shields.io/badge/Quartz-3.5.0-blue"/>|
+     |Serilog|<img src="https://img.shields.io/badge/Serilog-2.12.0-blue"/>|
+     |FluentMigrator|<img src="https://img.shields.io/badge/FluentMigrator-3.3.2-blue"/>
+
 
              
