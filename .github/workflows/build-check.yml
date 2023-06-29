@@ -36,11 +36,11 @@
 # For a complete CI/CD sample to get started with GitHub Action workflows for Desktop Applications,
 # refer to https://github.com/microsoft/github-actions-for-desktop-apps
 
-name: netx build check
+name: netx
 
 on:
   push:
-    branches: [ "dev-qi" , "dev-zeke" ]
+    branches: [ "dev-qi" ]
   pull_request:
     branches: [ "dev" ]
 
@@ -75,7 +75,7 @@ jobs:
       uses: microsoft/setup-msbuild@v1.0.2
      
     # Restore the application to populate the obj folder with RuntimeIdentifiers
-    - name: netx build
+    - name: build netx
       run: msbuild $env:Solution_Name /t:Restore /p:Configuration=$env:Configuration
       env:
         Configuration: ${{ matrix.configuration }}
