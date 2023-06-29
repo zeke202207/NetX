@@ -1,7 +1,7 @@
 name: netx
 on: 
   push:
-    branches: [ "dev" ]
+    branches: [ "dev-qi" ]
   pull_request:
     branches: [ "dev" ]
     
@@ -22,4 +22,4 @@ jobs:
       - name: Display dotnet version
         run: dotnet --version
       - name: Build
-        run: dotnet build --configuration Release --no-restore
+        run: dotnet build --configuration Release
