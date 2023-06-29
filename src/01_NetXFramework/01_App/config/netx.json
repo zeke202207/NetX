@@ -1,4 +1,5 @@
 {
+  "urls": "http://*:8221",
   "cors": {
     "policyname": "zeke",
     "preflightmaxage": 0
@@ -18,5 +19,5 @@
   "netxinfo": {
     "version": "1.0.0.1",
     "github": "https://github.com/zeke202207/NetX"
-  }  
+  }
 }

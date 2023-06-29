@@ -1,0 +1,14 @@
+﻿[Unit]
+Description="netx service"
+
+[Service]
+WorkingDirectory=/var/www/netxapi/
+ExecStart=/usr/bin/dotnet NetX.WebApi.dll
+Restart=always
+RestartSec=10
+SyslogIdentifier="netxservice"
+User=root
+Environment=ASPNETCORE_ENVIRONMENT=Production
+
+[Install]
+WantedBy=multi-user.target

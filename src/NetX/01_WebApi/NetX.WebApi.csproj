@@ -29,7 +29,7 @@
 
   <ItemGroup>
     <Content Include="..\..\01_NetXFramework\01_App\config\netx.json" Link="config\netx.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="..\..\01_NetXFramework\01_App\config\tenants.json" Link="config\tenants.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -68,6 +68,12 @@
 
   <ItemGroup>
     <EditorConfigFiles Remove="D:\Persion\fw\netx\src\.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="netx.service">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   
 </Project>

@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NetX.Common;
 using NetX.DiagnosticLog;
+using Quartz.Util;
 
 namespace NetX.App;
 
@@ -27,9 +28,9 @@ public static class ServerHost
             WebApplication.CreateBuilder(options.Options);
         builder.Host.UseLogging();
         builder.AddConfiguration(options);
-        var startUrls = !string.IsNullOrWhiteSpace(urls) ?
-            urls :
-            builder.Configuration[nameof(urls)];
+        var startUrls = urls.IsNullOrWhiteSpace() ?
+            builder.Configuration[nameof(urls)] :
+            urls;
         if (!string.IsNullOrWhiteSpace(startUrls))
             builder.WebHost.UseUrls(startUrls);
         //系统logo
