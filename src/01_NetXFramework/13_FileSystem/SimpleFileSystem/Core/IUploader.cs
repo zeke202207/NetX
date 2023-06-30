@@ -1,12 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
-using NetX.FileServer.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using NetX.SimpleFileSystem.Model;
 
-namespace NetX.FileServer;
+namespace NetX.SimpleFileSystem;
 
 /// <summary>
 /// 上传接口服务

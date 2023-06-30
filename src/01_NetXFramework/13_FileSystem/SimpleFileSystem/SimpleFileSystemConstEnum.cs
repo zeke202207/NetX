@@ -1,22 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace NetX.SimpleFileSystem;
 
-namespace NetX.FileServer;
-
-internal class FileServerConstEnum
+internal class SimpleFileSystemConstEnum
 {
-    /// <summary>
-    /// 唯一标识
-    /// </summary>
-    public const string C_FILESERVER_KEY = "10000000000000000000000000000003";
-
     /// <summary>
     /// swagger分组名称
     /// </summary>
-    public const string C_FILESERVER_GROUPNAME = "fileserver";
+    public const string C_FILESERVER_GROUPNAME = "simplefilesystem";
 }
 
 /// <summary>

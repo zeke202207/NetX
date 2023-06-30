@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NetX.FileServer.Model;
+﻿namespace NetX.SimpleFileSystem.Model;
 
 /// <summary>
 /// 文件服务器配置

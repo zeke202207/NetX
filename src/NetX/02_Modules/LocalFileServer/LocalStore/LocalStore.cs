@@ -1,12 +1,7 @@
-﻿using Microsoft.Extensions.Logging;
-using NetX.FileServer.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using NetX.SimpleFileSystem;
+using NetX.SimpleFileSystem.Model;
 
-namespace NetX.FileServer.FileStores;
+namespace NetX.LocalFileServer.FileStores;
 
 /// <summary>
 /// 本地存储文件服务
@@ -118,11 +113,11 @@ public class LocalStore : IFileStore
         var ext = Path.GetExtension(uploadInfo.OrgFileName);
         var date = DateTime.Now;
         return Path.Combine(
-            uploadInfo.TenantId.ToLower(), 
-            uploadInfo.FileType.ToString().ToLower(), 
-            date.ToString("yyyy"), 
-            date.ToString("MM"), 
-            Guid.NewGuid().ToString("N").ToLower()) 
+            uploadInfo.TenantId.ToLower(),
+            uploadInfo.FileType.ToString().ToLower(),
+            date.ToString("yyyy"),
+            date.ToString("MM"),
+            Guid.NewGuid().ToString("N").ToLower())
             + ext;
     }
 }

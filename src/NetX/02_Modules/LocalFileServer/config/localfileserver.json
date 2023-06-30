@@ -1,8 +1,4 @@
 {
-  "fileserver": {
-    "limitedsize": 20, // 单位 M
-    "supportedext": ".jpg;.jpeg;.png"
-  },
   "localstore": {
     "rootpath": "D:\\FileStore",
     "requestpath": "/upload",
