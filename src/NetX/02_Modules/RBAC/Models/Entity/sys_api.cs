@@ -27,4 +27,8 @@ public class sys_api : BaseEntity<string>
     /// 
     /// </summary>
     public string description { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
+    public bool issystem { get; set; }
 }

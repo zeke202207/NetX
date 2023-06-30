@@ -42,4 +42,9 @@ public class ApiModel
     /// </summary>
     [JsonProperty("description")]
     public string Description { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
+    [JsonProperty("issystem")]
+    public bool IsSystem { get; set; }
 }

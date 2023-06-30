@@ -63,6 +63,7 @@ public class MenuProfile : Profile
              .ForMember(dest => dest.IsExt, opt => opt.MapFrom(src => src.isext))
              .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.type))
              .ForMember(dest => dest.KeepAlive, opt => opt.MapFrom(src => src.keepalive))
+             .ForMember(dest => dest.IsSystem, opt => opt.MapFrom(src => src.issystem))
              .ForMember(dest => dest.ExtPath, opt => opt.MapFrom(src => JsonConvert.DeserializeObject<MenuMetaData>(src.meta).FrameSrc));
     }
 }

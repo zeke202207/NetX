@@ -27,4 +27,8 @@ public class sys_role : BaseEntity<string>
     /// 
     /// </summary>
     public string remark { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
+    public bool issystem { get; set; }
 }

@@ -55,4 +55,9 @@ public class RoleModel
     /// </summary>
     [JsonProperty("remark")]
     public string Remark { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
+    [JsonProperty("issystem")]
+    public bool IsSystem { get; set; }
 }

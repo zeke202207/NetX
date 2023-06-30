@@ -39,6 +39,7 @@ namespace NetX.TaskScheduling.DatabaseSetup.InitData
                      type = 1,// (int)MenuType.Menu,
                      permission = "",
                      orderno = 2,
+                     issystem = true,
                  });
             }
             catch (Exception ex)

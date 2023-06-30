@@ -38,6 +38,7 @@ namespace NetX.Audit.DatabaseSetup.InitData
                         icon = "ant-design:book-outlined",
                         permission = "",
                         orderno = 6,
+                        issystem = true,
                     })
                     .Row(new
                     {
@@ -51,6 +52,7 @@ namespace NetX.Audit.DatabaseSetup.InitData
                         type = 1,
                         permission = "",
                         orderno = 2,
+                        issystem = true,
                     })
                     //.Row(new
                     //{

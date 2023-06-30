@@ -27,4 +27,9 @@ public class UserListModel : UserModel
     /// </summary>
     [JsonProperty("deptname")]
     public string? DeptName { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
+    [JsonProperty("issystem")]
+    public bool IsSystem { get; set; }
 }

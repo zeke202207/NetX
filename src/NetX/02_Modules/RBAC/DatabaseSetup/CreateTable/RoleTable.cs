@@ -30,6 +30,7 @@ public class RoleTable : CreateTableMigration
                    .WithColumn("status").AsInt16().Nullable().WithDefaultValue(1)
                    .WithColumn("apicheck").AsInt16().Nullable().WithDefaultValue(0)
                    .WithColumn("createtime").AsDateTime().WithDefaultValue(DateTime.Now)
+                   .WithColumn("issystem").AsBoolean().WithDefaultValue(false).WithColumnDescription("是否是系统字段，系统字段将不允许被操作")
                    .WithColumn("remark").AsString(500).Nullable();
         }
         catch (Exception ex)

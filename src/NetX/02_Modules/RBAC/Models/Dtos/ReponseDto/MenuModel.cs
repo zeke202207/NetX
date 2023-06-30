@@ -103,4 +103,9 @@ public class MenuModel
     /// </summary>
     [JsonProperty("keepalive")]
     public string KeepAlive { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
+    [JsonProperty("issystem")]
+    public bool IsSystem { get; set; }
 }

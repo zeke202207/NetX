@@ -30,6 +30,7 @@ public class ApiTable : CreateTableMigration
                    .WithColumn("path").AsString(255).NotNullable()
                    .WithColumn("group").AsString(255).NotNullable()
                    .WithColumn("method").AsString(50).NotNullable()
+                   .WithColumn("issystem").AsBoolean().WithDefaultValue(false).WithColumnDescription("是否是系统字段，系统字段将不允许被操作")
                    .WithColumn("createtime").AsDateTime().WithDefaultValue(DateTime.Now)
                    .WithColumn("description").AsString(500).Nullable();
         }

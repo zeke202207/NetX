@@ -38,6 +38,7 @@ public class InitMenuData : InitDataMigration
                     type = (int)MenuType.Menu,
                     permission = "",
                     orderno = 1,
+                    issystem = true,
                 })
                 .Row(new
                 {
@@ -52,6 +53,7 @@ public class InitMenuData : InitDataMigration
                     type = (int)MenuType.Dir,
                     permission = "",
                     orderno = 2,
+                    issystem = true,
                 })
                 .Row(new
                 {
@@ -65,6 +67,7 @@ public class InitMenuData : InitDataMigration
                     type = (int)MenuType.Menu,
                     permission = "",
                     orderno = 1,
+                    issystem = true,
                 })
                 .Row(new
                 {
@@ -78,6 +81,7 @@ public class InitMenuData : InitDataMigration
                     type = (int)MenuType.Menu,
                     permission = "",
                     orderno = 2,
+                    issystem = true,
                 })
                 .Row(new
                 {
@@ -91,6 +95,7 @@ public class InitMenuData : InitDataMigration
                     type = (int)MenuType.Menu,
                     permission = "",
                     orderno = 3,
+                    issystem = true,
                 })
                 .Row(new
                 {
@@ -104,6 +109,7 @@ public class InitMenuData : InitDataMigration
                     type = (int)MenuType.Menu,
                     permission = "",
                     orderno = 4,
+                    issystem = true,
                 })
                 .Row(new
                 {
@@ -117,6 +123,7 @@ public class InitMenuData : InitDataMigration
                     type = (int)MenuType.Menu,
                     permission = "",
                     orderno = 5,
+                    issystem = true,
                 })
                 .Row(new
                 {
@@ -130,6 +137,7 @@ public class InitMenuData : InitDataMigration
                     type = (int)MenuType.Menu,
                     permission = "",
                     orderno = 6,
+                    issystem = true,
                 });
         }
         catch (Exception ex)

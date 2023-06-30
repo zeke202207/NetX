@@ -67,4 +67,8 @@ public class sys_menu : BaseEntity<string>
     /// 
     /// </summary>
     public DateTime createtime { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
+    public bool issystem { get; set; }
 }

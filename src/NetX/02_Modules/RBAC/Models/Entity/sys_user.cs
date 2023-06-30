@@ -35,4 +35,8 @@ public class sys_user : BaseEntity<string>
     /// 
     /// </summary>
     public string? remark { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
+    public bool issystem { get; set; }
 }

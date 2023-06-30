@@ -45,7 +45,8 @@ public class InitRoleData : InitDataMigration
                         rolename = "super admin",
                         status = (int)Status.Enable,
                         createtime = DateTime.Now,
-                        remark = ""
+                        remark = "",
+                        issystem = true,
                     });
         }
         catch (Exception ex)

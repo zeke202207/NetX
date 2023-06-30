@@ -5,7 +5,7 @@
   },
   "localstore": {
     "rootpath": "D:\\FileStore",
-    "requestpath": "/zeke",
+    "requestpath": "/upload",
     "minetype": [
       {
         "key": ".m3u8",

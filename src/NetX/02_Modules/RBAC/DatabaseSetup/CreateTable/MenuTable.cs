@@ -40,7 +40,8 @@ public class MenuTable : CreateTableMigration
                    .WithColumn("isext").AsInt16().WithDefaultValue(0)
                    .WithColumn("keepalive").AsInt16().WithDefaultValue(1)
                    .WithColumn("show").AsInt16().WithDefaultValue(1)
-                   .WithColumn("meta").AsString(500).Nullable();
+                   .WithColumn("meta").AsString(500).Nullable()
+                   .WithColumn("issystem").AsBoolean().WithDefaultValue(false).WithColumnDescription("是否是系统字段，系统字段将不允许被操作");
         }
         catch (Exception ex)
         {
