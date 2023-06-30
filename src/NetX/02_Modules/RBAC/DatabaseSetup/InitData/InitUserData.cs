@@ -31,9 +31,10 @@ public class InitUserData : InitDataMigration
                     username = "zeke",
                     password = "E10ADC3949BA59ABBE56E057F20F883E",
                     nickname = "zeke",
-                    avatar = "http://www.liuping.org.cn:8888/images/2020/03/07/1H3A4471-7-150x150.jpg",
+                    avatar = "images/2020/03/07/1H3A4471-7-150x150.jpg",
                     status = 1,
-                    remark = "super admin"
+                    remark = "super admin",
+                    issystem = true,
                 });
         }
         catch (Exception ex)

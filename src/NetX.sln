@@ -35,8 +35,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02_Demos", "02_Demos", "{48
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03_Tests", "03_Tests", "{D6B40723-62CB-410C-90EE-228D5D2590E5}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "00_Build", "00_Build", "{9FB6C0B2-B250-42A5-90A0-2A6C0E648E95}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetX.Tests", "03_Tests\NetX.Tests.csproj", "{72DFBF56-F612-49E9-AF91-81467F0B0FB1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01_WebApi", "01_WebApi", "{1FACA067-4C15-4285-9249-1A9C66C70E26}"
@@ -125,7 +123,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "12_MessageQueue", "12_Messa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetX.MemoryQueue", "01_NetXFramework\12_MessageQueue\MemoryQueue\NetX.MemoryQueue.csproj", "{09BDA429-0F6B-4AF5-99E6-5CD87C24703F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetX.Audit", "NetX\02_Modules\NetX.Audit\NetX.Audit.csproj", "{A0ED057B-49DA-45A7-A2B0-CFB01AD2AA80}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetX.Audit", "NetX\02_Modules\NetX.Audit\NetX.Audit.csproj", "{A0ED057B-49DA-45A7-A2B0-CFB01AD2AA80}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

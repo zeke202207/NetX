@@ -48,4 +48,9 @@ public class UserModel
     [JsonProperty("email")]
     public string Email { get; set; }
     //public string HomePath { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
+    [JsonProperty("issystem")]
+    public bool IsSystem { get; set; }
 }

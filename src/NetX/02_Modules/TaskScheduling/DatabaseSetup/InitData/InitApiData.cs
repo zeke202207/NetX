@@ -36,7 +36,8 @@ namespace NetX.TaskScheduling.DatabaseSetup.InitData
                     path = "/api/jobtask/addcronjob",
                     group = "jobtask",
                     method = "POST",
-                    description = "添加任务"
+                    description = "添加任务",
+                    issystem = true,
                 })
                 .Row(new
                 {
@@ -44,7 +45,8 @@ namespace NetX.TaskScheduling.DatabaseSetup.InitData
                     path = "/api/jobtask/pausejob",
                     group = "jobtask",
                     method = "POST",
-                    description = "暂停任务"
+                    description = "暂停任务",
+                    issystem = true,
                 })
                 .Row(new
                 {
@@ -52,7 +54,8 @@ namespace NetX.TaskScheduling.DatabaseSetup.InitData
                     path = "/api/jobtask/resumejob",
                     group = "jobtask",
                     method = "POST",
-                    description = "恢复任务"
+                    description = "恢复任务",
+                    issystem = true,
                 })
                 .Row(new
                 {
@@ -60,7 +63,8 @@ namespace NetX.TaskScheduling.DatabaseSetup.InitData
                     path = "/api/jobtask/removejob",
                     group = "jobtask",
                     method = "POST",
-                    description = "删除任务"
+                    description = "删除任务",
+                    issystem = true,
                 })
                 .Row(new
                 {
@@ -68,7 +72,8 @@ namespace NetX.TaskScheduling.DatabaseSetup.InitData
                     path = "/api/jobtask/getjoblist",
                     group = "jobtask",
                     method = "POST",
-                    description = "获取任务列表"
+                    description = "获取任务列表",
+                    issystem = true,
                 })
                 .Row(new
                 {
@@ -76,7 +81,8 @@ namespace NetX.TaskScheduling.DatabaseSetup.InitData
                     path = "/api/jobtask/getjobbyid",
                     group = "jobtask",
                     method = "POST",
-                    description = "通过id获取任务信息"
+                    description = "通过id获取任务信息",
+                    issystem = true,
                 })
                 .Row(new
                 {
@@ -84,7 +90,8 @@ namespace NetX.TaskScheduling.DatabaseSetup.InitData
                     path = "/api/jobtask/getjobtasktype",
                     group = "jobtask",
                     method = "POST",
-                    description = "获取系统支持的jobtype"
+                    description = "获取系统支持的jobtype",
+                    issystem = true,
                 })
                 .Row(new
                 {
@@ -92,7 +99,8 @@ namespace NetX.TaskScheduling.DatabaseSetup.InitData
                     path = "/api/jobtask/enabledjob",
                     group = "jobtask",
                     method = "POST",
-                    description = "设置jbo启用禁用状态"
+                    description = "设置jbo启用禁用状态",
+                    issystem = true,
                 });
             }
             catch (Exception ex)

@@ -31,6 +31,11 @@ internal class RBACConst
     /// 事件总线事件唯一标识
     /// </summary>
     public const string C_RBAC_EVENT_KEY = "rbac_permission_cache_key";
+
+    /// <summary>
+    /// 内置密码
+    /// </summary>
+    public const string C_RBAC_BUILDIN_PASSWORD = "netx";
 }
 
 /// <summary>

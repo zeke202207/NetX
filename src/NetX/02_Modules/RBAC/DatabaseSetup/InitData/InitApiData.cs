@@ -33,7 +33,8 @@ namespace NetX.RBAC.DatabaseSetup.InitData
                         path = "/api/account/login",
                         group = "account",
                         method = "POST",
-                        description = "登录"
+                        description = "登录",
+                        issystem = true,
                     })
                     .Row(new
                     {
@@ -41,7 +42,8 @@ namespace NetX.RBAC.DatabaseSetup.InitData
                         path = "/api/account/getuserinfo",
                         group = "account",
                         method = "GET",
-                        description = "获取用户信息"
+                        description = "获取用户信息",
+                        issystem = true,
                     })
                     .Row(new
                     {
@@ -49,7 +51,8 @@ namespace NetX.RBAC.DatabaseSetup.InitData
                         path = "/api/account/getaccountlist",
                         group = "account",
                         method = "GET",
-                        description = "获取用户列表集合"
+                        description = "获取用户列表集合",
+                        issystem = true,
                     })
                     .Row(new
                     {
@@ -57,7 +60,8 @@ namespace NetX.RBAC.DatabaseSetup.InitData
                         path = "/api/account/isaccountexist",
                         group = "account",
                         method = "GET",
-                        description = "验证用户名是否存在"
+                        description = "验证用户名是否存在",
+                        issystem = true,
                     })
                     .Row(new
                     {
@@ -65,7 +69,8 @@ namespace NetX.RBAC.DatabaseSetup.InitData
                         path = "/api/account/getpermcode",
                         group = "account",
                         method = "GET",
-                        description = "获取用户权限码集合"
+                        description = "获取用户权限码集合",
+                        issystem = true,
                     })
                     .Row(new
                     {
@@ -73,7 +78,8 @@ namespace NetX.RBAC.DatabaseSetup.InitData
                         path = "/api/account/logout",
                         group = "account",
                         method = "GET",
-                        description = "登出系统"
+                        description = "登出系统",
+                        issystem = true,
                     })
                     .Row(new
                     {
@@ -81,7 +87,8 @@ namespace NetX.RBAC.DatabaseSetup.InitData
                         path = "/api/account/addaccount",
                         group = "account",
                         method = "POST",
-                        description = "添加新用户"
+                        description = "添加新用户",
+                        issystem = true,
                     })
                     .Row(new
                     {
@@ -89,7 +96,8 @@ namespace NetX.RBAC.DatabaseSetup.InitData
                         path = "/api/account/updateaccount",
                         group = "account",
                         method = "POST",
-                        description = "更新用户信息"
+                        description = "更新用户信息",
+                        issystem = true,
                     })
                     .Row(new
                     {
@@ -97,7 +105,8 @@ namespace NetX.RBAC.DatabaseSetup.InitData
                         path = "/api/account/removeaccount",
                         group = "account",
                         method = "DELETE",
-                        description = "删除用户"
+                        description = "删除用户",
+                        issystem = true,
                     })
                     .Row(new
                     {
@@ -105,7 +114,8 @@ namespace NetX.RBAC.DatabaseSetup.InitData
                         path = "/api/account/changepassword",
                         group = "account",
                         method = "POST",
-                        description = "修改登录用户密码"
+                        description = "修改登录用户密码",
+                        issystem = true,
                     })
 
 
@@ -118,7 +128,8 @@ namespace NetX.RBAC.DatabaseSetup.InitData
                         path = "/api/dept/getdeptlist",
                         group = "department",
                         method = "GET",
-                        description = "获取部门列表"
+                        description = "获取部门列表",
+                        issystem = true,
                     })
                     .Row(new
                     {
@@ -126,7 +137,8 @@ namespace NetX.RBAC.DatabaseSetup.InitData
                         path = "/api/dept/adddept",
                         group = "department",
                         method = "POST",
-                        description = "新增部门信息"
+                        description = "新增部门信息",
+                        issystem = true,
                     })
                     .Row(new
                     {
@@ -134,7 +146,8 @@ namespace NetX.RBAC.DatabaseSetup.InitData
                         path = "/api/dept/updatedept",
                         group = "department",
                         method = "POST",
-                        description = "更新部门信息"
+                        description = "更新部门信息",
+                        issystem = true,
                     })
                     .Row(new
                     {
@@ -142,7 +155,8 @@ namespace NetX.RBAC.DatabaseSetup.InitData
                         path = "/api/dept/removedept",
                         group = "department",
                         method = "DELETE",
-                        description = "删除部门"
+                        description = "删除部门",
+                        issystem = true,
                     })
                 #endregion
 
@@ -153,7 +167,8 @@ namespace NetX.RBAC.DatabaseSetup.InitData
                         path = "/api/menu/getcurrentusermenulist",
                         group = "menu",
                         method = "GET",
-                        description = "获取登录用户授权的菜单列表"
+                        description = "获取登录用户授权的菜单列表",
+                        issystem = true,
                     })
                     .Row(new
                     {
@@ -161,7 +176,8 @@ namespace NetX.RBAC.DatabaseSetup.InitData
                         path = "/api/menu/getmenulist",
                         group = "menu",
                         method = "POST",
-                        description = "获取菜单列表"
+                        description = "获取菜单列表",
+                        issystem = true,
                     })
                     .Row(new
                     {
@@ -169,7 +185,8 @@ namespace NetX.RBAC.DatabaseSetup.InitData
                         path = "/api/menu/addmenu",
                         group = "menu",
                         method = "POST",
-                        description = "新增菜单信息"
+                        description = "新增菜单信息",
+                        issystem = true,
                     })
                     .Row(new
                     {
@@ -177,7 +194,8 @@ namespace NetX.RBAC.DatabaseSetup.InitData
                         path = "/api/menu/updatemenu",
                         group = "menu",
                         method = "POST",
-                        description = "更新菜单信息"
+                        description = "更新菜单信息",
+                        issystem = true,
                     })
                     .Row(new
                     {
@@ -185,7 +203,8 @@ namespace NetX.RBAC.DatabaseSetup.InitData
                         path = "/api/menu/removemenu",
                         group = "menu",
                         method = "DELETE",
-                        description = "删除菜单"
+                        description = "删除菜单",
+                        issystem = true,
                     })
                 #endregion
 
@@ -196,7 +215,8 @@ namespace NetX.RBAC.DatabaseSetup.InitData
                         path = "/api/role/getrolelistbypage",
                         group = "role",
                         method = "POST",
-                        description = "获取角色列表"
+                        description = "获取角色列表",
+                        issystem = true,
                     })
                     .Row(new
                     {
@@ -204,7 +224,8 @@ namespace NetX.RBAC.DatabaseSetup.InitData
                         path = "/api/role/getallrolelist",
                         group = "role",
                         method = "GET",
-                        description = "获取全部角色列表"
+                        description = "获取全部角色列表",
+                        issystem = true,
                     })
                     .Row(new
                     {
@@ -212,7 +233,8 @@ namespace NetX.RBAC.DatabaseSetup.InitData
                         path = "/api/role/addrole",
                         group = "role",
                         method = "POST",
-                        description = "添加新角色信息"
+                        description = "添加新角色信息",
+                        issystem = true,
                     })
                     .Row(new
                     {
@@ -220,7 +242,8 @@ namespace NetX.RBAC.DatabaseSetup.InitData
                         path = "/api/role/updaterole",
                         group = "role",
                         method = "POST",
-                        description = "更新角色信息"
+                        description = "更新角色信息",
+                        issystem = true,
                     })
                     .Row(new
                     {
@@ -228,7 +251,8 @@ namespace NetX.RBAC.DatabaseSetup.InitData
                         path = "/api/role/removerole",
                         group = "role",
                         method = "DELETE",
-                        description = "删除角色"
+                        description = "删除角色",
+                        issystem = true,
                     })
                     .Row(new
                     {
@@ -236,7 +260,8 @@ namespace NetX.RBAC.DatabaseSetup.InitData
                         path = "/api/role/setrolestatus",
                         group = "role",
                         method = "POST",
-                        description = "更新角色状态"
+                        description = "更新角色状态",
+                        issystem = true,
                     })
                     .Row(new
                     {
@@ -244,7 +269,8 @@ namespace NetX.RBAC.DatabaseSetup.InitData
                         path = "/api/role/setapiauthstatus",
                         group = "role",
                         method = "POST",
-                        description = "更新角色后台鉴权状态"
+                        description = "更新角色后台鉴权状态",
+                        issystem = true,
                     })
                     .Row(new
                     {
@@ -252,7 +278,8 @@ namespace NetX.RBAC.DatabaseSetup.InitData
                         path = "/api/role/getapiauth",
                         group = "role",
                         method = "POST",
-                        description = "获取api鉴权id集合"
+                        description = "获取api鉴权id集合",
+                        issystem = true,
                     })
                     .Row(new
                     {
@@ -260,7 +287,8 @@ namespace NetX.RBAC.DatabaseSetup.InitData
                         path = "/api/role/setapiauth",
                         group = "role",
                         method = "POST",
-                        description = "设置api鉴权id集合"
+                        description = "设置api鉴权id集合",
+                        issystem = true,
                     })
 
                 #endregion
@@ -273,7 +301,8 @@ namespace NetX.RBAC.DatabaseSetup.InitData
                     path = "/api/api/getapipagelist",
                     group = "api",
                     method = "POST",
-                    description = "获取接口分页列表"
+                    description = "获取接口分页列表",
+                    issystem = true,
                 })
                 .Row(new
                 {
@@ -281,7 +310,8 @@ namespace NetX.RBAC.DatabaseSetup.InitData
                     path = "/api/api/getapilist",
                     group = "api",
                     method = "POST",
-                    description = "获取全部接口列表"
+                    description = "获取全部接口列表",
+                    issystem = true,
                 })
                 .Row(new
                 {
@@ -289,7 +319,8 @@ namespace NetX.RBAC.DatabaseSetup.InitData
                     path = "/api/api/addapi",
                     group = "api",
                     method = "POST",
-                    description = "添加新的接口"
+                    description = "添加新的接口",
+                    issystem = true,
                 })
                 .Row(new
                 {
@@ -297,7 +328,8 @@ namespace NetX.RBAC.DatabaseSetup.InitData
                     path = "/api/api/updateapi",
                     group = "api",
                     method = "POST",
-                    description = "更新接口信息"
+                    description = "更新接口信息",
+                    issystem = true,
                 })
                 .Row(new
                 {
@@ -305,7 +337,8 @@ namespace NetX.RBAC.DatabaseSetup.InitData
                     path = "/api/api/removeapi",
                     group = "api",
                     method = "DELETE",
-                    description = "删除接口"
+                    description = "删除接口",
+                    issystem = true,
                 })
 
                 #endregion
