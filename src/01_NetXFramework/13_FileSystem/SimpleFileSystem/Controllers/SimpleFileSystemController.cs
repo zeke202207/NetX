@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using NetX.Authentication.Core;
 using NetX.Common;
 using NetX.Common.ModuleInfrastructure;
-using NetX.FileServer.Model;
+using NetX.SimpleFileSystem;
+using NetX.SimpleFileSystem.Model;
 using NetX.Swagger;
 using NetX.Tenants;
 
@@ -12,8 +13,8 @@ namespace NetX.FileServer.Controllers
     /// <summary>
     /// 
     /// </summary>
-    [ApiControllerDescription(FileServerConstEnum.C_FILESERVER_GROUPNAME, Description = "NetX实现的文件系统模块")]
-    public class FileServerController : BaseController
+    [ApiControllerDescription(SimpleFileSystemConstEnum.C_FILESERVER_GROUPNAME, Description = "NetX实现的文件系统模块")]
+    public class SimpleFileSystemController : BaseController
     {
         private readonly IUploader _uploader;
 
@@ -21,7 +22,7 @@ namespace NetX.FileServer.Controllers
         /// 实例对象
         /// </summary>
         /// <param name="uploader"></param>
-        public FileServerController(IUploader uploader)
+        public SimpleFileSystemController(IUploader uploader)
         {
             this._uploader = uploader;
         }

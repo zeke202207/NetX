@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="modules\simplefilesystem\plugin.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="modules\simplefilesystem\plugin.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\02_Module\NetX.Module.csproj" />
+    <ProjectReference Include="..\..\05_Tenant\NetX.Tenants.csproj" />
+    <ProjectReference Include="..\..\06_Authentication\Authentication.Core\NetX.Authentication.Core.csproj" />
+    <ProjectReference Include="..\..\08_ApiDoc\Swagger\NetX.Swagger.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="config\simplefilesystem.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="modules\simplefilesystem\ref\readme.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

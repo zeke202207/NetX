@@ -29,21 +29,20 @@
 
   <ItemGroup>
     <Content Include="..\..\01_NetXFramework\01_App\config\netx.json" Link="config\netx.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\..\01_NetXFramework\01_App\config\tenants.json" Link="config\tenants.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\..\01_NetXFramework\07_Logging\DiagnosticLog\seriloglog.json" Link="config\seriloglog.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\02_Modules\FileServer\config\fileserver.json" Link="config\fileserver.json">
+    <Content Include="..\..\01_NetXFramework\13_FileSystem\SimpleFileSystem\config\simplefilesystem.json" Link="config\simplefilesystem.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\02_Modules\FileServer\modules\fileserver\plugin.json" Link="modules\fileserver\plugin.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\02_Modules\FileServer\modules\fileserver\ref\readme.txt" Link="modules\fileserver\ref\readme.txt">
+    <Content Include="..\..\01_NetXFramework\13_FileSystem\SimpleFileSystem\modules\simplefilesystem\plugin.json" Link="modules\simplefilesystem\plugin.json" />
+    <Content Include="..\..\01_NetXFramework\13_FileSystem\SimpleFileSystem\modules\simplefilesystem\ref\readme.txt" Link="modules\simplefilesystem\ref\readme.txt" />
+    <Content Include="..\02_Modules\LocalFileServer\config\localfileserver.json" Link="config\localfileserver.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\02_Modules\NetX.DemoJob\modules\jobtaskdemo\plugin.json" Link="modules\jobtaskdemo\plugin.json" />

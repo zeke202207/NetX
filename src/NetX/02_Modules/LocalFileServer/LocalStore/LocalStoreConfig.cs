@@ -1,11 +1,4 @@
-﻿using Microsoft.AspNetCore.StaticFiles;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NetX.FileServer.FileStores;
+﻿namespace NetX.LocalFileServer.FileStores;
 
 /// <summary>
 /// 本地存储配置

@@ -1,19 +1,14 @@
 ﻿using Microsoft.AspNetCore.Http;
-using NetX.FileServer.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using NetX.SimpleFileSystem.Model;
 
-namespace NetX.FileServer;
+namespace NetX.SimpleFileSystem;
 
 /// <summary>
 /// 上传处理管理
 /// </summary>
 public class UploadHandler : IUploader
 {
-    private readonly IFileStore _fileService;
+    private readonly IFileStore _fileStore;
     private readonly FileServerConfig _serverConfig;
 
     /// <summary>
@@ -21,9 +16,9 @@ public class UploadHandler : IUploader
     /// </summary>
     /// <param name="fileServer">文件服务器</param>
     /// <param name="serverConfig">文件服务器配置项</param>
-    public UploadHandler(IFileStore fileServer,FileServerConfig serverConfig)
+    public UploadHandler(IFileStore fileServer, FileServerConfig serverConfig)
     {
-        this._fileService = fileServer;
+        this._fileStore = fileServer;
         this._serverConfig = serverConfig;
     }
 
@@ -44,11 +39,11 @@ public class UploadHandler : IUploader
     /// <returns></returns>
     public ValidateResult Validate(IFormFileCollection files)
     {
-        foreach(var file in files)
+        foreach (var file in files)
         {
             var result = Validate(file);
-            if(result != ValidateResult.Success)
-                return result; 
+            if (result != ValidateResult.Success)
+                return result;
         }
         return ValidateResult.Success;
     }
@@ -89,7 +84,7 @@ public class UploadHandler : IUploader
     /// <returns></returns>
     private ValidateResult IFormFileValidate(string extensionName, long size)
     {
-        if(null == _serverConfig)
+        if (null == _serverConfig)
             return ValidateResult.Success;
         if (!_serverConfig.SupportedExt.Contains(extensionName))
             return ValidateResult.EfficientType;
@@ -106,6 +101,8 @@ public class UploadHandler : IUploader
     /// <returns></returns>
     private async Task<UploadResult> IFormFileUpload(Memory<byte> buffer, UploadInfo uploadInfo)
     {
-        return await _fileService.WriteToFile(uploadInfo, buffer);
+        if (null == _fileStore)
+            throw new NotImplementedException("请实现IFileStore");
+        return await _fileStore.WriteToFile(uploadInfo, buffer);
     }
 }

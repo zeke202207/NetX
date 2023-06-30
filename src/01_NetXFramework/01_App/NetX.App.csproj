@@ -27,6 +27,7 @@
     <ProjectReference Include="..\10_Scheduling\QuartzScheduling\Netx.QuartzScheduling.csproj" />
     <ProjectReference Include="..\11_DomainDrivenDesign\Ddd.Domain\Netx.Ddd.Domain.csproj" />
     <ProjectReference Include="..\11_DomainDrivenDesign\Ddd.Infrastructure\Netx.Ddd.Infrastructure.csproj" />
+	<ProjectReference Include="..\13_FileSystem\SimpleFileSystem\NetX.SimpleFileSystem.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="config\logging.json">

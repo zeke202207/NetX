@@ -1,9 +1,9 @@
 {
   "Id": "10000000000000000000000000000003",
-  "Name": "fileserver",
+  "Name": "simplefilesystem",
   "Version": "1.0.0.0",
   "Enabled": true,
-  "FileName": "NetX.FileServer.dll",
+  "FileName": "NetX.LocalFileServer.dll",
   "IsSharedAssemblyContext": true,
   "Description": "netx实现的本地文件存储"
 }

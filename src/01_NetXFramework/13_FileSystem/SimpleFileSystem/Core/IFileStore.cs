@@ -1,11 +1,6 @@
-﻿using NetX.FileServer.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using NetX.SimpleFileSystem.Model;
 
-namespace NetX.FileServer;
+namespace NetX.SimpleFileSystem;
 
 /// <summary>
 /// 文件服务器
@@ -18,7 +13,7 @@ public interface IFileStore
     /// <param name="uploadInfo">上传文件名</param>
     /// <param name="buffer">文件数组</param>
     /// <returns></returns>
-    Task<UploadResult> WriteToFile(UploadInfo uploadInfo , byte[] buffer);
+    Task<UploadResult> WriteToFile(UploadInfo uploadInfo, byte[] buffer);
 
     /// <summary>
     /// 保存文件
