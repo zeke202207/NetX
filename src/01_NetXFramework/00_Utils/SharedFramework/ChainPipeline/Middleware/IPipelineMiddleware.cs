@@ -5,12 +5,11 @@
 /// </summary>
 /// <typeparam name="TParameter"></typeparam>
 public interface IPipelineMiddleware<TParameter>
-    where TParameter : DataflowParameter
 {
     /// <summary>
     /// 执行中间件
     /// </summary>
-    /// <param name="parameter">中间件传递参数</param>
+    /// <param name="context">中间件传递参数</param>
     /// <param name="next">下一个中间件</param>
-    void Run(TParameter parameter, Action<TParameter>? next);
+    void Run(RequestContext<TParameter> context, Action<RequestContext<TParameter>>? next);
 }

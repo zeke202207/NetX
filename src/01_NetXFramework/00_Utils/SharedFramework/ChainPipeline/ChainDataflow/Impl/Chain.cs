@@ -6,8 +6,7 @@
 /// <typeparam name="TParameter">The input type for the chain.</typeparam>
 /// <typeparam name="TResult">The return type of the chain.</typeparam>
 public class Chain<TParameter, TResult> : ChainBase<TParameter, TResult>, IChain<TParameter, TResult>
-    where TParameter : DataflowParameter
-    where TResult : DataflowResult
+    where TResult : class, new()
 {
     /// <summary>
     /// 同步责任链链条实例
@@ -46,20 +45,44 @@ public class Chain<TParameter, TResult> : ChainBase<TParameter, TResult>, IChain
     /// </summary>
     /// <param name="parameter"></param>
     /// <returns></returns>
-    public TResult Execute(TParameter parameter)
+    public ReponseContext<TResult> Execute(TParameter parameter)
     {
-        if (base._middlewareTypes.Count == 0)
-            return default(TResult);
-        int index = 0;
-        Func<TParameter, TResult> func = null;
-        func = (param) =>
+        ReponseContext<TResult> result = new ReponseContext<TResult>();
+        try
         {
-            var type = base._middlewareTypes[index++];
-            var middleware = base._middlewareCreater.Create(type) as IChainMiddleware<TParameter, TResult>;
-            if (index == base._middlewareTypes.Count)
-                func = p => base.DefaultResult();
-            return middleware.Run(parameter, func);
-        };
-        return func(parameter);
+            if (base._middlewareTypes.Count == 0)
+                return result;
+            int index = 0;
+            Func<RequestContext<TParameter>, ReponseContext<TResult>> func = null;
+            func = (param) =>
+            {
+                try
+                {
+                    var type = base._middlewareTypes[index++];
+                    var middleware = base._middlewareCreater.Create(type) as IChainMiddleware<TParameter, TResult>;
+                    if (index == base._middlewareTypes.Count)
+                        func = p => base.DefaultResult();
+                    if (param.CancellationToken.IsCancellationRequested)
+                        throw new Exception("pipeline is canneled");
+                    if (null != middleware)
+                        return middleware.Run(param, func);
+                    else
+                        throw new Exception("the middleware is null");
+                }
+                catch(Exception ex)
+                {
+                    result.Success = false;
+                    result.Ex.Add(new ChainPipelineExcpetion(ex));
+                    return result;
+                }
+            };
+            return func(new RequestContext<TParameter>(parameter));
+        }
+        catch (Exception ex)
+        {
+            result.Success = false;
+            result.Ex.Add(new ChainPipelineExcpetion(ex));
+            return result;
+        }
     }
 }

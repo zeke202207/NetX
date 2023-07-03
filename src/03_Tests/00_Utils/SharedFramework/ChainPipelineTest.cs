@@ -5,7 +5,9 @@ using NetX.SharedFramework.ChainPipeline.ChainDataflow;
 using NetX.SharedFramework.ChainPipeline.PipelineDataflow;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -38,7 +40,7 @@ namespace NetX.Tests._00_Utils.SharedFramework
             chain.Add<ChainMiddlewareB>();
             chain.Add<ChainMiddlewareC>();
             var result = chain.Execute(new DataflowParameterA() { Id = "zeke" });
-            Assert.Equal(result.Count, 3);
+            Assert.Equal(result.Result.Count, 3);
         }
 
         [Fact]
@@ -48,7 +50,7 @@ namespace NetX.Tests._00_Utils.SharedFramework
             chain.Add<ChainMiddlewareAsyncA>();
             chain.Add<ChainMiddlewareAsyncB>();
             var result = await chain.ExecuteAsync(new DataflowParameterA() { Id = "zeke" });
-            Assert.Equal(result.Count, 2);
+            Assert.Equal(result.Result.Count, 2);
         }
 
         [Fact]
@@ -70,12 +72,12 @@ namespace NetX.Tests._00_Utils.SharedFramework
         }
     }
 
-    public class DataflowParameterA: DataflowParameter
+    public class DataflowParameterA
     {
         public string Id { get; set; }
     }
 
-    public class DataflowResultA : DataflowResult
+    public class DataflowResultA
     {
         public int Count { get; set; }
 
@@ -84,22 +86,22 @@ namespace NetX.Tests._00_Utils.SharedFramework
 
     public class ChainMiddlewareA : IChainMiddleware<DataflowParameterA, DataflowResultA>
     {
-        public DataflowResultA Run(DataflowParameterA parameter, Func<DataflowParameterA, DataflowResultA> next)
+        public ReponseContext<DataflowResultA> Run(RequestContext<DataflowParameterA> parameter, Func<RequestContext<DataflowParameterA>, ReponseContext<DataflowResultA>> next)
         {
             var result = next(parameter);
-            result.Count+=1;
-            result.IsSuccess = true;
+            result.Result.Count+=1;
+            result.Result.IsSuccess = true;
             return result;
         }
     }
 
     public class ChainMiddlewareB : IChainMiddleware<DataflowParameterA, DataflowResultA>
     {
-        public DataflowResultA Run(DataflowParameterA parameter, Func<DataflowParameterA, DataflowResultA> next)
+        public ReponseContext<DataflowResultA> Run(RequestContext<DataflowParameterA> parameter, Func<RequestContext<DataflowParameterA>, ReponseContext<DataflowResultA>> next)
         {
             var result = next(parameter);
-            if (result.IsSuccess)
-                result.Count += 1;
+            if (result.Result.IsSuccess)
+                result.Result.Count += 1;
 
             return result;
         }
@@ -107,11 +109,11 @@ namespace NetX.Tests._00_Utils.SharedFramework
 
     public class ChainMiddlewareC : IChainMiddleware<DataflowParameterA, DataflowResultA>
     {
-        public DataflowResultA Run(DataflowParameterA parameter, Func<DataflowParameterA, DataflowResultA> next)
+        public ReponseContext<DataflowResultA> Run(RequestContext<DataflowParameterA> parameter, Func<RequestContext<DataflowParameterA>, ReponseContext<DataflowResultA>> next)
         {
             var result = next(parameter);
-            if (result.IsSuccess)
-                result.Count += 1;
+            if (result.Result.IsSuccess)
+                result.Result.Count += 1;
 
             return result;
         }
@@ -119,22 +121,22 @@ namespace NetX.Tests._00_Utils.SharedFramework
 
     public class ChainMiddlewareAsyncA : IChainMiddlewareAsync<DataflowParameterA, DataflowResultA>
     {
-        public async Task<DataflowResultA> RunAsync(DataflowParameterA parameter, Func<DataflowParameterA, Task<DataflowResultA>> next)
+        public async Task<ReponseContext<DataflowResultA>> RunAsync(RequestContext<DataflowParameterA> parameter, Func<RequestContext<DataflowParameterA>, Task<ReponseContext<DataflowResultA>>> next)
         {
             var result = await next(parameter);
-            result.Count += 1;
-            result.IsSuccess = true;
+            result.Result.Count += 1;
+            result.Result.IsSuccess = true;
             return result;
         }
     }
 
     public class ChainMiddlewareAsyncB : IChainMiddlewareAsync<DataflowParameterA, DataflowResultA>
     {
-        public async Task<DataflowResultA> RunAsync(DataflowParameterA parameter, Func<DataflowParameterA, Task<DataflowResultA>> next)
+        public async Task<ReponseContext<DataflowResultA>> RunAsync(RequestContext<DataflowParameterA> parameter, Func<RequestContext<DataflowParameterA>, Task<ReponseContext<DataflowResultA>>> next)
         {
             var result = await next(parameter);
-            if (result.IsSuccess)
-                result.Count += 1;
+            if (result.Result.IsSuccess)
+                result.Result.Count += 1;
 
             return result;
         }
@@ -142,7 +144,7 @@ namespace NetX.Tests._00_Utils.SharedFramework
 
     public class PipelineMiddlewareA : IPipelineMiddleware<DataflowParameterA>
     {
-        public void Run(DataflowParameterA parameter, Action<DataflowParameterA> next)
+        public void Run(RequestContext<DataflowParameterA> parameter, Action<RequestContext<DataflowParameterA>> next)
         {
             next(parameter);
         }
@@ -150,7 +152,7 @@ namespace NetX.Tests._00_Utils.SharedFramework
 
     public class PipelineMiddlewareB : IPipelineMiddleware<DataflowParameterA>
     {
-        public void Run(DataflowParameterA parameter, Action<DataflowParameterA> next)
+        public void Run(RequestContext<DataflowParameterA> parameter, Action<RequestContext<DataflowParameterA>> next)
         {
             next(parameter);
         }
@@ -158,7 +160,7 @@ namespace NetX.Tests._00_Utils.SharedFramework
 
     public class PipelineMiddlewareAsyncA : IPilelineMiddlewareAsync<DataflowParameterA>
     {
-        public async Task RunAsync(DataflowParameterA parameter, Func<DataflowParameterA, Task>? next)
+        public async Task RunAsync(RequestContext<DataflowParameterA> parameter, Func<RequestContext<DataflowParameterA>, Task>? next)
         {
             await next(parameter);
         }
@@ -166,7 +168,7 @@ namespace NetX.Tests._00_Utils.SharedFramework
 
     public class PipelineMiddlewareAsyncB : IPilelineMiddlewareAsync<DataflowParameterA>
     {
-        public async Task RunAsync(DataflowParameterA parameter, Func<DataflowParameterA, Task>? next)
+        public async Task RunAsync(RequestContext<DataflowParameterA> parameter, Func<RequestContext<DataflowParameterA>, Task>? next)
         {
             await next(parameter);
         }

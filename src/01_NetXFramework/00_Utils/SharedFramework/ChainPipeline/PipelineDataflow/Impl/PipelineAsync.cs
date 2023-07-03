@@ -5,7 +5,6 @@
 /// </summary>
 /// <typeparam name="TParameter"></typeparam>
 public class PipelineAsync<TParameter> : PipelineBase<TParameter>, IPipelineAsync<TParameter>
-where TParameter : DataflowParameter
 {
     /// <summary>
     /// 异步管道实例
@@ -45,19 +44,36 @@ where TParameter : DataflowParameter
     /// <returns></returns>
     public async Task ExecuteAsync(TParameter parameter)
     {
-        if (base._middlewareTypes.Count == 0)
-            return;
-        int index = 0;
-        Func<TParameter, Task> func = null;
-        func = async (param) =>
+        try
         {
-            var type = base._middlewareTypes[index++];
-            var middleware = _middlewareCreater.Create(type) as IPilelineMiddlewareAsync<TParameter>;
-            if (index == base._middlewareTypes.Count)
-                func = async p => await Task.CompletedTask;
-            if (null != middleware)
-                await middleware.RunAsync(parameter, func);
-        };
-        await func(parameter);
+
+            if (base._middlewareTypes.Count == 0)
+                return;
+            int index = 0;
+            Func<RequestContext<TParameter>, Task> func = null;
+            func = async (param) =>
+            {
+                try
+                {
+                    var type = base._middlewareTypes[index++];
+                    var middleware = _middlewareCreater.Create(type) as IPilelineMiddlewareAsync<TParameter>;
+                    if (index == base._middlewareTypes.Count)
+                        func = async p => await Task.CompletedTask;
+                    if (param.CancellationToken.IsCancellationRequested)
+                        throw new Exception("pipeline is canneled");
+                    if (null != middleware)
+                        await middleware.RunAsync(param, func);
+                }
+                catch (Exception ex)
+                {
+                    throw new ChainPipelineExcpetion(ex);
+                }
+            };
+            await func(new RequestContext<TParameter>(parameter));
+        }
+        catch (Exception ex)
+        {
+            throw new ChainPipelineExcpetion(ex);
+        }
     }
 }

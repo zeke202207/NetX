@@ -6,7 +6,6 @@
 /// </summary>
 /// <typeparam name="TParameter"></typeparam>
 public interface IPipelineAsync<TParameter>
-    where TParameter : DataflowParameter
 {
     /// <summary>
     /// 添加一个需要被执行的中间件

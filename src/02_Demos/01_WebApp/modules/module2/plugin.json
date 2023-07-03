@@ -2,7 +2,7 @@
   "Id": "00000000000000000000000000000003",
   "Name": "Module2",
   "Version": "1.0.0.0",
-  "Enabled": true,
+  "Enabled": false,
   "FileName": "Module2.dll",
   "IsSharedAssemblyContext": false,
   "Description": "这是一个测试模块Module2"

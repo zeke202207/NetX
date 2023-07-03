@@ -5,6 +5,10 @@ using Module1.Controllers;
 using NetX;
 using NetX.EventBus;
 using NetX.Module;
+using NetX.SharedFramework;
+using NetX.SharedFramework.ChainPipeline;
+using NetX.SharedFramework.ChainPipeline.ChainDataflow;
+using System;
 
 namespace Module1;
 
@@ -27,5 +31,10 @@ public class ModuleInitializer1 : ModuleInitializer
         //services.AddScoped<ITest, MyTest>();
         services.AddScoped<IEventSubscriber, EventHandler>();
         services.AddScoped<IEventSubscriber, EventHandler1>();
+
+        services.AddChain<DataflowParameterA, DataflowResultA>(typeof(ChainMiddlewareA), typeof(ChainMiddlewareB), typeof(ChainMiddlewareC));
+
+        //  services.AddChain<DataflowParameterA, DataflowResultA>(typeof(ActivatorMiddlewareCreater)
+        //, typeof(ChainMiddlewareA), typeof(ChainMiddlewareB), typeof(ChainMiddlewareC));
     }
 }

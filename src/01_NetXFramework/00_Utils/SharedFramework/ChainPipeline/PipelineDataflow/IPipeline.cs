@@ -5,7 +5,6 @@
 /// 中间件的执行顺序和添加顺序保持一致
 /// </summary>
 public interface IPipeline<TParameter>
-    where TParameter : DataflowParameter
 {
     /// <summary>
     /// 添加需要执行的中间件

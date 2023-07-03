@@ -5,7 +5,6 @@
 /// </summary>
 /// <typeparam name="TParameter"></typeparam>
 public class Pipeline<TParameter> : PipelineBase<TParameter>, IPipeline<TParameter>
-    where TParameter : DataflowParameter
 {
     /// <summary>
     /// 同步管道实例
@@ -45,18 +44,35 @@ public class Pipeline<TParameter> : PipelineBase<TParameter>, IPipeline<TParamet
     /// <param name="parameter"></param>
     public void Execute(TParameter parameter)
     {
-        if (base._middlewareTypes.Count == 0)
-            return;
-        int index = 0;
-        Action<TParameter> action = null;
-        action = parameter =>
+        try
         {
-            var type = base._middlewareTypes[index++];
-            var middleware = _middlewareCreater.Create(type) as IPipelineMiddleware<TParameter>;
-            if (index == base._middlewareTypes.Count)
-                action = p => { };
-            middleware.Run(parameter, action);
-        };
-        action(parameter);
+            if (base._middlewareTypes.Count == 0)
+                return;
+            int index = 0;
+            Action<RequestContext<TParameter>> action = null;
+            action = parameter =>
+            {
+                try
+                {
+                    var type = base._middlewareTypes[index++];
+                    var middleware = _middlewareCreater.Create(type) as IPipelineMiddleware<TParameter>;
+                    if (index == base._middlewareTypes.Count)
+                        action = p => { };
+                    if (parameter.CancellationToken.IsCancellationRequested)
+                        throw new Exception("pipeline is canneled");
+                    if (null != middleware)
+                        middleware.Run(parameter, action);
+                }
+                catch (Exception ex)
+                {
+                    throw new ChainPipelineExcpetion(ex);
+                }
+            };
+            action(new RequestContext<TParameter>(parameter));
+        }
+        catch (Exception ex)
+        {
+            throw new ChainPipelineExcpetion(ex);
+        }
     }
 }
