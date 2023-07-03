@@ -2,7 +2,7 @@
   "Id": "10000000000000000000000000000002",
   "Name": "DatabaseSetupTest2",
   "Version": "1.0.0.0",
-  "Enabled": true,
+  "Enabled": false,
   "FileName": "DatabaseSetupTest2.dll",
-  "IsSharedAssemblyContext":true
+  "IsSharedAssemblyContext": true
 }

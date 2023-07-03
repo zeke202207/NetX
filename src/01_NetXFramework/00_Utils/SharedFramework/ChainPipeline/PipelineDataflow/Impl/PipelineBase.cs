@@ -5,7 +5,6 @@
 /// </summary>
 /// <typeparam name="TParameter"></typeparam>
 public abstract class PipelineBase<TParameter> : DataflowBase<IPipelineMiddleware<TParameter>>
-    where TParameter : DataflowParameter
 {
     /// <summary>
     /// 中间件构造器

@@ -13,6 +13,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\00_Utils\Common\NetX.Common.csproj" />
+    <ProjectReference Include="..\00_Utils\SharedFramework\ChainPipeline\NetX.SharedFramework.ChainPipeline.csproj" />
     <ProjectReference Include="..\02_Module\NetX.Module.csproj" />
     <ProjectReference Include="..\03_EventBus\NetX.EventBus.csproj" />
     <ProjectReference Include="..\04_DatabaseSetup\NetX.DatabaseSetup.csproj" />

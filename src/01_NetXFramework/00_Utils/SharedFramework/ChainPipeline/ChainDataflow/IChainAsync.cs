@@ -6,8 +6,7 @@
 /// <typeparam name="TParameter">The input type for the chain.</typeparam>
 /// <typeparam name="TResult">The return type of the chain.</typeparam>
 public interface IChainAsync<TParameter, TResult>
-        where TParameter : DataflowParameter
-        where TResult : DataflowResult
+    where TResult : new()
 {
     /// <summary>
     /// Chains a new middleware to the chain of responsibility.
@@ -33,5 +32,5 @@ public interface IChainAsync<TParameter, TResult>
     /// Executes the configured chain of responsibility.
     /// </summary>
     /// <param name="parameter"></param>
-    Task<TResult> ExecuteAsync(TParameter parameter);
+    Task<ReponseContext<TResult>> ExecuteAsync(TParameter parameter);
 }

@@ -6,8 +6,7 @@
 /// <typeparam name="TParameter"></typeparam>
 /// <typeparam name="TResult"></typeparam>
 public abstract class ChainBase<TParameter, TResult> : DataflowBase<IChainMiddleware<TParameter, TResult>>
-        where TParameter : DataflowParameter
-        where TResult : DataflowResult
+    where TResult : class, new()
 {
     /// <summary>
     /// 中间件构造器
@@ -26,9 +25,9 @@ public abstract class ChainBase<TParameter, TResult> : DataflowBase<IChainMiddle
     /// 默认结果
     /// </summary>
     /// <returns></returns>
-    protected virtual TResult DefaultResult()
+    protected virtual ReponseContext<TResult> DefaultResult()
     {
-        return Activator.CreateInstance(typeof(TResult)) as TResult;
+        return Activator.CreateInstance(typeof(ReponseContext<TResult>)) as ReponseContext<TResult>;
     }
 }
 

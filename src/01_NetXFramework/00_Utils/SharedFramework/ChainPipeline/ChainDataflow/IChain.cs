@@ -4,8 +4,7 @@
 /// 
 /// </summary>
 public interface IChain<TParameter, TResult>
-        where TParameter : DataflowParameter
-        where TResult : DataflowResult
+    where TResult : new()
 {
     /// <summary>
     /// Chains a new middleware to the chain of responsibility.
@@ -31,5 +30,5 @@ public interface IChain<TParameter, TResult>
     /// Executes the configured chain of responsibility.
     /// </summary>
     /// <param name="parameter"></param>
-    TResult Execute(TParameter parameter);
+    ReponseContext<TResult> Execute(TParameter parameter);
 }

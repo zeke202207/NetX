@@ -6,8 +6,7 @@
 /// <typeparam name="TParameter">The input type for the chain.</typeparam>
 /// <typeparam name="TResult">The return type of the chain.</typeparam>
 public class ChainAsync<TParameter, TResult> : ChainBase<TParameter, TResult>, IChainAsync<TParameter, TResult>
-    where TParameter : DataflowParameter
-    where TResult : DataflowResult
+    where TResult : class,new()
 {
     /// <summary>
     /// 
@@ -46,20 +45,42 @@ public class ChainAsync<TParameter, TResult> : ChainBase<TParameter, TResult>, I
     /// </summary>
     /// <param name="parameter"></param>
     /// <returns></returns>
-    public async Task<TResult> ExecuteAsync(TParameter parameter)
+    public async Task<ReponseContext<TResult>> ExecuteAsync(TParameter parameter)
     {
-        if (base._middlewareTypes.Count == 0)
-            return default(TResult);
-        int index = 0;
-        Func<TParameter, Task<TResult>> func = null;
-        func = async (param) =>
+        ReponseContext<TResult> result = new ReponseContext<TResult>();
+        try
         {
-            var type = base._middlewareTypes[index++];
-            var middleware = base._middlewareCreater.Create(type) as IChainMiddlewareAsync<TParameter, TResult>;
-            if (index == base._middlewareTypes.Count)
-                func = async p => await Task.FromResult(base.DefaultResult());
-            return await middleware.RunAsync(parameter, func);
-        };
-        return await func(parameter);
+            if (base._middlewareTypes.Count == 0)
+                return result;
+            int index = 0;
+            Func<RequestContext<TParameter>, Task<ReponseContext<TResult>>> func = null;
+            func = async (param) =>
+            {
+                try
+                {
+                    var type = base._middlewareTypes[index++];
+                    var middleware = base._middlewareCreater.Create(type) as IChainMiddlewareAsync<TParameter, TResult>;
+                    if (index == base._middlewareTypes.Count)
+                        func = async p => await Task.FromResult(base.DefaultResult());
+                    if (null != middleware)
+                        return await middleware.RunAsync(param, func);
+                    else
+                        throw new Exception("the middleware is null");
+                }
+                catch (Exception ex)
+                {
+                    result.Success = false;
+                    result.Ex.Add(new ChainPipelineExcpetion(ex));
+                    return result;
+                }
+            };
+            return await func(new RequestContext<TParameter>(parameter));
+        }
+        catch (Exception ex)
+        {
+            result.Success = false;
+            result.Ex.Add(new ChainPipelineExcpetion(ex));
+            return result;
+        }
     }
 }

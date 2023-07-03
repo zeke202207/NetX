@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\01_NetXFramework\00_Utils\SharedFramework\ChainPipeline\NetX.SharedFramework.ChainPipeline.csproj" />
     <ProjectReference Include="..\..\..\01_NetXFramework\02_Module\NetX.Module.csproj" />
     <ProjectReference Include="..\..\..\01_NetXFramework\03_EventBus\NetX.EventBus.csproj" />
     <ProjectReference Include="..\..\..\01_NetXFramework\06_Authentication\Authentication.Core\NetX.Authentication.Core.csproj" />

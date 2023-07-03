@@ -7,6 +7,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="modules\databasesetuptest1\**" />
+    <Compile Remove="modules\databasesetuptest2\**" />
+    <Compile Remove="modules\module2\**" />
+    <Content Remove="modules\databasesetuptest1\**" />
+    <Content Remove="modules\databasesetuptest2\**" />
+    <Content Remove="modules\module2\**" />
+    <EmbeddedResource Remove="modules\databasesetuptest1\**" />
+    <EmbeddedResource Remove="modules\databasesetuptest2\**" />
+    <EmbeddedResource Remove="modules\module2\**" />
+    <None Remove="modules\databasesetuptest1\**" />
+    <None Remove="modules\databasesetuptest2\**" />
+    <None Remove="modules\module2\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="..\..\01_NetXFramework\01_App\config\logging.json" Link="config\logging.json" />
     <Content Include="..\..\01_NetXFramework\01_App\config\netx.json" Link="config\netx.json" />
     <Content Include="..\..\01_NetXFramework\01_App\config\tenants.json" Link="config\tenants.json" />
@@ -23,14 +38,9 @@
     <None Update="modules\module1\ref\Newtonsoft.Json.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="modules\module2\ref\Newtonsoft.Json.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="modules\databasesetuptest1\ref\" />
-    <Folder Include="modules\databasesetuptest2\ref\" />
     <Folder Include="config\" />
   </ItemGroup>
 
