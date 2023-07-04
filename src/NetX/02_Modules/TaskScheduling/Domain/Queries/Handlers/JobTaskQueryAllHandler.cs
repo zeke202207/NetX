@@ -1,6 +1,9 @@
-﻿using Netx.Ddd.Domain;
+﻿using Dapper;
+using Netx.Ddd.Domain;
 using NetX.Common.Attributes;
 using NetX.TaskScheduling.Model;
+using Newtonsoft.Json;
+using Quartz.Util;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -21,51 +24,97 @@ namespace NetX.TaskScheduling.Domain
 
         public override async Task<IEnumerable<JobTaskModel>> Handle(JobTaskQueryAll request, CancellationToken cancellationToken)
         {
-            IEnumerable<sys_jobtask> jobtask = null;
-            if (string.IsNullOrWhiteSpace(request.JobName))
-                jobtask = await base._dbContext.QueryListAsync<sys_jobtask>(@$"SELECT * FROM sys_jobtask ORDER BY createtime DESC", null);
-            else
-                jobtask = await base._dbContext.QueryListAsync<sys_jobtask>(@$"SELECT * FROM sys_jobtask WHERE name LIKE CONCAT('%',@name,'%') ORDER BY createtime DESC", new { name = request.JobName });
-            List<JobTaskModel> results = new List<JobTaskModel>();
-            foreach (var item in jobtask)
+            string sql = @"SELECT 
+    j.id as Id,
+    j.name,
+    j.group,
+    j.jobtype,
+    j.datamap,
+    j.disallowconcurrentexecution,
+    j.enabled,
+    j.state,
+    j.createtime,
+    j.description,
+    t.id  as triggerid,
+    t.name as triggername,
+    t.cron,
+    t.triggertype,
+    t.startat,
+    t.endat,
+    t.startnow,
+    t.priority
+FROM
+    sys_jobtask j
+        LEFT JOIN
+    sys_jobtasktrigger t 
+        ON 
+    t.jobtaskid = j.id 
+WHERE 1=1 ";
+            var param = new DynamicParameters();
+            if (request != null && !request.JobName.IsNullOrWhiteSpace())
             {
-                var jobtaskModel = new JobTaskModel()
-                {
-                    Id = item.Id,
-                    Name = item.name,
-                    Description = item.description,
-                    DisAllowConcurrentExecution = item.disallowconcurrentexecution,
-                    Group = item.group,
-                    JobType = item.jobtype,
-                    Enabled = Convert.ToBoolean(item.enabled),
-                    State = (JobTaskState)item.state,
-                };
-                if (!string.IsNullOrWhiteSpace(item.datamap))
-                    jobtaskModel.JobDataMap = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, string>>(item.datamap.Replace(@"\", ""));
-                var trigger = await base._dbContext.QuerySingleAsync<sys_jobtasktrigger>(@"SELECT * FROM sys_jobtasktrigger WHERE jobtaskid =@jobtaskid", new { jobtaskid = item.Id });
-                if (null != trigger)
-                    jobtaskModel.Trigger = GetTriggerModel(trigger);
-                results.Add(jobtaskModel);
+                sql += @" j.name LIKE CONCAT('%',@name,'%') ";
+                param.Add("name", request.JobName);
             }
-            return results;
+            sql += @" ORDER BY j.createtime DESC ";
+            var jobdetails = await base._dbContext.QueryListAsync<jobinfo>(sql, param);
+            return jobdetails?.Select(p => new JobTaskModel()
+            {
+                Id = p.Id,
+                Description = p.description,
+                DisAllowConcurrentExecution = p.disallowconcurrentexecution,
+                Enabled = Convert.ToBoolean(p.enabled),
+                Group = p.group,
+                JobDataMap = p.datamap.IsNullOrWhiteSpace()? new Dictionary<string, string>() : JsonConvert.DeserializeObject<Dictionary<string, string>>(p.datamap.Replace(@"\", "")),
+                JobType = p.jobtype,
+                Name = p.name,
+                State = (JobTaskState)p.state,
+                Trigger = new CronJobTaskTriggerModel()
+                {
+                    Name = p.triggername,
+                    CronExpression = p.cron,
+                    Description = p.description,
+                    EndAt = p.endat,
+                    Priority = p.priority,
+                    StartAt = p.startat,
+                    StartNow = p.startnow,
+                }
+            });
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        private CronJobTaskTriggerModel GetTriggerModel(sys_jobtasktrigger trigger)
+        private class jobinfo : sys_jobtask
         {
-            return new CronJobTaskTriggerModel()
-            {
-                CronExpression = trigger.cron,
-                Description = trigger.description,
-                StartAt = trigger.startat,
-                EndAt = trigger.endat,
-                Priority = trigger.priority,
-                Name = trigger.name,
-                StartNow = trigger.startnow
-            };
+            public string triggerid { get; set; }
+            /// <summary>
+            /// 
+            /// </summary>
+            public string triggername { get; set; }
+            /// <summary>
+            /// 
+            /// </summary>
+            public DateTime? startat { get; set; }
+            /// <summary>
+            /// 
+            /// </summary>
+            public DateTime? endat { get; set; }
+            /// <summary>
+            /// 
+            /// </summary>
+            public bool startnow { get; set; }
+            /// <summary>
+            /// 
+            /// </summary>
+            public int priority { get; set; }
+
+            public string cron { get; set; }
+
+            /// <summary>
+            /// 触发器类型
+            /// 0：cron
+            /// 1：simple
+            /// 2：。。。
+            /// </summary>
+            public int triggertype { get; set; }
         }
     }
 }

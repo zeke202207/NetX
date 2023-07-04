@@ -1,5 +1,6 @@
 ﻿using FluentMigrator;
 using NetX.DatabaseSetup;
+using NetX.RBAC.Models;
 
 namespace NetX.RBAC.DatabaseSetup.CreateTable;
 
@@ -25,11 +26,15 @@ public class UserDeptTable : CreateTableMigration
         try
         {
             Create.Table(_tableName)
-                    .WithColumn("userid").AsString(50).PrimaryKey()
+                    .WithColumn(nameof(sys_user_dept.userid).ToLower()).AsString(50).PrimaryKey()
                     //.ForeignKey($"fk_{DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYSUSERDEPT}_{DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYSUSER}", DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYSUSER, "id")
-                    .WithColumn("deptid").AsString(50).PrimaryKey()
+                    .WithColumn(nameof(sys_user_dept.deptid).ToLower()).AsString(50).PrimaryKey()
                     //.ForeignKey($"fk_{DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYSUSERDEPT}_{DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYSDEPT}", DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYSDEPT, "id")
                     ;
+            Create.Index("idx_userdept")
+                .OnTable(_tableName)
+                .OnColumn("userid").Ascending()
+                .OnColumn("deptid").Ascending();
         }
         catch (Exception ex)
         {

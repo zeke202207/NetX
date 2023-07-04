@@ -1,5 +1,7 @@
 ﻿using FluentMigrator;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using NetX.DatabaseSetup;
+using NetX.RBAC.Models;
 
 namespace NetX.RBAC.DatabaseSetup.CreateTable;
 
@@ -26,13 +28,13 @@ public class ApiTable : CreateTableMigration
         try
         {
             Create.Table(_tableName)
-                   .WithColumn("id").AsString(50).PrimaryKey()
-                   .WithColumn("path").AsString(255).NotNullable()
-                   .WithColumn("group").AsString(255).NotNullable()
-                   .WithColumn("method").AsString(50).NotNullable()
-                   .WithColumn("issystem").AsBoolean().WithDefaultValue(false).WithColumnDescription("是否是系统字段，系统字段将不允许被操作")
-                   .WithColumn("createtime").AsDateTime().WithDefaultValue(DateTime.Now)
-                   .WithColumn("description").AsString(500).Nullable();
+                   .WithColumn(nameof(sys_api.Id).ToLower()).AsString(50).PrimaryKey()
+                   .WithColumn(nameof(sys_api.path).ToLower()).AsString(255).NotNullable()
+                   .WithColumn(nameof(sys_api.group).ToLower()).AsString(255).NotNullable()
+                   .WithColumn(nameof(sys_api.method).ToLower()).AsString(50).NotNullable()
+                   .WithColumn(nameof(sys_api.issystem).ToLower()).AsBoolean().WithDefaultValue(false).WithColumnDescription("是否是系统字段，系统字段将不允许被操作")
+                   .WithColumn(nameof(sys_api.createtime).ToLower()).AsDateTime().WithDefaultValue(DateTime.Now)
+                   .WithColumn(nameof(sys_api.description).ToLower()).AsString(500).Nullable();
         }
         catch (Exception ex)
         {

@@ -30,7 +30,18 @@ public class RolePagerListQueryHandler : DomainQueryHandler<RolePagerListQuery, 
 
     private async Task<List<RoleModel>> GetList(RolePagerListQuery request)
     {
-        string sql = @"SELECT * FROM sys_role where 1 =1";
+        string sql = @"SELECT 
+    r.*,
+    t.menuids
+FROM
+    sys_role r
+        LEFT JOIN
+    (SELECT 
+    m.roleid, GROUP_CONCAT(m.menuid) AS menuids
+FROM
+    sys_role_menu m
+GROUP BY m.roleid) t
+on t.roleid = r.id  where 1 =1 ";
         var param = new DynamicParameters();
         if (!string.IsNullOrWhiteSpace(request.Status))
         {
@@ -43,19 +54,19 @@ public class RolePagerListQueryHandler : DomainQueryHandler<RolePagerListQuery, 
             param.Add("rolename", request.RoleName);
         }
         sql += sql.AppendMysqlPagerSql(request.CurrentPage, request.PageSize);
-        var roleEntities = await base._dbContext.QueryListAsync<sys_role>(sql, param);
-        List<(sys_role role, List<string> menuids)> result = new List<(sys_role role, List<string> menuids)>();
-        foreach (var roleEntity in roleEntities)
+        var roleEntities = await base._dbContext.QueryListAsync<rolemenuids>(sql, param);
+        return roleEntities.ToList().Select(p => new RoleModel()
         {
-            var sqlMenuIds = $@"SELECT  m.id FROM sys_role_menu rm
-                                    LEFT JOIN sys_menu m ON m.id = rm.menuid
-                             WHERE
-                                rm.roleid = @roleid";
-            var menuIds = await base._dbContext.QueryListAsync<string>(sqlMenuIds, new { roleid = roleEntity.Id });
-
-            result.Add((role: roleEntity, menuids: menuIds.ToList()));
-        }
-        return this._mapper.Map<List<RoleModel>>(result);
+            Id = p.Id,
+            ApiCheck = p.apicheck.ToString(),
+            CheckMenu = new CheckMenu() { Checked = p.menuids?.Split(",").ToList(), HalfChecked = new List<string>() },
+            CreateTime = p.createtime,
+            IsSystem = p.issystem,
+            Remark = p.remark,
+            RoleName = p.rolename,
+            Status = p.status.ToString(),
+            Menus = p.menuids?.Split(",").ToList()
+        }).ToList();
     }
 
     private async Task<int> GetCount(RolePagerListQuery request)
@@ -73,6 +84,11 @@ public class RolePagerListQueryHandler : DomainQueryHandler<RolePagerListQuery, 
             param.Add("rolename", request.RoleName);
         }
         return await _dbContext.ExecuteScalarAsync<int>(sql, param);
+    }
+
+    private class rolemenuids: sys_role
+    {
+        public string menuids { get; set; }
     }
 }
 

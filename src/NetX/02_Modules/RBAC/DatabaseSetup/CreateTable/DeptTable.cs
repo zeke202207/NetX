@@ -1,5 +1,6 @@
 ﻿using FluentMigrator;
 using NetX.DatabaseSetup;
+using NetX.RBAC.Models;
 
 namespace NetX.RBAC.DatabaseSetup.CreateTable;
 
@@ -25,13 +26,13 @@ public class DeptTable : CreateTableMigration
         try
         {
             Create.Table(_tableName)
-                   .WithColumn("id").AsString(50).PrimaryKey()
-                   .WithColumn("parentid").AsString(50).NotNullable()
-                   .WithColumn("deptname").AsString(255)
-                   .WithColumn("orderno").AsInt32()
-                   .WithColumn("createtime").AsDate().WithDefaultValue(DateTime.Now)
-                   .WithColumn("status").AsInt16().Nullable().WithDefaultValue(1)
-                   .WithColumn("remark").AsString(500).Nullable();
+                   .WithColumn(nameof(sys_dept.Id).ToLower()).AsString(50).PrimaryKey()
+                   .WithColumn(nameof(sys_dept.parentid).ToLower()).AsString(50).NotNullable()
+                   .WithColumn(nameof(sys_dept.deptname).ToLower()).AsString(255)
+                   .WithColumn(nameof(sys_dept.orderno).ToLower()).AsInt32()
+                   .WithColumn(nameof(sys_dept.createtime).ToLower()).AsDate().WithDefaultValue(DateTime.Now)
+                   .WithColumn(nameof(sys_dept.status).ToLower()).AsInt16().Nullable().WithDefaultValue(1)
+                   .WithColumn(nameof(sys_dept.remark).ToLower()).AsString(500).Nullable();
         }
         catch (Exception ex)
         {

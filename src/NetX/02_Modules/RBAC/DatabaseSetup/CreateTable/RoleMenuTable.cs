@@ -1,5 +1,6 @@
 ﻿using FluentMigrator;
 using NetX.DatabaseSetup;
+using NetX.RBAC.Models;
 
 namespace NetX.RBAC.DatabaseSetup.CreateTable;
 
@@ -25,9 +26,9 @@ public class RoleMenuTable : CreateTableMigration
         try
         {
             Create.Table(_tableName)
-                   .WithColumn("roleid").AsString(50).PrimaryKey()
+                   .WithColumn(nameof(sys_role_menu.roleid).ToLower()).AsString(50).PrimaryKey()
                    //.ForeignKey($"fk_{DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYSROLEMENU}_{DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYSROLE}", DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYSROLE, "id")
-                   .WithColumn("menuid").AsString(50).PrimaryKey()
+                   .WithColumn(nameof(sys_role_menu.menuid).ToLower()).AsString(50).PrimaryKey()
                    //.ForeignKey($"fk_{DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYSROLEMENU}_{DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYSMENU}", DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYSMENU, "id")
                    ;
         }
