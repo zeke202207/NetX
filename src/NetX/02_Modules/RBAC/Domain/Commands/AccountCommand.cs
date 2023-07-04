@@ -1,4 +1,5 @@
 ﻿using Netx.Ddd.Domain;
+using NetX.RBAC.Models.Dtos.RequestDto;
 
 namespace NetX.RBAC.Domain;
 
@@ -57,5 +58,15 @@ public record AccountRemoveCommand : DomainCommand
         : base(Guid.NewGuid(), DateTime.Now)
     {
         Id = id;
+    }
+}
+
+public record AccountModifyAvatarCommand: DomainCommand
+{
+    public AvatarRequestModel Avatar { get; set; }
+
+    public  AccountModifyAvatarCommand(AvatarRequestModel avatar)
+    {
+        Avatar = avatar;
     }
 }

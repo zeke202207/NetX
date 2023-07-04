@@ -150,3 +150,27 @@ public class AccountModifyPwdCommandHandler : DomainCommandHandler<AccountModify
         return await _uow.SaveChangesAsync();
     }
 }
+
+[Scoped]
+public class AccountModifyAvatarCommandHandler : DomainCommandHandler<AccountModifyAvatarCommand>
+{
+    private readonly IUnitOfWork _uow;
+
+    public AccountModifyAvatarCommandHandler(
+        IUnitOfWork uow)
+    {
+        _uow = uow;
+    }
+
+    public override async Task<bool> Handle(AccountModifyAvatarCommand request, CancellationToken cancellationToken)
+    {
+        var user = await _uow.GetRepository<sys_user, string>().AsQueryable()
+            .Where(p => p.Id.ToLower().Equals(request.Avatar.Id))
+            .FirstOrDefaultAsync();
+        if (null == user)
+            throw new RbacException("用户不存在", (int)ErrorStatusCode.UserExist);
+        user.avatar = request.Avatar.Url;
+        _uow.GetRepository<sys_user, string>().Update(user);
+        return await _uow.SaveChangesAsync();
+    }
+}

@@ -7,6 +7,7 @@ using NetX.Common.ModuleInfrastructure;
 using NetX.RBAC.Domain;
 using NetX.RBAC.Domain.Queries;
 using NetX.RBAC.Models;
+using NetX.RBAC.Models.Dtos.RequestDto;
 using NetX.Swagger;
 using NetX.Tenants;
 
@@ -156,6 +157,15 @@ public class AccountController : RBACBaseController
     public async Task<ResultModel> ChangePassword(ChangePwdRequestModel model)
     {
         await _accountCommand.Send<AccountModifyPwdCommand>(new AccountModifyPwdCommand(TenantContext.CurrentTenant.Principal?.UserId ?? string.Empty, model.OldPassword, model.NewPassword));
+        return true.ToSuccessResultModel();
+    }
+
+    [Audited]
+    [ApiActionDescription("更新头像")]
+    [HttpPost]
+    public async Task<ResultModel> ChangeAvatar(AvatarRequestModel model)
+    {
+        await _accountCommand.Send<AccountModifyAvatarCommand>(new AccountModifyAvatarCommand(model));
         return true.ToSuccessResultModel();
     }
 }
