@@ -1,5 +1,6 @@
 ﻿using FluentMigrator;
 using NetX.DatabaseSetup;
+using NetX.RBAC.Models;
 
 namespace NetX.RBAC.DatabaseSetup.CreateTable;
 
@@ -25,13 +26,13 @@ public class RoleTable : CreateTableMigration
         try
         {
             Create.Table(_tableName)
-                   .WithColumn("id").AsString(50).PrimaryKey()
-                   .WithColumn("rolename").AsString(50).NotNullable()
-                   .WithColumn("status").AsInt16().Nullable().WithDefaultValue(1)
-                   .WithColumn("apicheck").AsInt16().Nullable().WithDefaultValue(0)
-                   .WithColumn("createtime").AsDateTime().WithDefaultValue(DateTime.Now)
-                   .WithColumn("issystem").AsBoolean().WithDefaultValue(false).WithColumnDescription("是否是系统字段，系统字段将不允许被操作")
-                   .WithColumn("remark").AsString(500).Nullable();
+                   .WithColumn(nameof(sys_role.Id).ToLower()).AsString(50).PrimaryKey()
+                   .WithColumn(nameof(sys_role.rolename).ToLower()).AsString(50).NotNullable()
+                   .WithColumn(nameof(sys_role.status).ToLower()).AsInt16().Nullable().WithDefaultValue(1)
+                   .WithColumn(nameof(sys_role.apicheck).ToLower()).AsInt16().Nullable().WithDefaultValue(0)
+                   .WithColumn(nameof(sys_role.createtime).ToLower()).AsDateTime().WithDefaultValue(DateTime.Now)
+                   .WithColumn(nameof(sys_role.issystem).ToLower()).AsBoolean().WithDefaultValue(false).WithColumnDescription("是否是系统字段，系统字段将不允许被操作")
+                   .WithColumn(nameof(sys_role.remark).ToLower()).AsString(500).Nullable();
         }
         catch (Exception ex)
         {

@@ -68,5 +68,7 @@ namespace NetX.Audit.Models.Entity
         /// 自定义数据
         /// </summary>
         public string customdata { get; set; }
+
+        public string desc { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using FluentMigrator;
 using NetX.DatabaseSetup;
+using NetX.RBAC.Models;
 
 namespace NetX.RBAC.DatabaseSetup.CreateTable;
 
@@ -25,15 +26,15 @@ public class UserTable : CreateTableMigration
         try
         {
             Create.Table(_tableName)
-                    .WithColumn("id").AsString(50).PrimaryKey()
-                    .WithColumn("username").AsString(50).NotNullable()
-                    .WithColumn("password").AsString(50).NotNullable()
-                    .WithColumn("nickname").AsString(255).Nullable()
-                    .WithColumn("avatar").AsString(500).Nullable()
-                    .WithColumn("status").AsInt16().Nullable().WithDefaultValue(1)
-                    .WithColumn("email").AsString(255).Nullable()
-                    .WithColumn("issystem").AsBoolean().WithDefaultValue(false).WithColumnDescription("是否是系统字段，系统字段将不允许被操作")
-                    .WithColumn("remark").AsString(500).Nullable();
+                    .WithColumn(nameof(sys_user.Id).ToLower()).AsString(50).PrimaryKey()
+                    .WithColumn(nameof(sys_user.username).ToLower()).AsString(50).NotNullable()
+                    .WithColumn(nameof(sys_user.password).ToLower()).AsString(50).NotNullable()
+                    .WithColumn(nameof(sys_user.nickname).ToLower()).AsString(255).Nullable()
+                    .WithColumn(nameof(sys_user.avatar).ToLower()).AsString(500).Nullable()
+                    .WithColumn(nameof(sys_user.status).ToLower()).AsInt16().Nullable().WithDefaultValue(1)
+                    .WithColumn(nameof(sys_user.email).ToLower()).AsString(255).Nullable()
+                    .WithColumn(nameof(sys_user.issystem).ToLower()).AsBoolean().WithDefaultValue(false).WithColumnDescription("是否是系统字段，系统字段将不允许被操作")
+                    .WithColumn(nameof(sys_user.remark).ToLower()).AsString(500).Nullable();
             Create.Index("idx_username")
                 .OnTable(_tableName)
                 .OnColumn("username");
