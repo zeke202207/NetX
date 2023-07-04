@@ -32,8 +32,11 @@ public class UserTable : CreateTableMigration
                     .WithColumn("avatar").AsString(500).Nullable()
                     .WithColumn("status").AsInt16().Nullable().WithDefaultValue(1)
                     .WithColumn("email").AsString(255).Nullable()
-                   .WithColumn("issystem").AsBoolean().WithDefaultValue(false).WithColumnDescription("是否是系统字段，系统字段将不允许被操作")
+                    .WithColumn("issystem").AsBoolean().WithDefaultValue(false).WithColumnDescription("是否是系统字段，系统字段将不允许被操作")
                     .WithColumn("remark").AsString(500).Nullable();
+            Create.Index("idx_username")
+                .OnTable(_tableName)
+                .OnColumn("username");
         }
         catch (Exception ex)
         {

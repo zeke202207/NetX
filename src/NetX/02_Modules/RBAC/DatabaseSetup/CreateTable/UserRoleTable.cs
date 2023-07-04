@@ -1,4 +1,5 @@
 ﻿using FluentMigrator;
+using FluentMigrator.Postgres;
 using NetX.DatabaseSetup;
 
 namespace NetX.RBAC.DatabaseSetup.CreateTable;
@@ -30,6 +31,10 @@ public class UserRoleTable : CreateTableMigration
                    .WithColumn("roleid").AsString(50).PrimaryKey()
                    //.ForeignKey($"fk_{DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYSUSERROLE}_{DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYSROLE}", DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYSROLE, "id")
                    ;
+            Create.Index("idx_userrole")
+                .OnTable(_tableName)
+                .OnColumn("userid").Ascending()
+                .OnColumn("roleid").Ascending();
         }
         catch (Exception ex)
         {

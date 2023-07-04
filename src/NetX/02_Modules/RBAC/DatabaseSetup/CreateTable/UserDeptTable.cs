@@ -30,6 +30,10 @@ public class UserDeptTable : CreateTableMigration
                     .WithColumn("deptid").AsString(50).PrimaryKey()
                     //.ForeignKey($"fk_{DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYSUSERDEPT}_{DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYSDEPT}", DatabaseSetupConst.C_DATABASESETUP_TABLENAME_SYSDEPT, "id")
                     ;
+            Create.Index("idx_userdept")
+                .OnTable(_tableName)
+                .OnColumn("userid").Ascending()
+                .OnColumn("deptid").Ascending();
         }
         catch (Exception ex)
         {
