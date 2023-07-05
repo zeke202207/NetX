@@ -62,7 +62,7 @@ namespace NetX.TaskScheduling.DatabaseSetup.InitData
                     id = "60000000000000000000000000000003",
                     path = "/api/jobtask/removejob",
                     group = "jobtask",
-                    method = "POST",
+                    method = "DELETE",
                     description = "删除任务",
                     issystem = true,
                 })

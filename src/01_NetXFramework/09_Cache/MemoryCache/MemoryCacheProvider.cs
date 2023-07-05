@@ -18,6 +18,8 @@ public class MemoryCacheProvider : ICacheProvider
 {
     private readonly IMemoryCache _memoryCache;
 
+    public string CacheTypeKey => InMemoryCacheConstEnum.C_CACHE_TYPE_KEY;
+
     /// <summary>
     /// 内存缓存器实例
     /// </summary>

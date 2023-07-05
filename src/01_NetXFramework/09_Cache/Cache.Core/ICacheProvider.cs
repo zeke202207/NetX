@@ -9,6 +9,8 @@ namespace NetX.Cache.Core;
 /// </summary>
 public interface ICacheProvider
 {
+    string CacheTypeKey { get; }
+
     /// <summary>
     /// 获取
     /// </summary>

@@ -34,4 +34,8 @@ public class ClaimModel
     /// </summary>
     [ClaimModelAttribute("roleid")]
     public string? RoleId { get; set; }
+
+    [ClaimModelAttribute("deptid")]
+
+    public string? DeptId { get; set; }
 }

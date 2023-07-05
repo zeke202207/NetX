@@ -58,7 +58,7 @@ public class PermissionValidateHandler : IPermissionValidateHandler
         var cacheKey = roleId.ToRolePermissionCacheKey();
         //仅进行controller和action的模糊匹配
         //var router = context.Request.Path.ToString().ToLower();
-        var router = $"{routeValues["controller"]}/{routeValues["action"]}";
+        var router = new PermissionCacheApiModel($"{routeValues["controller"]}/{routeValues["action"]}", context.Request.Method);
         if (await _cacheManager.ExistsAsync(cacheKey))
             return await GetFromeCache(cacheKey, router);
         else
@@ -71,7 +71,7 @@ public class PermissionValidateHandler : IPermissionValidateHandler
     /// <param name="cacheKey">缓存key</param>
     /// <param name="router">路由</param>
     /// <returns></returns>
-    private async Task<bool> GetFromeCache(string cacheKey, string router)
+    private async Task<bool> GetFromeCache(string cacheKey, PermissionCacheApiModel apiCacheModel)
     {
         var model = await _cacheManager.GetAsync(cacheKey);
         if (null == model)
@@ -79,7 +79,7 @@ public class PermissionValidateHandler : IPermissionValidateHandler
             await _cacheManager.RemoveAsync(cacheKey);
             return false;
         }
-        return Check(model, router);
+        return Check(model, apiCacheModel);
     }
 
     /// <summary>
@@ -89,7 +89,7 @@ public class PermissionValidateHandler : IPermissionValidateHandler
     /// <param name="userId">用户唯一标识</param>
     /// <param name="router">路由</param>
     /// <returns></returns>
-    private async Task<bool> GetFromeDababase(string cacheKey, string roleId, string router)
+    private async Task<bool> GetFromeDababase(string cacheKey, string roleId, PermissionCacheApiModel apiCacheModel)
     {
         //0.验证是否需要后台checkapi
         var roleModelResult = await _roleQuery.Send<RoleByIdQuery, ResultModel>(new RoleByIdQuery(roleId)) as ResultModel<RoleModel>;
@@ -110,11 +110,11 @@ public class PermissionValidateHandler : IPermissionValidateHandler
         if (null == result || result.Code != Common.ResultEnum.SUCCESS)
             return false;
         var resultList = result as ResultModel<IEnumerable<ApiModel>>;
-        cacheModel.Apis.AddRange(resultList.Result.Select(p=>p.Path));
+        cacheModel.ApiCaches.AddRange(resultList.Result.Select(p => new PermissionCacheApiModel(p.Path, p.Method)));
         //2.添加缓存
         await _cacheManager.SetAsync(cacheKey, cacheModel);
         //3.checked
-        return Check(cacheModel, router);
+        return Check(cacheModel, apiCacheModel);
     }
 
     /// <summary>
@@ -123,11 +123,11 @@ public class PermissionValidateHandler : IPermissionValidateHandler
     /// <param name="permission">权限实体</param>
     /// <param name="router">路由</param>
     /// <returns></returns>
-    private bool Check(PermissionCacheModel permission, string router)
+    private bool Check(PermissionCacheModel permission, PermissionCacheApiModel apiModel)
     {
         if (!permission.CheckApi)
             return true;
         //TODO：性能优化
-        return permission.Apis.Contains($"{router}", new ApiEquelCompare());
+        return permission.ApiCaches.Contains(apiModel, new ApiEquelCompare());
     }
 }

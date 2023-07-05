@@ -21,7 +21,7 @@ namespace NetX.RBAC.Models
         /// <summary>
         /// 权限集合
         /// </summary>
-        public List<string> Apis { get; set; }
+        public List<PermissionCacheApiModel> ApiCaches { get; set; }
 
         /// <summary>
         /// 数据缓存的时间
@@ -39,7 +39,9 @@ namespace NetX.RBAC.Models
         internal PermissionCacheModel()
         {
             CacheTime = DateTime.Now;
-            Apis = new List<string>();
+            ApiCaches = new List<PermissionCacheApiModel>();
         }
     }
+
+    public sealed record PermissionCacheApiModel(string Path, string Method);
 }

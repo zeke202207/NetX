@@ -28,7 +28,7 @@ namespace NetX.Audit.DatabaseSetup
                        .WithColumn(nameof(sys_log_audit.clientname).ToLower()).AsString(500).Nullable()
                        .WithColumn(nameof(sys_log_audit.clientipaddress).ToLower()).AsString().Nullable()
                        .WithColumn(nameof(sys_log_audit.executionduration).ToLower()).AsInt32().Nullable()
-                       .WithColumn(nameof(sys_log_audit.executiontime).ToLower()).AsDate().Nullable()
+                       .WithColumn(nameof(sys_log_audit.executiontime).ToLower()).AsDateTime2().Nullable()
                        .WithColumn(nameof(sys_log_audit.returnvalue).ToLower()).AsCustom("TEXT").Nullable()
                        .WithColumn(nameof(sys_log_audit.exception).ToLower()).AsCustom("TEXT").Nullable()
                        .WithColumn(nameof(sys_log_audit.methodname).ToLower()).AsString(500).Nullable()

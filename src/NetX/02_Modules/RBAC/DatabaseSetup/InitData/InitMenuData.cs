@@ -135,7 +135,7 @@ public class InitMenuData : InitDataMigration
                     meta = "{\"ignoreKeepAlive\":false,\"currentActiveMenu\":null,\"KeepAlive\":true,\"HideMenu\":true,\"Title\":\"个人设置\",\"HideBreadcrumb\":true,\"Icon\":\"ant-design:user-outlined\"}",
                     icon = "ant-design:user-outlined",
                     type = (int)MenuType.Menu,
-                    permission = "",
+                    permission = "persionsetting",
                     orderno = 6,
                     issystem = true,
                 });

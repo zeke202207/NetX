@@ -93,7 +93,7 @@ public class JobTaskController : BaseController
     /// <param name="requestDto"></param>
     /// <returns></returns>
     [ApiActionDescription("删除任务")]
-    [HttpPost]
+    [HttpDelete]
     [Audited]
     public async Task<ResultModel> RemoveJob(KeyParam key)
     {

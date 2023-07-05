@@ -17,6 +17,10 @@ public class UserListModel : UserModel
     /// </summary>
     [JsonProperty("rolename")]
     public string? RoleName { get; set; }
+
+    [JsonProperty("rolestatus")]
+    public string RoleStatus { get; set; }
+
     /// <summary>
     /// 
     /// </summary>

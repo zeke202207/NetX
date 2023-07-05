@@ -38,7 +38,7 @@ namespace NetX.TaskScheduling.DatabaseSetup.InitData
                      icon = "ant-design:account-book-outlined",
                      type = 1,// (int)MenuType.Menu,
                      permission = "",
-                     orderno = 2,
+                     orderno = 3,
                      issystem = true,
                  });
             }

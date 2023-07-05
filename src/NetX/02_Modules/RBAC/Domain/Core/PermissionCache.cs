@@ -1,6 +1,7 @@
 ﻿using NetX.Cache.Core;
 using NetX.Common.Attributes;
 using NetX.DatabaseSetup;
+using NetX.InMemoryCache;
 using NetX.RBAC.Models;
 using System;
 using System.Collections.Generic;
@@ -16,9 +17,9 @@ namespace NetX.RBAC.Domain
     {
         private readonly ICacheProvider _cache;
 
-        public PermissionCache(ICacheProvider cache) 
+        public PermissionCache(Func<string, ICacheProvider> funcFactory) 
         { 
-            _cache = cache;
+            _cache = funcFactory(InMemoryCacheConstEnum.C_CACHE_TYPE_KEY);
         }
 
         public async Task<bool> ExistsAsync(string key)

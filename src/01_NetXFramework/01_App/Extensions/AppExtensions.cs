@@ -33,7 +33,8 @@ internal static class AppExtensions
             ?.DefinedTypes.Select(p => p.AsType());
         if (null != definedTypes)
             AddCacheKey(list, ModuleSetupConst.C_SERVERHOST_MODULE_ID, ModuleType.FrameworkModule, definedTypes.ToArray());
-        services.AddInMemoryCache(() => list);
+        services.AddCacheProvider(() => list);
+        services.AddInMemoryCache();
     }
 
     /// <summary>

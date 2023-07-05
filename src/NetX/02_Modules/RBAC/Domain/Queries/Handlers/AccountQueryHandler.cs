@@ -7,6 +7,7 @@ using NetX.Common;
 using NetX.Common.Attributes;
 using NetX.Common.ModuleInfrastructure;
 using NetX.RBAC.Models;
+using NetX.RBAC.Models.Entity.EntityCombination;
 
 namespace NetX.RBAC.Domain.Queries;
 
@@ -28,32 +29,49 @@ public class LoginQueryHandler : DomainQueryHandler<LoginQuery, ResultModel>
         _mapper = mapper;
     }
 
+    /// <summary>
+    /// 登录处理
+    /// </summary>
+    /// <param name="request"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     public override async Task<ResultModel> Handle(LoginQuery request, CancellationToken cancellationToken)
     {
         //1. 数据库查询账号密码
-        var user = await base._dbContext.QuerySingleAsync<sys_user>($"SELECT * FROM sys_user WHERE username =@username", new { username = request.UserName });
+        var user = await base._dbContext.QuerySingleAsync<sys_user_roleid_deptid>(@"
+SELECT 
+    u.*,
+    r.roleid as roleid,
+    d.deptid as deptid
+FROM
+    sys_user u
+        LEFT JOIN
+    sys_user_role r ON r.userid = u.id
+        LEFT JOIN
+    sys_user_dept d ON d.userid = u.id 
+WHERE u.username =@username", new { username = request.UserName });
         if (user == null || !_encryption.Encryption(request.Password).ToUpper().Equals(user.password.ToUpper()))
             return "用户名或密码错误".ToErrorResultModel<ResultModel>();
+        if (((Status)user.status) == Status.Disabled)
+            return "账号已被禁用".ToErrorResultModel<ResultModel>();
         //2. 生成Token
-        var userInfo = this._mapper.Map<UserModel>(user);
-        var userRoleId = await GetRoleId(userInfo.Id);
-        //2. 获取token
         string token = await GetToken(new ClaimModel()
         {
-            UserId = userInfo.Id,
-            LoginName = userInfo.UserName,
-            DisplayName = userInfo.NickName,
-            RoleId = userRoleId
+            UserId = user.Id,
+            LoginName = user.username,
+            DisplayName = user.nickname,
+            RoleId = user.roleid,
+            DeptId = user.deptid
         });
         if (string.IsNullOrWhiteSpace(token))
             return "获取token失败".ToErrorResultModel<ResultModel>();
         return new LoginResult()
         {
-            UserId = userInfo.Id,
-            UserName = userInfo.UserName,
-            RealName = userInfo.NickName,
+            UserId = user.Id,
+            UserName = user.username,
+            RealName = user.nickname,
             Token = token,
-            Desc = userInfo.Remark
+            Desc = user.remark
         }.ToSuccessResultModel();
     }
 
@@ -68,17 +86,6 @@ public class LoginQueryHandler : DomainQueryHandler<LoginQuery, ResultModel>
         if (null != result)
             return await Task.FromResult(result.AccessToken);
         return await Task.FromResult(string.Empty);
-    }
-
-    /// <summary>
-    /// 根据用户Id获取角色id
-    /// </summary>
-    /// <param name="userId">用户id</param>
-    /// <returns></returns>
-    private async Task<string> GetRoleId(string userId)
-    {
-        var userRole = await base._dbContext.QuerySingleAsync<sys_user_role>($"SELECT * FROM sys_user_role where userid=@userid;", new { userid = userId });
-        return userRole?.roleid;
     }
 }
 
@@ -123,7 +130,7 @@ public class AccountListQueryHandler : DomainQueryHandler<AccountListQuery, Resu
 
     private async Task<IEnumerable<UserListModel>> GetList(AccountListQuery request)
     {
-        string sql = @"SELECT u.* ,r.id as roleid,r.rolename,d.id as deptid,d.deptname FROM sys_user u
+        string sql = @"SELECT u.* ,r.id as roleid,r.rolename, r.status as rolestatus,d.id as deptid,d.deptname FROM sys_user u
                         left join sys_user_role ur on ur.userid = u.id
                         left join sys_user_dept ud on ud.userid = u.id
                         left join sys_role r on r.id = ur.roleid
