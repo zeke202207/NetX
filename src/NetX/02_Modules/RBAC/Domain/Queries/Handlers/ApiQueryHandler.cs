@@ -36,6 +36,7 @@ public class ApiPagerListQueryHandler : DomainQueryHandler<ApiPagerListQuery, Re
             sql += " AND `group` LIKE CONCAT('%',@group,'%')";
             param.Add("group", request.Group);
         }
+        sql += " order by createtime DESC,`group` ASC ";
         sql += sql.AppendMysqlPagerSql(request.CurrentPage, request.PageSize);
         var result = await _dbContext.QueryListAsync<sys_api>(sql, param);
         return _mapper.Map<List<ApiModel>>(result);
@@ -68,7 +69,7 @@ public class ApiListQueryHandler : DomainQueryHandler<ApiListQuery, ResultModel>
 
     public override async Task<ResultModel> Handle(ApiListQuery request, CancellationToken cancellationToken)
     {
-        var result = await base._dbContext.QueryListAsync<sys_api>("SELECT * FROM sys_api order by `group`");
+        var result = await base._dbContext.QueryListAsync<sys_api>("SELECT * FROM sys_api order by createtime DESC,`group` ASC");
         if (result?.Count() == 0)
             return new List<ApiModel>().ToSuccessResultModel();
         return this._mapper.Map<List<ApiModel>>(result).ToSuccessResultModel();

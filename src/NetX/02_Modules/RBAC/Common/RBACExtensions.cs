@@ -42,8 +42,6 @@ internal static class RBACExtensions
         return currentMenus.ToList();
     }
 
-
-
     /// <summary>
     /// 构建部门树
     /// </summary>
@@ -63,5 +61,15 @@ internal static class RBACExtensions
             }
         }
         return currentDepts.ToList();
+    }
+
+    /// <summary>
+    /// 生成role - api 缓存key
+    /// </summary>
+    /// <param name="roleId"></param>
+    /// <returns></returns>
+    public static string ToRolePermissionCacheKey(this string roleId)
+    {
+        return $"{CacheKeys.ACCOUNT_PERMISSIONS}{roleId}";
     }
 }

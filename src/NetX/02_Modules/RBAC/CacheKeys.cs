@@ -19,5 +19,5 @@ public static class CacheKeys
     /// <para>RBAC:ACCOUNT:PERMISSIONS:用户唯一标识</para>
     /// </summary>
     [Description("账户权限列表")]
-    public const string ACCOUNT_PERMISSIONS = "RBAC:ACCOUNT:PERMISSIONS:";
+    public const string ACCOUNT_PERMISSIONS = "RBAC:ACCOUNT:API:PERMISSIONS:";
 }

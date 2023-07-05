@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Netx.Ddd.Domain;
 using NetX.Common.Attributes;
+using NetX.RBAC.Domain.Commands;
 using NetX.RBAC.Models;
 
 namespace NetX.RBAC.Domain;
@@ -37,11 +38,13 @@ public class ApiAddCommandHandler : DomainCommandHandler<ApiAddCommand>
 public class ApiModifyCommandHandler : DomainCommandHandler<ApiModifyCommand>
 {
     private readonly IUnitOfWork _uow;
+    private readonly IApiManager _apiManager;
 
     public ApiModifyCommandHandler(
-        IUnitOfWork uow)
+        IUnitOfWork uow, IApiManager apiManager)
     {
         _uow = uow;
+        _apiManager = apiManager;
     }
 
     public override async Task<bool> Handle(ApiModifyCommand request, CancellationToken cancellationToken)
@@ -54,7 +57,10 @@ public class ApiModifyCommandHandler : DomainCommandHandler<ApiModifyCommand>
         apiEntity.group = request.Group;
         apiEntity.description = request.Description;
         _uow.GetRepository<sys_api, string>().Update(apiEntity);
-        return await _uow.SaveChangesAsync();
+        var result = await _uow.SaveChangesAsync();
+        if (result)
+            await _apiManager.RemovePermissionCacheAsync(request.Id);
+        return result;
     }
 }
 
@@ -63,11 +69,13 @@ public class ApiModifyCommandHandler : DomainCommandHandler<ApiModifyCommand>
 public class ApiRemoveCommandHandler : DomainCommandHandler<ApiRemoveCommand>
 {
     private readonly IUnitOfWork _uow;
+    private readonly IApiManager _apiManager;
 
     public ApiRemoveCommandHandler(
-        IUnitOfWork uow)
+        IUnitOfWork uow, IApiManager apiManager)
     {
         _uow = uow;
+        _apiManager = apiManager;
     }
 
     public override async Task<bool> Handle(ApiRemoveCommand request, CancellationToken cancellationToken)
@@ -79,7 +87,9 @@ public class ApiRemoveCommandHandler : DomainCommandHandler<ApiRemoveCommand>
         if (null != roleapi)
             _uow.GetRepository<sys_role_api, string>().Remove(roleapi);
         _uow.GetRepository<sys_api, string>().Remove(apiEntity);
-        return await _uow.SaveChangesAsync();
-
+        var result = await _uow.SaveChangesAsync();
+        if (result)
+            await _apiManager.RemovePermissionCacheAsync(request.Id);
+        return result;
     }
 }
