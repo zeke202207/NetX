@@ -26,7 +26,7 @@ public static class ServiceCollectionExtensions
             Func<string, ICacheProvider> func = s =>
                 {
                     var cacheProviders = provider.GetServices<ICacheProvider>();
-                    var cacheProvider = cacheProviders.FirstOrDefault(p=>p.CacheTypeKey.Equals(s));
+                    var cacheProvider = cacheProviders.FirstOrDefault(p=>p.CacheType.Equals(s));
                     if (null == cacheProvider)
                         throw new NotImplementedException($"容器中没有找到对应的缓存提供器，请确认已经注入 {s} 缓存提供器");
                     return cacheProvider;
