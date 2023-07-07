@@ -62,7 +62,7 @@ namespace NetX.TaskScheduling.DatabaseSetup.InitData
                     id = "60000000000000000000000000000003",
                     path = "/api/jobtask/removejob",
                     group = "jobtask",
-                    method = "POST",
+                    method = "DELETE",
                     description = "删除任务",
                     issystem = true,
                 })
@@ -115,7 +115,15 @@ namespace NetX.TaskScheduling.DatabaseSetup.InitData
         {
             try
             {
-                Execute.Sql($"delete from {_tableName}");
+                Execute.Sql($"DELETE FROM {_tableName} WHERE id in (" +
+                    $"'60000000000000000000000000000000'," +
+                    $"'60000000000000000000000000000001'," +
+                    $"'60000000000000000000000000000002'," +
+                    $"'60000000000000000000000000000003'," +
+                    $"'60000000000000000000000000000004'," +
+                    $"'60000000000000000000000000000005'," +
+                    $"'60000000000000000000000000000006'," +
+                    $"'60000000000000000000000000000007')");
             }
             catch (Exception ex)
             {

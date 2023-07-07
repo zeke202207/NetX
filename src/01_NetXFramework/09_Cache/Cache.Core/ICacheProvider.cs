@@ -9,12 +9,16 @@ namespace NetX.Cache.Core;
 /// </summary>
 public interface ICacheProvider
 {
+    string CacheType { get; }
+
+    string CacheName { get; }
+
     /// <summary>
     /// 获取
     /// </summary>
     /// <param name="key">键</param>
     /// <returns></returns>
-    string Get(string key);
+    object Get(string key);
 
     /// <summary>
     /// 获取
@@ -29,7 +33,7 @@ public interface ICacheProvider
     /// </summary>
     /// <param name="key">键</param>
     /// <returns></returns>
-    Task<string> GetAsync(string key);
+    Task<object> GetAsync(string key);
 
     /// <summary>
     /// 获取
@@ -45,7 +49,7 @@ public interface ICacheProvider
     /// <param name="key">键</param>
     /// <param name="value">返回值</param>
     /// <returns></returns>
-    bool TryGetValue(string key, out string value);
+    bool TryGetValue(string key, out object value);
 
     /// <summary>
     /// 尝试获取
@@ -139,4 +143,10 @@ public interface ICacheProvider
     /// <param name="key"></param>
     /// <returns></returns>
     Task<bool> ExistsAsync<T>(string key);
+
+    /// <summary>
+    /// 获取所有的key
+    /// </summary>
+    /// <returns></returns>
+    Task<IEnumerable<string>> GetKeys();
 }

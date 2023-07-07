@@ -28,7 +28,7 @@ public class AuditController : BaseController
     /// 获取审计日志
     /// </summary>
     /// <returns></returns>
-    [ApiActionDescription("添加任务")]
+    [ApiActionDescription("获取审计日志列表")]
     [HttpPost]
     public async Task<ResultModel> GetAuditLogs(AuditListParam auditListParam)
     {

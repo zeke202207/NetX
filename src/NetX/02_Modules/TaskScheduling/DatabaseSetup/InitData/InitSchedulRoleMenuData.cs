@@ -35,7 +35,7 @@ namespace NetX.TaskScheduling.DatabaseSetup.InitData
         {
             try
             {
-                Execute.Sql($"delete from {_tableName} WHERE menuid ='00000000000000000000000000000015'");
+                Execute.Sql($"delete from {_tableName} WHERE roleid ='00000000000000000000000000000001' AND menuid ='00000000000000000000000000000015'");
             }
             catch (Exception ex)
             {

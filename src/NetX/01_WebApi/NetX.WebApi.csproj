@@ -24,6 +24,7 @@
   <ItemGroup>
     <Folder Include="config\" />
     <Folder Include="config\" />
+    <Folder Include="modules\caching\ref\" />
     <Folder Include="modules\jobtaskdemo\ref\" />
   </ItemGroup>
 
@@ -44,6 +45,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\..\01_NetXFramework\13_FileSystem\SimpleFileSystem\modules\simplefilesystem\ref\readme.txt" Link="modules\simplefilesystem\ref\readme.txt" />
+    <Content Include="..\02_Modules\Caching\modules\caching\plugin.json" Link="modules\caching\plugin.json" />
+    <Content Include="..\02_Modules\Caching\modules\caching\ref\readme.txt" Link="modules\caching\ref\readme.txt" />
     <Content Include="..\02_Modules\LocalFileServer\config\localfileserver.json" Link="config\localfileserver.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

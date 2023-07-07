@@ -19,12 +19,32 @@ public class RolePagerListQuery : DomainQuery<ResultModel>
     }
 }
 
-public class RoleApiQuery : DomainQuery<ResultModel>
+public class RoleByIdQuery : DomainQuery<ResultModel>
 {
     public string Id { get; set; }
 
-    public RoleApiQuery(string id)
+    public RoleByIdQuery(string id)
     {
         Id = id;
+    }
+}
+
+public class RoleApiQuery : DomainQuery<ResultModel>
+{
+    public string RoleId { get; set; }
+
+    public RoleApiQuery(string roleId)
+    {
+        RoleId = roleId;
+    }
+}
+
+public class RoleApiIdsQuery : DomainQuery<ResultModel>
+{
+    public string RoleId { get; set; }
+
+    public RoleApiIdsQuery(string roleId)
+    {
+        RoleId = roleId;
     }
 }

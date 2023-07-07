@@ -14,6 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="..\05_Tenant\NetX.Tenants.csproj" />
     <ProjectReference Include="..\09_Cache\Cache.Core\NetX.Cache.Core.csproj" />
+    <ProjectReference Include="..\09_Cache\MemoryCache\NetX.InMemoryCache.csproj" />
   </ItemGroup>
 
 </Project>

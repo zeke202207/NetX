@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\01_NetXFramework\01_App\NetX.App.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="modules\caching\plugin.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="modules\caching\ref\readme.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<Exec Command="copy $(TargetDir)NetX.Caching.dll $(SolutionDir)NetX\01_WebApi\bin\Debug\net6.0\modules\caching\NetX.Caching.dll&#xD;&#xA;" />
+	</Target>
+
+</Project>

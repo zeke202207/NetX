@@ -1,0 +1,9 @@
+{
+  "Id": "10000000000000000000000000000008",
+  "Name": "caching",
+  "Version": "1.0.0.0",
+  "Enabled": true,
+  "FileName": "NetX.Caching.dll",
+  "IsSharedAssemblyContext": true,
+  "Description": "netx实现的缓存管理模块"
+}

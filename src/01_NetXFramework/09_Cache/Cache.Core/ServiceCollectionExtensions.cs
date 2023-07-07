@@ -19,11 +19,20 @@ public static class ServiceCollectionExtensions
     /// <param name="services"></param>
     /// <param name="CacheKeys"></param>
     /// <returns></returns>
-    public static IServiceCollection AddCache<T>(this IServiceCollection services, Func<IEnumerable<CacheKeyDescriptor>> CacheKeys)
-        where T : class, ICacheProvider
+    public static IServiceCollection AddCacheProvider(this IServiceCollection services, Func<IEnumerable<CacheKeyDescriptor>> CacheKeys)
     {
-        services.AddSingleton<IMemoryCache>(factory => new MemoryCache(new MemoryCacheOptions()));
-        services.AddSingleton<ICacheProvider, T>();
+        services.AddSingleton(provider =>
+        {
+            Func<string, ICacheProvider> func = s =>
+                {
+                    var cacheProviders = provider.GetServices<ICacheProvider>();
+                    var cacheProvider = cacheProviders.FirstOrDefault(p=>p.CacheType.Equals(s));
+                    if (null == cacheProvider)
+                        throw new NotImplementedException($"容器中没有找到对应的缓存提供器，请确认已经注入 {s} 缓存提供器");
+                    return cacheProvider;
+                };
+            return func;
+        });
         services.AddSingleton<IEnumerable<CacheKeyDescriptor>>(CacheKeys.Invoke());
         return services;
     }

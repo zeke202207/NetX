@@ -18,6 +18,10 @@ public class MemoryCacheProvider : ICacheProvider
 {
     private readonly IMemoryCache _memoryCache;
 
+    public string CacheType => InMemoryCacheConstEnum.C_CACHE_TYPE_KEY;
+
+    public string CacheName => InMemoryCacheConstEnum.C_CACHE_NAME;
+
     /// <summary>
     /// 内存缓存器实例
     /// </summary>
@@ -74,9 +78,9 @@ public class MemoryCacheProvider : ICacheProvider
     /// </summary>
     /// <param name="key"></param>
     /// <returns></returns>
-    public string Get(string key)
+    public object Get(string key)
     {
-        return _memoryCache.Get(key)?.ToString();
+        return _memoryCache.Get(key);
     }
 
     /// <summary>
@@ -97,7 +101,8 @@ public class MemoryCacheProvider : ICacheProvider
     private List<string> GetAllKeys()
     {
         const BindingFlags flags = BindingFlags.Instance | BindingFlags.NonPublic;
-        var entries = _memoryCache.GetType().GetField("_entries", flags).GetValue(_memoryCache);
+        var coherentState = _memoryCache.GetType().GetField("_coherentState", flags).GetValue(_memoryCache);//增加一个获取CoherentState对象环节
+        var entries = coherentState.GetType().GetField("_entries", flags).GetValue(coherentState);
         var cacheItems = entries as IDictionary;
         var keys = new List<string>();
         if (cacheItems == null) return keys;
@@ -113,7 +118,7 @@ public class MemoryCacheProvider : ICacheProvider
     /// </summary>
     /// <param name="key"></param>
     /// <returns></returns>
-    public async Task<string> GetAsync(string key)
+    public async Task<object> GetAsync(string key)
     {
         return await Task.FromResult(Get(key));
     }
@@ -224,7 +229,7 @@ public class MemoryCacheProvider : ICacheProvider
     /// <param name="key"></param>
     /// <param name="value"></param>
     /// <returns></returns>
-    public bool TryGetValue(string key, out string value)
+    public bool TryGetValue(string key, out object value)
     {
         return _memoryCache.TryGetValue(key, out value);
     }
@@ -239,5 +244,10 @@ public class MemoryCacheProvider : ICacheProvider
     public bool TryGetValue<T>(string key, out T value)
     {
         return _memoryCache.TryGetValue<T>(key, out value);
+    }
+
+    public async Task<IEnumerable<string>> GetKeys()
+    {
+        return await Task.FromResult(GetAllKeys());
     }
 }

@@ -37,7 +37,7 @@ namespace NetX.Audit.DatabaseSetup.InitData
                         meta = "{\"Title\":\"日志管理\",\"Icon\":\"ant-design:book-outlined\"}",
                         icon = "ant-design:book-outlined",
                         permission = "",
-                        orderno = 6,
+                        orderno = 7,
                         issystem = true,
                     })
                     .Row(new
@@ -51,7 +51,7 @@ namespace NetX.Audit.DatabaseSetup.InitData
                         icon = "ant-design:solution-outlined",
                         type = 1,
                         permission = "",
-                        orderno = 2,
+                        orderno = 1,
                         issystem = true,
                     })
                     //.Row(new

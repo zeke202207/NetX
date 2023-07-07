@@ -8,6 +8,7 @@ using FluentMigrator.Runner.Processors.SqlServer;
 using FluentMigrator.Runner.VersionTableInfo;
 using Microsoft.Extensions.DependencyInjection;
 using NetX.Cache.Core;
+using NetX.InMemoryCache;
 using NetX.Tenants;
 using System.Collections.Concurrent;
 using System.Reflection;
@@ -33,12 +34,12 @@ public class MigrationService : IMigrationService
     /// <param name="runner"></param>
     public MigrationService(
         MigrationSupportDbType supportDbType,
-        ICacheProvider cacheProvider,
+        Func<string, ICacheProvider> funcFactory,
         IEnumerable<DbFactoryBase> dbFactories,
         IMigrationRunner runner)
     {
         this._supportDbType = supportDbType;
-        this._cacheProvider = cacheProvider;
+        this._cacheProvider = funcFactory(InMemoryCacheConstEnum.C_CACHE_TYPE_KEY);
         this._dbFactory = GetDbFactoryBase(dbFactories);
         this._runner = runner;
     }

@@ -58,7 +58,7 @@ public class RoleController : RBACBaseController
     [HttpPost]
     public async Task<ResultModel> GetApiAuth(KeyParam param)
     {
-        return await _roleQuery.Send<RoleApiQuery, ResultModel>(new RoleApiQuery(param.Id));
+        return await _roleQuery.Send<RoleApiIdsQuery, ResultModel>(new RoleApiIdsQuery(param.Id));
     }
 
     /// <summary>

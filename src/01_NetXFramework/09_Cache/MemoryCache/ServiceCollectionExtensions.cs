@@ -20,11 +20,10 @@ public static class ServiceCollectionExtensions
     /// <param name="services"></param>
     /// <param name="CacheKeys"></param>
     /// <returns></returns>
-    public static IServiceCollection AddInMemoryCache(this IServiceCollection services, Func<IEnumerable<CacheKeyDescriptor>> CacheKeys)
+    public static IServiceCollection AddInMemoryCache(this IServiceCollection services)
     {
-        services.AddSingleton<IMemoryCache>(factory => new MemoryCache(new MemoryCacheOptions()));
         services.AddSingleton<ICacheProvider, MemoryCacheProvider>();
-        services.AddSingleton<IEnumerable<CacheKeyDescriptor>>(CacheKeys.Invoke());
+        services.AddSingleton<IMemoryCache>(factory => new MemoryCache(new MemoryCacheOptions()));
         return services;
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Netx.Ddd.Domain;
 using NetX.Common.Attributes;
+using NetX.RBAC.Domain.Commands;
 using NetX.RBAC.Models;
 
 namespace NetX.RBAC.Domain;
@@ -39,11 +40,14 @@ public class RoleAddCommandHandler : DomainCommandHandler<RoleAddCommand>
 public class RoleModifyCommandHandler : DomainCommandHandler<RoleModifyCommand>
 {
     private readonly IUnitOfWork _uow;
+    private readonly IRoleManager _roleManager;
 
     public RoleModifyCommandHandler(
-        IUnitOfWork uow)
+        IUnitOfWork uow,
+        IRoleManager roleManager)
     {
         _uow = uow;
+        _roleManager = roleManager;
     }
 
     public override async Task<bool> Handle(RoleModifyCommand request, CancellationToken cancellationToken)
@@ -61,7 +65,10 @@ public class RoleModifyCommandHandler : DomainCommandHandler<RoleModifyCommand>
             _uow.GetRepository<sys_role_menu, string>().RemoveRange(rms);
         var rolemenus = request.Menus.Select(p => new sys_role_menu() { menuid = p, roleid = roleEntity.Id });
         await _uow.GetRepository<sys_role_menu, string>().AddRangeAsync(rolemenus);
-        return await _uow.SaveChangesAsync();
+        var result = await _uow.SaveChangesAsync();
+        if (result)
+            await _roleManager.RemovePermissionCacheAsync(request.Id);
+        return result;
     }
 }
 
@@ -69,11 +76,13 @@ public class RoleModifyCommandHandler : DomainCommandHandler<RoleModifyCommand>
 public class RoleRemoveCommandHandler : DomainCommandHandler<RoleRemoveCommand>
 {
     private readonly IUnitOfWork _uow;
+    private readonly IRoleManager _roleManager;
 
     public RoleRemoveCommandHandler(
-        IUnitOfWork uow)
+        IUnitOfWork uow, IRoleManager roleManager)
     {
         _uow = uow;
+        _roleManager = roleManager;
     }
 
     public override async Task<bool> Handle(RoleRemoveCommand request, CancellationToken cancellationToken)
@@ -85,8 +94,10 @@ public class RoleRemoveCommandHandler : DomainCommandHandler<RoleRemoveCommand>
         if (null != rolemenu)
             _uow.GetRepository<sys_role_menu, string>().Remove(rolemenu);
         _uow.GetRepository<sys_role, string>().Remove(roleEntity);
-        return await _uow.SaveChangesAsync();
-
+        var result = await _uow.SaveChangesAsync();
+        if (result)
+            await _roleManager.RemovePermissionCacheAsync(request.Id);
+        return result;
     }
 }
 
@@ -94,11 +105,13 @@ public class RoleRemoveCommandHandler : DomainCommandHandler<RoleRemoveCommand>
 public class RoleStatusModifyCommandHandler : DomainCommandHandler<RoleStatusModifyCommand>
 {
     private readonly IUnitOfWork _uow;
+    private readonly IRoleManager _roleManager;
 
     public RoleStatusModifyCommandHandler(
-        IUnitOfWork uow)
+        IUnitOfWork uow, IRoleManager roleManager)
     {
         _uow = uow;
+        _roleManager = roleManager;
     }
 
     public override async Task<bool> Handle(RoleStatusModifyCommand request, CancellationToken cancellationToken)
@@ -108,8 +121,10 @@ public class RoleStatusModifyCommandHandler : DomainCommandHandler<RoleStatusMod
             throw new RbacException($"没有找到角色信息：{request.Id}", (int)ErrorStatusCode.RoleNotFound);
         roleEntity.status = int.Parse(request.Status);
         _uow.GetRepository<sys_role, string>().Update(roleEntity);
-        //TODO:更新缓存
-        return await _uow.SaveChangesAsync();
+        var result = await _uow.SaveChangesAsync();
+        if (result)
+            await _roleManager.RemovePermissionCacheAsync(request.Id);
+        return result;
     }
 }
 
@@ -118,11 +133,13 @@ public class RoleStatusModifyCommandHandler : DomainCommandHandler<RoleStatusMod
 public class RoleApiAuthModifyCommandHandler : DomainCommandHandler<RoleApiAuthModifyCommand>
 {
     private readonly IUnitOfWork _uow;
+    private readonly IRoleManager _roleManager;
 
     public RoleApiAuthModifyCommandHandler(
-        IUnitOfWork uow)
+        IUnitOfWork uow, IRoleManager roleManager)
     {
         _uow = uow;
+        _roleManager = roleManager;
     }
 
     public override async Task<bool> Handle(RoleApiAuthModifyCommand request, CancellationToken cancellationToken)
@@ -132,8 +149,10 @@ public class RoleApiAuthModifyCommandHandler : DomainCommandHandler<RoleApiAuthM
             throw new RbacException($"没有找到角色信息：{request.Id}", (int)ErrorStatusCode.RoleNotFound);
         roleEntity.apicheck = int.Parse(request.Status);
         _uow.GetRepository<sys_role, string>().Update(roleEntity);
-        //TODO:更新缓存
-        return await _uow.SaveChangesAsync();
+        var result = await _uow.SaveChangesAsync();
+        if (result)
+            await _roleManager.RemovePermissionCacheAsync(request.Id);
+        return result;
     }
 }
 
@@ -141,11 +160,13 @@ public class RoleApiAuthModifyCommandHandler : DomainCommandHandler<RoleApiAuthM
 public class RoleApiAuthSettingCommandHandler : DomainCommandHandler<RoleApiAuthSettingCommand>
 {
     private readonly IUnitOfWork _uow;
+    private readonly IRoleManager _roleManager;
 
     public RoleApiAuthSettingCommandHandler(
-        IUnitOfWork uow)
+        IUnitOfWork uow, IRoleManager roleManager)
     {
         _uow = uow;
+        _roleManager = roleManager;
     }
 
     public override async Task<bool> Handle(RoleApiAuthSettingCommand request, CancellationToken cancellationToken)
@@ -155,7 +176,9 @@ public class RoleApiAuthSettingCommandHandler : DomainCommandHandler<RoleApiAuth
         if (all.Any())
             _uow.GetRepository<sys_role_api, string>().RemoveRange(all);
         await _uow.GetRepository<sys_role_api, string>().AddRangeAsync(roleapis);
-        //TODO:更新缓存
-        return await _uow.SaveChangesAsync();
+        var result = await _uow.SaveChangesAsync();
+        if (result)
+            await _roleManager.RemovePermissionCacheAsync(request.RoleId);
+        return result;
     }
 }
