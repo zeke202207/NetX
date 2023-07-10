@@ -34,11 +34,8 @@ public class PermissionValidateAttribute : AuthorizeAttribute, IAuthorizationFil
     public async Task OnAuthorizationAsync(AuthorizationFilterContext context)
     {
         OnAuthorization(context);
-        //排除匿名访问
-        if (context.ActionDescriptor.EndpointMetadata.Any(m => m.GetType() == typeof(AllowAnonymousAttribute)))
-            return;
-        //排除通用接口
-        if (context.ActionDescriptor.EndpointMetadata.Any(m => m.GetType() == typeof(NoPermissionAttribute)))
+        //排除匿名和不需要授权的接口访问
+        if (context.ActionDescriptor.EndpointMetadata.Any(m => m.GetType() == typeof(AllowAnonymousAttribute) || m.GetType() == typeof(NoPermissionAttribute)))
             return;
         var handle = context.HttpContext.RequestServices.GetService<IPermissionValidateHandler>();
         if (null == handle || !await handle.Validate(context.HttpContext, context.ActionDescriptor.RouteValues))

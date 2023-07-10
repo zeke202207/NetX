@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Authentication.OAuth;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using NetX.Common;
 using NetX.DatabaseSetup;
 using NetX.Module;
+using NetX.RBAC.OAtuhLogin.Gitee;
 using System.Reflection;
 
 namespace NetX.RBAC;
@@ -53,5 +55,10 @@ internal class RBACInitializer : ModuleInitializer
         services.AddMigratorAssembly(new Assembly[] { Assembly.GetExecutingAssembly() }, MigrationSupportDbType.MySql5);
         //密码生成策略
         //services.AddScoped<IPasswordStrategy, DefaultPwdStrategy>();
+        //添加gitee oauth login
+        //services.AddOAuth<DefaultAccessTokenModel, GiteeUserModel>(
+        //   new GiteeOAuth(OAuthConfig.Load(context.Configuration, "oauth:gitee")));
+
+        services.AddTransient(typeof(GiteeOAuth), s => new GiteeOAuth(OAuthConfig.Load(context.Configuration, "oauth:gitee")));
     }
 }

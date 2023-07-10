@@ -117,3 +117,8 @@ public enum ErrorStatusCode
     RoleNotFound = 1006,
     MenuNotFound = 1007
 }
+
+public enum OAuthType : int
+{
+    Gitee = 0,
+}

@@ -1,0 +1,10 @@
+{
+  "oauth": {
+    "gitee": {
+      "app_id": "96e923af626ed9ffe3f7360866c232738ba02199bc026136f4bed190316d1c01",
+      "app_key": "758a9fa1c808857e63b7da7408ed84b2241c538a612539e845ae2a93f29fa72d",
+      "redirect_uri": "http://localhost:8220/api/account/giteelogincallback",
+      "scope": "user_info"
+    }
+  }
+}

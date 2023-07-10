@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Authentication.OAuth;
+using Microsoft.AspNetCore.Mvc;
 using Netx.Ddd.Core;
 using NetX.AuditLog;
 using NetX.Authentication.Core;
@@ -8,6 +9,7 @@ using NetX.RBAC.Domain;
 using NetX.RBAC.Domain.Queries;
 using NetX.RBAC.Models;
 using NetX.RBAC.Models.Dtos.RequestDto;
+using NetX.RBAC.OAtuhLogin.Gitee;
 using NetX.Swagger;
 using NetX.Tenants;
 
@@ -21,15 +23,17 @@ public class AccountController : RBACBaseController
 {
     private readonly IQueryBus _accountQuery;
     private readonly ICommandBus _accountCommand;
+    private IOAuthCore _authCore;
 
     /// <summary>
     /// 账号管理api实例对象
     /// </summary>
     /// <param name="accountService">账户管理服务</param>
-    public AccountController(IQueryBus accountQuery, ICommandBus accountCommand)
+    public AccountController(IQueryBus accountQuery, ICommandBus accountCommand, IOAuthCore authCore)
     {
         this._accountQuery = accountQuery;
         this._accountCommand = accountCommand;
+        _authCore = authCore;
     }
 
     /// <summary>
@@ -168,4 +172,40 @@ public class AccountController : RBACBaseController
         await _accountCommand.Send<AccountModifyAvatarCommand>(new AccountModifyAvatarCommand(model));
         return true.ToSuccessResultModel();
     }
+
+    #region 第三方登录集成
+
+    /// <summary>
+    /// 获取三方登录地址
+    /// </summary>
+    /// 
+    /// <returns></returns>
+    [ApiActionDescription("获取三方登录地址")]
+    [NoPermission]
+    [HttpPost]
+    public async Task<ResultModel> GetOAuthUrl(OAuthModel model)
+    {
+        var url = await _authCore.GetOAuthUrl(model);
+        return url.ToSuccessResultModel();
+    }
+
+    /// <summary>
+    /// Gitee登录
+    /// </summary>
+    /// <param name="model">Gitee登录CallBack</param>
+    /// <returns></returns>
+    [ApiActionDescription("Gitee登录")]
+    [NoPermission]
+    [HttpGet]
+    public async Task<ResultModel> GiteeLoginCallback(
+        [FromQuery] string code,
+        [FromQuery] string state,
+        [FromQuery] string error_description = ""
+    )
+    {
+        var result = await _authCore.GerRedirctUrl(new Dictionary<string, string>() { { "code", code } });
+        return result.ToSuccessResultModel();
+    }
+
+    #endregion
 }
