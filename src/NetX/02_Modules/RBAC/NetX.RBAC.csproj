@@ -61,6 +61,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\01_NetXFramework\01_App\NetX.App.csproj" />
+    <ProjectReference Include="..\..\..\01_NetXFramework\06_Authentication\Authentication.OAuth\Authentication.OAuth.csproj" />
   </ItemGroup>
 
   <ItemGroup>

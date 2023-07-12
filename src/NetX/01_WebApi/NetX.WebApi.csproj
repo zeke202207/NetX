@@ -35,6 +35,7 @@
     <Content Include="..\..\01_NetXFramework\01_App\config\tenants.json" Link="config\tenants.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="..\..\01_NetXFramework\06_Authentication\Authentication.OAuth\config\oauth.json" Link="config\oauth.json" />
     <Content Include="..\..\01_NetXFramework\07_Logging\DiagnosticLog\seriloglog.json" Link="config\seriloglog.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

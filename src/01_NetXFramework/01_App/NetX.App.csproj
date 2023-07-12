@@ -20,6 +20,7 @@
     <ProjectReference Include="..\05_Tenant\NetX.Tenants.csproj" />
     <ProjectReference Include="..\06_Authentication\Authentication.Core\NetX.Authentication.Core.csproj" />
     <ProjectReference Include="..\06_Authentication\Authentication.Jwt\NetX.Authentication.Jwt.csproj" />
+    <ProjectReference Include="..\06_Authentication\Authentication.OAuth\Authentication.OAuth.csproj" />
     <ProjectReference Include="..\07_Logging\DiagnosticLog\NetX.DiagnosticLog.csproj" />
     <ProjectReference Include="..\07_Logging\NetX.AuditLog\NetX.AuditLog.csproj" />
     <ProjectReference Include="..\08_ApiDoc\Swagger\NetX.Swagger.csproj" />
