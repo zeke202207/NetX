@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace NetX.RBAC.Models.Dtos.RequestDto
 {
-    public class OAuthModel
+    public class OAuthLoginModel
     {
-        public OAuthPlatform OAuthPlatform { get; set; }
+        public string Code { get; set; }
 
         public string State { get; set; } = "code";
     }

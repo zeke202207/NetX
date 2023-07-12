@@ -1,4 +1,6 @@
-﻿using NetX.RBAC.Models.Dtos.ReponseDto;
+﻿using NetX.Common.ModuleInfrastructure;
+using NetX.RBAC.Models;
+using NetX.RBAC.Models.Dtos.ReponseDto;
 using NetX.RBAC.Models.Dtos.RequestDto;
 using System;
 using System.Collections.Generic;
@@ -12,6 +14,6 @@ namespace NetX.RBAC.Domain
     {
         Task<string> GetOAuthUrl(OAuthModel model);
 
-        Task<OAuthLoginResultModel> GerRedirctUrl(Dictionary<string, string> param);
+        Task<ResultModel> OAuthLogin(OAuthLoginModel oAuthLoginModel);
     }
 }

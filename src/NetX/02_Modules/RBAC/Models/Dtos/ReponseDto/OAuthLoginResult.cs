@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace NetX.RBAC.Models.Dtos.ReponseDto
 {
-    public class OAuthLoginResultModel
+    public class OAuthLoginResult
     {
+        public LoginResult LoginResult { get; set; }
+
+        public OAuthResult Result { get; set; }
     }
 }

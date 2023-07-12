@@ -118,7 +118,23 @@ public enum ErrorStatusCode
     MenuNotFound = 1007
 }
 
-public enum OAuthType : int
+public enum OAuthPlatform : int
 {
     Gitee = 0,
+}
+
+public enum OAuthResult : int
+{
+    /// <summary>
+    /// 登录成功
+    /// </summary>
+    Success = 0,
+    /// <summary>
+    /// 账号未绑定
+    /// </summary>
+    NotBinding,
+    /// <summary>
+    /// 绑定账号失败
+    /// </summary>
+    FailEdBinding
 }

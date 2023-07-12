@@ -190,21 +190,17 @@ public class AccountController : RBACBaseController
     }
 
     /// <summary>
-    /// Gitee登录
+    /// OAuth登录
     /// </summary>
-    /// <param name="model">Gitee登录CallBack</param>
+    /// <param name="model">OAuth登录</param>
     /// <returns></returns>
-    [ApiActionDescription("Gitee登录")]
+    [ApiActionDescription("OAuth登录")]
     [NoPermission]
-    [HttpGet]
-    public async Task<ResultModel> GiteeLoginCallback(
-        [FromQuery] string code,
-        [FromQuery] string state,
-        [FromQuery] string error_description = ""
-    )
+    [HttpPost]
+    public async Task<ResultModel> OAuthLogin(OAuthLoginModel oAuthLoginModel)
     {
-        var result = await _authCore.GerRedirctUrl(new Dictionary<string, string>() { { "code", code } });
-        return result.ToSuccessResultModel();
+        var result = await _authCore.OAuthLogin(oAuthLoginModel);
+        return result;
     }
 
     #endregion
