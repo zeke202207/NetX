@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using NetX.Common;
 using NetX.DatabaseSetup;
 using NetX.Module;
-using NetX.RBAC.OAtuhLogin.Gitee;
+using NetX.RBAC.OAtuhLogin;
 using System.Reflection;
 
 namespace NetX.RBAC;
@@ -60,5 +60,7 @@ internal class RBACInitializer : ModuleInitializer
         //   new GiteeOAuth(OAuthConfig.Load(context.Configuration, "oauth:gitee")));
 
         services.AddTransient(typeof(GiteeOAuth), s => new GiteeOAuth(OAuthConfig.Load(context.Configuration, "oauth:gitee")));
+        //测试多注入
+        services.AddTransient(typeof(GithubOAuth), s => new GithubOAuth(OAuthConfig.Load(context.Configuration, "oauth:gitee")));
     }
 }

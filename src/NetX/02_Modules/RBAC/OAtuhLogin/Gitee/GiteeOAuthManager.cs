@@ -1,19 +1,21 @@
 ﻿using Authentication.OAuth;
 using NetX.Common.Attributes;
 using NetX.RBAC.Models.Dtos.RequestDto;
-using NetX.RBAC.OAtuhLogin.Gitee;
+using NetX.RBAC.OAtuhLogin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetX.RBAC.Domain.Core
+namespace NetX.RBAC.Domain
 {
     [Scoped]
-    public class GiteeOAuthManager : IOAuthManager<DefaultAccessTokenModel, GiteeUserModel>
+    public class GiteeOAuthManager : IOAuthManager<DefaultAccessTokenModel, GiteeUserModel>, IOAuthManager
     {
         private readonly GiteeOAuth _giteeOAuth;
+
+        public OAuthPlatform Platform => OAuthPlatform.Gitee;
 
         public GiteeOAuthManager(GiteeOAuth giteeOAuth)
         {
