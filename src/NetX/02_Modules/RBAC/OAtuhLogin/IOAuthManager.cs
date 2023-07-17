@@ -16,4 +16,9 @@ namespace NetX.RBAC.Domain
 
         Task<OAuthResult<TAccessTokenModel, TUserInfoModel>> GetOAuthResult(Dictionary<string, string> param);
     }
+
+    public interface IOAuthManager
+    {
+        OAuthPlatform Platform { get; }
+    }
 }

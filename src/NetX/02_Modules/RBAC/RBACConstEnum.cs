@@ -121,6 +121,7 @@ public enum ErrorStatusCode
 public enum OAuthPlatform : int
 {
     Gitee = 0,
+    Github=1
 }
 
 public enum OAuthResult : int

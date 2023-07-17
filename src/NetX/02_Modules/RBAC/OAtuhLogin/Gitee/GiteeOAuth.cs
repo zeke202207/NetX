@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetX.RBAC.OAtuhLogin.Gitee
+namespace NetX.RBAC.OAtuhLogin
 {
     public class GiteeOAuth : DefaultOAuthLogin<GiteeUserModel>
     {

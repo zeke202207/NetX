@@ -9,7 +9,7 @@ using NetX.RBAC.Domain;
 using NetX.RBAC.Domain.Queries;
 using NetX.RBAC.Models;
 using NetX.RBAC.Models.Dtos.RequestDto;
-using NetX.RBAC.OAtuhLogin.Gitee;
+using NetX.RBAC.OAtuhLogin;
 using NetX.Swagger;
 using NetX.Tenants;
 
