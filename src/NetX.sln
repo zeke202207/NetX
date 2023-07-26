@@ -131,7 +131,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetX.SimpleFileSystem", "01
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetX.Caching", "NetX\02_Modules\Caching\NetX.Caching.csproj", "{2AFC7956-A4D0-4984-93EA-3DDDD02C2C60}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authentication.OAuth", "01_NetXFramework\06_Authentication\Authentication.OAuth\Authentication.OAuth.csproj", "{32237D77-EDAB-44D6-BF5E-4B1BBF8FCA45}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Authentication.OAuth", "01_NetXFramework\06_Authentication\Authentication.OAuth\Authentication.OAuth.csproj", "{32237D77-EDAB-44D6-BF5E-4B1BBF8FCA45}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetX.ModuleManager", "NetX\02_Modules\ModuleManager\NetX.ModuleManager.csproj", "{0F3D0754-D473-477F-B7E0-438853E76864}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -279,6 +281,10 @@ Global
 		{32237D77-EDAB-44D6-BF5E-4B1BBF8FCA45}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{32237D77-EDAB-44D6-BF5E-4B1BBF8FCA45}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{32237D77-EDAB-44D6-BF5E-4B1BBF8FCA45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F3D0754-D473-477F-B7E0-438853E76864}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F3D0754-D473-477F-B7E0-438853E76864}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F3D0754-D473-477F-B7E0-438853E76864}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F3D0754-D473-477F-B7E0-438853E76864}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -345,6 +351,7 @@ Global
 		{A3AFBFEB-A452-475A-BFC6-C2F58592071C} = {23E64CE6-1F53-49FA-A790-6E9172AEDFA8}
 		{2AFC7956-A4D0-4984-93EA-3DDDD02C2C60} = {0E0C7D85-52A6-4139-A6A2-A4095C8B47C6}
 		{32237D77-EDAB-44D6-BF5E-4B1BBF8FCA45} = {BD0D352D-B332-42D5-B551-124EE9F5DF3A}
+		{0F3D0754-D473-477F-B7E0-438853E76864} = {0E0C7D85-52A6-4139-A6A2-A4095C8B47C6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E8782471-74F4-48CA-9551-1D4CF94CA9CC}

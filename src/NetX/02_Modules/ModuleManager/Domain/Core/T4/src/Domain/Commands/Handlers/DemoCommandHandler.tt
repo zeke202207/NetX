@@ -1,0 +1,33 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".txt" #>
+
+using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using Netx.Ddd.Domain;
+using NetX.Common;
+using NetX.Common.Attributes;
+
+namespace <#= _model.Project.Name #>.Domain;
+
+
+[Scoped]
+public class DemoCommandHandler : DomainCommandHandler<DemoCommand>
+{
+    private readonly IUnitOfWork _uow;
+
+    public DemoCommandHandler(
+        IUnitOfWork uow,
+        IMapper mapper)
+    {
+        _uow = uow;
+    }
+
+    public override async Task<bool> Handle(DemoCommand request, CancellationToken cancellationToken)
+    {
+        return await Task.FromResult(true);
+    }
+}

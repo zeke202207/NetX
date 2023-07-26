@@ -1,0 +1,34 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".txt" #>
+
+using AutoMapper;
+using Dapper;
+using Netx.Ddd.Domain;
+using Netx.Ddd.Domain.Extensions;
+using NetX.Common.Attributes;
+using NetX.Common.ModuleInfrastructure;
+
+namespace <#= _model.Project.Name #>.Domain;
+
+
+[Scoped]
+public class DemoQueryHandler : DomainQueryHandler<DemoQuery, ResultModel>
+{
+    private readonly IMapper _mapper;
+
+    public DemoQueryHandler(
+        IDatabaseContext dbContext,
+        IMapper mapper) : base(dbContext)
+    {
+        _mapper = mapper;
+    }
+
+    public override async Task<ResultModel> Handle(DemoQuery request, CancellationToken cancellationToken)
+    {
+       return default(ResultModel);
+    }
+}

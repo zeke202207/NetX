@@ -1,0 +1,9 @@
+{
+  "Id": "10000000000000000000000000000008",
+  "Name": "modulemanager",
+  "Version": "1.0.0.0",
+  "Enabled": true,
+  "FileName": "NetX.ModuleManager.dll",
+  "IsSharedAssemblyContext": true,
+  "Description": "模块生成脚手架"
+}
