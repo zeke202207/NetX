@@ -21,7 +21,7 @@ public sealed class CollectibleAssemblyLoadContextProvider
     /// <param name="env"></param>
     /// <param name="moduleContext"></param>
     /// <returns></returns>
-    public ModuleAssemblyLoadContext LoadCustomModule(
+    public ModuleInitializer LoadCustomModule(
         ModuleOptions options,
         ApplicationPartManager apm,
         IServiceCollection services,
@@ -34,6 +34,7 @@ public sealed class CollectibleAssemblyLoadContextProvider
         {
             //0. 将程序集装在到context中
             var assembly = context.LoadFromStream(fs);
+            AssemblyLoadContextManager.Instance.Add(assembly.GetName().Name, context);
             //1. 将程序集引用装在到context中
             options.Dependencies?.ForEach(p =>
             {
@@ -58,7 +59,7 @@ public sealed class CollectibleAssemblyLoadContextProvider
             }
             context.ModuleContext.ModuleOptions = options;
         }
-        return context;
+        return context.ModuleContext.Initialize;
     }
 
     /// <summary>
@@ -70,7 +71,7 @@ public sealed class CollectibleAssemblyLoadContextProvider
     /// <param name="env"></param>
     /// <param name="moduleContext"></param>
     /// <returns></returns>
-    public ModuleInitializer? LoadSharedCustomModule(
+    public ModuleInitializer LoadSharedCustomModule(
         ModuleOptions options,
         ApplicationPartManager apm,
         IServiceCollection services,
@@ -81,11 +82,12 @@ public sealed class CollectibleAssemblyLoadContextProvider
         using (var fs = new FileStream(paths.filePath, FileMode.Open))
         {
             //0. 将程序集装在到context中
-            var assembly = AssemblyLoadContext.Default.LoadFromStream(fs);
+            var assembly = ModuleAssemblyLoadContext.Default.LoadFromStream(fs);
+            AssemblyLoadContextManager.Instance.Add(assembly.GetName().Name, ModuleAssemblyLoadContext.Default);
             //1. 将程序集引用装在到context中
             options.Dependencies.ForEach(p =>
             {
-                if (AssemblyLoadContext.Default.Assemblies.ToList().Exists(a =>
+                if (ModuleAssemblyLoadContext.Default.Assemblies.ToList().Exists(a =>
                 {
                     var aName = a.GetName().Name;
                     if (!string.IsNullOrWhiteSpace(aName))
@@ -98,7 +100,7 @@ public sealed class CollectibleAssemblyLoadContextProvider
                 }
                 using (var fsRef = new FileStream(p, FileMode.Open))
                 {
-                    var assembly = AssemblyLoadContext.Default.LoadFromStream(fsRef);
+                    ModuleAssemblyLoadContext.Default.LoadFromStream(fsRef);
                 }
             });
             //2. apm装载assemblypart程序集
@@ -106,17 +108,17 @@ public sealed class CollectibleAssemblyLoadContextProvider
             apm.ApplicationParts.Add(part);
             //依赖项注入
             var moduleType = assembly.GetTypes().FirstOrDefault(p => typeof(ModuleInitializer).IsAssignableFrom(p));
-            ModuleInitializer? Initialize = null;
+            ModuleInitializer? initialize = null;
             if (null != moduleType)
             {
                 var moduleInitializerInstance = Activator.CreateInstance(moduleType);
                 if(moduleInitializerInstance is ModuleInitializer)
                 {
-                    Initialize = moduleInitializerInstance as ModuleInitializer;
-                    Initialize?.ConfigureServices(services, env, moduleContext);
+                    initialize = moduleInitializerInstance as ModuleInitializer;
+                    initialize?.ConfigureServices(services, env, moduleContext);
                 }
             }
-            return Initialize;
+            return initialize;
         }
     }
 

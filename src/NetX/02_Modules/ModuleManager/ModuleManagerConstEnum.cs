@@ -1,11 +1,14 @@
-﻿namespace NetX.ModuleManager
+﻿using NetX.Module;
+
+namespace NetX.ModuleManager
 {
     internal class ModuleManagerConstEnum
     {
         /// <summary>
         /// 脚手架唯一标识
         /// </summary>
-        public const string C_MODULEMANAGER_KEY = "10000000000000000000000000000009";
+        [ModuleKey]
+        public const string C_MODULEMANAGER_KEY = "10000000000000000000000000000008";
 
         /// <summary>
         /// swagger分组名称

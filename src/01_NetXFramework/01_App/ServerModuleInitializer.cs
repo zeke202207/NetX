@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -39,6 +41,13 @@ public sealed class ServerModuleInitializer : ModuleInitializer
     /// <param name="context">模块上下文</param>
     public override void ConfigureServices(IServiceCollection services, IWebHostEnvironment env, ModuleContext context)
     {
+        //全局注册模块控制过滤器
+        services.AddControllersWithViews(option =>
+        {
+            option.Filters.Add<ModuleActionFilterAttribute>();
+        });
+        services.AddSingleton<IActionDescriptorChangeProvider>(AppActionDescriptorChangeProvider.Instance);
+        services.AddSingleton(AppActionDescriptorChangeProvider.Instance);
         //1.跨域处理
         services.AddCors(options =>
         {

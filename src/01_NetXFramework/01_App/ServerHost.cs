@@ -34,7 +34,7 @@ public static class ServerHost
         if (!string.IsNullOrWhiteSpace(startUrls))
             builder.WebHost.UseUrls(startUrls);
         //系统logo
-        NetxLogoInfo(builder.Configuration);
+        builder.Configuration.ShowNetxLogo();
         //注入系统服务
         builder.InjectFrameworkService(builder.Environment, builder.Configuration);
         //注入配置服务
@@ -53,6 +53,7 @@ public static class ServerHost
         app.InjectApplicationFinally();
         options.App = app;
         InternalApp.RootServices = app.Services;
+        InternalApp.Services = builder.Services;
         ServiceLocator.Instance = app.Services;
         app.Run();
     }
@@ -62,7 +63,7 @@ public static class ServerHost
     /// http://patorjk.com/software/taag/#p=display&f=Blocks&t=netx%20
     /// </summary>
     /// <returns></returns>
-    private static void NetxLogoInfo(ConfigurationManager config)
+    private static void ShowNetxLogo(this ConfigurationManager config)
     {
         if (Console.WindowWidth <= 0 || Console.WindowHeight <= 0)
             return;

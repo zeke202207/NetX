@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -7,6 +8,7 @@ using Netx.QuartzScheduling;
 using NetX.Common;
 using NetX.DatabaseSetup;
 using NetX.Module;
+using System.Reflection;
 using System.Runtime.Loader;
 
 namespace NetX.App;
@@ -100,33 +102,55 @@ public static class AppWebApplicationBuilderExtensions
     {
         foreach (var option in options)
         {
-            ApplicationPartManager apm = webApplicationBuilder.Services.AddControllers().PartManager;
-            IServiceCollection services = webApplicationBuilder.Services;
-            var contextProvider = new CollectibleAssemblyLoadContextProvider();
-            ModuleContext context = new ModuleContext() 
-            { 
-                Configuration = config, 
-                ModuleOptions = option.Value,
-                ConfigApplication = (context, app, env) => ConfigApplication(context, app, env)
-            };
-            InternalApp.ModuleContexts.Add(context.ModuleOptions.Id, context);
-            if (option.Value.IsSharedAssemblyContext)
-            {
-                var Initialize = contextProvider.LoadSharedCustomModule(option.Value, apm, services, env, context);
-                //统一注入 
-                if (Initialize != null)
-                    services.AddServicesFromAssembly(Initialize.GetType().Assembly);
-                context.Initialize = Initialize;
-            }
-            else
-            {
-                var alc = contextProvider.LoadCustomModule(option.Value, apm, services, env, context);
-                //统一注入 
-                alc.Assemblies.ToList().ForEach(asm => services.AddServicesFromAssembly(asm));
-                context.Initialize = alc.ModuleContext.Initialize;
-            }
+            webApplicationBuilder.Services.AddControllers().PartManager
+                .InjectApplicationPartManager(
+                () => webApplicationBuilder.Services,
+                 option.Value,
+                 env,
+                 config
+                );
         }
+        RegistResolving();
         return webApplicationBuilder;
+    }
+
+    /// <summary>
+    /// 注入用户模块
+    /// </summary>
+    /// <param name="apm"></param>
+    /// <param name="servicesFunc"></param>
+    /// <param name="options"></param>
+    /// <param name="env"></param>
+    /// <param name="config"></param>
+    /// <returns></returns>
+    public static ApplicationPartManager InjectApplicationPartManager(
+       this ApplicationPartManager apm,
+       Func<IServiceCollection> servicesFunc,
+       ModuleOptions options,
+       IWebHostEnvironment env,
+       IConfiguration config)
+    {
+
+        IServiceCollection services = servicesFunc?.Invoke();
+        var contextProvider = new CollectibleAssemblyLoadContextProvider();
+        ModuleContext context = new ModuleContext()
+        {
+            Configuration = config,
+            ModuleOptions = options,
+            ConfigApplication = (context, app, env) => ConfigApplication(context, app, env)
+        };
+        InternalApp.ModuleContexts.Add(context.ModuleOptions.Id, context);
+        ModuleInitializer initialize;
+        if (options.IsSharedAssemblyContext)
+            initialize = contextProvider.LoadSharedCustomModule(options, apm, services, env, context);
+        else
+            initialize = contextProvider.LoadCustomModule(options, apm, services, env, context);
+        //统一注入 
+        if (initialize != null)
+            services.AddServicesFromAssembly(initialize.GetType().Assembly);
+        context.Initialize = initialize;
+
+        return apm;
     }
 
     /// <summary>
@@ -193,5 +217,27 @@ public static class AppWebApplicationBuilderExtensions
     private static void ConfigApplication(ModuleContext context, IApplicationBuilder app, IWebHostEnvironment env)
     {
         context.Initialize?.ConfigureApplication(app, env, context);
+    }
+
+    /// <summary>
+    /// Occurs when the resolution of an assembly fails when attempting to load into this assembly load context.
+    /// </summary>
+    private static void RegistResolving()
+    {
+        ModuleAssemblyLoadContext.Default.Resolving -= Resolving;
+        ModuleAssemblyLoadContext.Default.Resolving += Resolving;
+    }
+
+    /// <summary>
+    /// Occurs when the resolution of an assembly fails when attempting to load into this assembly load context.
+    /// </summary>
+    /// <param name="context"></param>
+    /// <param name="assemblyName"></param>
+    /// <returns></returns>
+    private static Assembly Resolving(AssemblyLoadContext context, AssemblyName assemblyName)
+    {
+        //var temp = AssemblyLoadContextManager.Instance.All().Where(p => p.Name == assemblyName.Name);
+        //TODO:这里需要动态加载依赖项
+        return null;
     }
 }

@@ -15,6 +15,8 @@ public static class App
     /// </summary>
     public static IServiceProvider? RootServices => InternalApp.RootServices;
 
+    public static IServiceCollection Services => InternalApp.Services;
+
     /// <summary>
     /// 获取请求上下文
     /// </summary>

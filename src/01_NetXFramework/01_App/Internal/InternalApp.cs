@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using NetX.Module;
 
 namespace NetX.App;
@@ -9,6 +10,8 @@ internal class InternalApp
     /// 根服务
     /// </summary>
     internal static IServiceProvider? RootServices { get; set; }
+
+    internal static IServiceCollection Services { get; set; }
 
     internal static IConfiguration? Configuration { get; set; }
 

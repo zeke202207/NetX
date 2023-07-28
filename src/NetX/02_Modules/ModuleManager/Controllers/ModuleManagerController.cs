@@ -7,6 +7,7 @@ using NetX.Common.ModuleInfrastructure;
 using NetX.Swagger;
 using NetX.ModuleManager.Models;
 using Microsoft.AspNetCore.Http;
+using NetX.App;
 
 namespace NetX.ModuleManager.Controllers
 {
