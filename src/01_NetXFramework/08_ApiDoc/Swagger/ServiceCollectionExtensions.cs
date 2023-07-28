@@ -16,6 +16,10 @@ public static class ServiceCollectionExtensions
     /// <returns></returns>
     public static IServiceCollection AddSwagger(this IServiceCollection services, IEnumerable<(string name, string version, string des)> moduleInfos)
     {
+        //添加miniprofile
+        services.AddMiniProfiler(options => {
+            options.RouteBasePath = "/profiler";
+        }).AddEntityFramework();
         services.AddSwaggerGen(option =>
         {
             moduleInfos.ToList().ForEach(module =>
