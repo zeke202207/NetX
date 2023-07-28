@@ -1,10 +1,13 @@
-﻿namespace NetX.RBAC;
+﻿using NetX.Module;
+
+namespace NetX.RBAC;
 
 internal class RBACConst
 {
     /// <summary>
     /// rbac唯一标识
     /// </summary>
+    [ModuleKey]
     public const string C_RBAC_KEY = "10000000000000000000000000000001";
 
     /// <summary>
