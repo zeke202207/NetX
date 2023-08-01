@@ -1,0 +1,35 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".txt" #>
+
+using AutoMapper;
+
+namespace <#= _model.Project.Name #>.MapperProfiles;
+
+/// <summary>
+/// 映射清单
+/// </summary>
+public class DemoProfile : Profile
+{
+    /// <summary>
+    /// 
+    /// </summary>
+    public DemoProfile()
+    {
+        ToEntity();
+        ToModel();
+    }
+
+    private void ToEntity()
+    {
+       
+    }
+
+    private void ToModel()
+    {
+        
+    }
+}

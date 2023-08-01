@@ -1,0 +1,50 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".txt" #>
+
+using Microsoft.AspNetCore.Mvc;
+using Netx.Ddd.Core;
+using NetX.AuditLog;
+using NetX.Common.ModuleInfrastructure;
+using NetX.Swagger;
+using <#= _model.Project.Name #>.Domain;
+
+namespace <#= _model.Project.Name #>.Controllers;
+
+/// <summary>
+/// 账号管理api接口
+/// </summary>
+[ApiControllerDescription(<#= _model.Project.Alias #>Const.C_<#= _model.Project.Alias #>_GROUPNAME, Description = "")]
+public class DemoController : <#= _model.Project.Alias #>BaseController
+{
+    private readonly IQueryBus _demoQuery;
+    private readonly ICommandBus _demoCommand;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public DemoController(IQueryBus demoQuery, ICommandBus demoCommand)
+    {
+        this._demoQuery = demoQuery;
+        this._demoCommand = demoCommand;
+    }
+
+    [ApiActionDescription("Add")]
+    [HttpPost]
+    public async Task<ResultModel> AddDemo()
+    {
+        await _demoCommand.Send<DemoCommand>(new DemoCommand());
+        return true.ToSuccessResultModel();
+    }
+
+    [ApiActionDescription("Get")]
+    [HttpGet]
+    public async Task<ResultModel> GetDemo()
+    {
+        await _demoQuery.Send<DemoQuery,ResultModel>(new DemoQuery());
+        return true.ToSuccessResultModel();
+    }
+}

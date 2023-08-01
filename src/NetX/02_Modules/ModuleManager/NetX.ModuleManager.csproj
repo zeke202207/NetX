@@ -1,0 +1,335 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+  
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="copy $(TargetDir)NetX.ModuleManager.dll $(SolutionDir)NetX\01_WebApi\bin\Debug\net6.0\modules\modulemanager\NetX.ModuleManager.dll" />
+  </Target>
+  
+  <ItemGroup>
+    <None Remove="modules\modulemanager\plugin.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="modules\modulemanager\plugin.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\01_NetXFramework\01_App\NetX.App.csproj" />
+    <ProjectReference Include="..\..\..\01_NetXFramework\02_Module\NetX.Module.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Domain\Core\T4\src\CacheKeys.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CacheKeys.tt</DependentUpon>
+    </None>
+    <None Include="Domain\Core\T4\src\Common\Demo.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Demo.tt</DependentUpon>
+    </None>
+    <None Include="Domain\Core\T4\src\ConstEnum.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ConstEnum.tt</DependentUpon>
+    </None>
+    <None Include="Domain\Core\T4\src\Controllers\BaseController.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>BaseController.tt</DependentUpon>
+    </None>
+    <None Include="Domain\Core\T4\src\Controllers\DemoController.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DemoController.tt</DependentUpon>
+    </None>
+    <None Include="Domain\Core\T4\src\Domain\Commands\DemoCommand.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DemoCommand.tt</DependentUpon>
+    </None>
+    <None Include="Domain\Core\T4\src\Domain\Commands\Handlers\DemoCommandHandler.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DemoCommandHandler.tt</DependentUpon>
+    </None>
+    <None Include="Domain\Core\T4\src\Domain\Core\Handlers\DemoService.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DemoService.tt</DependentUpon>
+    </None>
+    <None Include="Domain\Core\T4\src\Domain\Core\IDemoService.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>IDemoService.tt</DependentUpon>
+    </None>
+    <None Include="Domain\Core\T4\src\Domain\Queries\DemoQuery.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DemoQuery.tt</DependentUpon>
+    </None>
+    <None Include="Domain\Core\T4\src\Domain\Queries\Handlers\DemoQueryHandler.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DemoQueryHandler.tt</DependentUpon>
+    </None>
+    <None Include="Domain\Core\T4\src\Initializer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Initializer.tt</DependentUpon>
+    </None>
+    <None Include="Domain\Core\T4\src\MapperProfiles\DemoProfile.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DemoProfile.tt</DependentUpon>
+    </None>
+    <None Include="Domain\Core\T4\src\Models\Dto\ReponseDto\DemoResponse.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DemoResponse.tt</DependentUpon>
+    </None>
+    <None Include="Domain\Core\T4\src\Models\Dto\RequestDto\DemoRequest.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DemoRequest.tt</DependentUpon>
+    </None>
+    <None Include="Domain\Core\T4\src\Models\Entity\DemoEntity.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DemoEntity.tt</DependentUpon>
+    </None>
+    <None Include="Domain\Core\T4\src\modules\plugin.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>plugin.tt</DependentUpon>
+    </None>
+    <None Include="Domain\Core\T4\src\modules\ref\readme.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>readme.tt</DependentUpon>
+    </None>
+    <None Include="Domain\Core\T4\src\Project.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Project.tt</DependentUpon>
+    </None>
+    <None Include="Domain\Core\T4\src\readme.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>readme.tt</DependentUpon>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.CodeDom" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Domain\Core\T4\src\CacheKeys.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>CacheKeys.cs</LastGenOutput>
+    </None>
+    <None Update="Domain\Core\T4\src\Common\Demo.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>Demo.cs</LastGenOutput>
+    </None>
+    <None Update="Domain\Core\T4\src\ConstEnum.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>ConstEnum.cs</LastGenOutput>
+    </None>
+    <None Update="Domain\Core\T4\src\Controllers\BaseController.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>BaseController.cs</LastGenOutput>
+    </None>
+    <None Update="Domain\Core\T4\src\Controllers\DemoController.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>DemoController.cs</LastGenOutput>
+    </None>
+    <None Update="Domain\Core\T4\src\Domain\Commands\DemoCommand.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>DemoCommand.cs</LastGenOutput>
+    </None>
+    <None Update="Domain\Core\T4\src\Domain\Commands\Handlers\DemoCommandHandler.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>DemoCommandHandler.cs</LastGenOutput>
+    </None>
+    <None Update="Domain\Core\T4\src\Domain\Core\Handlers\DemoService.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>DemoService.cs</LastGenOutput>
+    </None>
+    <None Update="Domain\Core\T4\src\Domain\Core\IDemoService.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>IDemoService.cs</LastGenOutput>
+    </None>
+    <None Update="Domain\Core\T4\src\Domain\Queries\DemoQuery.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>DemoQuery.cs</LastGenOutput>
+    </None>
+    <None Update="Domain\Core\T4\src\Domain\Queries\Handlers\DemoQueryHandler.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>DemoQueryHandler.cs</LastGenOutput>
+    </None>
+    <None Update="Domain\Core\T4\src\MapperProfiles\DemoProfile.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>DemoProfile.cs</LastGenOutput>
+    </None>
+    <None Update="Domain\Core\T4\src\Models\Dto\ReponseDto\DemoResponse.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>DemoResponse.cs</LastGenOutput>
+    </None>
+    <None Update="Domain\Core\T4\src\Models\Dto\RequestDto\DemoRequest.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>DemoRequest.cs</LastGenOutput>
+    </None>
+    <None Update="Domain\Core\T4\src\Models\Entity\DemoEntity.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>DemoEntity.cs</LastGenOutput>
+    </None>
+    <None Update="Domain\Core\T4\src\modules\plugin.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>plugin.cs</LastGenOutput>
+    </None>
+    <None Update="Domain\Core\T4\src\modules\ref\readme.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>readme.cs</LastGenOutput>
+    </None>
+    <None Update="Domain\Core\T4\src\Project.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>Project.cs</LastGenOutput>
+    </None>
+    <None Update="Domain\Core\T4\src\Initializer.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>Initializer.cs</LastGenOutput>
+    </None>
+    <None Update="Domain\Core\T4\src\readme.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>readme.cs</LastGenOutput>
+    </None>
+    <None Update="modules\modulemanager\ref\readme.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Domain\Core\T4\src\CacheKeys.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CacheKeys.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Domain\Core\T4\src\Common\Demo.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Demo.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Domain\Core\T4\src\ConstEnum.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ConstEnum.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Domain\Core\T4\src\Controllers\BaseController.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>BaseController.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Domain\Core\T4\src\Controllers\DemoController.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DemoController.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Domain\Core\T4\src\Domain\Commands\DemoCommand.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DemoCommand.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Domain\Core\T4\src\Domain\Commands\Handlers\DemoCommandHandler.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DemoCommandHandler.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Domain\Core\T4\src\Domain\Core\Handlers\DemoService.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DemoService.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Domain\Core\T4\src\Domain\Core\IDemoService.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>IDemoService.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Domain\Core\T4\src\Domain\Queries\DemoQuery.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DemoQuery.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Domain\Core\T4\src\Domain\Queries\Handlers\DemoQueryHandler.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DemoQueryHandler.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Domain\Core\T4\src\Initializer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Initializer.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Domain\Core\T4\src\MapperProfiles\DemoProfile.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DemoProfile.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Domain\Core\T4\src\Models\Dto\ReponseDto\DemoResponse.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DemoResponse.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Domain\Core\T4\src\Models\Dto\RequestDto\DemoRequest.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DemoRequest.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Domain\Core\T4\src\Models\Entity\DemoEntity.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DemoEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Domain\Core\T4\src\modules\plugin.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>plugin.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Domain\Core\T4\src\modules\ref\readme.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>readme.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Domain\Core\T4\src\Project.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Project.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Domain\Core\T4\src\readme.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>readme.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Domain\Core\T4\src\Solution.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Solution.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+</Project>

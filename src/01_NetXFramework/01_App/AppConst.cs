@@ -37,5 +37,10 @@ namespace NetX.App
         /// 调度服务器存储
         /// </summary>
         public const string C_SCHEDULING_QUARTZ_STORENAME = "Quartz.Simpl.RAMJobStore, Quartz";
+
+        /// <summary>
+        /// 临时目录
+        /// </summary>
+        public const string C_APP_TEMP = "Temp";
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NetX.Module;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,7 @@ namespace NetX.Audit
 {
     public static class AuditConstEnum
     {
+        [ModuleKey]
         public static string C_AUDIT_KEY = "10000000000000000000000000000006";
 
         /// <summary>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NetX.Module;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,7 @@ namespace NetX.Caching
         /// <summary>
         /// swagger分组名称
         /// </summary>
+        [ModuleKey]
         public const string C_Caching_GROUPNAME = "caching";
     }
 }
