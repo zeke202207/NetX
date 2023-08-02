@@ -34,7 +34,7 @@ public sealed class CollectibleAssemblyLoadContextProvider
         {
             //0. 将程序集装在到context中
             var assembly = context.LoadFromStream(fs);
-            AssemblyLoadContextManager.Instance.Add(assembly.GetName().Name, context);
+            AssemblyLoadContextManager.Instance.AddOrUpdate(assembly.GetName().Name, context);
             //1. 将程序集引用装在到context中
             options.Dependencies?.ForEach(p =>
             {
@@ -53,8 +53,12 @@ public sealed class CollectibleAssemblyLoadContextProvider
                 var moduleInitalizerInstance = Activator.CreateInstance(moduleType);
                 if( moduleInitalizerInstance is ModuleInitializer)
                 {
-                    context.ModuleContext.Initialize = moduleInitalizerInstance as ModuleInitializer;
-                    context.ModuleContext.Initialize?.ConfigureServices(services, env, context.ModuleContext);
+                    if (!services.IsReadOnly)
+                    {
+                        context.ModuleContext.Initialize = moduleInitalizerInstance as ModuleInitializer;
+                        context.ModuleContext.Initialize?.ConfigureServices(services, env, context.ModuleContext);
+                        context.ModuleContext.IsLoaded = true;
+                    }
                 }
             }
             context.ModuleContext.ModuleOptions = options;
@@ -83,7 +87,7 @@ public sealed class CollectibleAssemblyLoadContextProvider
         {
             //0. 将程序集装在到context中
             var assembly = ModuleAssemblyLoadContext.Default.LoadFromStream(fs);
-            AssemblyLoadContextManager.Instance.Add(assembly.GetName().Name, ModuleAssemblyLoadContext.Default);
+            AssemblyLoadContextManager.Instance.AddOrUpdate(assembly.GetName().Name, ModuleAssemblyLoadContext.Default);
             //1. 将程序集引用装在到context中
             options.Dependencies.ForEach(p =>
             {
@@ -115,7 +119,11 @@ public sealed class CollectibleAssemblyLoadContextProvider
                 if(moduleInitializerInstance is ModuleInitializer)
                 {
                     initialize = moduleInitializerInstance as ModuleInitializer;
-                    initialize?.ConfigureServices(services, env, moduleContext);
+                    if (!services.IsReadOnly)
+                    {
+                        initialize?.ConfigureServices(services, env, moduleContext);
+                        moduleContext.IsLoaded = true;
+                    }
                 }
             }
             return initialize;

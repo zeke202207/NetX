@@ -57,5 +57,12 @@ namespace NetX.ModuleManager.Models
         /// at will
         /// </example>
         public string Description { get; set; }
+
+        /// <summary>
+        /// 是否已加载
+        /// issue：net6 在ServiceCollection builder 之后，不允许在进行注入注册了，暂时没有找到解决方案
+        /// 因此，添加一个isloaded属性，用于告诉客户端，在上传模块后，模块注入未成功，需要重启后生效
+        /// </summary>
+        public bool RestartNeeded { get; set; }
     }
 }

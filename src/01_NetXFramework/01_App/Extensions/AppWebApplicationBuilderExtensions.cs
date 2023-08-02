@@ -65,7 +65,7 @@ public static class AppWebApplicationBuilderExtensions
             ConfigApplication = (context,app, env) => ConfigApplication(context,app, env)
         };
         Initialize.ConfigureServices(services, env, context);
-        InternalApp.ModuleContexts.Add(context.ModuleOptions.Id, context);
+        InternalApp.ModuleContexts.AddOrUpdate(context.ModuleOptions.Id, k => context, (k, v) => context);
         return webApplicationBuilder;
     }
 
@@ -139,7 +139,7 @@ public static class AppWebApplicationBuilderExtensions
             ModuleOptions = options,
             ConfigApplication = (context, app, env) => ConfigApplication(context, app, env)
         };
-        InternalApp.ModuleContexts.Add(context.ModuleOptions.Id, context);
+        InternalApp.ModuleContexts.AddOrUpdate(context.ModuleOptions.Id, k => context, (oldKye, oldValue) => context);
         ModuleInitializer initialize;
         if (options.IsSharedAssemblyContext)
             initialize = contextProvider.LoadSharedCustomModule(options, apm, services, env, context);

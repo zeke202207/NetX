@@ -10,6 +10,11 @@ namespace NetX.Module;
 public sealed class ModuleContext
 {
     /// <summary>
+    /// 是否状态完成
+    /// </summary>
+    public bool IsLoaded { get; set; } = false;
+
+    /// <summary>
     /// 配置项
     /// </summary>
     public IConfiguration? Configuration { get; set; }

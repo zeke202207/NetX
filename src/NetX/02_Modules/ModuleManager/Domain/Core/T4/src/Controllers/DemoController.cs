@@ -79,7 +79,7 @@ namespace NetX.ModuleManager.Domain.Core.T4.src.Controllers
         this._demoCommand = demoCommand;
     }
 
-    [ApiActionDescription(""Add"")]
+    [ApiActionDescription(""AddOrUpdate"")]
     [HttpPost]
     public async Task<ResultModel> AddDemo()
     {

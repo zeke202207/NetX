@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NetX.Module;
+using System.Collections.Concurrent;
 
 namespace NetX.App;
 
@@ -18,12 +19,12 @@ internal class InternalApp
     /// <summary>
     /// 系统模块、自定义模块上下文缓存集合
     /// </summary>
-    internal static Dictionary<Guid, ModuleContext> ModuleContexts = new();
+    internal static ConcurrentDictionary<Guid, ModuleContext> ModuleContexts = new();
 
     /// <summary>
     /// 用户组件模块设置项
     /// </summary>
-    internal static List<ModuleOptions> UserModeulOptions = new List<ModuleOptions>();
+    internal static ConcurrentBag<ModuleOptions> UserModeulOptions = new ();
 
     /// <summary>
     /// 系统组件模块
