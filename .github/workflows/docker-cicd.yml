@@ -11,7 +11,7 @@ jobs:
         - name: Test
           run: ls -ll
         - name: Build Image
-          run: docker build -t ${{ secrets.DOCKER_REPOSITORY }}:latest .
+          run: docker build -t ${{ secrets.DOCKER_REPOSITORY }}:latest -f ./src/NetX/01_WebApi/Dockerfile .
         - name: Login to registry
           run: docker login --username=${{ secrets.DOCKER_USERNAME }} --password ${{ secrets.DOCKER_PASSWORD }} registry.cn-shanghai.aliyuncs.com
         - name: Push Image
