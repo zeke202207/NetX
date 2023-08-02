@@ -33,10 +33,11 @@ COPY ["01_NetXFramework/11_DomainDrivenDesign/Ddd.Infrastructure/Netx.Ddd.Infras
 COPY ["01_NetXFramework/13_FileSystem/SimpleFileSystem/NetX.SimpleFileSystem.csproj", "01_NetXFramework/13_FileSystem/SimpleFileSystem/"]
 RUN dotnet restore "NetX/01_WebApi/NetX.WebApi.csproj"
 COPY . .
-RUN dotnet build "NetX/01_WebApi/NetX.WebApi.csproj" -c Release -o /app/build
+WORKDIR "/src/NetX/01_WebApi"
+RUN dotnet build "NetX.WebApi.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "NetX/01_WebApi/NetX.WebApi.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "NetX.WebApi.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
