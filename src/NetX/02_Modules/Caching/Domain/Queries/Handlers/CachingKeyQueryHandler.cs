@@ -30,6 +30,9 @@ namespace NetX.Caching.Domain
             foreach (var item in keys)
             {
                 var splitItem = item.Split(':');
+                //过滤非约定缓存管理:约定格式： 模块:业务：缓存
+                if (splitItem?.Count() <= 1)
+                    continue;
                 var prefixKey = string.Join(":", splitItem, 0, splitItem.Length - 1);
                 var key = splitItem[splitItem.Length - 1];
                 CachingKeyModel model = new CachingKeyModel();
