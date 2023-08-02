@@ -8,7 +8,7 @@ namespace NetX.ModuleManager
         /// 脚手架唯一标识
         /// </summary>
         [ModuleKey]
-        public const string C_MODULEMANAGER_KEY = "10000000000000000000000000000008";
+        public const string C_MODULEMANAGER_KEY = "10000000000000000000000000000009";
 
         /// <summary>
         /// swagger分组名称
