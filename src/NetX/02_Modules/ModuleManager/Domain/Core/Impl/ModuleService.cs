@@ -91,8 +91,8 @@ namespace NetX.ModuleManager.Domain
             //TODO:NET6版本，不允许在 app build() 之后再次向 ServiceCollection 注入服务
             //暂时没有找到解决方案，上传module后
             //仅将文件解压到插件目录，重启后生效
-            //await InjectService(modulePath, moduleName);
-            //ResetControllActions();
+            await InjectService(modulePath, moduleName);
+            ResetControllActions();
             return true.ToSuccessResultModel();
         }
 
@@ -147,6 +147,7 @@ namespace NetX.ModuleManager.Domain
                 if (Directory.Exists(refDir))
                     Directory.EnumerateFiles(refDir, "*.dll")
                     .ToList().ForEach(p => options.Dependencies.Add(p));
+                RunOption.Default.AddMoudleOption(options);
             }
             //TODO:解决运行时注入问题(如何在运行时状态下动态注入新增的module？？？)
             //暂时还没有想到解决方案

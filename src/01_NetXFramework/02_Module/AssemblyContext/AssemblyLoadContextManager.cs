@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Loader;
@@ -15,11 +16,11 @@ namespace NetX.Module
 
         public static AssemblyLoadContextManager Instance => _instance.Value;
 
-        private Dictionary<string, AssemblyLoadContext> LoadContexts { get; } = new Dictionary<string, AssemblyLoadContext>();
+        private ConcurrentDictionary<string, AssemblyLoadContext> LoadContexts { get; } = new();
 
-        public void Add(string assemblyName, AssemblyLoadContext context)
+        public void AddOrUpdate(string assemblyName, AssemblyLoadContext context)
         {
-            LoadContexts.Add(assemblyName, context);
+            LoadContexts.AddOrUpdate(assemblyName, k => context, (k, v) => context);
         }
 
         public IEnumerable<AssemblyLoadContext> All()

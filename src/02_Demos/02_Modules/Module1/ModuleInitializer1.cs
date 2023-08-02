@@ -32,7 +32,7 @@ public class ModuleInitializer1 : ModuleInitializer
         services.AddScoped<IEventSubscriber, EventHandler>();
         services.AddScoped<IEventSubscriber, EventHandler1>();
 
-        services.AddChain<DataflowParameterA, DataflowResultA>(typeof(ChainMiddlewareA), typeof(ChainMiddlewareB), typeof(ChainMiddlewareC));
+        services.AddChain<DataflowParameterA, DataflowResultA>( ServiceLifetime.Scoped,typeof(ChainMiddlewareA), typeof(ChainMiddlewareB), typeof(ChainMiddlewareC));
 
         //  services.AddChain<DataflowParameterA, DataflowResultA>(typeof(ActivatorMiddlewareCreater)
         //, typeof(ChainMiddlewareA), typeof(ChainMiddlewareB), typeof(ChainMiddlewareC));

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NetX.Module;
+using System.Collections.Concurrent;
 
 namespace NetX.App;
 
@@ -161,6 +162,33 @@ public sealed class RunOption
                 Modules.Add(options.Id, options);
                 InternalApp.UserModeulOptions.Add(options);
             });
+    }
+
+    /// <summary>
+    /// 添加模块
+    /// </summary>
+    /// <param name="option"></param>
+    public void AddMoudleOption(ModuleOptions option)
+    {
+        if (null == option)
+            return;
+        var opt = InternalApp.UserModeulOptions.FirstOrDefault(p => p.Id == option.Id);
+        if (null == opt)
+            InternalApp.UserModeulOptions.Add(option);
+        else
+        {
+            ConcurrentBag<ModuleOptions> temp = new ();
+            foreach(var item in InternalApp.UserModeulOptions)
+            {
+                if (item.Id == option.Id)
+                {
+                    temp.Add(option);
+                    continue;
+                }
+                temp.Add(item);
+            }
+            InternalApp.UserModeulOptions = temp;
+        }
     }
 }
 

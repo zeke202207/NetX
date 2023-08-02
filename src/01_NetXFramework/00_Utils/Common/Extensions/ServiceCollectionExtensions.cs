@@ -32,6 +32,8 @@ public static class ServiceCollectionExtensions
     /// <returns></returns>
     public static IServiceCollection AddServicesFromAssembly(this IServiceCollection services, Assembly assembly)
     {
+        if(services.IsReadOnly)
+            return services;
         foreach (var type in assembly.GetTypes())
         {
             #region ==单例注入==

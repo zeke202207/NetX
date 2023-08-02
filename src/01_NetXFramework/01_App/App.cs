@@ -42,6 +42,11 @@ public static class App
     public static IEnumerable<ModuleOptions> GetUserModuleOptions => InternalApp.UserModeulOptions;
 
     /// <summary>
+    /// 获取模块上下文
+    /// </summary>
+    public static IEnumerable<ModuleContext> GetModuleContexts => InternalApp.ModuleContexts.Select(p => p.Value);
+
+    /// <summary>
     /// 获取全部模块信息
     /// </summary>
     /// <returns></returns>
