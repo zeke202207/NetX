@@ -1,4 +1,4 @@
-﻿using Netx.Ddd.Domain;
+﻿using NetX.Ddd.Domain;
 using NetX.Audit.Models.Entity;
 using NetX.Common.Attributes;
 using System;

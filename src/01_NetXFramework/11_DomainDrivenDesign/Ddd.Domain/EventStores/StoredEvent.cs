@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace Netx.Ddd.Domain;
+namespace NetX.Ddd.Domain;
 
 [Table("sys_eventstore")]
 public class StoredEvent : EventBase

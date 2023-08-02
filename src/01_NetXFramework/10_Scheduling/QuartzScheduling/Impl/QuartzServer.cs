@@ -5,7 +5,7 @@ using Quartz;
 using Quartz.Impl;
 using System.Collections.Specialized;
 
-namespace Netx.QuartzScheduling;
+namespace NetX.QuartzScheduling;
 
 /// <summary>
 /// Quartz调度服务

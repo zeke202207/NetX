@@ -1,5 +1,5 @@
 ﻿using Dapper;
-using Netx.Ddd.Domain;
+using NetX.Ddd.Domain;
 using NetX.Common.Attributes;
 using NetX.TaskScheduling.Model;
 using Newtonsoft.Json;

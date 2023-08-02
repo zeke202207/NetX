@@ -1,4 +1,4 @@
-﻿using Netx.Ddd.Domain;
+﻿using NetX.Ddd.Domain;
 using NetX.Cache.Core;
 using NetX.Caching.Models.Dtos;
 using NetX.Common.Attributes;

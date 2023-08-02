@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Netx.Ddd.Core;
+namespace NetX.Ddd.Core;
 
 /// <summary>
 /// Defines a publish interface

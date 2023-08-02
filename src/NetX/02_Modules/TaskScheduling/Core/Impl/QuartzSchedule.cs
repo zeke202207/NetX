@@ -1,4 +1,4 @@
-﻿using Netx.QuartzScheduling;
+﻿using NetX.QuartzScheduling;
 using NetX.Common.Attributes;
 using NetX.TaskScheduling.Model;
 using Quartz;

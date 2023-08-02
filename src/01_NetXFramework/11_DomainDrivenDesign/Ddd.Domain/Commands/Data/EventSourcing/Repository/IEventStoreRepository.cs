@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Netx.Ddd.Domain;
+namespace NetX.Ddd.Domain;
 
 public interface IEventStoreRepository : IDisposable
 {

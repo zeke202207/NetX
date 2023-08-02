@@ -1,4 +1,4 @@
-﻿namespace Netx.Ddd.Domain;
+﻿namespace NetX.Ddd.Domain;
 
 public sealed class EventStoreSQLContext : BaseDbContext
 {

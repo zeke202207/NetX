@@ -1,4 +1,4 @@
-﻿using Netx.Ddd.Domain;
+﻿using NetX.Ddd.Domain;
 using NetX.Common.ModuleInfrastructure;
 using System.Diagnostics.CodeAnalysis;
 

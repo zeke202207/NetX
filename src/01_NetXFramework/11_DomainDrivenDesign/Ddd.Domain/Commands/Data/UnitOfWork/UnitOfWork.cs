@@ -1,23 +1,23 @@
 ﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Netx.Ddd.Core;
+using NetX.Ddd.Core;
 using NetX.Module;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Netx.Ddd.Domain.Aggregates;
+using NetX.Ddd.Domain.Aggregates;
 using NetX.Common.Attributes;
 using NetX.Common;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Concurrent;
 using System.Data;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using static Netx.Ddd.Domain.UnitOfWork;
+using static NetX.Ddd.Domain.UnitOfWork;
 using System.Reflection;
 using Microsoft.EntityFrameworkCore.Storage;
 
-namespace Netx.Ddd.Domain;
+namespace NetX.Ddd.Domain;
 
 public class UnitOfWork : IUnitOfWork
 {

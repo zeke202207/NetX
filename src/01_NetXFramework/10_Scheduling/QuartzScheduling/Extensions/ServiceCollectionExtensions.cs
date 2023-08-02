@@ -4,7 +4,7 @@ using NetX.Common.Attributes;
 using System.Reflection;
 using static Quartz.Logging.OperationName;
 
-namespace Netx.QuartzScheduling;
+namespace NetX.QuartzScheduling;
 
 /// <summary>
 /// 服务注册扩展类
@@ -12,7 +12,7 @@ namespace Netx.QuartzScheduling;
 public static class ServiceCollectionExtensions
 {
     /// <summary>
-    /// 添加<see cref="Netx.QuartzScheduling"/>服务
+    /// 添加<see cref="NetX.QuartzScheduling"/>服务
     /// </summary>
     /// <param name="services">Specifies the contract for a collection of service descriptors.</param>
     /// <returns></returns>
@@ -30,7 +30,7 @@ public static class ServiceCollectionExtensions
     }
 
     /// <summary>
-    /// 添加<see cref="Netx.QuartzScheduling"/>服务
+    /// 添加<see cref="NetX.QuartzScheduling"/>服务
     /// </summary  
     /// <param name="service"></param>           
     /// <param name="injectJobs"></param>

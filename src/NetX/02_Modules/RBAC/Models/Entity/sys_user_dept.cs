@@ -1,5 +1,5 @@
-﻿using Netx.Ddd.Domain;
-using Netx.Ddd.Domain.Aggregates;
+﻿using NetX.Ddd.Domain;
+using NetX.Ddd.Domain.Aggregates;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NetX.RBAC.Models;

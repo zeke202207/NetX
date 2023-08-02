@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Netx.QuartzScheduling
+namespace NetX.QuartzScheduling
 {
     /// <summary>
     /// 工作任务日志记录器接口

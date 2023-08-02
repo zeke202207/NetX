@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Netx.Ddd.Domain;
+using NetX.Ddd.Domain;
 using NetX.Common.Attributes;
 using NetX.TaskScheduling.Domain.Commands;
 using NetX.TaskScheduling.Model;

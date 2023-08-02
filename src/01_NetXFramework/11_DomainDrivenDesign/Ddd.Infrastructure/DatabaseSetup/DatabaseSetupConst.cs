@@ -1,4 +1,4 @@
-﻿namespace Netx.Ddd.Infrastructure.DatabaseSetup;
+﻿namespace NetX.Ddd.Infrastructure.DatabaseSetup;
 
 internal class DatabaseSetupConst
 {

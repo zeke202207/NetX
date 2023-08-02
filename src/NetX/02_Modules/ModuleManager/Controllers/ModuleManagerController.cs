@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Netx.Ddd.Core;
+using NetX.Ddd.Core;
 using NetX.Authentication.Core;
 using NetX.ModuleManager.Domain;
 using NetX.Common.ModuleInfrastructure;

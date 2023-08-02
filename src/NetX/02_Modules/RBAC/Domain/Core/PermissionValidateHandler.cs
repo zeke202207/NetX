@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Netx.Ddd.Core;
+using NetX.Ddd.Core;
 using NetX.Authentication.Core;
 using NetX.Cache.Core;
 using NetX.Common;

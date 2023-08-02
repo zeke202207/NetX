@@ -95,7 +95,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetX.LocalFileServer", "Net
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "10_Scheduling", "10_Scheduling", "{FAF01CD7-B663-4CC6-989A-E1AEFA4842F0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Netx.QuartzScheduling", "01_NetXFramework\10_Scheduling\QuartzScheduling\Netx.QuartzScheduling.csproj", "{73B851D9-B95F-41D8-973F-2CAB13036015}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetX.QuartzScheduling", "01_NetXFramework\10_Scheduling\QuartzScheduling\NetX.QuartzScheduling.csproj", "{73B851D9-B95F-41D8-973F-2CAB13036015}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetX.TaskScheduling", "NetX\02_Modules\TaskScheduling\NetX.TaskScheduling.csproj", "{9CAFF79F-D82B-48AC-9A35-C7D7DF2CCE4D}"
 EndProject

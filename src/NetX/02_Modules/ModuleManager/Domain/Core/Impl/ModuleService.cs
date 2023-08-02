@@ -1,4 +1,4 @@
-﻿using Netx.Ddd.Core;
+﻿using NetX.Ddd.Core;
 using NetX.ModuleManager.Models;
 using NetX.Common.Attributes;
 using NetX.Common.ModuleInfrastructure;

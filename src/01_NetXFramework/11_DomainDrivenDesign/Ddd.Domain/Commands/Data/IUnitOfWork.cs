@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage;
-using Netx.Ddd.Domain.Aggregates;
-using static Netx.Ddd.Domain.UnitOfWork;
+using NetX.Ddd.Domain.Aggregates;
+using static NetX.Ddd.Domain.UnitOfWork;
 
-namespace Netx.Ddd.Domain;
+namespace NetX.Ddd.Domain;
 
 public interface IUnitOfWork : IDisposable
 {

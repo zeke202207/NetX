@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualBasic;
-using Netx.QuartzScheduling;
+using NetX.QuartzScheduling;
 using NetX.Common;
 using NetX.DatabaseSetup;
 using NetX.Module;

@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Netx.Ddd.Domain;
+namespace NetX.Ddd.Domain;
 
 [Scoped]
 public class EventStoreSQLRepository : IEventStoreRepository

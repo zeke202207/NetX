@@ -6,7 +6,7 @@
 <#@ output extension=".txt" #>
 
 using Microsoft.AspNetCore.Mvc;
-using Netx.Ddd.Core;
+using NetX.Ddd.Core;
 using NetX.AuditLog;
 using NetX.Common.ModuleInfrastructure;
 using NetX.Swagger;

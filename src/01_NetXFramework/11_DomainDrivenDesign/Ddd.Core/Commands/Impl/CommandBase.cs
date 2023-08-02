@@ -1,4 +1,4 @@
-﻿namespace Netx.Ddd.Core;
+﻿namespace NetX.Ddd.Core;
 
 /// <summary>
 /// Defines a Command interface

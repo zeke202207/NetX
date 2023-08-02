@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NetX.Common.ModuleInfrastructure;
-using Netx.Ddd.Core;
+using NetX.Ddd.Core;
 using NetX.Swagger;
 using System;
 using System.Collections.Generic;

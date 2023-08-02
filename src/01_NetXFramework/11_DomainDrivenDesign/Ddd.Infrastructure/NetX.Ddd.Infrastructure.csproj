@@ -12,8 +12,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\04_DatabaseSetup\NetX.DatabaseSetup.csproj" />
-    <ProjectReference Include="..\Ddd.Core\Netx.Ddd.Core.csproj" />
-    <ProjectReference Include="..\Ddd.Domain\Netx.Ddd.Domain.csproj" />
+    <ProjectReference Include="..\Ddd.Core\NetX.Ddd.Core.csproj" />
+    <ProjectReference Include="..\Ddd.Domain\NetX.Ddd.Domain.csproj" />
   </ItemGroup>
 
 </Project>

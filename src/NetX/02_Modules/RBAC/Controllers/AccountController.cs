@@ -1,6 +1,6 @@
 ﻿using Authentication.OAuth;
 using Microsoft.AspNetCore.Mvc;
-using Netx.Ddd.Core;
+using NetX.Ddd.Core;
 using NetX.AuditLog;
 using NetX.Authentication.Core;
 using NetX.Common;
