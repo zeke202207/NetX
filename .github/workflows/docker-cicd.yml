@@ -9,7 +9,7 @@ jobs:
         - name: Checkout
           uses: actions/checkout@v3
         - name: Test
-          run: cd /src
+          run: cd src
         - name: Build Image
           run: docker build -t ${{ secrets.DOCKER_REPOSITORY }}:latest -f ./src/Dockerfile .
         - name: Login to registry
