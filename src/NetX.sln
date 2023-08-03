@@ -105,11 +105,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetX.SharedFramework.ChainP
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "11_DomainDrivenDesign", "11_DomainDrivenDesign", "{89473DE9-F30A-4C6B-9332-A95DA3EB70AF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Netx.Ddd.Core", "01_NetXFramework\11_DomainDrivenDesign\Ddd.Core\Netx.Ddd.Core.csproj", "{CA7E56F5-6DB5-4661-9992-A4A91E4BE02D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetX.Ddd.Core", "01_NetXFramework\11_DomainDrivenDesign\Ddd.Core\NetX.Ddd.Core.csproj", "{CA7E56F5-6DB5-4661-9992-A4A91E4BE02D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Netx.Ddd.Domain", "01_NetXFramework\11_DomainDrivenDesign\Ddd.Domain\Netx.Ddd.Domain.csproj", "{127FCD4E-A0EE-44D0-89FD-2E3D36CFC4DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetX.Ddd.Domain", "01_NetXFramework\11_DomainDrivenDesign\Ddd.Domain\NetX.Ddd.Domain.csproj", "{127FCD4E-A0EE-44D0-89FD-2E3D36CFC4DB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Netx.Ddd.Infrastructure", "01_NetXFramework\11_DomainDrivenDesign\Ddd.Infrastructure\Netx.Ddd.Infrastructure.csproj", "{1732619F-6433-4DD6-88CB-C3FE814D89B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetX.Ddd.Infrastructure", "01_NetXFramework\11_DomainDrivenDesign\Ddd.Infrastructure\NetX.Ddd.Infrastructure.csproj", "{1732619F-6433-4DD6-88CB-C3FE814D89B1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetX.DiagnosticLog", "01_NetXFramework\07_Logging\DiagnosticLog\NetX.DiagnosticLog.csproj", "{E76FD5AA-8D26-4FA1-BCF7-25B4ADFC825F}"
 EndProject
