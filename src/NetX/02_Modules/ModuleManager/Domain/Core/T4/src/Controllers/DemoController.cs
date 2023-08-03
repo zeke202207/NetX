@@ -28,7 +28,7 @@ namespace NetX.ModuleManager.Domain.Core.T4.src.Controllers
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write("\r\nusing Microsoft.AspNetCore.Mvc;\r\nusing Netx.Ddd.Core;\r\nusing NetX.AuditLog;\r\nus" +
+            this.Write("\r\nusing Microsoft.AspNetCore.Mvc;\r\nusing NetX.Ddd.Core;\r\nusing NetX.AuditLog;\r\nus" +
                     "ing NetX.Common.ModuleInfrastructure;\r\nusing NetX.Swagger;\r\nusing ");
             
             #line 13 "D:\Persion\fw\netx\src\NetX\02_Modules\Cli\Domain\Core\T4\src\Controllers\DemoController.tt"

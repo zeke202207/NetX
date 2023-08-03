@@ -28,7 +28,7 @@ namespace NetX.ModuleManager.Domain.Core.T4.src.Domain.Queries
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write("\r\nusing Netx.Ddd.Domain;\r\nusing NetX.Common.ModuleInfrastructure;\r\n\r\nnamespace ");
+            this.Write("\r\nusing NetX.Ddd.Domain;\r\nusing NetX.Common.ModuleInfrastructure;\r\n\r\nnamespace ");
             
             #line 11 "D:\Persion\fw\netx\src\NetX\02_Modules\Cli\Domain\Core\T4\src\Domain\Queries\DemoQuery.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_model.Project.Name));

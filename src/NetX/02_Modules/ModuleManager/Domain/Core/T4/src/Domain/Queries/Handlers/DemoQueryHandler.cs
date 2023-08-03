@@ -28,7 +28,7 @@ namespace NetX.ModuleManager.Domain.Core.T4.src.Domain.Queries.Handlers
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write("\r\nusing AutoMapper;\r\nusing Dapper;\r\nusing Netx.Ddd.Domain;\r\nusing Netx.Ddd.Domain" +
+            this.Write("\r\nusing AutoMapper;\r\nusing Dapper;\r\nusing NetX.Ddd.Domain;\r\nusing NetX.Ddd.Domain" +
                     ".Extensions;\r\nusing NetX.Common.Attributes;\r\nusing NetX.Common.ModuleInfrastruct" +
                     "ure;\r\n\r\nnamespace ");
             
