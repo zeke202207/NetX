@@ -9,9 +9,9 @@ jobs:
         - name: Checkout
           uses: actions/checkout@v3
         - name: debug
-          run: ls -ll
+          run: cd src/ & ls -ll
         - name: Build Image
-          run: docker build -f Dockerfile . -t ${{ secrets.DOCKER_REPOSITORY }}:latest
+          run: docker build -t ${{ secrets.DOCKER_REPOSITORY }}:latest .
         - name: Login to registry
           run: docker login --username=${{ secrets.DOCKER_USERNAME }} --password ${{ secrets.DOCKER_PASSWORD }} registry.cn-shanghai.aliyuncs.com
         - name: Push Image
