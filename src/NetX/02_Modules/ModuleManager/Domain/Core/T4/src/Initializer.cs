@@ -18,7 +18,7 @@ namespace NetX.ModuleManager.Domain.Core.T4.src
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "D:\Persion\fw\netx\src\NetX\02_Modules\Cli\Domain\Core\T4\src\Initializer.tt"
+    #line 1 "D:\Persion\fw\netx\src\NetX\02_Modules\ModuleManager\Domain\Core\T4\src\Initializer.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "17.0.0.0")]
     public partial class Initializer : InitializerBase
     {
@@ -40,7 +40,7 @@ using System.Reflection;
 
 namespace ");
             
-            #line 17 "D:\Persion\fw\netx\src\NetX\02_Modules\Cli\Domain\Core\T4\src\Initializer.tt"
+            #line 17 "D:\Persion\fw\netx\src\NetX\02_Modules\ModuleManager\Domain\Core\T4\src\Initializer.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_model.Project.Name));
             
             #line default
@@ -48,7 +48,7 @@ namespace ");
             this.Write(";\r\n\r\n/// <summary>\r\n/// 模块初始化器\r\n/// netx框架自动加载初始化模块\r\n/// </summary>\r\ninternal cla" +
                     "ss ");
             
-            #line 23 "D:\Persion\fw\netx\src\NetX\02_Modules\Cli\Domain\Core\T4\src\Initializer.tt"
+            #line 23 "D:\Persion\fw\netx\src\NetX\02_Modules\ModuleManager\Domain\Core\T4\src\Initializer.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_model.Project.Alias));
             
             #line default
@@ -56,14 +56,14 @@ namespace ");
             this.Write("Initializer : ModuleInitializer\r\n{\r\n    /// <summary>\r\n    /// 模块唯一标识\r\n    /// ne" +
                     "tx内，不允许重复\r\n    /// </summary>\r\n    public override Guid Key => new Guid(");
             
-            #line 29 "D:\Persion\fw\netx\src\NetX\02_Modules\Cli\Domain\Core\T4\src\Initializer.tt"
+            #line 29 "D:\Persion\fw\netx\src\NetX\02_Modules\ModuleManager\Domain\Core\T4\src\Initializer.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_model.Project.Alias));
             
             #line default
             #line hidden
             this.Write("Const.C_");
             
-            #line 29 "D:\Persion\fw\netx\src\NetX\02_Modules\Cli\Domain\Core\T4\src\Initializer.tt"
+            #line 29 "D:\Persion\fw\netx\src\NetX\02_Modules\ModuleManager\Domain\Core\T4\src\Initializer.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_model.Project.Alias));
             
             #line default

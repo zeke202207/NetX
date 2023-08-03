@@ -18,7 +18,7 @@ namespace NetX.ModuleManager.Domain.Core.T4.src.modules
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "D:\Persion\fw\netx\src\NetX\02_Modules\Cli\Domain\Core\T4\src\modules\plugin.tt"
+    #line 1 "D:\Persion\fw\netx\src\NetX\02_Modules\ModuleManager\Domain\Core\T4\src\modules\plugin.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "17.0.0.0")]
     public partial class plugin : pluginBase
     {
@@ -30,49 +30,49 @@ namespace NetX.ModuleManager.Domain.Core.T4.src.modules
         {
             this.Write("\r\n{\r\n  \"Id\": \"");
             
-            #line 9 "D:\Persion\fw\netx\src\NetX\02_Modules\Cli\Domain\Core\T4\src\modules\plugin.tt"
+            #line 9 "D:\Persion\fw\netx\src\NetX\02_Modules\ModuleManager\Domain\Core\T4\src\modules\plugin.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_model.Project.Id));
             
             #line default
             #line hidden
             this.Write("\",\r\n  \"Name\":\"");
             
-            #line 10 "D:\Persion\fw\netx\src\NetX\02_Modules\Cli\Domain\Core\T4\src\modules\plugin.tt"
+            #line 10 "D:\Persion\fw\netx\src\NetX\02_Modules\ModuleManager\Domain\Core\T4\src\modules\plugin.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_model.Project.Alias));
             
             #line default
             #line hidden
             this.Write("\",\r\n  \"Version\": \"");
             
-            #line 11 "D:\Persion\fw\netx\src\NetX\02_Modules\Cli\Domain\Core\T4\src\modules\plugin.tt"
+            #line 11 "D:\Persion\fw\netx\src\NetX\02_Modules\ModuleManager\Domain\Core\T4\src\modules\plugin.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_model.Project.Version));
             
             #line default
             #line hidden
             this.Write("\",\r\n  \"Enabled\": ");
             
-            #line 12 "D:\Persion\fw\netx\src\NetX\02_Modules\Cli\Domain\Core\T4\src\modules\plugin.tt"
+            #line 12 "D:\Persion\fw\netx\src\NetX\02_Modules\ModuleManager\Domain\Core\T4\src\modules\plugin.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_model.Project.Enabled.ToString().ToLower()));
             
             #line default
             #line hidden
             this.Write(",\r\n  \"FileName\": \"");
             
-            #line 13 "D:\Persion\fw\netx\src\NetX\02_Modules\Cli\Domain\Core\T4\src\modules\plugin.tt"
+            #line 13 "D:\Persion\fw\netx\src\NetX\02_Modules\ModuleManager\Domain\Core\T4\src\modules\plugin.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_model.Project.Name));
             
             #line default
             #line hidden
             this.Write(".dll\",\r\n  \"IsSharedAssemblyContext\": ");
             
-            #line 14 "D:\Persion\fw\netx\src\NetX\02_Modules\Cli\Domain\Core\T4\src\modules\plugin.tt"
+            #line 14 "D:\Persion\fw\netx\src\NetX\02_Modules\ModuleManager\Domain\Core\T4\src\modules\plugin.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_model.Project.IsSharedAssemblyContext.ToString().ToLower()));
             
             #line default
             #line hidden
             this.Write(",\r\n  \"Description\": \"");
             
-            #line 15 "D:\Persion\fw\netx\src\NetX\02_Modules\Cli\Domain\Core\T4\src\modules\plugin.tt"
+            #line 15 "D:\Persion\fw\netx\src\NetX\02_Modules\ModuleManager\Domain\Core\T4\src\modules\plugin.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_model.Project.Description));
             
             #line default

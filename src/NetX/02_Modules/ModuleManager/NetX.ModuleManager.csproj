@@ -28,109 +28,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Domain\Core\T4\src\CacheKeys.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>CacheKeys.tt</DependentUpon>
-    </None>
-    <None Include="Domain\Core\T4\src\Common\Demo.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Demo.tt</DependentUpon>
-    </None>
-    <None Include="Domain\Core\T4\src\ConstEnum.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>ConstEnum.tt</DependentUpon>
-    </None>
-    <None Include="Domain\Core\T4\src\Controllers\BaseController.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>BaseController.tt</DependentUpon>
-    </None>
-    <None Include="Domain\Core\T4\src\Controllers\DemoController.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>DemoController.tt</DependentUpon>
-    </None>
-    <None Include="Domain\Core\T4\src\Domain\Commands\DemoCommand.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>DemoCommand.tt</DependentUpon>
-    </None>
-    <None Include="Domain\Core\T4\src\Domain\Commands\Handlers\DemoCommandHandler.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>DemoCommandHandler.tt</DependentUpon>
-    </None>
-    <None Include="Domain\Core\T4\src\Domain\Core\Handlers\DemoService.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>DemoService.tt</DependentUpon>
-    </None>
-    <None Include="Domain\Core\T4\src\Domain\Core\IDemoService.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>IDemoService.tt</DependentUpon>
-    </None>
-    <None Include="Domain\Core\T4\src\Domain\Queries\DemoQuery.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>DemoQuery.tt</DependentUpon>
-    </None>
-    <None Include="Domain\Core\T4\src\Domain\Queries\Handlers\DemoQueryHandler.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>DemoQueryHandler.tt</DependentUpon>
-    </None>
-    <None Include="Domain\Core\T4\src\Initializer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Initializer.tt</DependentUpon>
-    </None>
-    <None Include="Domain\Core\T4\src\MapperProfiles\DemoProfile.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>DemoProfile.tt</DependentUpon>
-    </None>
-    <None Include="Domain\Core\T4\src\Models\Dto\ReponseDto\DemoResponse.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>DemoResponse.tt</DependentUpon>
-    </None>
-    <None Include="Domain\Core\T4\src\Models\Dto\RequestDto\DemoRequest.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>DemoRequest.tt</DependentUpon>
-    </None>
-    <None Include="Domain\Core\T4\src\Models\Entity\DemoEntity.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>DemoEntity.tt</DependentUpon>
-    </None>
-    <None Include="Domain\Core\T4\src\modules\plugin.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>plugin.tt</DependentUpon>
-    </None>
-    <None Include="Domain\Core\T4\src\modules\ref\readme.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>readme.tt</DependentUpon>
-    </None>
-    <None Include="Domain\Core\T4\src\Project.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Project.tt</DependentUpon>
-    </None>
-    <None Include="Domain\Core\T4\src\readme.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>readme.tt</DependentUpon>
-    </None>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="System.CodeDom" Version="7.0.0" />
   </ItemGroup>
 
@@ -330,6 +227,19 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Solution.tt</DependentUpon>
     </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Domain\Core\T4\src\Common\" />
+    <Folder Include="Domain\Core\T4\src\Controllers\" />
+    <Folder Include="Domain\Core\T4\src\Domain\Commands\Handlers\" />
+    <Folder Include="Domain\Core\T4\src\Domain\Core\Handlers\" />
+    <Folder Include="Domain\Core\T4\src\Domain\Queries\Handlers\" />
+    <Folder Include="Domain\Core\T4\src\MapperProfiles\" />
+    <Folder Include="Domain\Core\T4\src\Models\Dto\ReponseDto\" />
+    <Folder Include="Domain\Core\T4\src\Models\Dto\RequestDto\" />
+    <Folder Include="Domain\Core\T4\src\Models\Entity\" />
+    <Folder Include="Domain\Core\T4\src\modules\ref\" />
   </ItemGroup>
 
 </Project>

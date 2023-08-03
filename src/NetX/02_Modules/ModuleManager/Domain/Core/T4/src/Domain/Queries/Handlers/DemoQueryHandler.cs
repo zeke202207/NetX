@@ -18,7 +18,7 @@ namespace NetX.ModuleManager.Domain.Core.T4.src.Domain.Queries.Handlers
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "D:\Persion\fw\netx\src\NetX\02_Modules\Cli\Domain\Core\T4\src\Domain\Queries\Handlers\DemoQueryHandler.tt"
+    #line 1 "D:\Persion\fw\netx\src\NetX\02_Modules\ModuleManager\Domain\Core\T4\src\Domain\Queries\Handlers\DemoQueryHandler.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "17.0.0.0")]
     public partial class DemoQueryHandler : DemoQueryHandlerBase
     {
@@ -32,7 +32,7 @@ namespace NetX.ModuleManager.Domain.Core.T4.src.Domain.Queries.Handlers
                     ".Extensions;\r\nusing NetX.Common.Attributes;\r\nusing NetX.Common.ModuleInfrastruct" +
                     "ure;\r\n\r\nnamespace ");
             
-            #line 15 "D:\Persion\fw\netx\src\NetX\02_Modules\Cli\Domain\Core\T4\src\Domain\Queries\Handlers\DemoQueryHandler.tt"
+            #line 15 "D:\Persion\fw\netx\src\NetX\02_Modules\ModuleManager\Domain\Core\T4\src\Domain\Queries\Handlers\DemoQueryHandler.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_model.Project.Name));
             
             #line default

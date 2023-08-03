@@ -18,7 +18,7 @@ namespace NetX.ModuleManager.Domain.Core.T4.src.Domain.Commands.Handlers
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "D:\Persion\fw\netx\src\NetX\02_Modules\Cli\Domain\Core\T4\src\Domain\Commands\Handlers\DemoCommandHandler.tt"
+    #line 1 "D:\Persion\fw\netx\src\NetX\02_Modules\ModuleManager\Domain\Core\T4\src\Domain\Commands\Handlers\DemoCommandHandler.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "17.0.0.0")]
     public partial class DemoCommandHandler : DemoCommandHandlerBase
     {
@@ -31,7 +31,7 @@ namespace NetX.ModuleManager.Domain.Core.T4.src.Domain.Commands.Handlers
             this.Write("\r\nusing AutoMapper;\r\nusing Microsoft.EntityFrameworkCore;\r\nusing NetX.Ddd.Domain;" +
                     "\r\nusing NetX.Common;\r\nusing NetX.Common.Attributes;\r\n\r\nnamespace ");
             
-            #line 14 "D:\Persion\fw\netx\src\NetX\02_Modules\Cli\Domain\Core\T4\src\Domain\Commands\Handlers\DemoCommandHandler.tt"
+            #line 14 "D:\Persion\fw\netx\src\NetX\02_Modules\ModuleManager\Domain\Core\T4\src\Domain\Commands\Handlers\DemoCommandHandler.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_model.Project.Name));
             
             #line default
