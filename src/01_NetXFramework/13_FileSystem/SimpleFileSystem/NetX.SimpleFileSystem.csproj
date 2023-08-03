@@ -18,5 +18,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-
+  <ItemGroup>
+    <PackageReference Include="System.Net.Primitives" Version="4.3.0" />
+  </ItemGroup>
 </Project>

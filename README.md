@@ -78,3 +78,16 @@ NetX 前身是 ``` sagittarius ``` ,一个我业余时间开发的模块化组�
 
 
              
+## How To Run
+
+```
+    docker run --name netx  -p 800:80 -v /var/www/dockerbuildtest/log/:/app/logs -v /var/www/dockerbuildtest/modules/:/app/modules -v /var/www/dockerbuildtest/config/:/app/config  registry.cn-hangzhou.aliyuncs.com/zeke_qi/netx:latest
+
+```
+> -p 800:80  将容器内80端口映射为宿主主机800端口 （自行修改） <br/>
+-v 盘符映射<br/>
+log :日志<br/>
+modules：模块<br/>
+config：配置文件<br/>
+
+TODO :未来会将 webapi 、vue前台 编排到一个docker compose中，方便部署
