@@ -8,7 +8,8 @@ jobs:
     steps:
         - name: Checkout
           uses: actions/checkout@v3
-        - run: ls -ll
+        - name: debug
+          run: ls -ll
         - name: Build Image
           run: docker build -f Dockerfile . -t ${{ secrets.DOCKER_REPOSITORY }}:latest
         - name: Login to registry
