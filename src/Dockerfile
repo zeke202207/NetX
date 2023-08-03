@@ -7,8 +7,6 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-RUN echo $PWD
-RUN ls -ll
 COPY ["Directory.Build.props", "."]
 COPY ["NetX/01_WebApi/NetX.WebApi.csproj", "NetX/01_WebApi/"]
 COPY ["01_NetXFramework/01_App/NetX.App.csproj", "01_NetXFramework/01_App/"]
