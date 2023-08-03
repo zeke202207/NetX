@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
-using Netx.Ddd.Core;
-using Netx.QuartzScheduling;
+using NetX.Ddd.Core;
+using NetX.QuartzScheduling;
 using NetX.Common.Attributes;
 using NetX.Common.ModuleInfrastructure;
 using NetX.TaskScheduling.DatabaseSetup;

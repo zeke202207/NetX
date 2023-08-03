@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Netx.Ddd.Domain.Aggregates
+namespace NetX.Ddd.Domain.Aggregates
 {
     public abstract class BaseEntity<T> : Aggregate<T>
     {

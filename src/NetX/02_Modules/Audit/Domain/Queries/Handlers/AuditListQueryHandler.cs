@@ -1,9 +1,9 @@
 ﻿using Dapper;
-using Netx.Ddd.Domain;
+using NetX.Ddd.Domain;
 using NetX.Audit.Models.Dtos;
 using NetX.Common.Attributes;
 using NetX.Common.ModuleInfrastructure;
-using Netx.Ddd.Domain.Extensions;
+using NetX.Ddd.Domain.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;

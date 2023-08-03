@@ -1,2 +1,2 @@
-﻿global using Netx.Ddd.Core;
+﻿global using NetX.Ddd.Core;
 global using Microsoft.EntityFrameworkCore;

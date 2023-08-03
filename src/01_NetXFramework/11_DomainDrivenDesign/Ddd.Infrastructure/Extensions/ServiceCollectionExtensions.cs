@@ -13,7 +13,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Netx.Ddd.Infrastructure;
+namespace NetX.Ddd.Infrastructure;
 
 public static class ServiceCollectionExtensions
 {

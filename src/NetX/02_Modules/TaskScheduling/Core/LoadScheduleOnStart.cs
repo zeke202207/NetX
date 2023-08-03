@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Netx.Ddd.Core;
+using NetX.Ddd.Core;
 using NetX.Common;
 using NetX.DatabaseSetup;
 using NetX.TaskScheduling.Domain;

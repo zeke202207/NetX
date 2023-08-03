@@ -28,7 +28,7 @@ namespace NetX.ModuleManager.Domain.Core.T4.src.Domain.Commands.Handlers
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write("\r\nusing AutoMapper;\r\nusing Microsoft.EntityFrameworkCore;\r\nusing Netx.Ddd.Domain;" +
+            this.Write("\r\nusing AutoMapper;\r\nusing Microsoft.EntityFrameworkCore;\r\nusing NetX.Ddd.Domain;" +
                     "\r\nusing NetX.Common;\r\nusing NetX.Common.Attributes;\r\n\r\nnamespace ");
             
             #line 14 "D:\Persion\fw\netx\src\NetX\02_Modules\Cli\Domain\Core\T4\src\Domain\Commands\Handlers\DemoCommandHandler.tt"

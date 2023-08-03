@@ -5,7 +5,7 @@
 <#@ import namespace="System.Collections.Generic" #>
 <#@ output extension=".txt" #>
 
-using Netx.Ddd.Domain;
+using NetX.Ddd.Domain;
 using NetX.Common.ModuleInfrastructure;
 
 namespace <#= _model.Project.Name #>.Domain;

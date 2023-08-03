@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Netx.Ddd.Core;
+using NetX.Ddd.Core;
 using NetX.Audit.Domain;
 using NetX.AuditLog;
 using NetX.Authentication.Core;

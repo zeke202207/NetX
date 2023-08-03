@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Netx.Ddd.Domain;
+namespace NetX.Ddd.Domain;
 
 /// <summary>
 /// Dapper数据库上下文

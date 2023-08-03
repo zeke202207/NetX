@@ -1,6 +1,6 @@
 ﻿using Authentication.OAuth;
 using Microsoft.Extensions.DependencyInjection;
-using Netx.Ddd.Core;
+using NetX.Ddd.Core;
 using NetX.Common.Attributes;
 using NetX.Common.ModuleInfrastructure;
 using NetX.RBAC.Domain.Queries;

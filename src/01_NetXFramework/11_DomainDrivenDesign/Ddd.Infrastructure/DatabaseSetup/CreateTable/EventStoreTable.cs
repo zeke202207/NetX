@@ -1,7 +1,7 @@
 ﻿using FluentMigrator;
 using NetX.DatabaseSetup;
 
-namespace Netx.Ddd.Infrastructure.DatabaseSetup;
+namespace NetX.Ddd.Infrastructure.DatabaseSetup;
 
 /// <summary>
 /// api资源表

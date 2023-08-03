@@ -1,4 +1,4 @@
-﻿namespace Netx.Ddd.Core
+﻿namespace NetX.Ddd.Core
 {
     public interface IQueryBus
     {

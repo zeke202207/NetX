@@ -1,4 +1,4 @@
-﻿using Netx.Ddd.Domain;
+﻿using NetX.Ddd.Domain;
 using NetX.RBAC.Models.Dtos.RequestDto;
 
 namespace NetX.RBAC.Domain;

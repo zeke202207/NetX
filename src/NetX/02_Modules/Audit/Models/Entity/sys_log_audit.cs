@@ -1,4 +1,4 @@
-﻿using Netx.Ddd.Domain.Aggregates;
+﻿using NetX.Ddd.Domain.Aggregates;
 using System;
 using System.Collections.Generic;
 using System.Linq;

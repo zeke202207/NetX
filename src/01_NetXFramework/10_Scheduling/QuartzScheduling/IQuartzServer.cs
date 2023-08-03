@@ -1,7 +1,7 @@
 ﻿using Quartz;
 using System.Collections.Specialized;
 
-namespace Netx.QuartzScheduling;
+namespace NetX.QuartzScheduling;
 
 /// <summary>
 /// 

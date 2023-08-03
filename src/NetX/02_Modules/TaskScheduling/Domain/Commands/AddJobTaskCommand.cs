@@ -1,4 +1,4 @@
-﻿using Netx.Ddd.Domain;
+﻿using NetX.Ddd.Domain;
 using NetX.TaskScheduling.Model;
 using System;
 using System.Collections.Generic;

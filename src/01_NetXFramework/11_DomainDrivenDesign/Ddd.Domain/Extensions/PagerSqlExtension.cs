@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Netx.Ddd.Domain.Extensions;
+namespace NetX.Ddd.Domain.Extensions;
 
 /// <summary>
 /// 分页Sql扩展

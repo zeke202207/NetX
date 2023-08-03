@@ -28,7 +28,7 @@ namespace NetX.ModuleManager.Domain.Core.T4.src.Domain.Commands
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write("\r\nusing Netx.Ddd.Domain;\r\n\r\nnamespace ");
+            this.Write("\r\nusing NetX.Ddd.Domain;\r\n\r\nnamespace ");
             
             #line 10 "D:\Persion\fw\netx\src\NetX\02_Modules\Cli\Domain\Core\T4\src\Domain\Commands\DemoCommand.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_model.Project.Name));

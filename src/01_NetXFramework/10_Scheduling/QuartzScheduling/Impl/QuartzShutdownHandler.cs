@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Netx.QuartzScheduling;
+namespace NetX.QuartzScheduling;
 
 /// <summary>
 /// 调度服务器关闭处理器

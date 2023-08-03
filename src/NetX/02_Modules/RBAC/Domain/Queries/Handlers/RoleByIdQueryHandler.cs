@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Dapper;
-using Netx.Ddd.Domain;
-using Netx.Ddd.Domain.Extensions;
+using NetX.Ddd.Domain;
+using NetX.Ddd.Domain.Extensions;
 using NetX.Common.Attributes;
 using NetX.Common.ModuleInfrastructure;
 using NetX.RBAC.Models;

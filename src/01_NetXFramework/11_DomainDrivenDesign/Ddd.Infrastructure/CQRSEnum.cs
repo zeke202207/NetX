@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Netx.Ddd.Infrastructure
+namespace NetX.Ddd.Infrastructure
 {
     public enum ServiceType
     {

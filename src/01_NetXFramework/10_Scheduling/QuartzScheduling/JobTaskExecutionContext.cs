@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Netx.QuartzScheduling;
+namespace NetX.QuartzScheduling;
 
 /// <summary>
 /// 任务执行上下文

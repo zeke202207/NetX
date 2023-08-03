@@ -1,2 +1,2 @@
-﻿global using Netx.Ddd.Domain;
-global using Netx.Ddd.Core;
+﻿global using NetX.Ddd.Domain;
+global using NetX.Ddd.Core;

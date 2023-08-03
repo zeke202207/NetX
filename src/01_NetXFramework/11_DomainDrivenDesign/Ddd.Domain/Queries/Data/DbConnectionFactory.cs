@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Netx.Ddd.Domain;
+namespace NetX.Ddd.Domain;
 
 /// <summary>
 /// 数据库链接工厂

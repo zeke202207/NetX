@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Netx.Ddd.Core;
+using NetX.Ddd.Core;
 using NetX.Audit.Domain.Commands;
 using NetX.AuditLog;
 using NetX.Tenants.Extensions;

@@ -1,4 +1,4 @@
-﻿namespace Netx.Ddd.Infrastructure;
+﻿namespace NetX.Ddd.Infrastructure;
 
 public class DomainException : Exception
 {

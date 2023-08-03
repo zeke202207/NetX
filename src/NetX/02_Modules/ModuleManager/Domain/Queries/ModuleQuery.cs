@@ -1,5 +1,5 @@
 ﻿using NetX.Common.ModuleInfrastructure;
-using Netx.Ddd.Domain;
+using NetX.Ddd.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;

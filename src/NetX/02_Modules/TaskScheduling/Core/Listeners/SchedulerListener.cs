@@ -1,4 +1,4 @@
-﻿using Netx.Ddd.Core;
+﻿using NetX.Ddd.Core;
 using NetX.Common.Attributes;
 using NetX.TaskScheduling.Domain;
 using NetX.TaskScheduling.Model;

@@ -1,0 +1,16 @@
+name: Docker Image CI/CD
+on:
+  push: 
+    branches: [ dev_zeke ]
+jobs:
+  build: 
+    runs-on: ubuntu-latest
+    steps:
+        - name: Checkout
+          uses: actions/checkout@v3
+        - name: Docker build & push image
+          run: |
+              cd /home/runner/work/NetX/NetX/src
+              docker build -t ${{ secrets.DOCKER_REPOSITORY }}:latest .
+              docker login --username=${{ secrets.DOCKER_USERNAME }} --password ${{ secrets.DOCKER_PASSWORD }} registry.cn-hangzhou.aliyuncs.com
+              docker push ${{ secrets.DOCKER_REPOSITORY }}:latest

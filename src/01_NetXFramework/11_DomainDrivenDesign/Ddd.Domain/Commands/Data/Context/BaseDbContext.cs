@@ -1,4 +1,4 @@
-﻿using Netx.Ddd.Core;
+﻿using NetX.Ddd.Core;
 using NetX.Module;
 using NetX.Tenants;
 using System;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Netx.Ddd.Domain;
+namespace NetX.Ddd.Domain;
 
 public abstract class BaseDbContext: DbContext
 {

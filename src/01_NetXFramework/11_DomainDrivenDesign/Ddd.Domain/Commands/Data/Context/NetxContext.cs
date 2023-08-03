@@ -1,12 +1,12 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using Netx.Ddd.Domain.Aggregates;
+using NetX.Ddd.Domain.Aggregates;
 using NetX.Module;
 using NetX.Tenants;
 using System.Reflection;
 
-namespace Netx.Ddd.Domain;
+namespace NetX.Ddd.Domain;
 
 public sealed class NetxContext : BaseDbContext
 {

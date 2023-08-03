@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using Netx.Ddd.Domain;
+using NetX.Ddd.Domain;
 using NetX.Common;
 using NetX.Common.Attributes;
 using NetX.RBAC.Models;

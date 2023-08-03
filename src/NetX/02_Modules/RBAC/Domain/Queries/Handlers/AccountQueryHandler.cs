@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Dapper;
-using Netx.Ddd.Domain;
-using Netx.Ddd.Domain.Extensions;
+using NetX.Ddd.Domain;
+using NetX.Ddd.Domain.Extensions;
 using NetX.Authentication.Core;
 using NetX.Common;
 using NetX.Common.Attributes;

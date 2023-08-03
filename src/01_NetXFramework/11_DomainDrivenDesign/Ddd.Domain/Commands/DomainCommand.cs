@@ -1,4 +1,4 @@
-﻿namespace Netx.Ddd.Domain;
+﻿namespace NetX.Ddd.Domain;
 
 public abstract record DomainCommand : CommandBase, IDomainEvent
 {

@@ -1,6 +1,6 @@
 ﻿using FluentMigrator.Runner;
 using Microsoft.Extensions.DependencyInjection;
-using Netx.QuartzScheduling;
+using NetX.QuartzScheduling;
 using NetX.App;
 using NetX.DatabaseSetup;
 using NetX.TaskScheduling.Core;
