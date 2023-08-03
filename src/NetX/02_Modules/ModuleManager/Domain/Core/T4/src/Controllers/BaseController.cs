@@ -18,7 +18,7 @@ namespace NetX.ModuleManager.Domain.Core.T4.src.Controllers
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "D:\Persion\fw\netx\src\NetX\02_Modules\Cli\Domain\Core\T4\src\Controllers\BaseController.tt"
+    #line 1 "D:\Persion\fw\netx\src\NetX\02_Modules\ModuleManager\Domain\Core\T4\src\Controllers\BaseController.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "17.0.0.0")]
     public partial class BaseController : BaseControllerBase
     {
@@ -30,7 +30,7 @@ namespace NetX.ModuleManager.Domain.Core.T4.src.Controllers
         {
             this.Write("\r\nusing Microsoft.AspNetCore.Mvc;\r\nusing NetX.App;\r\n\r\nnamespace ");
             
-            #line 11 "D:\Persion\fw\netx\src\NetX\02_Modules\Cli\Domain\Core\T4\src\Controllers\BaseController.tt"
+            #line 11 "D:\Persion\fw\netx\src\NetX\02_Modules\ModuleManager\Domain\Core\T4\src\Controllers\BaseController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_model.Project.Name));
             
             #line default
@@ -38,7 +38,7 @@ namespace NetX.ModuleManager.Domain.Core.T4.src.Controllers
             this.Write(".Controllers;\r\n\r\n/// <summary>\r\n/// api接口基类对象\r\n/// </summary>\r\n[ApiController]\r\n[" +
                     "Route(\"api/[controller]/[action]\")]\r\npublic abstract class ");
             
-            #line 18 "D:\Persion\fw\netx\src\NetX\02_Modules\Cli\Domain\Core\T4\src\Controllers\BaseController.tt"
+            #line 18 "D:\Persion\fw\netx\src\NetX\02_Modules\ModuleManager\Domain\Core\T4\src\Controllers\BaseController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_model.Project.Alias));
             
             #line default

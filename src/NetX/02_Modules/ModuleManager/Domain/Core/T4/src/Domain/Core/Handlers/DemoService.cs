@@ -18,7 +18,7 @@ namespace NetX.ModuleManager.Domain.Core.T4.src.Domain.Core.Handlers
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "D:\Persion\fw\netx\src\NetX\02_Modules\Cli\Domain\Core\T4\src\Domain\Core\Handlers\DemoService.tt"
+    #line 1 "D:\Persion\fw\netx\src\NetX\02_Modules\ModuleManager\Domain\Core\T4\src\Domain\Core\Handlers\DemoService.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "17.0.0.0")]
     public partial class DemoService : DemoServiceBase
     {
@@ -30,7 +30,7 @@ namespace NetX.ModuleManager.Domain.Core.T4.src.Domain.Core.Handlers
         {
             this.Write("\r\nnamespace ");
             
-            #line 8 "D:\Persion\fw\netx\src\NetX\02_Modules\Cli\Domain\Core\T4\src\Domain\Core\Handlers\DemoService.tt"
+            #line 8 "D:\Persion\fw\netx\src\NetX\02_Modules\ModuleManager\Domain\Core\T4\src\Domain\Core\Handlers\DemoService.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_model.Project.Name));
             
             #line default

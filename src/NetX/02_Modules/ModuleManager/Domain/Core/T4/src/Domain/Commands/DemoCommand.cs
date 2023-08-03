@@ -18,7 +18,7 @@ namespace NetX.ModuleManager.Domain.Core.T4.src.Domain.Commands
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "D:\Persion\fw\netx\src\NetX\02_Modules\Cli\Domain\Core\T4\src\Domain\Commands\DemoCommand.tt"
+    #line 1 "D:\Persion\fw\netx\src\NetX\02_Modules\ModuleManager\Domain\Core\T4\src\Domain\Commands\DemoCommand.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "17.0.0.0")]
     public partial class DemoCommand : DemoCommandBase
     {
@@ -30,7 +30,7 @@ namespace NetX.ModuleManager.Domain.Core.T4.src.Domain.Commands
         {
             this.Write("\r\nusing NetX.Ddd.Domain;\r\n\r\nnamespace ");
             
-            #line 10 "D:\Persion\fw\netx\src\NetX\02_Modules\Cli\Domain\Core\T4\src\Domain\Commands\DemoCommand.tt"
+            #line 10 "D:\Persion\fw\netx\src\NetX\02_Modules\ModuleManager\Domain\Core\T4\src\Domain\Commands\DemoCommand.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_model.Project.Name));
             
             #line default

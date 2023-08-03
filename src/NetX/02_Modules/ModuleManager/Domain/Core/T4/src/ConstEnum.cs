@@ -18,7 +18,7 @@ namespace NetX.ModuleManager.Domain.Core.T4.src
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "D:\Persion\fw\netx\src\NetX\02_Modules\Cli\Domain\Core\T4\src\ConstEnum.tt"
+    #line 1 "D:\Persion\fw\netx\src\NetX\02_Modules\ModuleManager\Domain\Core\T4\src\ConstEnum.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "17.0.0.0")]
     public partial class ConstEnum : ConstEnumBase
     {
@@ -30,14 +30,14 @@ namespace NetX.ModuleManager.Domain.Core.T4.src
         {
             this.Write("\r\nnamespace ");
             
-            #line 8 "D:\Persion\fw\netx\src\NetX\02_Modules\Cli\Domain\Core\T4\src\ConstEnum.tt"
+            #line 8 "D:\Persion\fw\netx\src\NetX\02_Modules\ModuleManager\Domain\Core\T4\src\ConstEnum.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_model.Project.Name));
             
             #line default
             #line hidden
             this.Write(";\r\n\r\ninternal class ");
             
-            #line 10 "D:\Persion\fw\netx\src\NetX\02_Modules\Cli\Domain\Core\T4\src\ConstEnum.tt"
+            #line 10 "D:\Persion\fw\netx\src\NetX\02_Modules\ModuleManager\Domain\Core\T4\src\ConstEnum.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_model.Project.Alias));
             
             #line default
@@ -45,14 +45,14 @@ namespace NetX.ModuleManager.Domain.Core.T4.src
             this.Write("Const\r\n{\r\n    /// <summary>\r\n    /// 这里要与 plugin.json 文件中的id保存一致\r\n    /// </summa" +
                     "ry>\r\n    public const string C_");
             
-            #line 15 "D:\Persion\fw\netx\src\NetX\02_Modules\Cli\Domain\Core\T4\src\ConstEnum.tt"
+            #line 15 "D:\Persion\fw\netx\src\NetX\02_Modules\ModuleManager\Domain\Core\T4\src\ConstEnum.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_model.Project.Alias));
             
             #line default
             #line hidden
             this.Write("_KEY = \"");
             
-            #line 15 "D:\Persion\fw\netx\src\NetX\02_Modules\Cli\Domain\Core\T4\src\ConstEnum.tt"
+            #line 15 "D:\Persion\fw\netx\src\NetX\02_Modules\ModuleManager\Domain\Core\T4\src\ConstEnum.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_model.Project.Id));
             
             #line default
@@ -60,14 +60,14 @@ namespace NetX.ModuleManager.Domain.Core.T4.src
             this.Write("\";\r\n\r\n    /// <summary>\r\n    /// swagger分组名称\r\n    /// </summary>\r\n    public cons" +
                     "t string C_");
             
-            #line 20 "D:\Persion\fw\netx\src\NetX\02_Modules\Cli\Domain\Core\T4\src\ConstEnum.tt"
+            #line 20 "D:\Persion\fw\netx\src\NetX\02_Modules\ModuleManager\Domain\Core\T4\src\ConstEnum.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_model.Project.Alias));
             
             #line default
             #line hidden
             this.Write("_GROUPNAME = \"");
             
-            #line 20 "D:\Persion\fw\netx\src\NetX\02_Modules\Cli\Domain\Core\T4\src\ConstEnum.tt"
+            #line 20 "D:\Persion\fw\netx\src\NetX\02_Modules\ModuleManager\Domain\Core\T4\src\ConstEnum.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_model.Project.Alias));
             
             #line default

@@ -18,7 +18,7 @@ namespace NetX.ModuleManager.Domain.Core.T4.src.Controllers
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "D:\Persion\fw\netx\src\NetX\02_Modules\Cli\Domain\Core\T4\src\Controllers\DemoController.tt"
+    #line 1 "D:\Persion\fw\netx\src\NetX\02_Modules\ModuleManager\Domain\Core\T4\src\Controllers\DemoController.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "17.0.0.0")]
     public partial class DemoController : DemoControllerBase
     {
@@ -31,14 +31,14 @@ namespace NetX.ModuleManager.Domain.Core.T4.src.Controllers
             this.Write("\r\nusing Microsoft.AspNetCore.Mvc;\r\nusing NetX.Ddd.Core;\r\nusing NetX.AuditLog;\r\nus" +
                     "ing NetX.Common.ModuleInfrastructure;\r\nusing NetX.Swagger;\r\nusing ");
             
-            #line 13 "D:\Persion\fw\netx\src\NetX\02_Modules\Cli\Domain\Core\T4\src\Controllers\DemoController.tt"
+            #line 13 "D:\Persion\fw\netx\src\NetX\02_Modules\ModuleManager\Domain\Core\T4\src\Controllers\DemoController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_model.Project.Name));
             
             #line default
             #line hidden
             this.Write(".Domain;\r\n\r\nnamespace ");
             
-            #line 15 "D:\Persion\fw\netx\src\NetX\02_Modules\Cli\Domain\Core\T4\src\Controllers\DemoController.tt"
+            #line 15 "D:\Persion\fw\netx\src\NetX\02_Modules\ModuleManager\Domain\Core\T4\src\Controllers\DemoController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_model.Project.Name));
             
             #line default
@@ -46,21 +46,21 @@ namespace NetX.ModuleManager.Domain.Core.T4.src.Controllers
             this.Write(".Controllers;\r\n\r\n/// <summary>\r\n/// 账号管理api接口\r\n/// </summary>\r\n[ApiControllerDesc" +
                     "ription(");
             
-            #line 20 "D:\Persion\fw\netx\src\NetX\02_Modules\Cli\Domain\Core\T4\src\Controllers\DemoController.tt"
+            #line 20 "D:\Persion\fw\netx\src\NetX\02_Modules\ModuleManager\Domain\Core\T4\src\Controllers\DemoController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_model.Project.Alias));
             
             #line default
             #line hidden
             this.Write("Const.C_");
             
-            #line 20 "D:\Persion\fw\netx\src\NetX\02_Modules\Cli\Domain\Core\T4\src\Controllers\DemoController.tt"
+            #line 20 "D:\Persion\fw\netx\src\NetX\02_Modules\ModuleManager\Domain\Core\T4\src\Controllers\DemoController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_model.Project.Alias));
             
             #line default
             #line hidden
             this.Write("_GROUPNAME, Description = \"\")]\r\npublic class DemoController : ");
             
-            #line 21 "D:\Persion\fw\netx\src\NetX\02_Modules\Cli\Domain\Core\T4\src\Controllers\DemoController.tt"
+            #line 21 "D:\Persion\fw\netx\src\NetX\02_Modules\ModuleManager\Domain\Core\T4\src\Controllers\DemoController.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(_model.Project.Alias));
             
             #line default
@@ -79,7 +79,7 @@ namespace NetX.ModuleManager.Domain.Core.T4.src.Controllers
         this._demoCommand = demoCommand;
     }
 
-    [ApiActionDescription(""AddOrUpdate"")]
+    [ApiActionDescription(""Add"")]
     [HttpPost]
     public async Task<ResultModel> AddDemo()
     {
