@@ -1,15 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetX.MemoryQueue
 {
     public class MemoryQueueServiceConfiguration
     {
-        public Type QueueImplementationType { get;private set; }
+        public Type QueueImplementationType { get; private set; }
         public ServiceLifetime Lifetime { get; private set; }
 
         public MemoryQueueServiceConfiguration()
@@ -18,9 +13,9 @@ namespace NetX.MemoryQueue
             QueueImplementationType = typeof(MemoryMessageQueue);
         }
 
-        public MemoryQueueServiceConfiguration Using<TQueue>() where TQueue :IPublisher
+        public MemoryQueueServiceConfiguration Using<TQueue>() where TQueue : IPublisher
         {
-            QueueImplementationType = typeof (TQueue);
+            QueueImplementationType = typeof(TQueue);
             return this;
         }
 

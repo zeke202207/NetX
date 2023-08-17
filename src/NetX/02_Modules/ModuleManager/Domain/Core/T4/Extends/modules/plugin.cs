@@ -1,9 +1,4 @@
 ﻿using NetX.ModuleManager.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetX.ModuleManager.Domain.Core.T4.src.modules
 {
@@ -17,7 +12,7 @@ namespace NetX.ModuleManager.Domain.Core.T4.src.modules
         {
             _model = model;
             _directoryName = ModuleManagerConstEnum.C_CLI_SRC;
-            _fileName = Path.Combine("modules",$"{_model.Project.Alias}", $"plugin.json");
+            _fileName = Path.Combine("modules", $"{_model.Project.Alias}", $"plugin.json");
         }
 
         public async Task<bool> SaveAsync()

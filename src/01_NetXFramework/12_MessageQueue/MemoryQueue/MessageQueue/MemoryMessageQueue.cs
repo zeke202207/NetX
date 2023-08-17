@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Concurrent;
 
 namespace NetX.MemoryQueue
 {
@@ -40,7 +35,7 @@ namespace NetX.MemoryQueue
             return await queue.Publish(message);
         }
 
-        private string GetNewQueueName(string queueName,string groupName)
+        private string GetNewQueueName(string queueName, string groupName)
         {
             string newQueueName = queueName;
             if (!string.IsNullOrEmpty(groupName))

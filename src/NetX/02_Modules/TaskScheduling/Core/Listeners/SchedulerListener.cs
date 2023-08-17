@@ -1,7 +1,5 @@
 ﻿using NetX.Ddd.Core;
-using NetX.Common.Attributes;
 using NetX.TaskScheduling.Domain;
-using NetX.TaskScheduling.Model;
 using Quartz;
 
 namespace NetX.TaskScheduling.Core
@@ -37,7 +35,7 @@ namespace NetX.TaskScheduling.Core
 
         public async Task JobInterrupted(JobKey jobKey, CancellationToken cancellationToken = default(CancellationToken))
         {
-            await SendCommand(jobKey.Name,jobKey.Group, JobTaskState.Interrupted);
+            await SendCommand(jobKey.Name, jobKey.Group, JobTaskState.Interrupted);
         }
 
         public async Task JobPaused(JobKey jobKey, CancellationToken cancellationToken = default(CancellationToken))

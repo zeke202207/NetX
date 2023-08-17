@@ -1,14 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using NetX.SharedFramework.ChainPipeline;
 using NetX.SharedFramework.ChainPipeline.ChainDataflow;
 using NetX.SharedFramework.ChainPipeline.PipelineDataflow;
-using System;
-using System.Collections.Generic;
-using System.Data.Common;
-using System.Linq;
 using System.Reflection;
-using System.Text;
 
 namespace NetX.SharedFramework
 {

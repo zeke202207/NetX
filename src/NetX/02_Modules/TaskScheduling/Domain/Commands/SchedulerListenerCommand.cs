@@ -1,9 +1,4 @@
 ﻿using NetX.Ddd.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetX.TaskScheduling.Domain
 {
@@ -18,11 +13,11 @@ namespace NetX.TaskScheduling.Domain
 
         public JobTaskState State { get; set; }
 
-        public SchedulerListenerCommand(string name, string group , JobTaskState state) 
+        public SchedulerListenerCommand(string name, string group, JobTaskState state)
             : base(Guid.NewGuid(), DateTime.Now)
         {
             Name = name;
-            Group = group;  
+            Group = group;
             State = state;
         }
     }

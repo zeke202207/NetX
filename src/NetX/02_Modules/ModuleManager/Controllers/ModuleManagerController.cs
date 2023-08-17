@@ -1,13 +1,10 @@
-﻿using MediatR;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using NetX.Ddd.Core;
 using NetX.Authentication.Core;
-using NetX.ModuleManager.Domain;
 using NetX.Common.ModuleInfrastructure;
-using NetX.Swagger;
+using NetX.ModuleManager.Domain;
 using NetX.ModuleManager.Models;
-using Microsoft.AspNetCore.Http;
-using NetX.App;
+using NetX.Swagger;
 
 namespace NetX.ModuleManager.Controllers
 {

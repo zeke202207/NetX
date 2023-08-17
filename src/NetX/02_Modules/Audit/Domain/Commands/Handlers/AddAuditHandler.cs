@@ -1,11 +1,6 @@
-﻿using NetX.Ddd.Domain;
-using NetX.Audit.Models.Entity;
+﻿using NetX.Audit.Models.Entity;
 using NetX.Common.Attributes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using NetX.Ddd.Domain;
 
 namespace NetX.Audit.Domain.Commands.Handlers
 {

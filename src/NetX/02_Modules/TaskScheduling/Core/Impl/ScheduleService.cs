@@ -1,11 +1,7 @@
-﻿using MediatR;
-using Microsoft.EntityFrameworkCore.Migrations.Operations;
-using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
+﻿using NetX.Common.Attributes;
+using NetX.Common.ModuleInfrastructure;
 using NetX.Ddd.Core;
 using NetX.QuartzScheduling;
-using NetX.Common.Attributes;
-using NetX.Common.ModuleInfrastructure;
-using NetX.TaskScheduling.DatabaseSetup;
 using NetX.TaskScheduling.Domain;
 using NetX.TaskScheduling.Domain.Commands;
 using NetX.TaskScheduling.Model;
@@ -27,7 +23,7 @@ public class ScheduleService : BaseService, IScheduleService
     /// <summary>
     /// 任务调度服务管理实例
     /// </summary>
-    public ScheduleService(ICommandBus jobtaskCommand, IQueryBus queryBus,  ISchedule schedule)
+    public ScheduleService(ICommandBus jobtaskCommand, IQueryBus queryBus, ISchedule schedule)
         : base()
     {
         this._schedule = schedule;
@@ -52,7 +48,7 @@ public class ScheduleService : BaseService, IScheduleService
         var dataMap = new Dictionary<string, string>();
         if (!string.IsNullOrWhiteSpace(scheduleModel.Job.JobDataMap))
             dataMap = JsonConvert.DeserializeObject<Dictionary<string, string>>(scheduleModel.Job.JobDataMap);
-        dataMap.Add("tenantid",TenantContext.CurrentTenant.Principal.Tenant.TenantId);
+        dataMap.Add("tenantid", TenantContext.CurrentTenant.Principal.Tenant.TenantId);
 
         //先执行数据库操作，以便于更新数据库任务执行状态
         //2. database handle
@@ -72,15 +68,15 @@ public class ScheduleService : BaseService, IScheduleService
         //1. quartz add job
         await this._schedule.AddJobAsync(new JobTaskModel()
         {
-             Name = scheduleModel.Job.Name,
-             Group = scheduleModel.Job.Group,
-             JobType = scheduleModel.Job.JobType,
-             JobDataMap = dataMap,
-             DisAllowConcurrentExecution = scheduleModel.Job.DisAllowConcurrentExecution,
-             Description = scheduleModel.Job.Description,
-             Enabled = scheduleModel.Job.Enabled,
-             State = JobTaskState.None,
-             Trigger = CreateTriggerBuilder(scheduleModel)
+            Name = scheduleModel.Job.Name,
+            Group = scheduleModel.Job.Group,
+            JobType = scheduleModel.Job.JobType,
+            JobDataMap = dataMap,
+            DisAllowConcurrentExecution = scheduleModel.Job.DisAllowConcurrentExecution,
+            Description = scheduleModel.Job.Description,
+            Enabled = scheduleModel.Job.Enabled,
+            State = JobTaskState.None,
+            Trigger = CreateTriggerBuilder(scheduleModel)
         });
         return base.Success<bool>(true);
     }
@@ -128,7 +124,7 @@ public class ScheduleService : BaseService, IScheduleService
     public async Task<ResultModel<bool>> DeleteJob(string jobId)
     {
         var jobtask = await _jobtaskQuery.Send<JobTaskQueryById, sys_jobtask>(new JobTaskQueryById(jobId));
-        if(null == jobtask)
+        if (null == jobtask)
             return base.Success<bool>(true);
         await this._schedule.DeleteJobAsync(jobtask.name, jobtask.group);
         await _jobtaskCommand.Send<RemoveJobTaskCommand>(new RemoveJobTaskCommand(jobId));
@@ -172,7 +168,7 @@ public class ScheduleService : BaseService, IScheduleService
     /// <returns></returns>
     public async Task<ResultModel<List<SupportJobTypeModel>>> GetAllSupportJobType()
     {
-        var result = JobTaskTypeManager.Instance.GetAll().ToList().Where(p=>p.Enabled).ToList();
+        var result = JobTaskTypeManager.Instance.GetAll().ToList().Where(p => p.Enabled).ToList();
         List<SupportJobTypeModel> list = new List<SupportJobTypeModel>();
         result.ForEach(p => list.Add(new SupportJobTypeModel() { TypeName = p.DisplayName, Id = p.Id }));
         return base.Success<List<SupportJobTypeModel>>(list);

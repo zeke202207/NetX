@@ -6,11 +6,7 @@ using FluentMigrator.Runner.Processors.SqlServer;
 using FluentMigrator.Runner.VersionTableInfo;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using NetX.Cache.Core;
-using System;
-using System.Collections.Generic;
 using System.Reflection;
-using System.Text;
 
 namespace NetX.DatabaseSetup;
 
@@ -32,7 +28,7 @@ public static class FluentMigrationExtensions
     {
         if (null == assemblies)
             return services;
-        if(assemblies.Length>0)
+        if (assemblies.Length > 0)
             services.BuildFluentMigrator(assemblies, supportDatabaseType);
         return services;
     }
@@ -56,22 +52,22 @@ public static class FluentMigrationExtensions
             .EmbeddedResources())
             .AddLogging(lb => lb.AddFluentMigratorConsole());
         services.AddScoped(typeof(MigrationSupportDbType), (sp) => supportDbType);
-        services.AddScoped<IMigrationService,MigrationService>();
+        services.AddScoped<IMigrationService, MigrationService>();
         services.AddScoped<DbFactoryBase, MySqlDbFactory>();
         services.AddScoped<DbFactoryBase, SqlServerDbFactory>();
 
         services.AddScoped<IConnectionStringAccessor>(
-            sp => 
+            sp =>
                 new ConnectionStringAccessor(
-                    new TenantProcessorOptions(), 
-                    new TenantSelectingProcessorAccessorOptions(supportDbType), 
-                    new List<IConnectionStringReader>() 
-                    { 
-                        new TenantConnectionStringReader() 
+                    new TenantProcessorOptions(),
+                    new TenantSelectingProcessorAccessorOptions(supportDbType),
+                    new List<IConnectionStringReader>()
+                    {
+                        new TenantConnectionStringReader()
                     }));
         services.AddScoped<IVersionTableMetaData>(sp => { return new TenantMigrationVersionTable(); });
         services.ConfigureRunner(rb => rb.WithGlobalCommandTimeout(TimeSpan.FromSeconds(_commandTimeout)));
-        services.AddScoped<IMigrationRunner,MigrationRunner>();
+        services.AddScoped<IMigrationRunner, MigrationRunner>();
         services.AddScoped<IOptionsSnapshot<SelectingProcessorAccessorOptions>, TenantSelectingProcessorAccessorOptions>();
 
         return services;
@@ -83,9 +79,9 @@ public static class FluentMigrationExtensions
     /// <param name="builder"></param>
     /// <param name="supportDbType"></param>
     /// <returns></returns>
-    private static IMigrationRunnerBuilder AddDatabase(this IMigrationRunnerBuilder builder , MigrationSupportDbType supportDbType)
+    private static IMigrationRunnerBuilder AddDatabase(this IMigrationRunnerBuilder builder, MigrationSupportDbType supportDbType)
     {
-        switch(supportDbType)
+        switch (supportDbType)
         {
             case MigrationSupportDbType.SqlServer:
                 builder.AddSqlServer2012();

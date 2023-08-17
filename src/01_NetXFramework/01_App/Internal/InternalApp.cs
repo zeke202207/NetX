@@ -24,7 +24,7 @@ internal class InternalApp
     /// <summary>
     /// 用户组件模块设置项
     /// </summary>
-    internal static ConcurrentBag<ModuleOptions> UserModeulOptions = new ();
+    internal static ConcurrentBag<ModuleOptions> UserModeulOptions = new();
 
     /// <summary>
     /// 系统组件模块

@@ -1,13 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NetX.Ddd.Core;
-using NetX.Common;
-using NetX.DatabaseSetup;
 using NetX.TaskScheduling.Domain;
 using NetX.TaskScheduling.Model;
-using NetX.Tenants;
 using NetX.Tenants.Extensions;
-using System.Xml.Linq;
 
 namespace NetX.TaskScheduling.Core;
 

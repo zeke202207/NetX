@@ -1,17 +1,10 @@
-﻿using FluentMigrator.Infrastructure;
-using FluentMigrator.Runner;
-using FluentMigrator.Runner.Constraints;
-using FluentMigrator.Runner.Initialization;
+﻿using FluentMigrator.Runner;
 using FluentMigrator.Runner.Processors;
 using FluentMigrator.Runner.Processors.MySql;
 using FluentMigrator.Runner.Processors.SqlServer;
-using FluentMigrator.Runner.VersionTableInfo;
-using Microsoft.Extensions.DependencyInjection;
 using NetX.Cache.Core;
 using NetX.InMemoryCache;
 using NetX.Tenants;
-using System.Collections.Concurrent;
-using System.Reflection;
 
 namespace NetX.DatabaseSetup;
 
@@ -82,7 +75,7 @@ public class MigrationService : IMigrationService
         try
         {
             var cacheKey = GetCacheKey();
-            if(string.IsNullOrWhiteSpace(cacheKey))
+            if (string.IsNullOrWhiteSpace(cacheKey))
                 return false;
             this._runner.MigrateDown(version);
             await _cacheProvider.RemoveAsync(cacheKey);
@@ -101,7 +94,7 @@ public class MigrationService : IMigrationService
     /// <returns></returns>
     private DbFactoryBase? GetDbFactoryBase(IEnumerable<DbFactoryBase> dbFactories)
     {
-        switch(this._supportDbType)
+        switch (this._supportDbType)
         {
             case MigrationSupportDbType.SqlServer:
                 return dbFactories.FirstOrDefault(p => p.GetType().Equals(typeof(SqlServerDbFactory)));

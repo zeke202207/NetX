@@ -17,8 +17,8 @@ public class ApiEquelCompare : IEqualityComparer<PermissionCacheApiModel>
     /// <returns></returns>
     public bool Equals(PermissionCacheApiModel? x, PermissionCacheApiModel? y)
     {
-        if (x == null || y == null || 
-            x.Path.IsNullOrWhiteSpace() || x.Method.IsNullOrWhiteSpace() || 
+        if (x == null || y == null ||
+            x.Path.IsNullOrWhiteSpace() || x.Method.IsNullOrWhiteSpace() ||
             y.Path.IsNullOrWhiteSpace() || y.Method.IsNullOrWhiteSpace())
             return false;
         return x.Path.ToLower().Contains(y.Path.ToLower()) && x.Method.ToLower().Equals(y.Method.ToLower());

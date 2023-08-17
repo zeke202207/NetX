@@ -1,6 +1,5 @@
 ﻿using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using System.ComponentModel;
 using System.Reflection;
 
 namespace NetX.Swagger;
@@ -35,7 +34,7 @@ public class DescriptionDocumentFilter : IDocumentFilter
         {
             if (apiDescription.TryGetMethodInfo(out MethodInfo methodInfo) && methodInfo.DeclaringType != null)
             {
-                var desc = Attribute.GetCustomAttribute(methodInfo.DeclaringType, typeof(ApiControllerDescriptionAttribute));                
+                var desc = Attribute.GetCustomAttribute(methodInfo.DeclaringType, typeof(ApiControllerDescriptionAttribute));
                 if (desc is ApiControllerDescriptionAttribute)
                 {
                     var descAttr = (ApiControllerDescriptionAttribute)desc;

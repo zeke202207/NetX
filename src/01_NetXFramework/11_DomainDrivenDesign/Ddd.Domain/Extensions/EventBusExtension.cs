@@ -1,12 +1,4 @@
-﻿using NetX.Ddd.Core;
-using NetX.Ddd.Domain.Aggregates;
-using System;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NetX.Ddd.Domain;
+﻿namespace NetX.Ddd.Domain;
 
 public static class EventBusExtension
 {

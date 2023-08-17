@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
-namespace NetX.Cache.Core;
+﻿namespace NetX.Cache.Core;
 
 /// <summary>
 /// 

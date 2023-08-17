@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
 using NetX.Common;
-using NetX.DatabaseSetup;
 using NetX.Tenants;
-using System.Collections.Concurrent;
 using System.Security.Claims;
 
 namespace NetX.App;

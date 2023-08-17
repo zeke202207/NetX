@@ -18,6 +18,6 @@ public abstract class EventBase : INotification
     {
         MessageType = GetType().Name;
         Timestamp = DateTime.UtcNow;
-        this.AggregateId= aggregateid;
+        this.AggregateId = aggregateid;
     }
 }

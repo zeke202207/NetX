@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NetX.Ddd.Domain;
 
@@ -9,7 +6,7 @@ namespace NetX.Ddd.Domain;
 public class StoredEvent : EventBase
 {
     public StoredEvent(EventBase theEvent, string data, string userid)
-        :base(theEvent.AggregateId)
+        : base(theEvent.AggregateId)
     {
         Id = Guid.NewGuid().ToString();
         AggregateId = theEvent.AggregateId;
@@ -20,7 +17,7 @@ public class StoredEvent : EventBase
     }
 
     protected StoredEvent()
-    :base(Guid.NewGuid()){ }
+    : base(Guid.NewGuid()) { }
 
     public string Id { get; private set; }
 

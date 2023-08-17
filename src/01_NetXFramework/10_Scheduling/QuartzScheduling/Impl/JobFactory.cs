@@ -1,10 +1,5 @@
 ﻿using Quartz;
 using Quartz.Spi;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetX.QuartzScheduling;
 
@@ -17,7 +12,7 @@ public class JobFactory : IJobFactory
 
     public JobFactory(IServiceProvider serviceProvider)
     {
-        this._serviceProvider= serviceProvider;
+        this._serviceProvider = serviceProvider;
     }
 
     /// <summary>
@@ -37,6 +32,6 @@ public class JobFactory : IJobFactory
     /// <param name="job">执行的job实例对象</param>
     public void ReturnJob(IJob job)
     {
-     (job as IDisposable)?.Dispose();   
+        (job as IDisposable)?.Dispose();
     }
 }

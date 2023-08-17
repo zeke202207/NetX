@@ -1,5 +1,5 @@
-﻿using NetX.Ddd.Domain;
-using NetX.Common.ModuleInfrastructure;
+﻿using NetX.Common.ModuleInfrastructure;
+using NetX.Ddd.Domain;
 using System.Diagnostics.CodeAnalysis;
 
 namespace NetX.RBAC.Domain.Queries;

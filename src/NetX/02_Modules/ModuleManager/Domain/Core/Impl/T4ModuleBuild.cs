@@ -1,11 +1,6 @@
-﻿using NetX.ModuleManager.Models;
-using NetX.Common.Attributes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using NetX.Common.Attributes;
+using NetX.ModuleManager.Models;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetX.ModuleManager.Domain
 {
@@ -38,7 +33,7 @@ namespace NetX.ModuleManager.Domain
             foreach (var type in handlerTypeList)
             {
                 var instance = Activator.CreateInstance(type, _model) as ITemplateHandler;
-                if(null == instance)
+                if (null == instance)
                     result = false;
                 result &= await instance.SaveAsync();
             }

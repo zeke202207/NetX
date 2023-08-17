@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace NetX.Common
+﻿namespace NetX.Common
 {
     /// <summary>
     ///  加密方式         加密向量            是否可逆    **
@@ -18,7 +14,7 @@ namespace NetX.Common
         /// <param name="content"></param>
         /// <returns></returns>
         string Encryption(string content);
-        
+
         /// <summary>
         /// 解密
         /// </summary>

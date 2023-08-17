@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using NetX.Ddd.Core;
 using NetX.AuditLog;
 using NetX.Authentication.Core;
 using NetX.Common.ModuleInfrastructure;
+using NetX.Ddd.Core;
 using NetX.RBAC.Domain;
 using NetX.RBAC.Models;
 using NetX.Swagger;

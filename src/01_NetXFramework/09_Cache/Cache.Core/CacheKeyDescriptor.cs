@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NetX.Cache.Core;
+﻿namespace NetX.Cache.Core;
 
 /// <summary>
 /// 缓存键描述信息

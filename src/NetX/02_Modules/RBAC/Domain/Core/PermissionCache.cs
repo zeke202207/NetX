@@ -1,14 +1,7 @@
 ﻿using NetX.Cache.Core;
 using NetX.Common.Attributes;
-using NetX.DatabaseSetup;
 using NetX.InMemoryCache;
 using NetX.RBAC.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetX.RBAC.Domain
 {
@@ -17,8 +10,8 @@ namespace NetX.RBAC.Domain
     {
         private readonly ICacheProvider _cache;
 
-        public PermissionCache(Func<string, ICacheProvider> funcFactory) 
-        { 
+        public PermissionCache(Func<string, ICacheProvider> funcFactory)
+        {
             _cache = funcFactory(InMemoryCacheConstEnum.C_CACHE_TYPE_KEY);
         }
 

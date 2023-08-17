@@ -157,7 +157,7 @@ public sealed class RunOption
                     return;
                 var refDir = Path.Combine(fi.DirectoryName, ModuleSetupConst.C_MODULE_REFDIRECTORYNAME);
                 if (Directory.Exists(refDir))
-                    Directory.EnumerateFiles(refDir,"*.dll")
+                    Directory.EnumerateFiles(refDir, "*.dll")
                     .ToList().ForEach(p => options.Dependencies.Add(p));
                 Modules.Add(options.Id, options);
                 InternalApp.UserModeulOptions.Add(options);
@@ -177,8 +177,8 @@ public sealed class RunOption
             InternalApp.UserModeulOptions.Add(option);
         else
         {
-            ConcurrentBag<ModuleOptions> temp = new ();
-            foreach(var item in InternalApp.UserModeulOptions)
+            ConcurrentBag<ModuleOptions> temp = new();
+            foreach (var item in InternalApp.UserModeulOptions)
             {
                 if (item.Id == option.Id)
                 {

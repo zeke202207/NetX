@@ -32,5 +32,5 @@ public sealed class ModuleContext
     /// <summary>
     /// 配置应用程序
     /// </summary>
-    public Action<ModuleContext ,IApplicationBuilder, IWebHostEnvironment> ConfigApplication;
+    public Action<ModuleContext, IApplicationBuilder, IWebHostEnvironment> ConfigApplication;
 }

@@ -1,15 +1,13 @@
-﻿using Authentication.OAuth;
-using Microsoft.AspNetCore.Mvc;
-using NetX.Ddd.Core;
+﻿using Microsoft.AspNetCore.Mvc;
 using NetX.AuditLog;
 using NetX.Authentication.Core;
 using NetX.Common;
 using NetX.Common.ModuleInfrastructure;
+using NetX.Ddd.Core;
 using NetX.RBAC.Domain;
 using NetX.RBAC.Domain.Queries;
 using NetX.RBAC.Models;
 using NetX.RBAC.Models.Dtos.RequestDto;
-using NetX.RBAC.OAtuhLogin;
 using NetX.Swagger;
 using NetX.Tenants;
 

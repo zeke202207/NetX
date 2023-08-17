@@ -1,20 +1,14 @@
-﻿using NetX.Common.ModuleInfrastructure;
+﻿using NetX.Common.Attributes;
+using NetX.Common.ModuleInfrastructure;
 using NetX.Ddd.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NetX.ModuleManager.Models;
-using NetX.Common.Attributes;
-using NetX.App;
 
 namespace NetX.ModuleManager.Domain
 {
     [Scoped]
     public class ModuleQueryHandler : DomainQueryHandler<ModuleQuery, ResultModel>
     {
-        public ModuleQueryHandler(IDatabaseContext dbContext) 
+        public ModuleQueryHandler(IDatabaseContext dbContext)
             : base(dbContext)
         {
         }
@@ -29,7 +23,7 @@ namespace NetX.ModuleManager.Domain
                 Description = p.Description,
                 IsSharedAssemblyContext = p.IsSharedAssemblyContext,
                 Version = p.Version,
-                RestartNeeded = !App.App.GetModuleContexts.FirstOrDefault(m=>m.Initialize.Key.Equals(p.Id)).IsLoaded
+                RestartNeeded = !App.App.GetModuleContexts.FirstOrDefault(m => m.Initialize.Key.Equals(p.Id)).IsLoaded
             });
             return Task.FromResult(result.ToSuccessResultModel<IEnumerable<ModuleModel>>());
         }

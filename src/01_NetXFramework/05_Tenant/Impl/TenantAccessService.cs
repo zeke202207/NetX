@@ -12,7 +12,7 @@ internal class TenantAccessService<T>
     /// 租户访问访问实例
     /// </summary>
     /// <param name="tenantStore"></param>
-    public TenantAccessService( ITenantStore<T> tenantStore)
+    public TenantAccessService(ITenantStore<T> tenantStore)
     {
         _tenantStore = tenantStore;
     }

@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using Dapper;
-using NetX.Ddd.Domain;
-using NetX.Ddd.Domain.Extensions;
 using NetX.Common.Attributes;
 using NetX.Common.ModuleInfrastructure;
+using NetX.Ddd.Domain;
+using NetX.Ddd.Domain.Extensions;
 using NetX.RBAC.Models;
 
 namespace NetX.RBAC.Domain;
@@ -86,7 +86,7 @@ on t.roleid = r.id  where 1 =1 ";
         return await _dbContext.ExecuteScalarAsync<int>(sql, param);
     }
 
-    private class rolemenuids: sys_role
+    private class rolemenuids : sys_role
     {
         public string menuids { get; set; }
     }

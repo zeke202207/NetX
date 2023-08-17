@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NetX.Common
+﻿namespace NetX.Common
 {
     public static class DatetimeExtensions
     {
@@ -23,7 +17,7 @@ namespace NetX.Common
         /// </summary>
         /// <param name="date"></param>
         /// <returns></returns>
-        public static long ToTimeStamp(this DateTime date,DateTime baseTime)
+        public static long ToTimeStamp(this DateTime date, DateTime baseTime)
         {
             TimeSpan ts = date - baseTime;
             return Convert.ToInt64(ts.TotalMilliseconds);

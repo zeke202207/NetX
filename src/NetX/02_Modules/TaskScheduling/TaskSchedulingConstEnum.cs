@@ -18,7 +18,7 @@ internal class TaskSchedulingConstEnum
 
 public enum JobTaskState : int
 {
-    None =0,
+    None = 0,
     //1->Started 2->Paused 3->Resumed 4->Deleted 5->Interrupted
     Started = 1,
     Paused = 2,

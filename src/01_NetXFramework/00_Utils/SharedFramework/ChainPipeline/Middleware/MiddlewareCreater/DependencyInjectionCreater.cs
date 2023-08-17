@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace NetX.SharedFramework.ChainPipeline
+﻿namespace NetX.SharedFramework.ChainPipeline
 {
     public class DependencyInjectionCreater : IMiddlewareCreater
     {

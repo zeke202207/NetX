@@ -1,10 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetX.MemoryQueue
 {
@@ -28,9 +23,9 @@ namespace NetX.MemoryQueue
         /// <param name="configuration"></param>
         /// <param name="assemblies"></param>
         /// <returns></returns>
-        public static IServiceCollection AddMemoryQueue(this IServiceCollection services,Action<MemoryQueueServiceConfiguration> configuration, params Assembly[] assemblies)
+        public static IServiceCollection AddMemoryQueue(this IServiceCollection services, Action<MemoryQueueServiceConfiguration> configuration, params Assembly[] assemblies)
         {
-            return services.AddMemoryQueue(assemblies,configuration);
+            return services.AddMemoryQueue(assemblies, configuration);
         }
 
         /// <summary>
@@ -47,8 +42,8 @@ namespace NetX.MemoryQueue
                 throw new ArgumentException("没有发现要扫描的程序集。 提供至少一个组件来扫描处理程序。");
             var serviceConfig = new MemoryQueueServiceConfiguration();
             configuration?.Invoke(serviceConfig);
-            ServiceRegistrar.AddRequiredServices(services,serviceConfig);
-            ServiceRegistrar.AddMemoryQueueClasses(services,assemblies);
+            ServiceRegistrar.AddRequiredServices(services, serviceConfig);
+            ServiceRegistrar.AddMemoryQueueClasses(services, assemblies);
             return services;
         }
 

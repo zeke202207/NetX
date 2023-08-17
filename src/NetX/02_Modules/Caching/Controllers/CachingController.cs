@@ -1,20 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using NetX.Common.ModuleInfrastructure;
-using NetX.Ddd.Core;
-using NetX.Swagger;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NetX.Authentication.Core;
 using NetX.Caching.Domain;
 using NetX.Caching.Models;
+using NetX.Common.ModuleInfrastructure;
+using NetX.Ddd.Core;
+using NetX.Swagger;
 
 namespace NetX.Caching.Controllers
 {
     [ApiControllerDescription(CachingConstEnum.C_Caching_GROUPNAME, Description = "NetX实现的缓存模块->缓存管理")]
-    public class CachingController :BaseController
+    public class CachingController : BaseController
     {
         private readonly IQueryBus _queryBus;
         private readonly ICommandBus _commandBus;

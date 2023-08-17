@@ -1,19 +1,17 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using NetX.Ddd.Infrastructure;
-using NetX.QuartzScheduling;
 using NetX.Authentication.Jwt;
 using NetX.Common;
+using NetX.Ddd.Infrastructure;
 using NetX.EventBus;
 using NetX.Module;
+using NetX.QuartzScheduling;
 using NetX.Swagger;
 using System.Collections.Specialized;
-using System.Linq;
 using System.Reflection;
 
 namespace NetX.App;
@@ -85,9 +83,9 @@ public sealed class ServerModuleInitializer : ModuleInitializer
 
         //8.注入attribute 标签服务
         services.AddServicesFromAssembly(
-            new Assembly[] { 
-                GetType().Assembly, 
-                typeof(QuartzShutdownHandler).Assembly 
+            new Assembly[] {
+                GetType().Assembly,
+                typeof(QuartzShutdownHandler).Assembly
             });
 
         //9. 配置响应压缩方案

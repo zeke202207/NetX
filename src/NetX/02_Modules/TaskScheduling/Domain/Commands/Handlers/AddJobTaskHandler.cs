@@ -1,13 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using NetX.Common.Attributes;
 using NetX.Ddd.Domain;
-using NetX.Common.Attributes;
 using NetX.TaskScheduling.Model;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetX.TaskScheduling.Domain
 {
@@ -56,8 +49,8 @@ namespace NetX.TaskScheduling.Domain
             }
             finally
             {
-                if(!result)
-                    await _uow.RollbackAsync(transaction);                    
+                if (!result)
+                    await _uow.RollbackAsync(transaction);
             }
             return result;
         }

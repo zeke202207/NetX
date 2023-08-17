@@ -1,13 +1,8 @@
-﻿using NetX.Common.ModuleInfrastructure;
-using NetX.Ddd.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NetX.Common.Attributes;
-using NetX.Cache.Core;
+﻿using NetX.Cache.Core;
 using NetX.Caching.Models;
+using NetX.Common.Attributes;
+using NetX.Common.ModuleInfrastructure;
+using NetX.Ddd.Domain;
 
 namespace NetX.Caching.Domain
 {
@@ -28,7 +23,7 @@ namespace NetX.Caching.Domain
             var provider = _cacheProviderFactory(request.CacheType);
             if (provider == null || !(await provider.ExistsAsync(request.CacheKey)))
                 return result.ToSuccessResultModel();
-            var objValue = provider.Get(request.CacheKey);            
+            var objValue = provider.Get(request.CacheKey);
             result.CacheValue = Newtonsoft.Json.JsonConvert.SerializeObject(objValue);
             return result.ToSuccessResultModel();
         }

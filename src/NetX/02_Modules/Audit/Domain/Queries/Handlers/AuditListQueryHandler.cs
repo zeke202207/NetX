@@ -1,15 +1,9 @@
 ﻿using Dapper;
-using NetX.Ddd.Domain;
 using NetX.Audit.Models.Dtos;
 using NetX.Common.Attributes;
 using NetX.Common.ModuleInfrastructure;
+using NetX.Ddd.Domain;
 using NetX.Ddd.Domain.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MediatR;
 using Quartz.Util;
 
 namespace NetX.Audit.Domain
