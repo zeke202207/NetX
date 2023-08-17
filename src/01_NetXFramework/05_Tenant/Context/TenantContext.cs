@@ -8,7 +8,7 @@ public class TenantContext
     private static readonly AsyncLocal<TenantContext> _instance;
 
     private TenantOption? _tenantOption;
-    
+
     static TenantContext()
     {
         _instance = new AsyncLocal<TenantContext>();

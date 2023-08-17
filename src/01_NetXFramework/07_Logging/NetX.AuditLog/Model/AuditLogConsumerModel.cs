@@ -1,9 +1,4 @@
 ﻿using NetX.MemoryQueue;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetX.AuditLog
 {
@@ -74,7 +69,7 @@ namespace NetX.AuditLog
         public string CustomData { get; set; }
 
 
-        public AuditLogConsumerModel(string tenandId,AuditInfo auditInfo)
+        public AuditLogConsumerModel(string tenandId, AuditInfo auditInfo)
         {
             Id = auditInfo.Id;
             Parameters = auditInfo.Parameters;

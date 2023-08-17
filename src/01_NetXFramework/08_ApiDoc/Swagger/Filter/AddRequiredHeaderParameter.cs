@@ -1,11 +1,6 @@
 ﻿using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetX.Swagger;
 
@@ -29,10 +24,10 @@ public class AddRequiredHeaderParameter : IOperationFilter
         if (operation.Parameters == null)
             operation.Parameters = new List<OpenApiParameter>();
         var des = context.ApiDescription;
-        if(null != des && des.TryGetMethodInfo(out MethodInfo methodInfo) && null != methodInfo.DeclaringType)
+        if (null != des && des.TryGetMethodInfo(out MethodInfo methodInfo) && null != methodInfo.DeclaringType)
         {
             var desc = Attribute.GetCustomAttribute(methodInfo.DeclaringType, typeof(ApiControllerDescriptionAttribute));
-            if(desc is ApiControllerDescriptionAttribute )
+            if (desc is ApiControllerDescriptionAttribute)
             {
                 var descAttr = (ApiControllerDescriptionAttribute)desc;
                 if (null != descAttr.HeaderKeys)
@@ -52,6 +47,6 @@ public class AddRequiredHeaderParameter : IOperationFilter
                 }
             }
         }
-      
+
     }
 }

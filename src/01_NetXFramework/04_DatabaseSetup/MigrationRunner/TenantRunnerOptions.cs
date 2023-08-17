@@ -1,8 +1,5 @@
 ﻿using FluentMigrator.Runner.Initialization;
 using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace NetX.DatabaseSetup;
 

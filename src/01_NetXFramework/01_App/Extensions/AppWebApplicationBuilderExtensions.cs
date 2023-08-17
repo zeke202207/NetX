@@ -1,13 +1,10 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.VisualBasic;
-using NetX.QuartzScheduling;
 using NetX.Common;
-using NetX.DatabaseSetup;
 using NetX.Module;
+using NetX.QuartzScheduling;
 using System.Reflection;
 using System.Runtime.Loader;
 
@@ -62,7 +59,7 @@ public static class AppWebApplicationBuilderExtensions
             Configuration = webApplicationBuilder.Configuration,
             Initialize = Initialize,
             ModuleOptions = InternalApp.FrameworkModuleOptions,
-            ConfigApplication = (context,app, env) => ConfigApplication(context,app, env)
+            ConfigApplication = (context, app, env) => ConfigApplication(context, app, env)
         };
         Initialize.ConfigureServices(services, env, context);
         InternalApp.ModuleContexts.AddOrUpdate(context.ModuleOptions.Id, k => context, (k, v) => context);
@@ -187,7 +184,7 @@ public static class AppWebApplicationBuilderExtensions
         //    App.GetModuleInitializer().SelectMany(p => p.GetType().Assembly.GetTypes()).Where(p => typeof(IJobTask).IsAssignableFrom(p)),
         //    App.GetUserModuleOptions.ToDictionary(x => x.Id, y => y.Enabled));
         webApplicationBuilder.Services.AddQuartzScheduling(
-            App.GetModuleInitializer().ToDictionary(x => x.Key, y=> y.GetType().Assembly.GetTypes().Where(p => typeof(IJobTask).IsAssignableFrom(p))),
+            App.GetModuleInitializer().ToDictionary(x => x.Key, y => y.GetType().Assembly.GetTypes().Where(p => typeof(IJobTask).IsAssignableFrom(p))),
             App.GetUserModuleOptions.ToDictionary(x => x.Id, y => y.Enabled));
         return webApplicationBuilder;
     }

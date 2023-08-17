@@ -1,21 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
-using NetX.Ddd.Core;
-using NetX.Module;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore.Storage;
 using NetX.Ddd.Domain.Aggregates;
-using NetX.Common.Attributes;
-using NetX.Common;
-using Microsoft.Extensions.DependencyInjection;
-using System.Collections.Concurrent;
-using System.Data;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using static NetX.Ddd.Domain.UnitOfWork;
 using System.Reflection;
-using Microsoft.EntityFrameworkCore.Storage;
 
 namespace NetX.Ddd.Domain;
 
@@ -68,7 +53,7 @@ public class UnitOfWork : IUnitOfWork
     /// <typeparam name="T"></typeparam>
     /// <typeparam name="TKey"></typeparam>
     /// <returns></returns>
-    public DbSet<T> GetRepository<T,TKey>() where T : BaseEntity<TKey>
+    public DbSet<T> GetRepository<T, TKey>() where T : BaseEntity<TKey>
     {
         return _dbContext.Set<T>();
     }
@@ -150,7 +135,7 @@ public class UnitOfWork : IUnitOfWork
             if (null != transaction)
             {
                 if (!result)
-                    await transaction.RollbackAsync();                    
+                    await transaction.RollbackAsync();
             }
         }
     }

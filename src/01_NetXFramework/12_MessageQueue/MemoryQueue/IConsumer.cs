@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NetX.MemoryQueue
+﻿namespace NetX.MemoryQueue
 {
     /// <summary>
     /// 消费者接口

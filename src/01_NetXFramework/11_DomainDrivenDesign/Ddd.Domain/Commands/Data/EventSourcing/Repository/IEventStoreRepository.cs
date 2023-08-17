@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace NetX.Ddd.Domain;
+﻿namespace NetX.Ddd.Domain;
 
 public interface IEventStoreRepository : IDisposable
 {

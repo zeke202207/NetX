@@ -1,5 +1,4 @@
-﻿using NetX.Authentication;
-using NetX.Authentication.Core;
+﻿using NetX.Authentication.Core;
 
 namespace NetX.App;
 

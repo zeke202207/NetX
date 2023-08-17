@@ -1,6 +1,4 @@
-﻿using System.Runtime;
-
-namespace NetX.SharedFramework.ChainPipeline;
+﻿namespace NetX.SharedFramework.ChainPipeline;
 
 /// <summary>
 /// 管道执行结果

@@ -1,13 +1,4 @@
-﻿using Flurl;
-using Flurl.Http;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Net.WebRequestMethods;
-
-namespace Authentication.OAuth
+﻿namespace Authentication.OAuth
 {
     /// <summary>
     /// 默认AccessToken实现

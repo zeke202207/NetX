@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage;
 using NetX.Ddd.Domain.Aggregates;
-using static NetX.Ddd.Domain.UnitOfWork;
 
 namespace NetX.Ddd.Domain;
 

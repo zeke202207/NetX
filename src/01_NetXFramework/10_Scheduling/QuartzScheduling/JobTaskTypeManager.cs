@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Concurrent;
 
 namespace NetX.QuartzScheduling
 {
     public class JobTaskTypeManager
     {
-        private static Lazy<JobTaskTypeManager> instance = new Lazy<JobTaskTypeManager>(()=> new JobTaskTypeManager());
+        private static Lazy<JobTaskTypeManager> instance = new Lazy<JobTaskTypeManager>(() => new JobTaskTypeManager());
 
         private ConcurrentDictionary<string, JobTaskTypeModel> _jobTypeDic = new ConcurrentDictionary<string, JobTaskTypeModel>();
 
@@ -55,10 +50,10 @@ namespace NetX.QuartzScheduling
 
         public string Name { get; private set; }
 
-        public JobTaskAttribute(string id, string name )
+        public JobTaskAttribute(string id, string name)
         {
-            Id=id;
-            Name=name;
+            Id = id;
+            Name = name;
         }
     }
 }

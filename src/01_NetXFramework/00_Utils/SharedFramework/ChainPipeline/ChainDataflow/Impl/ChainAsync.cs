@@ -6,7 +6,7 @@
 /// <typeparam name="TParameter">The input type for the chain.</typeparam>
 /// <typeparam name="TResult">The return type of the chain.</typeparam>
 public class ChainAsync<TParameter, TResult> : ChainBase<TParameter, TResult>, IChainAsync<TParameter, TResult>
-    where TResult : class,new()
+    where TResult : class, new()
 {
     /// <summary>
     /// 
@@ -25,7 +25,7 @@ public class ChainAsync<TParameter, TResult> : ChainBase<TParameter, TResult>, I
     public IChainAsync<TParameter, TResult> Add<TMiddleware>()
         where TMiddleware : IChainMiddlewareAsync<TParameter, TResult>
     {
-        base._middlewareTypes.Insert(0,typeof(TMiddleware));
+        base._middlewareTypes.Insert(0, typeof(TMiddleware));
         return this;
     }
 
@@ -36,7 +36,7 @@ public class ChainAsync<TParameter, TResult> : ChainBase<TParameter, TResult>, I
     /// <returns></returns>
     public IChainAsync<TParameter, TResult> Add(Type middlewareType)
     {
-        base._middlewareTypes.Insert(0,middlewareType);
+        base._middlewareTypes.Insert(0, middlewareType);
         return this;
     }
 

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NetX.MemoryQueue
+﻿namespace NetX.MemoryQueue
 {
     /// <summary>
     /// 消息队列
@@ -18,6 +12,6 @@ namespace NetX.MemoryQueue
         /// <param name="queueName">队列名称</param>
         /// <param name="message">具体消息</param>
         /// <returns></returns>
-        Task<bool> Publish<T>(string queueName,T message) where T : MessageArgument;        
+        Task<bool> Publish<T>(string queueName, T message) where T : MessageArgument;
     }
 }

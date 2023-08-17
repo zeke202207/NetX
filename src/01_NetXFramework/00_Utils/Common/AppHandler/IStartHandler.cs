@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NetX.Common;
+﻿namespace NetX.Common;
 
 /// <summary>
 /// 应用程序启动处理接口

@@ -1,20 +1,13 @@
-﻿using NetX.Ddd.Core;
-using NetX.Module;
-using NetX.Tenants;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using NetX.Tenants;
 
 namespace NetX.Ddd.Domain;
 
-public abstract class BaseDbContext: DbContext
+public abstract class BaseDbContext : DbContext
 {
     public BaseDbContext(DbContextOptions options)
        : base(options)
     {
-        
+
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

@@ -1,10 +1,4 @@
-﻿using Microsoft.Extensions.Caching.Memory;
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Extensions.DependencyInjection;
 
 namespace NetX.Cache.Core;
 
@@ -26,7 +20,7 @@ public static class ServiceCollectionExtensions
             Func<string, ICacheProvider> func = s =>
                 {
                     var cacheProviders = provider.GetServices<ICacheProvider>();
-                    var cacheProvider = cacheProviders.FirstOrDefault(p=>p.CacheType.Equals(s));
+                    var cacheProvider = cacheProviders.FirstOrDefault(p => p.CacheType.Equals(s));
                     if (null == cacheProvider)
                         throw new NotImplementedException($"容器中没有找到对应的缓存提供器，请确认已经注入 {s} 缓存提供器");
                     return cacheProvider;

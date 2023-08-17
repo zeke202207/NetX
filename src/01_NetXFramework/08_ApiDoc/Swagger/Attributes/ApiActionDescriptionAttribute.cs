@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NetX.Swagger;
+﻿namespace NetX.Swagger;
 
 /// <summary>
 /// Action描述特性
