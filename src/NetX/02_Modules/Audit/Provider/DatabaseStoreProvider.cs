@@ -1,13 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using NetX.Ddd.Core;
 using NetX.Audit.Domain.Commands;
 using NetX.AuditLog;
+using NetX.Ddd.Core;
 using NetX.Tenants.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetX.Audit.Provider
 {

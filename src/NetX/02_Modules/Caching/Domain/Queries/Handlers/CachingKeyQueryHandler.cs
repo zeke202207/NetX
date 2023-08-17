@@ -1,13 +1,8 @@
-﻿using NetX.Ddd.Domain;
-using NetX.Cache.Core;
+﻿using NetX.Cache.Core;
 using NetX.Caching.Models.Dtos;
 using NetX.Common.Attributes;
 using NetX.Common.ModuleInfrastructure;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using NetX.Ddd.Domain;
 
 namespace NetX.Caching.Domain
 {
@@ -16,7 +11,7 @@ namespace NetX.Caching.Domain
     {
         private readonly Func<string, ICacheProvider> _cacheProviderFactory;
 
-        public CachingKeyQueryHandler(IDatabaseContext dbContext, Func<string, ICacheProvider> cacheProviderFactory) 
+        public CachingKeyQueryHandler(IDatabaseContext dbContext, Func<string, ICacheProvider> cacheProviderFactory)
             : base(dbContext)
         {
             _cacheProviderFactory = cacheProviderFactory;

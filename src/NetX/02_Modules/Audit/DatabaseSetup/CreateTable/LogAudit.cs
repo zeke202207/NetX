@@ -1,18 +1,13 @@
 ﻿using FluentMigrator;
 using NetX.Audit.Models.Entity;
 using NetX.DatabaseSetup;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetX.Audit.DatabaseSetup
 {
     [Migration(20230628104108)]
     public class LogAudit : CreateTableMigration
     {
-        public LogAudit() 
+        public LogAudit()
             : base(DatabaseSetupConst.C_DATABASESETUP_TABLENAME_AUDIT)
         {
         }

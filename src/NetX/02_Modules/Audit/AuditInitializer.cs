@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using NetX.Audit.Provider;
+using NetX.AuditLog;
 using NetX.DatabaseSetup;
 using NetX.Module;
 using System.Reflection;
-using NetX.AuditLog;
-using NetX.Audit.Provider;
 
 namespace NetX.Audit
 {

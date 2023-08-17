@@ -61,11 +61,11 @@ public record AccountRemoveCommand : DomainCommand
     }
 }
 
-public record AccountModifyAvatarCommand: DomainCommand
+public record AccountModifyAvatarCommand : DomainCommand
 {
     public AvatarRequestModel Avatar { get; set; }
 
-    public  AccountModifyAvatarCommand(AvatarRequestModel avatar)
+    public AccountModifyAvatarCommand(AvatarRequestModel avatar)
     {
         Avatar = avatar;
     }

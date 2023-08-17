@@ -1,10 +1,5 @@
-﻿using NetX.Ddd.Domain;
-using NetX.AuditLog;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using NetX.AuditLog;
+using NetX.Ddd.Domain;
 
 namespace NetX.Audit.Domain.Commands
 {
@@ -16,7 +11,7 @@ namespace NetX.Audit.Domain.Commands
         public AuditLogConsumerModel Info { get; private set; }
 
         public AddAuditCommand(AuditLogConsumerModel info)
-            :base(Guid.NewGuid(), DateTime.Now)
+            : base(Guid.NewGuid(), DateTime.Now)
         {
             Info = info;
         }

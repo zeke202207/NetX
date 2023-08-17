@@ -2,11 +2,6 @@
 using NetX.Common.Attributes;
 using NetX.RBAC.Models.Dtos.RequestDto;
 using NetX.RBAC.OAtuhLogin;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetX.RBAC.Domain
 {

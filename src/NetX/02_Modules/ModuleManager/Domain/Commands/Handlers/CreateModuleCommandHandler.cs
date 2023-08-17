@@ -1,11 +1,6 @@
-﻿using NetX.Ddd.Domain;
+﻿using NetX.Common.Attributes;
+using NetX.Ddd.Domain;
 using NetX.ModuleManager.Models;
-using NetX.Common.Attributes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetX.ModuleManager.Domain
 {

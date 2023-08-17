@@ -1,12 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using NetX.Ddd.Domain;
 using NetX.Common.Attributes;
+using NetX.Ddd.Domain;
 using NetX.TaskScheduling.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetX.TaskScheduling.Domain.Commands.Handlers
 {

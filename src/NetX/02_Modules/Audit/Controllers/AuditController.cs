@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using NetX.Ddd.Core;
 using NetX.Audit.Domain;
-using NetX.AuditLog;
-using NetX.Authentication.Core;
 using NetX.Common.ModuleInfrastructure;
+using NetX.Ddd.Core;
 using NetX.Swagger;
 
 namespace NetX.Audit.Controllers;
@@ -32,6 +30,6 @@ public class AuditController : BaseController
     [HttpPost]
     public async Task<ResultModel> GetAuditLogs(AuditListParam auditListParam)
     {
-        return await _auditLogQuery.Send<AuditListQuery, ResultModel>(new AuditListQuery(auditListParam.NickName ,auditListParam.CurrentPage, auditListParam.PageSize));
+        return await _auditLogQuery.Send<AuditListQuery, ResultModel>(new AuditListQuery(auditListParam.NickName, auditListParam.CurrentPage, auditListParam.PageSize));
     }
 }

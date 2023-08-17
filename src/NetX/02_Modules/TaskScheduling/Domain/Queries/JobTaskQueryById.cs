@@ -1,12 +1,5 @@
-﻿using NetX.Common.ModuleInfrastructure;
-using NetX.Ddd.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using NetX.Ddd.Domain;
 using NetX.TaskScheduling.Model;
-using System.Diagnostics.CodeAnalysis;
 
 namespace NetX.TaskScheduling.Domain
 {

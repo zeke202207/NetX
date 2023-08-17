@@ -1,8 +1,7 @@
-﻿using NetX.QuartzScheduling;
-using NetX.Common.Attributes;
+﻿using NetX.Common.Attributes;
+using NetX.QuartzScheduling;
 using NetX.TaskScheduling.Model;
 using Quartz;
-using Quartz.Util;
 
 namespace NetX.TaskScheduling.Core.Impl
 {

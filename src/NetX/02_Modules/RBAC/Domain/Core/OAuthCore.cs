@@ -1,20 +1,13 @@
 ﻿using Authentication.OAuth;
 using Microsoft.Extensions.DependencyInjection;
-using NetX.Ddd.Core;
 using NetX.Common.Attributes;
 using NetX.Common.ModuleInfrastructure;
+using NetX.Ddd.Core;
 using NetX.RBAC.Domain.Queries;
 using NetX.RBAC.Models;
 using NetX.RBAC.Models.Dtos.ReponseDto;
 using NetX.RBAC.Models.Dtos.RequestDto;
 using NetX.RBAC.OAtuhLogin;
-using Swashbuckle.AspNetCore.SwaggerGen;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NetX.Common;
 using System.Reflection;
 
 namespace NetX.RBAC.Domain.Core

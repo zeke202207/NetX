@@ -1,15 +1,9 @@
 ﻿using Dapper;
-using NetX.Ddd.Domain;
 using NetX.Common.Attributes;
+using NetX.Ddd.Domain;
 using NetX.TaskScheduling.Model;
 using Newtonsoft.Json;
 using Quartz.Util;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetX.TaskScheduling.Domain
 {
@@ -65,7 +59,7 @@ WHERE 1=1 ";
                 DisAllowConcurrentExecution = p.disallowconcurrentexecution,
                 Enabled = Convert.ToBoolean(p.enabled),
                 Group = p.group,
-                JobDataMap = p.datamap.IsNullOrWhiteSpace()? new Dictionary<string, string>() : JsonConvert.DeserializeObject<Dictionary<string, string>>(p.datamap.Replace(@"\", "")),
+                JobDataMap = p.datamap.IsNullOrWhiteSpace() ? new Dictionary<string, string>() : JsonConvert.DeserializeObject<Dictionary<string, string>>(p.datamap.Replace(@"\", "")),
                 JobType = p.jobtype,
                 Name = p.name,
                 State = (JobTaskState)p.state,

@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using Dapper;
-using NetX.Ddd.Domain;
-using NetX.Ddd.Domain.Extensions;
 using NetX.Authentication.Core;
 using NetX.Common;
 using NetX.Common.Attributes;
 using NetX.Common.ModuleInfrastructure;
+using NetX.Ddd.Domain;
+using NetX.Ddd.Domain.Extensions;
 using NetX.RBAC.Models;
 using NetX.RBAC.Models.Entity.EntityCombination;
 

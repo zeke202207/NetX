@@ -1,5 +1,4 @@
 ﻿using FluentMigrator;
-using FluentMigrator.Postgres;
 using NetX.DatabaseSetup;
 using NetX.RBAC.Models;
 

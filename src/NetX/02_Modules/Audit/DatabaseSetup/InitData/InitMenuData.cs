@@ -69,7 +69,7 @@ namespace NetX.Audit.DatabaseSetup.InitData
                     //})
                     ;
             }
-            catch(Exception _)
+            catch (Exception _)
             {
 
             }

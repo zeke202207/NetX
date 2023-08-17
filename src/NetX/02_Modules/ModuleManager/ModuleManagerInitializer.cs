@@ -2,11 +2,6 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using NetX.Module;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetX.ModuleManager
 {
@@ -32,7 +27,7 @@ namespace NetX.ModuleManager
         /// <param name="context">模块上下文</param>
         public override void ConfigureApplication(IApplicationBuilder app, IWebHostEnvironment env, ModuleContext context)
         {
-            
+
         }
 
         /// <summary>
@@ -43,7 +38,7 @@ namespace NetX.ModuleManager
         /// <param name="context">模块上下文</param>
         public override void ConfigureServices(IServiceCollection services, IWebHostEnvironment env, ModuleContext context)
         {
-            
+
         }
     }
 }

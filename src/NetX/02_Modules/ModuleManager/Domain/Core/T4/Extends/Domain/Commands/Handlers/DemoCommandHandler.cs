@@ -1,9 +1,4 @@
 ﻿using NetX.ModuleManager.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetX.ModuleManager.Domain.Core.T4.src.Domain.Commands.Handlers
 {
@@ -17,7 +12,7 @@ namespace NetX.ModuleManager.Domain.Core.T4.src.Domain.Commands.Handlers
         {
             _model = model;
             _directoryName = ModuleManagerConstEnum.C_CLI_SRC;
-            _fileName = Path.Combine("Domain", "Commands","Handlers", $"DemoCommandHandler.cs");
+            _fileName = Path.Combine("Domain", "Commands", "Handlers", $"DemoCommandHandler.cs");
         }
 
         public async Task<bool> SaveAsync()

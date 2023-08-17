@@ -1,14 +1,6 @@
-﻿using NetX.Common.ModuleInfrastructure;
+﻿using NetX.Common.Attributes;
 using NetX.Ddd.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NetX.Common.Attributes;
 using NetX.TaskScheduling.Model;
-using NetX.Authentication.Core;
-using NetX.Common;
 
 namespace NetX.TaskScheduling.Domain
 {
@@ -18,7 +10,7 @@ namespace NetX.TaskScheduling.Domain
         public JobTaskQueryByIdHandler(IDatabaseContext dbContext)
             : base(dbContext)
         {
-            
+
         }
 
         public override async Task<sys_jobtask> Handle(JobTaskQueryById request, CancellationToken cancellationToken)

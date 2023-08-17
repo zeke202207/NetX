@@ -1,26 +1,14 @@
-﻿using NetX.Ddd.Core;
-using NetX.ModuleManager.Models;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.ApplicationParts;
+using Microsoft.Extensions.Configuration;
+using NetX.App;
 using NetX.Common.Attributes;
 using NetX.Common.ModuleInfrastructure;
-using System;
-using System.Collections.Generic;
-using System.IO.Compression;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using NetX.SimpleFileSystem.Model;
+using NetX.Ddd.Core;
 using NetX.Module;
-using NetX.App;
-using Microsoft.AspNetCore.Mvc.ApplicationParts;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
-using Microsoft.CodeAnalysis;
-using Microsoft.VisualBasic.FileIO;
-using NetX.Common;
+using NetX.ModuleManager.Models;
+using System.IO.Compression;
 
 namespace NetX.ModuleManager.Domain
 {
@@ -34,8 +22,8 @@ namespace NetX.ModuleManager.Domain
         private readonly IConfiguration _config;
 
         public ModuleService(
-            IQueryBus cliQuery, 
-            ICommandBus cliCommand, 
+            IQueryBus cliQuery,
+            ICommandBus cliCommand,
             ApplicationPartManager apm,
             IWebHostEnvironment env,
             IConfiguration config)
@@ -76,7 +64,7 @@ namespace NetX.ModuleManager.Domain
         /// <exception cref="NotImplementedException"></exception>
         public Task<ResultModel> GetModules(ModuleParam model)
         {
-            return _cliQuery.Send<ModuleQuery,ResultModel>(new ModuleQuery());
+            return _cliQuery.Send<ModuleQuery, ResultModel>(new ModuleQuery());
         }
 
         /// <summary>
@@ -87,7 +75,7 @@ namespace NetX.ModuleManager.Domain
         public async Task<ResultModel> UploadModule(IFormFile file)
         {
             var modulePath = Path.Combine(AppContext.BaseDirectory, ModuleSetupConst.C_MODULE_DIRECTORYNAME);
-            var moduleName = await ExtractModuleZip(modulePath,file);
+            var moduleName = await ExtractModuleZip(modulePath, file);
             //TODO:NET6版本，不允许在 app build() 之后再次向 ServiceCollection 注入服务
             //暂时没有找到解决方案，上传module后
             //仅将文件解压到插件目录，重启后生效
@@ -116,7 +104,7 @@ namespace NetX.ModuleManager.Domain
                 await File.WriteAllBytesAsync(tempFile, buffer.ToArray());
                 ZipFile.ExtractToDirectory(tempFile, modulePath, true);
                 //moduleName = ZipFile.OpenRead(tempFile).Entries[0].FullName;
-                using(var zip = ZipFile.OpenRead(tempFile))
+                using (var zip = ZipFile.OpenRead(tempFile))
                 {
                     moduleName = zip.Entries[0].FullName;
                 }

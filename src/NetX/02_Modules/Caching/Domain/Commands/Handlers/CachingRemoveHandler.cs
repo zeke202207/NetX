@@ -1,11 +1,6 @@
-﻿using NetX.Ddd.Domain;
-using NetX.Cache.Core;
+﻿using NetX.Cache.Core;
 using NetX.Common.Attributes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using NetX.Ddd.Domain;
 
 namespace NetX.Caching.Domain
 {

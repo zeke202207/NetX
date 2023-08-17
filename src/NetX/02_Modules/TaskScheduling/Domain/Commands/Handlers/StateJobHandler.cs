@@ -1,12 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using NetX.Ddd.Domain;
 using NetX.Common.Attributes;
+using NetX.Ddd.Domain;
 using NetX.TaskScheduling.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetX.TaskScheduling.Domain
 {
@@ -24,7 +19,7 @@ namespace NetX.TaskScheduling.Domain
         public override async Task<bool> Handle(StateJobCommand request, CancellationToken cancellationToken)
         {
             var entity = await _uow.GetRepository<sys_jobtask, string>().FirstOrDefaultAsync(p => p.Id.Equals(request.Id));
-            if (null == entity )
+            if (null == entity)
                 return true;
             entity.state = request.State;
             entity.enabled = Convert.ToInt32(true);

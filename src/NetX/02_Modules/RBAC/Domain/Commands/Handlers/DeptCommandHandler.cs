@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using NetX.Ddd.Domain;
 using NetX.Common.Attributes;
+using NetX.Ddd.Domain;
 using NetX.RBAC.Models;
 
 namespace NetX.RBAC.Domain;
