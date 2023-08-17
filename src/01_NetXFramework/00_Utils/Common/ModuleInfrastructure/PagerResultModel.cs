@@ -1,9 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetX.Common.ModuleInfrastructure;
 
@@ -13,7 +8,7 @@ namespace NetX.Common.ModuleInfrastructure;
 /// <typeparam name="T"></typeparam>
 public class PagerResultModel<T> : ResultModel<T>
 {
-    public PagerResultModel(ResultEnum code) 
+    public PagerResultModel(ResultEnum code)
         : base(code)
     {
     }

@@ -1,13 +1,6 @@
-﻿using Microsoft.Extensions.Options;
-using MySqlConnector;
-using NetX.Common.Attributes;
+﻿using MySqlConnector;
 using NetX.Tenants;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetX.Ddd.Domain;
 
@@ -26,7 +19,7 @@ public class DbConnectionFactory
         {
             if (TenantContext.CurrentTenant.TenantOption?.DatabaseInfo?.DatabaseType == DatabaseType.MySql)
             {
-                var _connection = new MySqlConnection($"{TenantContext.CurrentTenant.TenantOption.DatabaseInfo.ToConnStr(TenantContext.CurrentTenant.TenantType,TenantContext.CurrentTenant.Principal.Tenant.TenantId)}");
+                var _connection = new MySqlConnection($"{TenantContext.CurrentTenant.TenantOption.DatabaseInfo.ToConnStr(TenantContext.CurrentTenant.TenantType, TenantContext.CurrentTenant.Principal.Tenant.TenantId)}");
                 if (null != _connection && _connection.State != ConnectionState.Open)
                     _connection.Open();
                 return _connection;

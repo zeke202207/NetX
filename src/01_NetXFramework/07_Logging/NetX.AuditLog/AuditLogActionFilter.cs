@@ -1,18 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Reflection;
-using NetX.Tenants;
 using NetX.MemoryQueue;
+using NetX.Tenants;
+using Newtonsoft.Json;
+using System.Diagnostics;
+using System.Reflection;
 
 namespace NetX.AuditLog
 {
@@ -109,7 +103,7 @@ namespace NetX.AuditLog
                     }
                 }
                 //保存审计日志
-                await _publisher.Publish(NetxConstEnum.C_QUEUE_AUDITLOG_HANDLE, new AuditLogConsumerModel(TenantContext.CurrentTenant.Principal.Tenant.TenantId,auditInfo));
+                await _publisher.Publish(NetxConstEnum.C_QUEUE_AUDITLOG_HANDLE, new AuditLogConsumerModel(TenantContext.CurrentTenant.Principal.Tenant.TenantId, auditInfo));
             }
         }
 

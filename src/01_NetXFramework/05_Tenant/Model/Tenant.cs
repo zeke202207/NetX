@@ -14,7 +14,7 @@ public class Tenant
     /// 租户身份标识
     /// 在解析策略中使用此标识符进行解析
     /// </summary>
-    public string Identifier { get; set; } = string.Empty ; 
+    public string Identifier { get; set; } = string.Empty;
 
     /// <summary>
     /// The Tenant Items

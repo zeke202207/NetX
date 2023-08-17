@@ -69,7 +69,7 @@ public class Chain<TParameter, TResult> : ChainBase<TParameter, TResult>, IChain
                     else
                         throw new Exception("the middleware is null");
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     result.Success = false;
                     result.Ex.Add(new ChainPipelineExcpetion(ex));

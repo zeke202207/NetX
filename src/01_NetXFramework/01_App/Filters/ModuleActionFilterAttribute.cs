@@ -2,12 +2,7 @@
 using NetX.Cache.Core;
 using NetX.Module;
 using Quartz.Util;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetX.App
 {
@@ -20,20 +15,20 @@ namespace NetX.App
         {
             _cacheProvider = cacheProvider;
         }
-        
+
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             var controller = filterContext.Controller;
             var classType = controller.GetType().Assembly
                 .GetTypes()
-                .Where(p => 
+                .Where(p =>
                     p.GetFields(BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public)
                     .Where(f => null != f.GetCustomAttribute<ModuleKeyAttribute>()).Count() > 0)
                 .FirstOrDefault();
             if (null == classType)
                 return;
-            var keyFieldInfo = classType.GetFields().Where(p => null != p.GetCustomAttribute<ModuleKeyAttribute>()).FirstOrDefault() ;
-            if(null == keyFieldInfo) 
+            var keyFieldInfo = classType.GetFields().Where(p => null != p.GetCustomAttribute<ModuleKeyAttribute>()).FirstOrDefault();
+            if (null == keyFieldInfo)
                 return;
             var key = keyFieldInfo.GetValue(null)?.ToString();
             if (key.IsNullOrWhiteSpace())
@@ -46,7 +41,7 @@ namespace NetX.App
                 if (null != options)
                     _cacheProvider.Set<ModuleOptions>(cacheKey, options);
             }
-            if (null!= options && !options.Enabled)
+            if (null != options && !options.Enabled)
                 throw new NotSupportedException("This module is not enabled!");
         }
     }

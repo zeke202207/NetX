@@ -1,9 +1,5 @@
-﻿
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using NetX.Ddd.Domain.Aggregates;
+﻿using NetX.Ddd.Domain.Aggregates;
 using NetX.Module;
-using NetX.Tenants;
 using System.Reflection;
 
 namespace NetX.Ddd.Domain;
@@ -13,11 +9,11 @@ public sealed class NetxContext : BaseDbContext
     private readonly IEventBus _eventBus;
     private readonly IEnumerable<ModuleInitializer> _modules;
 
-    public NetxContext(DbContextOptions<NetxContext> options, IEventBus eventBus, IEnumerable<ModuleInitializer> modules) 
+    public NetxContext(DbContextOptions<NetxContext> options, IEventBus eventBus, IEnumerable<ModuleInitializer> modules)
         : base(options)
     {
-        _eventBus= eventBus;
-        _modules= modules;
+        _eventBus = eventBus;
+        _modules = modules;
         ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
         ChangeTracker.AutoDetectChangesEnabled = false;
     }
@@ -28,10 +24,10 @@ public sealed class NetxContext : BaseDbContext
         {
             var entities = module.GetType().Assembly.GetTypes()
             .Where(type =>
-            null != type.BaseType 
-            && !type.IsAbstract 
+            null != type.BaseType
+            && !type.IsAbstract
             && type.IsClass
-            && type.BaseType.IsGenericType 
+            && type.BaseType.IsGenericType
             && type.BaseType.GetGenericTypeDefinition() == typeof(BaseEntity<>));
             foreach (var type in entities)
             {

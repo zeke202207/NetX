@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NetX.Common.ModuleInfrastructure;
+﻿namespace NetX.Common.ModuleInfrastructure;
 
 /// <summary>
 /// 服务基类

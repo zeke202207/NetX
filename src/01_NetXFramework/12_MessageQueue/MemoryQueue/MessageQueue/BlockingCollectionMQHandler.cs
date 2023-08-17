@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Collections.Concurrent;
 
 namespace NetX.MemoryQueue
 {
@@ -27,11 +21,11 @@ namespace NetX.MemoryQueue
         public override void BindReceivedEvent(Action<MessageArgument> received)
         {
             this._received = received;
-            if(null != _received)
+            if (null != _received)
             {
                 Task.Factory.StartNew(() =>
                 {
-                    foreach(var message in _queue.GetConsumingEnumerable())
+                    foreach (var message in _queue.GetConsumingEnumerable())
                     {
                         if (!_queue.IsAddingCompleted)
                         {

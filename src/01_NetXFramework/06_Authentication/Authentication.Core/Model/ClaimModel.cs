@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NetX.Authentication.Core;
+﻿namespace NetX.Authentication.Core;
 
 /// <summary>
 /// Token声明

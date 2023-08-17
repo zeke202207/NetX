@@ -1,9 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetX.Tenants.Extensions
 {
@@ -16,7 +11,7 @@ namespace NetX.Tenants.Extensions
         /// <param name="tenantId"></param>
         /// <param name="scopeAction"></param>
         /// <exception cref="KeyNotFoundException"></exception>
-        public static void MockTenantScope(this IServiceProvider serviceProvider, string tenantId ,Action<IServiceScope, Tenant> scopeAction)
+        public static void MockTenantScope(this IServiceProvider serviceProvider, string tenantId, Action<IServiceScope, Tenant> scopeAction)
         {
             using (IServiceScope scope = serviceProvider.CreateScope())
             {

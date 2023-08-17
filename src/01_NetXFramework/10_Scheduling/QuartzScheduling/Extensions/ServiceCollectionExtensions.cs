@@ -1,8 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using NetX.Common;
-using NetX.Common.Attributes;
 using System.Reflection;
-using static Quartz.Logging.OperationName;
 
 namespace NetX.QuartzScheduling;
 
@@ -35,7 +33,7 @@ public static class ServiceCollectionExtensions
     /// <param name="service"></param>           
     /// <param name="injectJobs"></param>
     /// <returns></returns>
-    public static IServiceCollection AddQuartzScheduling(this IServiceCollection service, Dictionary<Guid,IEnumerable<Type>> injectJobs, Dictionary<Guid,bool> userModuleOptions)
+    public static IServiceCollection AddQuartzScheduling(this IServiceCollection service, Dictionary<Guid, IEnumerable<Type>> injectJobs, Dictionary<Guid, bool> userModuleOptions)
     {
         AddQuartzScheduling(service);
         if (!injectJobs.Any())

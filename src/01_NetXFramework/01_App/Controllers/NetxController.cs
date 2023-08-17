@@ -2,13 +2,6 @@
 using NetX.Authentication.Core;
 using NetX.DatabaseSetup;
 using NetX.Swagger;
-using NetX.Tenants;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetX.App;
 

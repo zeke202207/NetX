@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.FileProviders;
 using System.Reflection;
-using System;
 
 namespace NetX.Swagger;
 
@@ -23,7 +21,7 @@ public static class ApplicationBuilderExtensions
         app.UseSwaggerUI(c =>
         {
             moduleNames.ToList()
-            .ForEach(moduleName =>c.SwaggerEndpoint($"/swagger/{moduleName}/swagger.json", moduleName));
+            .ForEach(moduleName => c.SwaggerEndpoint($"/swagger/{moduleName}/swagger.json", moduleName));
             c.SwaggerEndpoint($"/swagger/{SwaggerConst.C_NOGROUP_NAME}/swagger.json", SwaggerConst.C_NOGROUP_TITLE);
             c.IndexStream = () => typeof(NetX.Swagger.SwaggerConst).GetTypeInfo().Assembly.GetManifestResourceStream("NetX.Swagger.index.html");
         });

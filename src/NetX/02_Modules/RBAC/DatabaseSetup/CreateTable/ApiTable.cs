@@ -1,5 +1,4 @@
 ﻿using FluentMigrator;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using NetX.DatabaseSetup;
 using NetX.RBAC.Models;
 

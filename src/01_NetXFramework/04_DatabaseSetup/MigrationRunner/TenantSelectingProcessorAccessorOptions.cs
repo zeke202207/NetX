@@ -1,8 +1,5 @@
 ﻿using FluentMigrator.Runner.Processors;
 using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace NetX.DatabaseSetup;
 
@@ -17,7 +14,7 @@ public class TenantSelectingProcessorAccessorOptions : IOptionsSnapshot<Selectin
     /// 
     /// </summary>
     /// <param name="supporDbType"></param>
-    public TenantSelectingProcessorAccessorOptions( MigrationSupportDbType supporDbType)
+    public TenantSelectingProcessorAccessorOptions(MigrationSupportDbType supporDbType)
     {
         supportDb = supporDbType;
     }

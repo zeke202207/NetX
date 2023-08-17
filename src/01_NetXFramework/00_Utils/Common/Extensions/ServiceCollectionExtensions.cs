@@ -17,7 +17,7 @@ public static class ServiceCollectionExtensions
     /// <returns></returns>
     public static IServiceCollection AddServicesFromAssembly(this IServiceCollection services, Assembly[] assemblies)
     {
-        foreach(var assembly in assemblies)
+        foreach (var assembly in assemblies)
         {
             services.AddServicesFromAssembly(assembly);
         }
@@ -32,7 +32,7 @@ public static class ServiceCollectionExtensions
     /// <returns></returns>
     public static IServiceCollection AddServicesFromAssembly(this IServiceCollection services, Assembly assembly)
     {
-        if(services.IsReadOnly)
+        if (services.IsReadOnly)
             return services;
         foreach (var type in assembly.GetTypes())
         {
@@ -67,7 +67,7 @@ public static class ServiceCollectionExtensions
 
             #region ==瞬时注入==
 
-            var transient = Attribute.GetCustomAttribute(type, typeof(TransientAttribute));           
+            var transient = Attribute.GetCustomAttribute(type, typeof(TransientAttribute));
             if (transient is TransientAttribute)
             {
                 var transientAttr = (TransientAttribute)transient;

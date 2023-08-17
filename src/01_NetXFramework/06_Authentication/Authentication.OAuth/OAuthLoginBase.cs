@@ -1,8 +1,5 @@
 ﻿using Flurl;
 using Flurl.Http;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System.Text.Encodings.Web;
-using static System.Net.WebRequestMethods;
 
 namespace Authentication.OAuth
 {
@@ -50,7 +47,7 @@ namespace Authentication.OAuth
             };
         }
 
-        protected virtual Dictionary<string,string> BuildAccessTokenParams(Dictionary<string,string> authorizeCallbackParams)
+        protected virtual Dictionary<string, string> BuildAccessTokenParams(Dictionary<string, string> authorizeCallbackParams)
         {
             return new Dictionary<string, string>()
             {

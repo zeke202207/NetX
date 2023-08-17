@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NetX.Common.ModuleInfrastructure;
+﻿namespace NetX.Common.ModuleInfrastructure;
 
 public static class ResultExtension
 {
@@ -25,7 +19,7 @@ public static class ResultExtension
         };
     }
 
-    public static ResultModel ToSuccessPagerResultModel<T>(this T result , int total)
+    public static ResultModel ToSuccessPagerResultModel<T>(this T result, int total)
     {
         return new PagerResultModel<T>(ResultEnum.SUCCESS)
         {

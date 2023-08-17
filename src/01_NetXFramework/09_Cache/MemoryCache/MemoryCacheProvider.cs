@@ -1,13 +1,7 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
 using NetX.Cache.Core;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Reflection.Metadata;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetX.InMemoryCache;
 

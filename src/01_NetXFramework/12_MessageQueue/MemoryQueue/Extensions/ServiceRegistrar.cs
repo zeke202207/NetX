@@ -1,11 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetX.MemoryQueue
 {
@@ -126,18 +121,18 @@ namespace NetX.MemoryQueue
 
         private static bool CanBeCastTo(this Type pluggedType, Type pluginType)
         {
-            if (pluggedType == null) 
+            if (pluggedType == null)
                 return false;
-            if (pluggedType == pluginType) 
+            if (pluggedType == pluginType)
                 return true;
             return pluginType.GetTypeInfo().IsAssignableFrom(pluggedType.GetTypeInfo());
         }
 
         private static IEnumerable<Type> FindInterfacesThatClosesCore(Type pluggedType, Type templateType)
         {
-            if (pluggedType == null) 
+            if (pluggedType == null)
                 yield break;
-            if (!pluggedType.IsConcrete()) 
+            if (!pluggedType.IsConcrete())
                 yield break;
             if (templateType.GetTypeInfo().IsInterface)
             {
@@ -155,7 +150,7 @@ namespace NetX.MemoryQueue
                 yield return pluggedType.GetTypeInfo().BaseType;
             }
 
-            if (pluggedType.GetTypeInfo().BaseType == typeof(object)) 
+            if (pluggedType.GetTypeInfo().BaseType == typeof(object))
                 yield break;
             foreach (var interfaceType in FindInterfacesThatClosesCore(pluggedType.GetTypeInfo().BaseType, templateType))
             {
@@ -170,7 +165,7 @@ namespace NetX.MemoryQueue
 
         private static void Fill<T>(this IList<T> list, T value)
         {
-            if (list.Contains(value)) 
+            if (list.Contains(value))
                 return;
             list.Add(value);
         }

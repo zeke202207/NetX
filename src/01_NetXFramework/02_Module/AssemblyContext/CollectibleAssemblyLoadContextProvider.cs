@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using System.Reflection;
-using System.Runtime.Loader;
 
 namespace NetX.Module;
 
@@ -48,10 +46,10 @@ public sealed class CollectibleAssemblyLoadContextProvider
             apm.ApplicationParts.Add(part);
             //依赖项注入
             var moduleType = assembly.GetTypes().FirstOrDefault(p => typeof(ModuleInitializer).IsAssignableFrom(p));
-            if(null != moduleType)
+            if (null != moduleType)
             {
                 var moduleInitalizerInstance = Activator.CreateInstance(moduleType);
-                if( moduleInitalizerInstance is ModuleInitializer)
+                if (moduleInitalizerInstance is ModuleInitializer)
                 {
                     if (!services.IsReadOnly)
                     {
@@ -116,7 +114,7 @@ public sealed class CollectibleAssemblyLoadContextProvider
             if (null != moduleType)
             {
                 var moduleInitializerInstance = Activator.CreateInstance(moduleType);
-                if(moduleInitializerInstance is ModuleInitializer)
+                if (moduleInitializerInstance is ModuleInitializer)
                 {
                     initialize = moduleInitializerInstance as ModuleInitializer;
                     if (!services.IsReadOnly)
@@ -135,7 +133,7 @@ public sealed class CollectibleAssemblyLoadContextProvider
     /// </summary>
     /// <param name="options">模块配置项</param>
     /// <returns></returns>
-    private (string modelPath,string filePath,string refPath) GetPaths(ModuleOptions options)
+    private (string modelPath, string filePath, string refPath) GetPaths(ModuleOptions options)
     {
         var modelPath = Path.Combine(AppContext.BaseDirectory, ModuleSetupConst.C_MODULE_DIRECTORYNAME);
         var filePath = Path.Combine(modelPath, Path.GetFileNameWithoutExtension(options.Name), options.FileName);

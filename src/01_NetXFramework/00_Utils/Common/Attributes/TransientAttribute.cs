@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NetX.Common.Attributes;
+﻿namespace NetX.Common.Attributes;
 
 /// <summary>
 /// 瞬时注入(使用该特性的服务系统会自动注入)

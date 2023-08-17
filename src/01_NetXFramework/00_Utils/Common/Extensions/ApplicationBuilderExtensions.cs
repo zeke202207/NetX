@@ -1,12 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using NetX.Common;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetX.Common;
 
@@ -32,7 +26,7 @@ public static class ApplicationBuilderExtensions
     /// </summary>
     /// <param name="app"></param>
     /// <param name="applicationLifetime"></param>
-    private static void RegisterStarted(IApplicationBuilder app,IHostApplicationLifetime applicationLifetime)
+    private static void RegisterStarted(IApplicationBuilder app, IHostApplicationLifetime applicationLifetime)
     {
         applicationLifetime.ApplicationStarted.Register(async () =>
         {
@@ -50,7 +44,7 @@ public static class ApplicationBuilderExtensions
     /// </summary>
     /// <param name="app"></param>
     /// <param name="applicationLifetime"></param>
-    private static void RegisterShutdown(IApplicationBuilder app,IHostApplicationLifetime applicationLifetime)
+    private static void RegisterShutdown(IApplicationBuilder app, IHostApplicationLifetime applicationLifetime)
     {
         applicationLifetime.ApplicationStopping.Register(async () =>
         {

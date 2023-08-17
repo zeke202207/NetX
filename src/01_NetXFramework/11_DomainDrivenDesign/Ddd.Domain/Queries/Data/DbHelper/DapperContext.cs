@@ -1,11 +1,5 @@
 ﻿using Dapper;
-using NetX.Common.Attributes;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetX.Ddd.Domain;
 
@@ -25,9 +19,9 @@ public class DapperContext : IDatabaseContext
     /// <returns></returns>
     public T ExecuteScalar<T>(string sql, object param = null, int? commandTimeout = null, CommandType? commandType = null)
     {
-        using(var db = DbConnectionFactory.CreateDbConnection())
+        using (var db = DbConnectionFactory.CreateDbConnection())
         {
-            return db.ExecuteScalar<T>(sql,param,null,commandTimeout,commandType);
+            return db.ExecuteScalar<T>(sql, param, null, commandTimeout, commandType);
         }
     }
 
@@ -42,7 +36,7 @@ public class DapperContext : IDatabaseContext
     /// <returns></returns>
     public T QuerySingle<T>(string sql, object param = null, int? commandTimeout = null, CommandType? commandType = null) where T : class
     {
-        using(var db = DbConnectionFactory.CreateDbConnection())
+        using (var db = DbConnectionFactory.CreateDbConnection())
         {
             return db.QueryFirst<T>(sql, param, null, commandTimeout, commandType);
         }

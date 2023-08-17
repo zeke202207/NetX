@@ -1,11 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
-using NetX.Common;
+﻿using NetX.Common;
 using NetX.Common.Attributes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetX.QuartzScheduling;
 
@@ -23,7 +17,7 @@ public class QuartzShutdownHandler : IShutdownHandler
     /// </summary>
     /// <param name="server"></param>
     /// <param name="logger"></param>
-    public QuartzShutdownHandler(IQuartzServer server,IJobTaskLogger logger)
+    public QuartzShutdownHandler(IQuartzServer server, IJobTaskLogger logger)
     {
         _server = server;
         _logger = logger;

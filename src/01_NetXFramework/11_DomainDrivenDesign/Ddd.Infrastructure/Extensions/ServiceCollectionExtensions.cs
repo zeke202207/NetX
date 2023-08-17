@@ -5,13 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using NetX.DatabaseSetup;
 using NetX.Tenants;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NetX.Ddd.Infrastructure;
 
@@ -38,18 +32,18 @@ public static class ServiceCollectionExtensions
         if (info == null)
             return services;
         var strConn = "service=";
-        switch(info.DatabaseType)
+        switch (info.DatabaseType)
         {
             case NetX.Tenants.DatabaseType.MySql:
-                services.AddDbContext<NetxContext>(options =>options.UseMySql(strConn, new MySqlServerVersion(new Version(5, 7, 37))));
-                services.AddDbContext<EventStoreSQLContext>(options =>options.UseMySql(strConn, new MySqlServerVersion(new Version(5, 7, 37))));
+                services.AddDbContext<NetxContext>(options => options.UseMySql(strConn, new MySqlServerVersion(new Version(5, 7, 37))));
+                services.AddDbContext<EventStoreSQLContext>(options => options.UseMySql(strConn, new MySqlServerVersion(new Version(5, 7, 37))));
                 break;
             default:
                 throw new NotSupportedException("this database is not support!");
         }
         services.AddTransient<NetxContext>();
         services.AddTransient<EventStoreSQLContext>();
-        services.AddScoped<IUnitOfWork,UnitOfWork>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
         return services;
     }
 }
