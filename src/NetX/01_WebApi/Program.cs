@@ -1,5 +1,20 @@
+using Google.Protobuf.Reflection;
 using NetX.App;
 using NetX.Tenants;
+using ServiceSelf;
+
+var serviceOption = new NetX.App.Options.ServiceOption()
+{
+    ServiceName = "netx",
+    Options = new ServiceSelf.ServiceOptions()
+    {
+        Description = "netx",
+    }
+};
+serviceOption.Options.Windows.DisplayName = "netx";
+serviceOption.Options.Windows.FailureActionType = WindowsServiceActionType.Restart;
+serviceOption.Options.Linux.Service.Restart = "always";
+serviceOption.Options.Linux.Service.RestartSec = "10";
 
 ServerHost.Start(
     RunOption.Default
@@ -13,7 +28,8 @@ ServerHost.Start(
         //1.¶à×â»§
         app.UseMultiTenancy();
     })
-    , "http://*:8220"
+    , "http://*:8220",
+    serviceOption
     );
 
 /// <summary>
